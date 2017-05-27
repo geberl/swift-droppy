@@ -1,0 +1,723 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		71B8BCA7F40CE38196922DF3 /* Pods_DropPy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8077B363D66782A696F40634 /* Pods_DropPy.framework */; };
+		80CA1BB5837067B42B265BBB /* Pods_DropPyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1965F5303BF80DC5E7FB52 /* Pods_DropPyUITests.framework */; };
+		9519A5BC9F474570AD0068EE /* Pods_DropPyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 497C418422CF2B2058F90C8E /* Pods_DropPyTests.framework */; };
+		A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393301E8FDA40000C7BDB /* AppDelegate.swift */; };
+		A46393331E8FDA40000C7BDB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393321E8FDA40000C7BDB /* ViewController.swift */; };
+		A46393351E8FDA40000C7BDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A46393341E8FDA40000C7BDB /* Assets.xcassets */; };
+		A46393381E8FDA40000C7BDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46393361E8FDA40000C7BDB /* Main.storyboard */; };
+		A46393431E8FDA40000C7BDB /* DropPyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393421E8FDA40000C7BDB /* DropPyTests.swift */; };
+		A463934E1E8FDA40000C7BDB /* DropPyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A463934D1E8FDA40000C7BDB /* DropPyUITests.swift */; };
+		A4FC6C5A1E8FF100005B94E4 /* MyImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FC6C591E8FF100005B94E4 /* MyImageView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A463933F1E8FDA40000C7BDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A46393251E8FDA40000C7BDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A463932C1E8FDA40000C7BDB;
+			remoteInfo = DropPy;
+		};
+		A463934A1E8FDA40000C7BDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A46393251E8FDA40000C7BDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A463932C1E8FDA40000C7BDB;
+			remoteInfo = DropPy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		05DB7FE7B50ABEFE9C44246E /* Pods-DropPyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyTests/Pods-DropPyTests.release.xcconfig"; sourceTree = "<group>"; };
+		0A749EECABA588E14A48E474 /* Pods-DropPyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		175281C69A362641429AC739 /* Pods-DropPy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPy.release.xcconfig"; path = "Pods/Target Support Files/Pods-DropPy/Pods-DropPy.release.xcconfig"; sourceTree = "<group>"; };
+		1D1965F5303BF80DC5E7FB52 /* Pods_DropPyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		497C418422CF2B2058F90C8E /* Pods_DropPyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68ED04C44A3C0DA13B567FE6 /* Pods-DropPy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPy/Pods-DropPy.debug.xcconfig"; sourceTree = "<group>"; };
+		8077B363D66782A696F40634 /* Pods_DropPy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		904F9E47AA41C35056094C52 /* Pods-DropPyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyTests/Pods-DropPyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A463932D1E8FDA40000C7BDB /* DropPy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropPy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A46393301E8FDA40000C7BDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A46393321E8FDA40000C7BDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A46393341E8FDA40000C7BDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A46393371E8FDA40000C7BDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A46393391E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A463933E1E8FDA40000C7BDB /* DropPyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DropPyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A46393421E8FDA40000C7BDB /* DropPyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropPyTests.swift; sourceTree = "<group>"; };
+		A46393441E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A46393491E8FDA40000C7BDB /* DropPyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DropPyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A463934D1E8FDA40000C7BDB /* DropPyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropPyUITests.swift; sourceTree = "<group>"; };
+		A463934F1E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A4FC6C591E8FF100005B94E4 /* MyImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyImageView.swift; sourceTree = "<group>"; };
+		FAC7B670493565E826211E5E /* Pods-DropPyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A463932A1E8FDA40000C7BDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				71B8BCA7F40CE38196922DF3 /* Pods_DropPy.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A463933B1E8FDA40000C7BDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9519A5BC9F474570AD0068EE /* Pods_DropPyTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A46393461E8FDA40000C7BDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80CA1BB5837067B42B265BBB /* Pods_DropPyUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08408B51D3A4022FB24DF6C6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8077B363D66782A696F40634 /* Pods_DropPy.framework */,
+				497C418422CF2B2058F90C8E /* Pods_DropPyTests.framework */,
+				1D1965F5303BF80DC5E7FB52 /* Pods_DropPyUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		48898B45A75DE79CB0B824CB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				68ED04C44A3C0DA13B567FE6 /* Pods-DropPy.debug.xcconfig */,
+				175281C69A362641429AC739 /* Pods-DropPy.release.xcconfig */,
+				904F9E47AA41C35056094C52 /* Pods-DropPyTests.debug.xcconfig */,
+				05DB7FE7B50ABEFE9C44246E /* Pods-DropPyTests.release.xcconfig */,
+				FAC7B670493565E826211E5E /* Pods-DropPyUITests.debug.xcconfig */,
+				0A749EECABA588E14A48E474 /* Pods-DropPyUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A46393241E8FDA40000C7BDB = {
+			isa = PBXGroup;
+			children = (
+				A463932F1E8FDA40000C7BDB /* DropPy */,
+				A46393411E8FDA40000C7BDB /* DropPyTests */,
+				A463934C1E8FDA40000C7BDB /* DropPyUITests */,
+				A463932E1E8FDA40000C7BDB /* Products */,
+				48898B45A75DE79CB0B824CB /* Pods */,
+				08408B51D3A4022FB24DF6C6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A463932E1E8FDA40000C7BDB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A463932D1E8FDA40000C7BDB /* DropPy.app */,
+				A463933E1E8FDA40000C7BDB /* DropPyTests.xctest */,
+				A46393491E8FDA40000C7BDB /* DropPyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A463932F1E8FDA40000C7BDB /* DropPy */ = {
+			isa = PBXGroup;
+			children = (
+				A46393301E8FDA40000C7BDB /* AppDelegate.swift */,
+				A46393321E8FDA40000C7BDB /* ViewController.swift */,
+				A46393341E8FDA40000C7BDB /* Assets.xcassets */,
+				A46393361E8FDA40000C7BDB /* Main.storyboard */,
+				A46393391E8FDA40000C7BDB /* Info.plist */,
+				A4FC6C591E8FF100005B94E4 /* MyImageView.swift */,
+			);
+			path = DropPy;
+			sourceTree = "<group>";
+		};
+		A46393411E8FDA40000C7BDB /* DropPyTests */ = {
+			isa = PBXGroup;
+			children = (
+				A46393421E8FDA40000C7BDB /* DropPyTests.swift */,
+				A46393441E8FDA40000C7BDB /* Info.plist */,
+			);
+			path = DropPyTests;
+			sourceTree = "<group>";
+		};
+		A463934C1E8FDA40000C7BDB /* DropPyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A463934D1E8FDA40000C7BDB /* DropPyUITests.swift */,
+				A463934F1E8FDA40000C7BDB /* Info.plist */,
+			);
+			path = DropPyUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A463932C1E8FDA40000C7BDB /* DropPy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A46393521E8FDA40000C7BDB /* Build configuration list for PBXNativeTarget "DropPy" */;
+			buildPhases = (
+				5E12F74360858505F2E1A0F9 /* [CP] Check Pods Manifest.lock */,
+				A46393291E8FDA40000C7BDB /* Sources */,
+				A463932A1E8FDA40000C7BDB /* Frameworks */,
+				A463932B1E8FDA40000C7BDB /* Resources */,
+				991879D10696BB52BC7E6867 /* [CP] Embed Pods Frameworks */,
+				357859C4F150DB71BB7ADC1E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DropPy;
+			productName = DropPy;
+			productReference = A463932D1E8FDA40000C7BDB /* DropPy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A463933D1E8FDA40000C7BDB /* DropPyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A46393551E8FDA40000C7BDB /* Build configuration list for PBXNativeTarget "DropPyTests" */;
+			buildPhases = (
+				3A0DE38C1DE5C9BFEE3A26D9 /* [CP] Check Pods Manifest.lock */,
+				A463933A1E8FDA40000C7BDB /* Sources */,
+				A463933B1E8FDA40000C7BDB /* Frameworks */,
+				A463933C1E8FDA40000C7BDB /* Resources */,
+				9F16C888F582CD3D04C07354 /* [CP] Embed Pods Frameworks */,
+				B5A42EDBF39E6A10AE375405 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A46393401E8FDA40000C7BDB /* PBXTargetDependency */,
+			);
+			name = DropPyTests;
+			productName = DropPyTests;
+			productReference = A463933E1E8FDA40000C7BDB /* DropPyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A46393481E8FDA40000C7BDB /* DropPyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A46393581E8FDA40000C7BDB /* Build configuration list for PBXNativeTarget "DropPyUITests" */;
+			buildPhases = (
+				8BDC1875C65AF33E2BF2A57D /* [CP] Check Pods Manifest.lock */,
+				A46393451E8FDA40000C7BDB /* Sources */,
+				A46393461E8FDA40000C7BDB /* Frameworks */,
+				A46393471E8FDA40000C7BDB /* Resources */,
+				2C9BC74BE01ACA82BA29FBE8 /* [CP] Embed Pods Frameworks */,
+				FBF2B95684C891EB34916D8F /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A463934B1E8FDA40000C7BDB /* PBXTargetDependency */,
+			);
+			name = DropPyUITests;
+			productName = DropPyUITests;
+			productReference = A46393491E8FDA40000C7BDB /* DropPyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A46393251E8FDA40000C7BDB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Günther Eberl";
+				TargetAttributes = {
+					A463932C1E8FDA40000C7BDB = {
+						CreatedOnToolsVersion = 8.3;
+						ProvisioningStyle = Automatic;
+					};
+					A463933D1E8FDA40000C7BDB = {
+						CreatedOnToolsVersion = 8.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = A463932C1E8FDA40000C7BDB;
+					};
+					A46393481E8FDA40000C7BDB = {
+						CreatedOnToolsVersion = 8.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = A463932C1E8FDA40000C7BDB;
+					};
+				};
+			};
+			buildConfigurationList = A46393281E8FDA40000C7BDB /* Build configuration list for PBXProject "DropPy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A46393241E8FDA40000C7BDB;
+			productRefGroup = A463932E1E8FDA40000C7BDB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A463932C1E8FDA40000C7BDB /* DropPy */,
+				A463933D1E8FDA40000C7BDB /* DropPyTests */,
+				A46393481E8FDA40000C7BDB /* DropPyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A463932B1E8FDA40000C7BDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A46393351E8FDA40000C7BDB /* Assets.xcassets in Resources */,
+				A46393381E8FDA40000C7BDB /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A463933C1E8FDA40000C7BDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A46393471E8FDA40000C7BDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2C9BC74BE01ACA82BA29FBE8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		357859C4F150DB71BB7ADC1E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPy/Pods-DropPy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A0DE38C1DE5C9BFEE3A26D9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5E12F74360858505F2E1A0F9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8BDC1875C65AF33E2BF2A57D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		991879D10696BB52BC7E6867 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPy/Pods-DropPy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9F16C888F582CD3D04C07354 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPyTests/Pods-DropPyTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5A42EDBF39E6A10AE375405 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPyTests/Pods-DropPyTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FBF2B95684C891EB34916D8F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A46393291E8FDA40000C7BDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A46393331E8FDA40000C7BDB /* ViewController.swift in Sources */,
+				A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */,
+				A4FC6C5A1E8FF100005B94E4 /* MyImageView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A463933A1E8FDA40000C7BDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A46393431E8FDA40000C7BDB /* DropPyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A46393451E8FDA40000C7BDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A463934E1E8FDA40000C7BDB /* DropPyUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A46393401E8FDA40000C7BDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A463932C1E8FDA40000C7BDB /* DropPy */;
+			targetProxy = A463933F1E8FDA40000C7BDB /* PBXContainerItemProxy */;
+		};
+		A463934B1E8FDA40000C7BDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A463932C1E8FDA40000C7BDB /* DropPy */;
+			targetProxy = A463934A1E8FDA40000C7BDB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A46393361E8FDA40000C7BDB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A46393371E8FDA40000C7BDB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A46393501E8FDA40000C7BDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A46393511E8FDA40000C7BDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		A46393531E8FDA40000C7BDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68ED04C44A3C0DA13B567FE6 /* Pods-DropPy.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DropPy/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.DropPy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		A46393541E8FDA40000C7BDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 175281C69A362641429AC739 /* Pods-DropPy.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DropPy/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.DropPy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		A46393561E8FDA40000C7BDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 904F9E47AA41C35056094C52 /* Pods-DropPyTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DropPyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.DropPyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DropPy.app/Contents/MacOS/DropPy";
+			};
+			name = Debug;
+		};
+		A46393571E8FDA40000C7BDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 05DB7FE7B50ABEFE9C44246E /* Pods-DropPyTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DropPyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.DropPyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DropPy.app/Contents/MacOS/DropPy";
+			};
+			name = Release;
+		};
+		A46393591E8FDA40000C7BDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FAC7B670493565E826211E5E /* Pods-DropPyUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DropPyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.DropPyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = DropPy;
+			};
+			name = Debug;
+		};
+		A463935A1E8FDA40000C7BDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A749EECABA588E14A48E474 /* Pods-DropPyUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DropPyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.DropPyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = DropPy;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A46393281E8FDA40000C7BDB /* Build configuration list for PBXProject "DropPy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A46393501E8FDA40000C7BDB /* Debug */,
+				A46393511E8FDA40000C7BDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A46393521E8FDA40000C7BDB /* Build configuration list for PBXNativeTarget "DropPy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A46393531E8FDA40000C7BDB /* Debug */,
+				A46393541E8FDA40000C7BDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A46393551E8FDA40000C7BDB /* Build configuration list for PBXNativeTarget "DropPyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A46393561E8FDA40000C7BDB /* Debug */,
+				A46393571E8FDA40000C7BDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A46393581E8FDA40000C7BDB /* Build configuration list for PBXNativeTarget "DropPyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A46393591E8FDA40000C7BDB /* Debug */,
+				A463935A1E8FDA40000C7BDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A46393251E8FDA40000C7BDB /* Project object */;
+}

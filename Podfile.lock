@@ -1,0 +1,15 @@
+PODS:
+  - SwiftyJSON (3.1.4)
+  - Willow (3.0.0)
+
+DEPENDENCIES:
+  - SwiftyJSON
+  - Willow
+
+SPEC CHECKSUMS:
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Willow: b75bf19a5f2056ed40aa0e2c1fd255c70eb450da
+
+PODFILE CHECKSUM: eaafda10c6368d39f8435c4dd1977944ed28045f
+
+COCOAPODS: 1.2.0
