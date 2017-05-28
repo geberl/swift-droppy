@@ -712,14 +712,14 @@
                                 </buttonCell>
                             </button>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GMI-Zz-XD4">
-                                <rect key="frame" x="63" y="85" width="116" height="92"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="sample" id="DVK-e3-Ngl"/>
+                                <rect key="frame" x="64" y="68" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" identifier="Logo" image="Logo" id="DVK-e3-Ngl" userLabel="Logo"/>
                             </imageView>
                             <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYf-lE-mJ8">
                                 <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" identifier="MyImage" image="zone" id="ijI-bt-2u5"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" identifier="Border" image="Zone" id="ijI-bt-2u5"/>
                             </imageView>
                             <view wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK1-lV-7qF" customClass="DragDropView" customModule="DropPy" customModuleProvider="target">
                                 <rect key="frame" x="11" y="11" width="234" height="234"/>
@@ -734,11 +734,11 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="78" y="656"/>
+            <point key="canvasLocation" x="75" y="699"/>
         </scene>
     </scenes>
     <resources>
-        <image name="sample" width="258" height="258"/>
-        <image name="zone" width="256" height="256"/>
+        <image name="Logo" width="256" height="256"/>
+        <image name="Zone" width="256" height="256"/>
     </resources>
 </document>

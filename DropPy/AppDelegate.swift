@@ -23,7 +23,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-        log.info("applicationWillTerminate")
         log.enabled = false
     }
     
