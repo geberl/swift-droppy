@@ -31,6 +31,12 @@ struct Settings {
 class ViewController: NSViewController {
     
     @IBOutlet weak var DropDownOutlet: NSPopUpButton!
+    @IBOutlet weak var MyImage: NSImageCell!
+
+    @IBAction func SettingsButton(_ sender: Any) {
+        log.debug("abc")
+        resetImage()
+    }
 
     @IBAction func DropDownAction(_ sender: NSPopUpButton) {
         log.debug("DropDown changed, now #\(sender.indexOfSelectedItem) - \(sender.titleOfSelectedItem!)")
@@ -59,6 +65,10 @@ class ViewController: NSViewController {
         super.viewWillDisappear()
         getPosition()
         saveSettings()
+    }
+    
+    func resetImage() {
+        MyImage.image = NSImage(named: "zone")
     }
     
     func getSelectedWorkflow() {

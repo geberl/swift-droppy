@@ -27,19 +27,15 @@ extension Date {
     }
 }
 
-class MyImageView: NSImageView {
+class DragDropView: NSView {
     
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-    }
+    var fileTypeIsOk = false
+    var droppedFilePath: String?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         register(forDraggedTypes: [NSFilenamesPboardType, NSURLPboardType, NSPasteboardTypeHTML])
     }
-    
-    var fileTypeIsOk = false
-    var droppedFilePath: String?
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         if checkType(drag: sender) {
@@ -71,8 +67,8 @@ class MyImageView: NSImageView {
                                         "datetime end": "",
                                         "workflow": "just_rotate.json",
                                         //"workflow": "convert_for_kindle.json",
-                                        "items": board]
-
+                    "items": board]
+                
                 // Convert SwiftyJSON object to string
                 let jsonString = jsonObject.description
                 //log.debug("jsonString: '\(jsonString)'")
@@ -80,10 +76,10 @@ class MyImageView: NSImageView {
                 // Setup objects needed for directory and file access
                 let tempDir: URL = FileManager.default.temporaryDirectory
                 let filePath: URL = tempDir.appendingPathComponent("droppy_date_here.json")
-
+                
                 // Write json string to file, this overwrites a preexisting file here
                 try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
-
+                
                 // Send json file path to a function in ViewControler
                 ViewController().runScriptJson(path: filePath.path)
             } catch {

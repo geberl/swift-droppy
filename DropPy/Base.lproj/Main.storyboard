@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12118"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -667,11 +667,11 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="285"/>
+                        <rect key="frame" x="0.0" y="0.0" width="256" height="288"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="39P-vk-4Vq">
-                                <rect key="frame" x="9" y="250" width="126" height="26"/>
+                                <rect key="frame" x="9" y="253" width="126" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Workflow" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="3lf-yG-LlO" id="6ej-UZ-abG">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -688,7 +688,7 @@
                                 </popUpButtonCell>
                             </popUpButton>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DsC-P3-881">
-                                <rect key="frame" x="134" y="246" width="40" height="32"/>
+                                <rect key="frame" x="134" y="249" width="40" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="S" alternateTitle="Settings" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="l90-Yc-M9r">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -696,7 +696,7 @@
                                 </buttonCell>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qJ0-fZ-H1d">
-                                <rect key="frame" x="169" y="246" width="40" height="32"/>
+                                <rect key="frame" x="169" y="249" width="40" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="W" alternateTitle="Workflow Editor" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="EQQ-IW-Kjw">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -704,30 +704,41 @@
                                 </buttonCell>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Avg-SS-X5h">
-                                <rect key="frame" x="205" y="246" width="40" height="32"/>
+                                <rect key="frame" x="205" y="249" width="40" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="L" alternateTitle="Show Log" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="jvR-3a-PAY">
                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYf-lE-mJ8" customClass="MyImageView" customModule="DropPy" customModuleProvider="target">
-                                <rect key="frame" x="1" y="2" width="248" height="248"/>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GMI-Zz-XD4">
+                                <rect key="frame" x="63" y="85" width="116" height="92"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="zone" id="ijI-bt-2u5"/>
+                                <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="sample" id="DVK-e3-Ngl"/>
                             </imageView>
+                            <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYf-lE-mJ8">
+                                <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" identifier="MyImage" image="zone" id="ijI-bt-2u5"/>
+                            </imageView>
+                            <view wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK1-lV-7qF" customClass="DragDropView" customModule="DropPy" customModuleProvider="target">
+                                <rect key="frame" x="11" y="11" width="234" height="234"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </view>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="DropDownOutlet" destination="39P-vk-4Vq" id="E1P-NW-ZUA"/>
+                        <outlet property="MyImage" destination="ijI-bt-2u5" id="QqA-9Z-l7v"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="78" y="656"/>
         </scene>
     </scenes>
     <resources>
-        <image name="zone" width="245" height="246"/>
+        <image name="sample" width="258" height="258"/>
+        <image name="zone" width="256" height="256"/>
     </resources>
 </document>
