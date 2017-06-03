@@ -653,6 +653,57 @@
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
                         <value key="minSize" type="size" width="250" height="250"/>
                         <value key="maxSize" type="size" width="250" height="250"/>
+                        <toolbar key="toolbar" implicitIdentifier="1C08101E-D7FF-456A-B98E-59B42D514B29" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="j1u-W3-IBL">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="65D732F6-BFE0-4AC5-A280-1513F43D0724" label="Workflows" paletteLabel="Workflows" id="OaY-gx-Bv8">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="100" height="28"/>
+                                    <size key="maxSize" width="130" height="28"/>
+                                    <popUpButton key="view" verticalHuggingPriority="750" id="RIK-BI-TL9">
+                                        <rect key="frame" x="0.0" y="14" width="120" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="roundTextured" title="Item 1" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="7y1-tf-Tks" id="WFo-KC-yyW">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <menu key="menu" id="38u-Uk-gZ8">
+                                                <items>
+                                                    <menuItem title="Item 1" state="on" id="7y1-tf-Tks"/>
+                                                    <menuItem title="Item 2" id="1gj-R0-RyO"/>
+                                                    <menuItem title="Item 3" id="wvh-lB-qir"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                    </popUpButton>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="069E188E-41E8-46E5-80F5-3AF66CAF6EBD" label="Actions" paletteLabel="Actions" id="nGL-hq-ps5">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="100" height="28"/>
+                                    <size key="maxSize" width="100" height="28"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="wrr-nz-pw1">
+                                        <rect key="frame" x="0.0" y="14" width="100" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="WLV-8x-Cma">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment toolTip="Edit Workflow" image="ButtonEdit" width="32">
+                                                    <nil key="label"/>
+                                                </segment>
+                                                <segment toolTip="Open Workflow Directory" image="ButtonFolder" width="32" tag="1">
+                                                    <nil key="label"/>
+                                                </segment>
+                                                <segment toolTip="Add Workflow" image="ButtonAdd" width="32">
+                                                    <nil key="label"/>
+                                                </segment>
+                                            </segments>
+                                        </segmentedCell>
+                                    </segmentedControl>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="OaY-gx-Bv8"/>
+                                <toolbarItem reference="nGL-hq-ps5"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                     </window>
                     <connections>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
@@ -687,30 +738,6 @@
                                     </connections>
                                 </popUpButtonCell>
                             </popUpButton>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DsC-P3-881">
-                                <rect key="frame" x="134" y="249" width="40" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="S" alternateTitle="Settings" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="l90-Yc-M9r">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qJ0-fZ-H1d">
-                                <rect key="frame" x="169" y="249" width="40" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="W" alternateTitle="Workflow Editor" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="EQQ-IW-Kjw">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Avg-SS-X5h">
-                                <rect key="frame" x="205" y="249" width="40" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="L" alternateTitle="Show Log" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="jvR-3a-PAY">
-                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GMI-Zz-XD4">
                                 <rect key="frame" x="64" y="68" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -738,6 +765,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ButtonAdd" width="19" height="19"/>
+        <image name="ButtonEdit" width="19" height="19"/>
+        <image name="ButtonFolder" width="19" height="19"/>
         <image name="Logo" width="256" height="256"/>
         <image name="Zone" width="256" height="256"/>
     </resources>
