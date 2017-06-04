@@ -30,13 +30,7 @@ struct Settings {
 
 class ViewController: NSViewController {
     
-    @IBOutlet weak var DropDownOutlet: NSPopUpButton!
     @IBOutlet weak var MyImage: NSImageCell!
-
-    @IBAction func SettingsButton(_ sender: Any) {
-        log.debug("abc")
-        resetImage()
-    }
 
     @IBAction func DropDownAction(_ sender: NSPopUpButton) {
         log.debug("DropDown changed, now #\(sender.indexOfSelectedItem) - \(sender.titleOfSelectedItem!)")
@@ -48,13 +42,19 @@ class ViewController: NSViewController {
         super.viewWillAppear()
         loadSettings()
         
-        DropDownOutlet.removeAllItems()
-        DropDownOutlet.addItem(withTitle: "abc")
-        DropDownOutlet.addItem(withTitle: "def")
-        DropDownOutlet.addItem(withTitle: "ghi")
-
-        DropDownOutlet.selectItem(withTitle: "ghi")
         Settings.selectedWorkflow = "ghi"
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewController.setZoneLine(notification:)),
+                                               name: Notification.Name("draggingEnteredOk"), object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewController.setZoneDashed(notification:)),
+                                               name: Notification.Name("draggingExited"), object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewController.setZoneDashed(notification:)),
+                                               name: Notification.Name("draggingEnded"), object: nil)
     }
     
     override func viewDidLoad() {
@@ -67,13 +67,17 @@ class ViewController: NSViewController {
         saveSettings()
     }
     
-    func resetImage() {
-        MyImage.image = NSImage(named: "zone")
+    func setZoneDashed(notification: Notification) {
+        MyImage.image = NSImage(named: "ZoneDashed")
+    }
+    
+    func setZoneLine(notification: Notification) {
+        MyImage.image = NSImage(named: "ZoneLine")
     }
     
     func getSelectedWorkflow() {
-        let workflow = DropDownOutlet.titleOfSelectedItem!  // Does not work when called from runScriptJson because of different instance (or no instance at all, just statically called a function of a class); currently working around this limitation by saving the currently selected Workflow string into the globally available settings object (which is bad but works)
-        log.debug("\(workflow)")
+        //let workflow = DropDownOutlet.titleOfSelectedItem!  // Does not work when called from runScriptJson because of different instance (or no instance at all, just statically called a function of a class); currently working around this limitation by saving the currently selected Workflow string into the globally available settings object (which is bad but works)
+        //log.debug("\(workflow)")
     }
     
     func printSettings() {

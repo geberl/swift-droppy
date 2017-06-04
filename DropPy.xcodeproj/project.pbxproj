@@ -16,6 +16,7 @@
 		A46393381E8FDA40000C7BDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46393361E8FDA40000C7BDB /* Main.storyboard */; };
 		A46393431E8FDA40000C7BDB /* DropPyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393421E8FDA40000C7BDB /* DropPyTests.swift */; };
 		A463934E1E8FDA40000C7BDB /* DropPyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A463934D1E8FDA40000C7BDB /* DropPyUITests.swift */; };
+		A4E7828A1EE3EF7000B81971 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E782891EE3EF7000B81971 /* WindowController.swift */; };
 		A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E8DF931EDAA29100D12029 /* DragDropView.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		A46393491E8FDA40000C7BDB /* DropPyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DropPyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A463934D1E8FDA40000C7BDB /* DropPyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropPyUITests.swift; sourceTree = "<group>"; };
 		A463934F1E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A4E782891EE3EF7000B81971 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		A4E8DF931EDAA29100D12029 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
 		FAC7B670493565E826211E5E /* Pods-DropPyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,6 +145,7 @@
 				A46393361E8FDA40000C7BDB /* Main.storyboard */,
 				A46393391E8FDA40000C7BDB /* Info.plist */,
 				A4E8DF931EDAA29100D12029 /* DragDropView.swift */,
+				A4E782891EE3EF7000B81971 /* WindowController.swift */,
 			);
 			path = DropPy;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A46393331E8FDA40000C7BDB /* ViewController.swift in Sources */,
+				A4E7828A1EE3EF7000B81971 /* WindowController.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,
 				A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */,
 			);

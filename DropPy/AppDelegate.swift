@@ -26,6 +26,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.enabled = false
     }
     
+    func applicationWillBecomeActive(_ notification: Notification) {
+        // Reload workflows from workflow dir now to account for added/edited/deleted json files
+        NotificationCenter.default.post(name: Notification.Name("appWillBecomeActive"), object: nil)
+    }
+    
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
