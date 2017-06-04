@@ -728,12 +728,12 @@
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GMI-Zz-XD4">
                                 <rect key="frame" x="64" y="66" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" identifier="Logo" image="Logo" id="DVK-e3-Ngl" userLabel="Logo"/>
+                                <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" identifier="Logo" image="Logo" id="DVK-e3-Ngl" userLabel="LogoImage"/>
                             </imageView>
                             <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYf-lE-mJ8">
                                 <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" identifier="Border" image="ZoneDashed" id="ijI-bt-2u5"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" identifier="Border" image="ZoneDashed" id="ijI-bt-2u5" userLabel="ZoneImage"/>
                             </imageView>
                             <view wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK1-lV-7qF" customClass="DragDropView" customModule="DropPy" customModuleProvider="target">
                                 <rect key="frame" x="11" y="11" width="234" height="234"/>
@@ -742,7 +742,8 @@
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="MyImage" destination="ijI-bt-2u5" id="QqA-9Z-l7v"/>
+                        <outlet property="logoImage" destination="DVK-e3-Ngl" id="aTM-bX-3qy"/>
+                        <outlet property="zoneImage" destination="ijI-bt-2u5" id="j3a-mk-Xze"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

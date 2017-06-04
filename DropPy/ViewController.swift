@@ -30,13 +30,8 @@ struct Settings {
 
 class ViewController: NSViewController {
     
-    @IBOutlet weak var MyImage: NSImageCell!
-
-    @IBAction func DropDownAction(_ sender: NSPopUpButton) {
-        log.debug("DropDown changed, now #\(sender.indexOfSelectedItem) - \(sender.titleOfSelectedItem!)")
-        Settings.selectedWorkflow = sender.titleOfSelectedItem!
-        // TODO also change image now
-    }
+    @IBOutlet weak var logoImage: NSImageCell!
+    @IBOutlet weak var zoneImage: NSImageCell!
 
     override func viewWillAppear() {
         super.viewWillAppear()
@@ -68,11 +63,11 @@ class ViewController: NSViewController {
     }
     
     func setZoneDashed(notification: Notification) {
-        MyImage.image = NSImage(named: "ZoneDashed")
+        zoneImage.image = NSImage(named: "ZoneDashed")
     }
     
     func setZoneLine(notification: Notification) {
-        MyImage.image = NSImage(named: "ZoneLine")
+        zoneImage.image = NSImage(named: "ZoneLine")
     }
     
     func getSelectedWorkflow() {
