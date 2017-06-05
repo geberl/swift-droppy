@@ -22,7 +22,6 @@ struct Settings {
     static var file = "settings.json" as String
     static var frameworks = [String: Dictionary<String, String>]()
     
-    // TODO specify sensible defaults for the following values instead of placeholder strings without meaning
     struct Window {
         static var configName = "Default" as String
         static var resolutionX = "not set" as String
@@ -32,9 +31,14 @@ struct Settings {
     }
 }
 
+// Workflows object
+struct Workflows {
+    static var workflows = [String: Dictionary<String, String>]()
+}
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
+    
     func applicationWillFinishLaunching(_ notification: Notification) {
         log.enabled = true
         self.loadSettings()
@@ -48,7 +52,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillBecomeActive(_ notification: Notification) {
         // Reload workflows from workflow dir now to account for added/edited/deleted json files
-        NotificationCenter.default.post(name: Notification.Name("appWillBecomeActive"), object: nil)
+        var changesDetected: Bool
+        changesDetected = self.reloadWorkflows()
+        if changesDetected {
+            NotificationCenter.default.post(name: Notification.Name("workflowChanges"), object: nil)
+        }
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -169,5 +177,78 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } catch let error {
             log.error(error.localizedDescription)
         }
+    }
+    
+    func reloadWorkflows() -> Bool {
+        let workflowDir = "/Users/guenther/\(Settings.baseFolder)Workflows"
+        log.debug("Reloading Workflows from '\(workflowDir)'")
+
+        let fileManager = FileManager.default
+        let enumerator: FileManager.DirectoryEnumerator = fileManager.enumerator(atPath: workflowDir)!
+        
+        var workflowsTemp = [String: Dictionary<String, String>]()
+        
+        while let element = enumerator.nextObject() as? String {
+            if element.hasSuffix("json") {
+                do {
+                    let data = try Data(contentsOf: URL(fileURLWithPath: "\(workflowDir)/\(element)"), options: .alwaysMapped)
+                    let jsonObj = JSON(data: data)
+                    if jsonObj != JSON.null {
+                        workflowsTemp[jsonObj["name"].stringValue] = [String: String]()
+                        workflowsTemp[jsonObj["name"].stringValue]?["image"] = jsonObj["image"].stringValue
+                        workflowsTemp[jsonObj["name"].stringValue]?["file"] = element
+                    }
+                } catch let error {
+                    log.error(error.localizedDescription)
+                }
+
+            }
+        }
+        
+        if workflowsChanged(workflowsNew: workflowsTemp, workflowsOld: Workflows.workflows) {
+            Workflows.workflows = workflowsTemp
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func workflowsChanged(workflowsNew: [String: Dictionary<String, String>],
+                          workflowsOld: [String: Dictionary<String, String>]) -> Bool {
+        
+        // Check for added and edited workflows (one-way)
+        for (name, _):(String, Dictionary<String, String>) in workflowsNew {
+            if workflowsOld[name] != nil {
+                log.debug("Workflow '\(name)' was present before.")
+                if workflowsOld[name]?["file"] != workflowsNew[name]?["file"] {
+                    log.debug("Workflow '\(name)' file has changed, changes detected, exiting.")
+                    return true
+                } else {
+                    log.debug("Workflow '\(name)' file is identical.")
+                }
+                if workflowsOld[name]?["image"] != workflowsNew[name]?["image"] {
+                    log.debug("Workflow '\(name)' image has changed, changes detected, exiting.")
+                    return true
+                } else {
+                log.debug("Workflow '\(name)' image is identical.")
+                }
+            } else {
+                log.debug("Workflow '\(name) was NOT present before, changes detected, exiting.")
+                return true
+            }
+        }
+        
+        // Check for removed workflows (the-other-way)
+        for (name, _):(String, Dictionary<String, String>) in workflowsOld {
+            if workflowsNew[name] != nil {
+                log.debug("Workflow '\(name)' is still present.")
+            } else {
+                log.debug("Workflow '\(name)' was removed, changes detected, exiting.")
+                return true
+            }
+        }
+        
+        // No changes detected in all checks
+        return false
     }
 }

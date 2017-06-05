@@ -19,15 +19,23 @@ class ViewController: NSViewController {
     
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewController.setZoneLine(notification:)),
-                                               name: Notification.Name("draggingEnteredOk"), object: nil)
+                                               name: Notification.Name("draggingEnteredOk"),
+                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewController.setZoneDashed(notification:)),
-                                               name: Notification.Name("draggingExited"), object: nil)
+                                               name: Notification.Name("draggingExited"),
+                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewController.setZoneDashed(notification:)),
-                                               name: Notification.Name("draggingEnded"), object: nil)
+                                               name: Notification.Name("draggingEnded"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewController.setLogo(notification:)),
+                                               name: Notification.Name("updateLogo"),
+                                               object: nil)
     }
     
     func setZoneDashed(notification: Notification) {
@@ -37,7 +45,25 @@ class ViewController: NSViewController {
     func setZoneLine(notification: Notification) {
         zoneImage.image = NSImage(named: "ZoneLine")
     }
+    
+    func setLogo(notification: Notification) {
+        let selectedWorkflow: String = notification.object as! String
 
+        for (name, _):(String, Dictionary<String, String>) in Workflows.workflows {
+            if name == selectedWorkflow {
+                let workflowLogoFile: String = (Workflows.workflows[name]?["image"]!)!
+                let newLogoFilePath = "/Users/guenther/\(Settings.baseFolder)Workflows/\(workflowLogoFile)"
+                if let newLogo = NSImage(contentsOfFile: newLogoFilePath) {
+                    log.debug("Image loaded successfully")
+                    logoImage.image = newLogo
+                } else {
+                    log.debug("Can't load image")
+                }
+                break
+            }
+        }
+    }
+    
     func executeCommand(command: String, args: [String]) -> String {
         let task = Process()
         task.launchPath = command

@@ -29,7 +29,7 @@ class WindowController: NSWindowController {
     override func windowWillLoad() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowController.refreshToolbarDropdown(notification:)),
-                                               name: Notification.Name("appWillBecomeActive"), object: nil)
+                                               name: Notification.Name("workflowChanges"), object: nil)
     }
     
     func refreshToolbarDropdown(notification: Notification){
@@ -37,15 +37,18 @@ class WindowController: NSWindowController {
         
         ToolbarDropdown.removeAllItems()
         
-        let aboutMenuItem = NSMenuItem()
-        aboutMenuItem.title = "About"
-        aboutMenuItem.target = self
-        ToolbarDropdown.addItem(aboutMenuItem)
-        
-        let anotherMenuItem = NSMenuItem()
-        anotherMenuItem.title = "Another"
-        anotherMenuItem.target = self
-        ToolbarDropdown.addItem(anotherMenuItem)
+        for (key, _):(String, Dictionary<String, String>) in Workflows.workflows {
+            let newMenuItem = NSMenuItem()
+            newMenuItem.title = key
+            newMenuItem.target = self
+            newMenuItem.action = #selector(updateLogo)
+            ToolbarDropdown.addItem(newMenuItem)
+        }
+    }
+    
+    func updateLogo() {
+        let selectedWorkflow = getSelectedWorkflow()
+        NotificationCenter.default.post(name: Notification.Name("updateLogo"), object: selectedWorkflow)
     }
     
     func getSelectedWorkflow() -> String {
