@@ -114,7 +114,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let data = try Data(contentsOf: URL(fileURLWithPath: strFilePath), options: .alwaysMapped)
                 let jsonObj = JSON(data: data)
                 if jsonObj != JSON.null {
-                    // TODO load the correct Window settings to begin with, call getScreenResolution and pick out the one that has the same resolution x/y
+                    // TODO load and apply the window position that corresponds with the currently active resolution x/y
+                    // leave all other resolutions in place
+                    // get rid of the configName, this is irrelevant
                     //getResolution()
                     
                     // Just use the first configName for now, discard all others
