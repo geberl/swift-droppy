@@ -40,19 +40,24 @@ class WindowController: NSWindowController {
     func refreshToolbarDropdown(notification: Notification){
         log.debug("Toolbar Dropdown refreshing")
         
+        // Start fresh with an empty dropdown
         ToolbarDropdown.removeAllItems()
         
+        // Add the empty string placeholder item to the dropdown
         let placeholderMenuItem = NSMenuItem()
         placeholderMenuItem.title = ""
         placeholderMenuItem.target = self
         placeholderMenuItem.action = #selector(selectEmptyWorkflow)
         ToolbarDropdown.addItem(placeholderMenuItem)
         
-        // TODO add workflows in alphabetical order of their names
-        
-        for (key, _):(String, Dictionary<String, String>) in Workflows.workflows {
+        // Sort Workflow names alphabetically
+        let allWorkflowNames:[String] = NSDictionary(dictionary: Workflows.workflows).allKeys as! [String]
+        let sortedWorkflowNames = allWorkflowNames.sorted(){ $0 < $1 }
+
+        // Add Workflows to the dropdown in that order
+        for name:String in sortedWorkflowNames {
             let newMenuItem = NSMenuItem()
-            newMenuItem.title = key
+            newMenuItem.title = name
             newMenuItem.target = self
             newMenuItem.action = #selector(workflowSelectionChanged)
             ToolbarDropdown.addItem(newMenuItem)
@@ -150,14 +155,11 @@ class WindowController: NSWindowController {
             let userDir: URL = FileManager.default.homeDirectoryForCurrentUser
             let filePath: URL = userDir.appendingPathComponent("\(Settings.baseFolder)Workflows/\(workflowFileName)")
         
-            print("\(Settings.baseFolder)/Workflows/\(workflowFileName)")
-        
             // Write json string to file, this overwrites a preexisting file here
             try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
 
-        
             // Update global Workflow object
-            Workflows.activeJsonFile = workflowFileName // TODO this is wrong
+            Workflows.activeJsonFile = workflowFileName
             Workflows.activeName = workflowName
             Workflows.activeLogoFilePath = ""
         
