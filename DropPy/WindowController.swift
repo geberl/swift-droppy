@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftyJSON
 
 
 
@@ -124,18 +125,47 @@ class WindowController: NSWindowController {
     }
     
     func addWorkflow() {
-        log.debug("Toolbar Action: Add (not implemented yet)")
-        // TODO implement this
-
-        // Copy file from Assets to workflow dir, named new_workflow_{datetime}.json
-        // Set Workflows.activeJsonFile to this filename
+        log.debug("Toolbar Action: Add")
         
-        // Change name inside the Json file to the filename but without underscores (use spaces instead)
-        // Set Workflows.activeName to this same name
-
-        // Use "" as image in the template json, so the default logo is used automatically
+       do {
+            // Get the current datetime as a string
+            let stringFromDate = Date().iso8601
         
-        // Call editWorkflow() to open the new file in the user's editor
+            // Determine Workflow name (for inside the JSON file) and the JSON file's filename.
+            let workflowName: String = "New Workflow \(stringFromDate)"
+            let workflowFileName: String = "new_workflow_\(stringFromDate).json"
+        
+            // Create SwiftyJSON object
+            let jsonObject: JSON = ["name": workflowName,
+                                    "author": "Your name here",
+                                    "description": "A short description what this Workflow does. Currently not accessed by DropPy. For now just for your own documentation purposes.",
+                                    "image": "",
+                                    "executable": "Python 3",
+                                    "tasks": []]
+        
+            // Convert SwiftyJSON object to string
+            let jsonString = jsonObject.description
+        
+            // Setup objects needed for directory and file access
+            let userDir: URL = FileManager.default.homeDirectoryForCurrentUser
+            let filePath: URL = userDir.appendingPathComponent("\(Settings.baseFolder)Workflows/\(workflowFileName)")
+        
+            print("\(Settings.baseFolder)/Workflows/\(workflowFileName)")
+        
+            // Write json string to file, this overwrites a preexisting file here
+            try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
+
+        
+            // Update global Workflow object
+            Workflows.activeJsonFile = workflowFileName // TODO this is wrong
+            Workflows.activeName = workflowName
+            Workflows.activeLogoFilePath = ""
+        
+            // Open new file in editor
+            self.editWorkflow()
+        } catch {
+            log.error(error.localizedDescription)
+        }
     }
     
     func actionOnEmptyWorkflow(notification: Notification) {
