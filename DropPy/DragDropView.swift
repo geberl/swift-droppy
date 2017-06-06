@@ -35,6 +35,8 @@ class DragDropView: NSView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
+        // Allow all types initially, but check again on draggingEntered
         register(forDraggedTypes: [NSFilenamesPboardType, NSURLPboardType, NSPasteboardTypeHTML])
     }
     
@@ -43,7 +45,7 @@ class DragDropView: NSView {
             workflowIsSelected = false
             NotificationCenter.default.post(name: Notification.Name("draggingEnteredNoWorkflowSelected"), object: nil)
             return .copy // allow drop (catch later, provide message)
-            // return [] // don't allow drop
+            // return [] // don't even allow drop
         } else {
             workflowIsSelected = true
 
@@ -54,8 +56,7 @@ class DragDropView: NSView {
             } else {
                 fileTypeIsOk = false
                 NotificationCenter.default.post(name: Notification.Name("draggingEnteredNotOk"), object: nil)
-                return .copy // allow drop (catch later, provide message)
-                // return [] // don't allow drop
+                return .copy
             }
         }
     }
@@ -75,7 +76,7 @@ class DragDropView: NSView {
             
         } else if fileTypeIsOk == false {
             // Display error message
-            NotificationCenter.default.post(name: Notification.Name("unsupportedFileType"), object: nil)  // TODO not implemented
+            NotificationCenter.default.post(name: Notification.Name("unsupportedFileType"), object: nil)  // TODO not implemented yet
             
         } else {
             // Process files
@@ -115,6 +116,9 @@ class DragDropView: NSView {
     }
     
     func checkType(drag: NSDraggingInfo) -> Bool {
+        // TODO make this work
+        Swift.print(Workflows.activeAccepts)
+        
         if (drag.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") != nil) {
             return true
         }

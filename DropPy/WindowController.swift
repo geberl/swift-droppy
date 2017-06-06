@@ -68,6 +68,7 @@ class WindowController: NSWindowController {
         Workflows.activeJsonFile = ""
         Workflows.activeLogoFilePath = ""
         Workflows.activeName = ""
+        Workflows.activeAccepts = ""
 
         NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
     }
@@ -75,26 +76,24 @@ class WindowController: NSWindowController {
     func workflowSelectionChanged() {
         // User changed highlight in the Workflows dropdown, now update the global Workflows object (in AppDelegate)
 
-        // Name
+        // Name from dropdown
         Workflows.activeName = self.getSelectedWorkflow()
         
-        // Json file
+        // Rest from Workflows.workflows object
         for (name, _):(String, Dictionary<String, String>) in Workflows.workflows {
             if name == Workflows.activeName {
                 let workflowJsonFile: String = (Workflows.workflows[name]?["file"]!)!
                 log.debug("Workflow definition '\(workflowJsonFile)' is now active")
                 Workflows.activeJsonFile = workflowJsonFile
-                break
-            }
-        }
-        
-        // Logo image file
-        for (name, _):(String, Dictionary<String, String>) in Workflows.workflows {
-            if name == Workflows.activeName {
+                
                 let workflowLogoFile: String = (Workflows.workflows[name]?["image"]!)!
                 log.debug("Workflow logo '\(workflowLogoFile)' is now active")
                 let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
                 Workflows.activeLogoFilePath = "\(userDir)/\(Settings.baseFolder)Workflows/\(workflowLogoFile)"
+                
+                let workflowAccepts: String = (Workflows.workflows[name]?["accepts"]!)!
+                Workflows.activeAccepts = workflowAccepts
+                
                 break
             }
         }
@@ -149,6 +148,7 @@ class WindowController: NSWindowController {
                                     "description": "A short description what this Workflow does. Currently not accessed by DropPy. For now just for your own documentation purposes.",
                                     "image": "",
                                     "executable": "Python 3",
+                                    "accepts": "", // TODO choose sensible default
                                     "tasks": []]
         
             // Convert SwiftyJSON object to string
@@ -164,6 +164,7 @@ class WindowController: NSWindowController {
             // Update global Workflow object
             Workflows.activeJsonFile = workflowFileName
             Workflows.activeName = workflowName
+            Workflows.activeAccepts = ""
             Workflows.activeLogoFilePath = ""
         
             // Open new file in editor

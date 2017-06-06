@@ -37,6 +37,7 @@ struct Settings {
 struct Workflows {
     static var workflows = [String: Dictionary<String, String>]()
     static var activeName = "" as String
+    static var activeAccepts = "" as String
     static var activeJsonFile = "" as String
     static var activeLogoFilePath = "" as String
 }
@@ -74,6 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let changesDetected: Bool = self.reloadWorkflows()
         if changesDetected {
             Workflows.activeName = ""
+            Workflows.activeAccepts = ""
             Workflows.activeJsonFile = ""
             Workflows.activeLogoFilePath = ""
             NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
@@ -224,6 +226,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         workflowsTemp[jsonObj["name"].stringValue] = [String: String]()
                         workflowsTemp[jsonObj["name"].stringValue]?["image"] = jsonObj["image"].stringValue
                         workflowsTemp[jsonObj["name"].stringValue]?["file"] = element
+                        workflowsTemp[jsonObj["name"].stringValue]?["accepts"] = jsonObj["accepts"].stringValue
                     }
                 } catch let error {
                     log.error(error.localizedDescription)
@@ -247,17 +250,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         for (name, _):(String, Dictionary<String, String>) in workflowsNew {
             if workflowsOld[name] != nil {
                 log.debug("Workflow '\(name)' was present before.")
+                
                 if workflowsOld[name]?["file"] != workflowsNew[name]?["file"] {
                     log.debug("Workflow '\(name)' file has changed, changes detected, reloading.")
                     return true
                 } else {
                     log.debug("Workflow '\(name)' file is identical.")
                 }
+                
                 if workflowsOld[name]?["image"] != workflowsNew[name]?["image"] {
                     log.debug("Workflow '\(name)' image has changed, changes detected, reloading.")
                     return true
                 } else {
                 log.debug("Workflow '\(name)' image is identical.")
+                }
+                
+                if workflowsOld[name]?["accepts"] != workflowsNew[name]?["accepts"] {
+                    log.debug("Workflow '\(name)' accepted objects have changed, changes detected, reloading.")
+                    return true
+                } else {
+                    log.debug("Workflow '\(name)' accepted objects are identical.")
                 }
             } else {
                 log.debug("Workflow '\(name) was NOT present before, changes detected, reloading.")
