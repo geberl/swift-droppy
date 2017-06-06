@@ -93,7 +93,8 @@ class WindowController: NSWindowController {
             if name == Workflows.activeName {
                 let workflowLogoFile: String = (Workflows.workflows[name]?["image"]!)!
                 log.debug("Workflow logo '\(workflowLogoFile)' is now active")
-                Workflows.activeLogoFilePath = "/Users/guenther/\(Settings.baseFolder)Workflows/\(workflowLogoFile)"
+                let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
+                Workflows.activeLogoFilePath = "\(userDir)\(Settings.baseFolder)Workflows/\(workflowLogoFile)"
                 break
             }
         }
@@ -115,8 +116,9 @@ class WindowController: NSWindowController {
     
     func openFinder() {
         log.debug("Toolbar Action: Open")
-        NSWorkspace.shared().selectFile("/Users/guenther/\(Settings.baseFolder)Workflows/\(Workflows.activeJsonFile)",
-            inFileViewerRootedAtPath: "/Users/guenther/")
+        let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
+        NSWorkspace.shared().selectFile("\(userDir)\(Settings.baseFolder)Workflows/\(Workflows.activeJsonFile)",
+            inFileViewerRootedAtPath: "\(userDir)")
     }
     
     func editWorkflow() {
@@ -124,8 +126,9 @@ class WindowController: NSWindowController {
         if Workflows.activeName == "" {
             NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
         } else {
-            NSWorkspace.shared().openFile("/Users/guenther/\(Settings.baseFolder)Workflows/\(Workflows.activeJsonFile)",
-                withApplication: "Visual Studio Code")
+            let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
+            NSWorkspace.shared().openFile("\(userDir)\(Settings.baseFolder)Workflows/\(Workflows.activeJsonFile)",
+                withApplication: Settings.editor)
         }
     }
     

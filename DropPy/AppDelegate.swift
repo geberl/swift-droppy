@@ -16,11 +16,13 @@ let configuration = LoggerConfiguration(modifiers: modifiers)
 let log = Logger(configuration: configuration)
 
 
-// Settings object
+// Settings object (with defaults)
 struct Settings {
-    static var baseFolder = "Dropbox/DropPy/" as String
+    static var baseFolder = "/DropPy/" as String
     static var file = "settings.json" as String
+
     static var frameworks = [String: Dictionary<String, String>]()
+    static var editor = "TextEdit" as String
     
     struct Window {
         static var configName = "Default" as String
@@ -82,6 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.debug("Settings --------------")
         log.debug("Base Folder: \(Settings.baseFolder)")
         log.debug("File: \(Settings.file)")
+        log.debug("Editor: \(Settings.editor)")
         log.debug("Window")
         log.debug("  Config Name: \(Settings.Window.configName)")
         log.debug("  Res X: \(Settings.Window.resolutionX), Res Y: \(Settings.Window.positionY)")
@@ -114,10 +117,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let data = try Data(contentsOf: URL(fileURLWithPath: strFilePath), options: .alwaysMapped)
                 let jsonObj = JSON(data: data)
                 if jsonObj != JSON.null {
+                    // Editor
+                    if jsonObj["editor"] != JSON.null {
+                        Settings.editor = jsonObj["editor"].stringValue
+                    }
+                    
                     // TODO load and apply the window position that corresponds with the currently active resolution x/y
                     // leave all other resolutions in place
                     // get rid of the configName, this is irrelevant
                     //getResolution()
+
                     
                     // Just use the first configName for now, discard all others
                     let allWindowConfigs = jsonObj["window"].dictionaryValue as Dictionary
@@ -165,17 +174,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.debug("Saving settings")
         
         // Create SwiftyJSON object from the values that should be saved
-        let jsonObject: JSON = ["window": [Settings.Window.configName: ["resolution x": Settings.Window.resolutionX,
+        var jsonObject: JSON = ["window": [Settings.Window.configName: ["resolution x": Settings.Window.resolutionX,
                                                                         "resolution y": Settings.Window.resolutionY,
                                                                         "position x": Settings.Window.positionX,
                                                                         "position y": Settings.Window.positionY]],
                                 "frameworks": Settings.frameworks
         ]
         
+        // Only save editor if value is non-default
+        if Settings.editor != "TextEdit" {
+            jsonObject["editor"].stringValue = Settings.editor
+        }
+        
         // Convert SwiftyJSON object to string
         let jsonString = jsonObject.description
-        //log.debug("jsonString: '\(jsonString)'")
-        
+
         // Setup objects needed for directory and file access
         let userDir: URL = FileManager.default.homeDirectoryForCurrentUser
         let filePath: URL = userDir.appendingPathComponent("\(Settings.baseFolder)\(Settings.file)")
@@ -189,7 +202,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func reloadWorkflows() -> Bool {
-        let workflowDir = "/Users/guenther/\(Settings.baseFolder)Workflows"
+        let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
+        let workflowDir = "\(userDir)\(Settings.baseFolder)Workflows"
         log.debug("Reloading Workflows from '\(workflowDir)'")
 
         let fileManager = FileManager.default
