@@ -34,6 +34,9 @@ struct Settings {
 // Workflows object
 struct Workflows {
     static var workflows = [String: Dictionary<String, String>]()
+    static var activeName = "" as String
+    static var activeJsonFile = "" as String
+    static var activeLogoFilePath = "" as String
 }
 
 @NSApplicationMain
@@ -51,15 +54,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationWillBecomeActive(_ notification: Notification) {
-        // Reload workflows from workflow dir now to account for added/edited/deleted json files
-        var changesDetected: Bool
-        changesDetected = self.reloadWorkflows()
+        // Reload workflows from workflow dir now to account for json files that could have been added/edited/deleted
+        let changesDetected: Bool = self.reloadWorkflows()
         if changesDetected {
-            NotificationCenter.default.post(name: Notification.Name("workflowChanges"), object: nil)
+            Workflows.activeName = ""
+            Workflows.activeJsonFile = ""
+            Workflows.activeLogoFilePath = ""
+            NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
         }
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        // Actually quit the application when the user closes the window
         return true
     }
     

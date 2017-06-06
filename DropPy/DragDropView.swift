@@ -38,27 +38,23 @@ class DragDropView: NSView {
     }
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
-        if checkType(drag: sender) {
-            fileTypeIsOk = true
-            NotificationCenter.default.post(name: Notification.Name("draggingEnteredOk"), object: nil)
-            return .copy
-        } else {
+        if Workflows.activeName == "" {
             fileTypeIsOk = false
-            NotificationCenter.default.post(name: Notification.Name("draggingEnteredNotOk"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("draggingEnteredNoWorkflowSelected"), object: nil)
             return []
-        }
-    }
-    
-    override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
-        if fileTypeIsOk {
-            NotificationCenter.default.post(name: Notification.Name("draggingUpdatedOk"), object: nil)
-            return .copy
         } else {
-            NotificationCenter.default.post(name: Notification.Name("draggingUpdatedNotOk"), object: nil)
-            return []
+            if checkType(drag: sender) {
+                fileTypeIsOk = true
+                NotificationCenter.default.post(name: Notification.Name("draggingEnteredOk"), object: nil)
+                return .copy
+            } else {
+                fileTypeIsOk = false
+                NotificationCenter.default.post(name: Notification.Name("draggingEnteredNotOk"), object: nil)
+                return []
+            }
         }
     }
-    
+
     override func draggingEnded(_ sender: NSDraggingInfo?) {
         NotificationCenter.default.post(name: Notification.Name("draggingEnded"), object: nil)
     }
@@ -77,9 +73,8 @@ class DragDropView: NSView {
                 // Create SwiftyJSON object
                 let jsonObject: JSON = ["datetime start": stringFromDate,
                                         "datetime end": "",
-                                        "workflow": "just_rotate.json",
-                                        //"workflow": "convert_for_kindle.json",
-                    "items": board]
+                                        "workflow": Workflows.activeJsonFile,
+                                        "items": board]
                 
                 // Convert SwiftyJSON object to string
                 let jsonString = jsonObject.description
@@ -108,5 +103,4 @@ class DragDropView: NSView {
         }
         return false
     }
-    
 }

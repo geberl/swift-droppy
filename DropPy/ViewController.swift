@@ -34,34 +34,76 @@ class ViewController: NSViewController {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewController.setLogo(notification:)),
-                                               name: Notification.Name("updateLogo"),
+                                               name: Notification.Name("draggingExited"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewController.setLogo(notification:)),
+                                               name: Notification.Name("draggingEnded"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewController.setLogo(notification:)),
+                                               name: Notification.Name("workflowSelectionChanged"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewController.setZoneLogoError(notification:)),
+                                               name: Notification.Name("draggingEnteredNoWorkflowSelected"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewController.setZoneLogoError(notification:)),
+                                               name: Notification.Name("draggingUpdatedNoWorkflowSelected"),
                                                object: nil)
     }
     
     func setZoneDashed(notification: Notification) {
+        log.debug("Changing zone image to dashed.")
         zoneImage.image = NSImage(named: "ZoneDashed")
     }
     
     func setZoneLine(notification: Notification) {
+        log.debug("Changing zone image to line.")
         zoneImage.image = NSImage(named: "ZoneLine")
     }
     
     func setLogo(notification: Notification) {
-        let selectedWorkflow: String = notification.object as! String
-
-        for (name, _):(String, Dictionary<String, String>) in Workflows.workflows {
-            if name == selectedWorkflow {
-                let workflowLogoFile: String = (Workflows.workflows[name]?["image"]!)!
-                let newLogoFilePath = "/Users/guenther/\(Settings.baseFolder)Workflows/\(workflowLogoFile)"
-                if let newLogo = NSImage(contentsOfFile: newLogoFilePath) {
-                    log.debug("Image loaded successfully")
-                    logoImage.image = newLogo
-                } else {
-                    log.debug("Can't load image")
-                }
-                break
+        if Workflows.activeLogoFilePath == "" {
+            log.debug("Changing workflow logo to default.")
+            logoImage.image = NSImage(named: "Logo")
+        } else {
+            if let newLogo = NSImage(contentsOfFile: Workflows.activeLogoFilePath) {
+                log.debug("Workflow logo loaded successfully.")
+                let resizedLogo = self.resizeNSImage(image: newLogo, width:128, height:128)
+                logoImage.image = resizedLogo
+            } else {
+                log.error("Can't load workflow logo! Changing to default.")
+                logoImage.image = NSImage(named: "Logo")
             }
         }
+    }
+    
+    func setZoneLogoError(notification: Notification) {
+        if Workflows.activeLogoFilePath == "" {
+            log.debug("Changing workflow logo to error.")
+            logoImage.image = NSImage(named: "LogoError")
+            
+            log.debug("Changing zone image to error.")
+            zoneImage.image = NSImage(named: "ZoneError")
+        }
+    }
+    
+    func resizeNSImage(image: NSImage, width: Int, height: Int) -> NSImage {
+        let destSize = NSMakeSize(CGFloat(width), CGFloat(height))
+        let newImage = NSImage(size: destSize)
+        newImage.lockFocus()
+        image.draw(in: NSMakeRect(0, 0, destSize.width, destSize.height),
+                   from: NSMakeRect(0, 0, image.size.width, image.size.height),
+                   operation: NSCompositingOperation.sourceOver, fraction: CGFloat(1))
+        newImage.unlockFocus()
+        newImage.size = destSize
+        return NSImage(data: newImage.tiffRepresentation!)!
     }
     
     func executeCommand(command: String, args: [String]) -> String {
