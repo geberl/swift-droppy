@@ -29,6 +29,7 @@ extension Date {
 
 class DragDropView: NSView {
     
+    var workflowIsSelected = false
     var fileTypeIsOk = false
     var droppedFilePath: String?
     
@@ -39,18 +40,22 @@ class DragDropView: NSView {
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         if Workflows.activeName == "" {
-            fileTypeIsOk = false
+            workflowIsSelected = false
             NotificationCenter.default.post(name: Notification.Name("draggingEnteredNoWorkflowSelected"), object: nil)
-            return []
+            return .copy // allow drop (catch later, provide message)
+            // return [] // don't allow drop
         } else {
-            if checkType(drag: sender) {
+            workflowIsSelected = true
+
+            if self.checkType(drag: sender) {
                 fileTypeIsOk = true
                 NotificationCenter.default.post(name: Notification.Name("draggingEnteredOk"), object: nil)
                 return .copy
             } else {
                 fileTypeIsOk = false
                 NotificationCenter.default.post(name: Notification.Name("draggingEnteredNotOk"), object: nil)
-                return []
+                return .copy // allow drop (catch later, provide message)
+                // return [] // don't allow drop
             }
         }
     }
@@ -64,37 +69,49 @@ class DragDropView: NSView {
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        if let board = sender.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
-            // Save paths in bulk to one json file
-            do {
-                // Get the current datetime as a string
-                let stringFromDate = Date().iso8601
+        if workflowIsSelected == false {
+            // Display error message
+            NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
+            
+        } else if fileTypeIsOk == false {
+            // Display error message
+            NotificationCenter.default.post(name: Notification.Name("unsupportedFileType"), object: nil)  // TODO not implemented
+            
+        } else {
+            // Process files
+        
+            if let board = sender.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
+                // Save paths in bulk to one json file
+                do {
+                    // Get the current datetime as a string
+                    let stringFromDate = Date().iso8601
                 
-                // Create SwiftyJSON object
-                let jsonObject: JSON = ["datetime start": stringFromDate,
-                                        "datetime end": "",
-                                        "workflow": Workflows.activeJsonFile,
-                                        "items": board]
+                    // Create SwiftyJSON object
+                    let jsonObject: JSON = ["datetime start": stringFromDate,
+                                            "datetime end": "",
+                                            "workflow": Workflows.activeJsonFile,
+                                            "items": board]
                 
-                // Convert SwiftyJSON object to string
-                let jsonString = jsonObject.description
-                //log.debug("jsonString: '\(jsonString)'")
+                    // Convert SwiftyJSON object to string
+                    let jsonString = jsonObject.description
                 
-                // Setup objects needed for directory and file access
-                let tempDir: URL = FileManager.default.temporaryDirectory
-                let filePath: URL = tempDir.appendingPathComponent("droppy_date_here.json")
+                    // Setup objects needed for directory and file access
+                    let tempDir: URL = FileManager.default.temporaryDirectory
+                    let filePath: URL = tempDir.appendingPathComponent("droppy_date_here.json")
                 
-                // Write json string to file, this overwrites a preexisting file here
-                try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
+                    // Write json string to file, this overwrites a preexisting file here
+                    try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
                 
-                // Send json file path to a function in ViewControler
-                ViewController().runScriptJson(path: filePath.path)
-            } catch {
-                log.error(error.localizedDescription)
+                    // Send json file path to a function in ViewControler
+                    ViewController().runScriptJson(path: filePath.path)
+                } catch {
+                    log.error(error.localizedDescription)
+                }
+                return true
             }
             return true
         }
-        return false
+        return true
     }
     
     func checkType(drag: NSDraggingInfo) -> Bool {
