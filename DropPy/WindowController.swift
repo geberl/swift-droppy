@@ -94,7 +94,7 @@ class WindowController: NSWindowController {
                 let workflowLogoFile: String = (Workflows.workflows[name]?["image"]!)!
                 log.debug("Workflow logo '\(workflowLogoFile)' is now active")
                 let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
-                Workflows.activeLogoFilePath = "\(userDir)\(Settings.baseFolder)Workflows/\(workflowLogoFile)"
+                Workflows.activeLogoFilePath = "\(userDir)/\(Settings.baseFolder)Workflows/\(workflowLogoFile)"
                 break
             }
         }
@@ -117,7 +117,7 @@ class WindowController: NSWindowController {
     func openFinder() {
         log.debug("Toolbar Action: Open")
         let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
-        NSWorkspace.shared().selectFile("\(userDir)\(Settings.baseFolder)Workflows/\(Workflows.activeJsonFile)",
+        NSWorkspace.shared().selectFile("\(userDir)/\(Settings.baseFolder)Workflows/\(Workflows.activeJsonFile)",
             inFileViewerRootedAtPath: "\(userDir)")
     }
     
@@ -127,7 +127,7 @@ class WindowController: NSWindowController {
             NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
         } else {
             let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
-            NSWorkspace.shared().openFile("\(userDir)\(Settings.baseFolder)Workflows/\(Workflows.activeJsonFile)",
+            NSWorkspace.shared().openFile("\(userDir)/\(Settings.baseFolder)Workflows/\(Workflows.activeJsonFile)",
                 withApplication: Settings.editor)
         }
     }

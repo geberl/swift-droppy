@@ -18,7 +18,7 @@ let log = Logger(configuration: configuration)
 
 // Settings object (with defaults)
 struct Settings {
-    static var baseFolder = "/DropPy/" as String
+    static var baseFolder = "DropPy/" as String
     static var file = "settings.json" as String
 
     static var frameworks = [String: Dictionary<String, String>]()
@@ -203,7 +203,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func reloadWorkflows() -> Bool {
         let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
-        let workflowDir = "\(userDir)\(Settings.baseFolder)Workflows"
+        let workflowDir = "\(userDir)/\(Settings.baseFolder)Workflows"
         log.debug("Reloading Workflows from '\(workflowDir)'")
 
         let fileManager = FileManager.default
@@ -244,19 +244,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if workflowsOld[name] != nil {
                 log.debug("Workflow '\(name)' was present before.")
                 if workflowsOld[name]?["file"] != workflowsNew[name]?["file"] {
-                    log.debug("Workflow '\(name)' file has changed, changes detected, exiting.")
+                    log.debug("Workflow '\(name)' file has changed, changes detected, reloading.")
                     return true
                 } else {
                     log.debug("Workflow '\(name)' file is identical.")
                 }
                 if workflowsOld[name]?["image"] != workflowsNew[name]?["image"] {
-                    log.debug("Workflow '\(name)' image has changed, changes detected, exiting.")
+                    log.debug("Workflow '\(name)' image has changed, changes detected, reloading.")
                     return true
                 } else {
                 log.debug("Workflow '\(name)' image is identical.")
                 }
             } else {
-                log.debug("Workflow '\(name) was NOT present before, changes detected, exiting.")
+                log.debug("Workflow '\(name) was NOT present before, changes detected, reloading.")
                 return true
             }
         }
@@ -266,7 +266,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if workflowsNew[name] != nil {
                 log.debug("Workflow '\(name)' is still present.")
             } else {
-                log.debug("Workflow '\(name)' was removed, changes detected, exiting.")
+                log.debug("Workflow '\(name)' was removed, changes detected, reloading.")
                 return true
             }
         }
