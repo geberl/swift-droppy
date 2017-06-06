@@ -24,13 +24,13 @@ struct Settings {
     static var frameworks = [String: Dictionary<String, String>]()
     static var editor = "TextEdit" as String
     
-    struct Window {
-        static var configName = "Default" as String
-        static var resolutionX = "not set" as String
-        static var resolutionY = "not set" as String
-        static var positionX = "not set" as String
-        static var positionY = "not set" as String
-    }
+    static var screenSizes = [String: Dictionary<String, String>]()
+    
+        //static var configName = "Default" as String
+        //static var resolutionX = "not set" as String
+        //static var resolutionY = "not set" as String
+        //static var positionX = "not set" as String
+        //static var positionY = "not set" as String
 }
 
 // Workflows object
@@ -50,8 +50,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-        self.getPosition()
+        // Get current window position
+        var positionX: Int
+        var positionY: Int
+        (positionX, positionY) = self.getPosition()
+        
+        // Get current screen size
+        var resolutionX: Int
+        var resolutionY: Int
+        (resolutionX, resolutionY) = getResolution()
+        
+        // Save the window position for this screen size to the Settings object
+        self.updatePosition(resolutionX: resolutionX, resolutionY: resolutionY, positionX: positionX, positionY: positionY)
+        
+        // Save all settings to file
         self.saveSettings()
+        
         log.enabled = false
     }
     
@@ -72,32 +86,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
     
-    func getPosition() {
-        guard let window = NSApplication.shared().windows.first else { return }
-        Settings.Window.positionX = String(format: "%.0f", window.frame.origin.x)
-        Settings.Window.positionY = String(format: "%.0f", window.frame.origin.y)
-        
-        log.debug(String(format: "Get Position: X: %.0f, Y: %.0f", window.frame.origin.x, window.frame.origin.y))
+    func getPosition() -> (Int, Int) {
+        let window = NSApplication.shared().windows.first
+        let positionX: Int =  Int(window!.frame.origin.x)
+        let positionY: Int = Int(window!.frame.origin.y)
+        log.debug("Get Position: X: \(positionX), Y: \(positionY)")
+        return (positionX, positionY)
     }
     
-    func printSettings() {
-        log.debug("Settings --------------")
-        log.debug("Base Folder: \(Settings.baseFolder)")
-        log.debug("File: \(Settings.file)")
-        log.debug("Editor: \(Settings.editor)")
-        log.debug("Window")
-        log.debug("  Config Name: \(Settings.Window.configName)")
-        log.debug("  Res X: \(Settings.Window.resolutionX), Res Y: \(Settings.Window.positionY)")
-        log.debug("  Pos X: \(Settings.Window.positionX), Pos Y: \(Settings.Window.positionY)")
-        log.debug("Frameworks: \(Settings.frameworks)")
-        log.debug("-----------------------")
+    func updatePosition(resolutionX: Int, resolutionY: Int, positionX: Int, positionY: Int) {
+        Settings.screenSizes["\(resolutionX)x\(resolutionY)"] = ["positionX": String(positionX),
+                                                                 "positionY": String(positionY)]
     }
 
-    func setPosition() {
-        let numberFormatter = NumberFormatter()
-        let position = NSPoint(x: numberFormatter.number(from: Settings.Window.positionX)!.intValue,
-                               y: numberFormatter.number(from: Settings.Window.positionY)!.intValue)
-        
+    func setPosition(positionX: Int, positionY: Int) {
+        let position = NSPoint(x: positionX, y: positionY)
         guard let window = NSApplication.shared().windows.first else { return }
         window.setFrameOrigin(position)
         
@@ -117,29 +120,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let data = try Data(contentsOf: URL(fileURLWithPath: strFilePath), options: .alwaysMapped)
                 let jsonObj = JSON(data: data)
                 if jsonObj != JSON.null {
-                    // Editor
+
+                    // User defined editor
                     if jsonObj["editor"] != JSON.null {
                         Settings.editor = jsonObj["editor"].stringValue
                     }
-                    
-                    // TODO load and apply the window position that corresponds with the currently active resolution x/y
-                    // leave all other resolutions in place
-                    // get rid of the configName, this is irrelevant
-                    //getResolution()
 
-                    
-                    // Just use the first configName for now, discard all others
-                    let allWindowConfigs = jsonObj["window"].dictionaryValue as Dictionary
-                    for (name, _):(String, JSON) in allWindowConfigs {
-                        Settings.Window.configName = name
-                        break
+                    // Window positions for screen sizes
+                    if jsonObj["screenSizes"] != JSON.null {
+                        Settings.screenSizes = jsonObj["screenSizes"].rawValue as! [String : Dictionary<String, String>]
+                        
+                        // Get current screen size
+                        var resolutionX: Int
+                        var resolutionY: Int
+                        (resolutionX, resolutionY) = getResolution()
+
+                        // Pick current window configurations for all screen sizes
+                        var screenSizeFound: Bool = false
+                        for (name, value):(String, Dictionary<String, String>) in Settings.screenSizes {
+                            if name == "\(resolutionX)x\(resolutionY)" {
+                                log.debug("Screen Size '\(resolutionX)x\(resolutionY)' found, loading window position.")
+                                self.setPosition(positionX: Int(value["positionX"]!)!,
+                                                 positionY: Int(value["positionY"]!)!)
+                                screenSizeFound = true
+                                break
+                            }
+                        }
+                        if screenSizeFound == false {
+                            log.debug("Screen Size '\(resolutionX)x\(resolutionY)' not found, loading default window position (centered).")
+                        }
+                    } else {
+                        log.debug("Config contains no screen sizes, loading default window position (centered).")
                     }
-                    Settings.Window.configName = "Dell external screen"
-                    Settings.Window.resolutionX = jsonObj["window"][Settings.Window.configName]["resolution x"].stringValue
-                    Settings.Window.resolutionY = jsonObj["window"][Settings.Window.configName]["resolution y"].stringValue
-                    Settings.Window.positionX = jsonObj["window"][Settings.Window.configName]["position x"].stringValue
-                    Settings.Window.positionY = jsonObj["window"][Settings.Window.configName]["position y"].stringValue
-                    
+
                     let allFrameworks = jsonObj["frameworks"].dictionaryValue as Dictionary
                     for (name, paramsJson):(String, JSON) in allFrameworks {
                         Settings.frameworks[name] = [String: String]()
@@ -148,9 +161,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                             Settings.frameworks[name]?[param] = value.stringValue
                         }
                     }
-                    
-                    //printSettings()
-                    setPosition()
+
                 } else {
                     log.error("Could not get json from file, make sure that file contains valid json.")
                 }
@@ -162,30 +173,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func getResolution() {
+    func getResolution() -> (Int, Int) {
         let scrn: NSScreen = NSScreen.main()!
         let rect: NSRect = scrn.frame
         let height = rect.size.height
         let width = rect.size.width
         log.debug(String(format: "Resolution: X: %.0f, Y: %.0f", height, width))
+        return (Int(height), Int(width))
     }
     
     func saveSettings() {
         log.debug("Saving settings")
-        
+
         // Create SwiftyJSON object from the values that should be saved
-        var jsonObject: JSON = ["window": [Settings.Window.configName: ["resolution x": Settings.Window.resolutionX,
-                                                                        "resolution y": Settings.Window.resolutionY,
-                                                                        "position x": Settings.Window.positionX,
-                                                                        "position y": Settings.Window.positionY]],
-                                "frameworks": Settings.frameworks
-        ]
-        
-        // Only save editor if value is non-default
-        if Settings.editor != "TextEdit" {
-            jsonObject["editor"].stringValue = Settings.editor
-        }
-        
+        let jsonObject: JSON = ["editor": Settings.editor,
+                                "screenSizes": Settings.screenSizes,
+                                "frameworks": Settings.frameworks]
+  
         // Convert SwiftyJSON object to string
         let jsonString = jsonObject.description
 
@@ -193,7 +197,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let userDir: URL = FileManager.default.homeDirectoryForCurrentUser
         let filePath: URL = userDir.appendingPathComponent("\(Settings.baseFolder)\(Settings.file)")
         
-        // Write json string to file, this overwrites a preexisting file here
+        // Write json string to file, this overwrites a preexisting file at this location
         do {
             try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
         } catch let error {
