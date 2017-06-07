@@ -187,9 +187,10 @@ class WindowController: NSWindowController {
     }
     
     func unupportedType(notification: Notification) {
+        // TODO support more types
         let alert = NSAlert()
         alert.messageText = "Error: Unsupported Type"
-        alert.informativeText = "The item you dropped doesn't support the types of your selected Workflow:\n\n\(Workflows.activeAccepts)"
+        alert.informativeText = "The item you dropped doesn't support the types of your selected Workflow: \(Workflows.activeAccepts)\n\nDropPy itself currently only supports the 'filename' type."
         alert.icon = NSImage(named: "LogoError")
         alert.runModal()
     }
