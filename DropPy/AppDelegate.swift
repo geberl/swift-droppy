@@ -35,9 +35,9 @@ struct Settings {
 
 // Workflows object
 struct Workflows {
-    static var workflows = [String: Dictionary<String, String>]()
+    static var workflows = [String: Dictionary<String, Any>]()
     static var activeName = "" as String
-    static var activeAccepts = "" as String
+    static var activeAccepts = [] as Array<String>
     static var activeJsonFile = "" as String
     static var activeLogoFilePath = "" as String
 }
@@ -75,7 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let changesDetected: Bool = self.reloadWorkflows()
         if changesDetected {
             Workflows.activeName = ""
-            Workflows.activeAccepts = ""
+            Workflows.activeAccepts = []
             Workflows.activeJsonFile = ""
             Workflows.activeLogoFilePath = ""
             NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
@@ -215,7 +215,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let fileManager = FileManager.default
         let enumerator: FileManager.DirectoryEnumerator = fileManager.enumerator(atPath: workflowDir)!
         
-        var workflowsTemp = [String: Dictionary<String, String>]()
+        var workflowsTemp = [String: Dictionary<String, Any>]()
         
         while let element = enumerator.nextObject() as? String {
             if element.hasSuffix("json") {
@@ -226,7 +226,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         workflowsTemp[jsonObj["name"].stringValue] = [String: String]()
                         workflowsTemp[jsonObj["name"].stringValue]?["image"] = jsonObj["image"].stringValue
                         workflowsTemp[jsonObj["name"].stringValue]?["file"] = element
-                        workflowsTemp[jsonObj["name"].stringValue]?["accepts"] = jsonObj["accepts"].stringValue
+                        workflowsTemp[jsonObj["name"].stringValue]?["accepts"] = jsonObj["accepts"].arrayObject
                     }
                 } catch let error {
                     log.error(error.localizedDescription)
@@ -243,29 +243,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func workflowsChanged(workflowsNew: [String: Dictionary<String, String>],
-                          workflowsOld: [String: Dictionary<String, String>]) -> Bool {
+    func workflowsChanged(workflowsNew: [String: Dictionary<String, Any>],
+                          workflowsOld: [String: Dictionary<String, Any>]) -> Bool {
         
         // Check for added and edited workflows (one-way)
-        for (name, _):(String, Dictionary<String, String>) in workflowsNew {
+        for (name, _):(String, Dictionary<String, Any>) in workflowsNew {
             if workflowsOld[name] != nil {
                 log.debug("Workflow '\(name)' was present before.")
                 
-                if workflowsOld[name]?["file"] != workflowsNew[name]?["file"] {
+                if workflowsOld[name]?["file"] as! String != workflowsNew[name]?["file"] as! String {
                     log.debug("Workflow '\(name)' file has changed, changes detected, reloading.")
                     return true
                 } else {
                     log.debug("Workflow '\(name)' file is identical.")
                 }
                 
-                if workflowsOld[name]?["image"] != workflowsNew[name]?["image"] {
+                if workflowsOld[name]?["image"] as! String != workflowsNew[name]?["image"] as! String {
                     log.debug("Workflow '\(name)' image has changed, changes detected, reloading.")
                     return true
                 } else {
                 log.debug("Workflow '\(name)' image is identical.")
                 }
                 
-                if workflowsOld[name]?["accepts"] != workflowsNew[name]?["accepts"] {
+                if workflowsOld[name]?["accepts"] as! Array<String> != workflowsNew[name]?["accepts"] as! Array<String> {
                     log.debug("Workflow '\(name)' accepted objects have changed, changes detected, reloading.")
                     return true
                 } else {
@@ -278,7 +278,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         // Check for removed workflows (the-other-way)
-        for (name, _):(String, Dictionary<String, String>) in workflowsOld {
+        for (name, _):(String, Dictionary<String, Any>) in workflowsOld {
             if workflowsNew[name] != nil {
                 log.debug("Workflow '\(name)' is still present.")
             } else {

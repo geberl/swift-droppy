@@ -35,6 +35,10 @@ class WindowController: NSWindowController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowController.actionOnEmptyWorkflow(notification:)),
                                                name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(WindowController.unupportedType(notification:)),
+                                               name: Notification.Name("unsupportedType"), object: nil)
     }
     
     func refreshToolbarDropdown(notification: Notification){
@@ -68,7 +72,7 @@ class WindowController: NSWindowController {
         Workflows.activeJsonFile = ""
         Workflows.activeLogoFilePath = ""
         Workflows.activeName = ""
-        Workflows.activeAccepts = ""
+        Workflows.activeAccepts = []
 
         NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
     }
@@ -80,20 +84,20 @@ class WindowController: NSWindowController {
         Workflows.activeName = self.getSelectedWorkflow()
         
         // Rest from Workflows.workflows object
-        for (name, _):(String, Dictionary<String, String>) in Workflows.workflows {
+        for (name, _):(String, Dictionary<String, Any>) in Workflows.workflows {
             if name == Workflows.activeName {
-                let workflowJsonFile: String = (Workflows.workflows[name]?["file"]!)!
+                let workflowJsonFile: String = Workflows.workflows[name]?["file"] as! String
                 log.debug("Workflow definition '\(workflowJsonFile)' is now active")
                 Workflows.activeJsonFile = workflowJsonFile
                 
-                let workflowLogoFile: String = (Workflows.workflows[name]?["image"]!)!
+                let workflowLogoFile: String = Workflows.workflows[name]?["image"] as! String
                 log.debug("Workflow logo '\(workflowLogoFile)' is now active")
                 let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
                 Workflows.activeLogoFilePath = "\(userDir)/\(Settings.baseFolder)Workflows/\(workflowLogoFile)"
                 
-                let workflowAccepts: String = (Workflows.workflows[name]?["accepts"]!)!
+                let workflowAccepts: Array = Workflows.workflows[name]!["accepts"] as! Array<String>
                 Workflows.activeAccepts = workflowAccepts
-                
+
                 break
             }
         }
@@ -148,7 +152,7 @@ class WindowController: NSWindowController {
                                     "description": "A short description what this Workflow does. Currently not accessed by DropPy. For now just for your own documentation purposes.",
                                     "image": "",
                                     "executable": "Python 3",
-                                    "accepts": "", // TODO choose sensible default
+                                    "accepts": ["file", "url"],
                                     "tasks": []]
         
             // Convert SwiftyJSON object to string
@@ -164,7 +168,7 @@ class WindowController: NSWindowController {
             // Update global Workflow object
             Workflows.activeJsonFile = workflowFileName
             Workflows.activeName = workflowName
-            Workflows.activeAccepts = ""
+            Workflows.activeAccepts = ["file", "url"]
             Workflows.activeLogoFilePath = ""
         
             // Open new file in editor
@@ -178,6 +182,14 @@ class WindowController: NSWindowController {
         let alert = NSAlert()
         alert.messageText = "Error: No Workflow selected"
         alert.informativeText = "You can't perform this action when no Workflow is selected.\n\nSelect a Workflow from the dropdown and try again."
+        alert.icon = NSImage(named: "LogoError")
+        alert.runModal()
+    }
+    
+    func unupportedType(notification: Notification) {
+        let alert = NSAlert()
+        alert.messageText = "Error: Unsupported Type"
+        alert.informativeText = "The item you dropped doesn't support the types of your selected Workflow:\n\n\(Workflows.activeAccepts)"
         alert.icon = NSImage(named: "LogoError")
         alert.runModal()
     }
