@@ -1,5 +1,5 @@
 //
-//  WindowController.swift
+//  WindowControllerMain.swift
 //  DropPy
 //
 //  Created by Günther Eberl on 04.06.17.
@@ -11,7 +11,7 @@ import SwiftyJSON
 
 
 
-class WindowController: NSWindowController {
+class WindowControllerMain: NSWindowController {
     
     @IBOutlet weak var ToolbarDropdown: NSMenu!
     
@@ -29,15 +29,15 @@ class WindowController: NSWindowController {
 
     override func windowWillLoad() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowController.refreshToolbarDropdown(notification:)),
+                                               selector: #selector(WindowControllerMain.refreshToolbarDropdown(notification:)),
                                                name: Notification.Name("workflowsChanged"), object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowController.actionOnEmptyWorkflow(notification:)),
+                                               selector: #selector(WindowControllerMain.actionOnEmptyWorkflow(notification:)),
                                                name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowController.unupportedType(notification:)),
+                                               selector: #selector(WindowControllerMain.unupportedType(notification:)),
                                                name: Notification.Name("unsupportedType"), object: nil)
     }
     

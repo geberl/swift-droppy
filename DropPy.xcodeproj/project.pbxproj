@@ -16,8 +16,9 @@
 		A46393381E8FDA40000C7BDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46393361E8FDA40000C7BDB /* Main.storyboard */; };
 		A46393431E8FDA40000C7BDB /* DropPyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393421E8FDA40000C7BDB /* DropPyTests.swift */; };
 		A463934E1E8FDA40000C7BDB /* DropPyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A463934D1E8FDA40000C7BDB /* DropPyUITests.swift */; };
-		A4E7828A1EE3EF7000B81971 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E782891EE3EF7000B81971 /* WindowController.swift */; };
+		A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */; };
 		A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E8DF931EDAA29100D12029 /* DragDropView.swift */; };
+		A4FA76891EEA60AD00D00769 /* WindowControllerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FA76881EEA60AD00D00769 /* WindowControllerPrefs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +59,9 @@
 		A46393491E8FDA40000C7BDB /* DropPyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DropPyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A463934D1E8FDA40000C7BDB /* DropPyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropPyUITests.swift; sourceTree = "<group>"; };
 		A463934F1E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A4E782891EE3EF7000B81971 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
+		A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerMain.swift; sourceTree = "<group>"; };
 		A4E8DF931EDAA29100D12029 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
+		A4FA76881EEA60AD00D00769 /* WindowControllerPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerPrefs.swift; sourceTree = "<group>"; };
 		FAC7B670493565E826211E5E /* Pods-DropPyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -145,7 +147,8 @@
 				A46393361E8FDA40000C7BDB /* Main.storyboard */,
 				A46393391E8FDA40000C7BDB /* Info.plist */,
 				A4E8DF931EDAA29100D12029 /* DragDropView.swift */,
-				A4E782891EE3EF7000B81971 /* WindowController.swift */,
+				A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */,
+				A4FA76881EEA60AD00D00769 /* WindowControllerPrefs.swift */,
 			);
 			path = DropPy;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				TargetAttributes = {
 					A463932C1E8FDA40000C7BDB = {
 						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = QEZ83PUW72;
 						ProvisioningStyle = Automatic;
 					};
 					A463933D1E8FDA40000C7BDB = {
@@ -449,7 +453,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A46393331E8FDA40000C7BDB /* ViewController.swift in Sources */,
-				A4E7828A1EE3EF7000B81971 /* WindowController.swift in Sources */,
+				A4FA76891EEA60AD00D00769 /* WindowControllerPrefs.swift in Sources */,
+				A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,
 				A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */,
 			);
@@ -595,12 +600,15 @@
 			baseConfigurationReference = 68ED04C44A3C0DA13B567FE6 /* Pods-DropPy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = QEZ83PUW72;
 				INFOPLIST_FILE = DropPy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.DropPy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.droppy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -610,12 +618,15 @@
 			baseConfigurationReference = 175281C69A362641429AC739 /* Pods-DropPy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = QEZ83PUW72;
 				INFOPLIST_FILE = DropPy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.DropPy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.droppy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
