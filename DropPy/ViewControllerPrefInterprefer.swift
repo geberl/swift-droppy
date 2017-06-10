@@ -12,7 +12,7 @@ class ViewControllerPrefInterprefer: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        print(123)
     }
     
 }

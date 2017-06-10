@@ -10,8 +10,9 @@
 		71B8BCA7F40CE38196922DF3 /* Pods_DropPy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8077B363D66782A696F40634 /* Pods_DropPy.framework */; };
 		80CA1BB5837067B42B265BBB /* Pods_DropPyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1965F5303BF80DC5E7FB52 /* Pods_DropPyUITests.framework */; };
 		9519A5BC9F474570AD0068EE /* Pods_DropPyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 497C418422CF2B2058F90C8E /* Pods_DropPyTests.framework */; };
+		A44061411EEBBB9900CD8AB4 /* ViewControllerPrefInterprefer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44061401EEBBB9900CD8AB4 /* ViewControllerPrefInterprefer.swift */; };
 		A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393301E8FDA40000C7BDB /* AppDelegate.swift */; };
-		A46393331E8FDA40000C7BDB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393321E8FDA40000C7BDB /* ViewController.swift */; };
+		A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393321E8FDA40000C7BDB /* ViewControllerMain.swift */; };
 		A46393351E8FDA40000C7BDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A46393341E8FDA40000C7BDB /* Assets.xcassets */; };
 		A46393381E8FDA40000C7BDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46393361E8FDA40000C7BDB /* Main.storyboard */; };
 		A46393431E8FDA40000C7BDB /* DropPyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393421E8FDA40000C7BDB /* DropPyTests.swift */; };
@@ -47,9 +48,10 @@
 		68ED04C44A3C0DA13B567FE6 /* Pods-DropPy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPy/Pods-DropPy.debug.xcconfig"; sourceTree = "<group>"; };
 		8077B363D66782A696F40634 /* Pods_DropPy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		904F9E47AA41C35056094C52 /* Pods-DropPyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyTests/Pods-DropPyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A44061401EEBBB9900CD8AB4 /* ViewControllerPrefInterprefer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerPrefInterprefer.swift; sourceTree = "<group>"; };
 		A463932D1E8FDA40000C7BDB /* DropPy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropPy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A46393301E8FDA40000C7BDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A46393321E8FDA40000C7BDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A46393321E8FDA40000C7BDB /* ViewControllerMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerMain.swift; sourceTree = "<group>"; };
 		A46393341E8FDA40000C7BDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A46393371E8FDA40000C7BDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A46393391E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -142,13 +144,14 @@
 			isa = PBXGroup;
 			children = (
 				A46393301E8FDA40000C7BDB /* AppDelegate.swift */,
-				A46393321E8FDA40000C7BDB /* ViewController.swift */,
+				A46393321E8FDA40000C7BDB /* ViewControllerMain.swift */,
 				A46393341E8FDA40000C7BDB /* Assets.xcassets */,
 				A46393361E8FDA40000C7BDB /* Main.storyboard */,
 				A46393391E8FDA40000C7BDB /* Info.plist */,
 				A4E8DF931EDAA29100D12029 /* DragDropView.swift */,
 				A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */,
 				A4FA76881EEA60AD00D00769 /* WindowControllerPrefs.swift */,
+				A44061401EEBBB9900CD8AB4 /* ViewControllerPrefInterprefer.swift */,
 			);
 			path = DropPy;
 			sourceTree = "<group>";
@@ -452,7 +455,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A46393331E8FDA40000C7BDB /* ViewController.swift in Sources */,
+				A44061411EEBBB9900CD8AB4 /* ViewControllerPrefInterprefer.swift in Sources */,
+				A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */,
 				A4FA76891EEA60AD00D00769 /* WindowControllerPrefs.swift in Sources */,
 				A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,

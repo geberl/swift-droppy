@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G12b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
@@ -98,7 +98,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="DropPy" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="74" y="-155"/>
+            <point key="canvasLocation" x="76" y="-122"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -179,49 +179,24 @@
         <scene sceneID="YvH-dP-yfa">
             <objects>
                 <windowController id="niN-ne-by4" customClass="WindowControllerPrefs" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="kFP-FX-so0">
+                    <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="kFP-FX-so0">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
                         <rect key="contentRect" x="694" y="443" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
-                        <toolbar key="toolbar" implicitIdentifier="9CEBEDA8-9E98-4096-A918-7EDB90459180" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="hry-UN-Qt7">
-                            <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="2MZ-Fz-ase"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="hYk-ZF-Xnt"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="Hvp-hi-pnl"/>
-                            </allowedToolbarItems>
-                            <defaultToolbarItems>
-                                <toolbarItem reference="2MZ-Fz-ase"/>
-                                <toolbarItem reference="hYk-ZF-Xnt"/>
-                                <toolbarItem reference="Hvp-hi-pnl"/>
-                            </defaultToolbarItems>
-                        </toolbar>
                     </window>
                     <connections>
-                        <segue destination="4ZF-cK-lfT" kind="relationship" relationship="window.shadowedContentViewController" id="Zlf-rF-fjr"/>
+                        <segue destination="hLe-dA-CaL" kind="relationship" relationship="window.shadowedContentViewController" id="kQG-qA-h05"/>
                     </connections>
                 </windowController>
                 <customObject id="tDp-Kj-4uw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="548" y="250"/>
+            <point key="canvasLocation" x="641" y="227"/>
         </scene>
-        <!--Settings-->
-        <scene sceneID="hmg-O6-Fqn">
-            <objects>
-                <viewController title="Settings" id="4ZF-cK-lfT" sceneMemberID="viewController">
-                    <view key="view" id="L1A-Rc-hkm">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
-                <customObject id="Dve-vF-RN6" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="548" y="705"/>
-        </scene>
-        <!--View Controller-->
+        <!--View Controller Main-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewControllerMain" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -251,12 +226,139 @@
             </objects>
             <point key="canvasLocation" x="75" y="698.5"/>
         </scene>
+        <!--Tab View Controller-->
+        <scene sceneID="adP-dS-MaB">
+            <objects>
+                <tabViewController selectedTabViewItemIndex="0" tabStyle="toolbar" canPropagateSelectedChildViewControllerTitle="NO" id="hLe-dA-CaL" sceneMemberID="viewController">
+                    <tabViewItems>
+                        <tabViewItem label="General" identifier="" image="NSPreferencesGeneral" id="So6-r5-lNJ"/>
+                        <tabViewItem label="Interpreter" identifier="" image="NSAdvanced" id="II6-UH-hj9"/>
+                        <tabViewItem label="Editor" image="NSFontPanel" id="JHB-pG-KN0"/>
+                        <tabViewItem label="Workspace" image="NSFolder" id="6Mu-v5-RHq"/>
+                    </tabViewItems>
+                    <tabView key="tabView" misplaced="YES" type="noTabsNoBorder" id="aWf-He-5X5">
+                        <rect key="frame" x="-259" y="0.0" width="750" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <font key="font" metaFont="system"/>
+                        <tabViewItems/>
+                    </tabView>
+                    <connections>
+                        <segue destination="F1A-We-v2b" kind="relationship" relationship="tabItems" id="aRW-6P-EsD"/>
+                        <segue destination="JY6-k0-QsS" kind="relationship" relationship="tabItems" id="sU2-xR-9iB"/>
+                        <segue destination="b3V-Ji-Eo7" kind="relationship" relationship="tabItems" id="RE4-0y-oJM"/>
+                        <segue destination="Rku-20-kef" kind="relationship" relationship="tabItems" id="C7j-XL-JbK"/>
+                    </connections>
+                </tabViewController>
+                <customObject id="mYv-xd-br0" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="641" y="705"/>
+        </scene>
+        <!--General-->
+        <scene sceneID="8G7-ea-auJ">
+            <objects>
+                <viewController title="General" id="F1A-We-v2b" sceneMemberID="viewController">
+                    <view key="view" id="c5X-MK-dK9">
+                        <rect key="frame" x="0.0" y="0.0" width="750" height="200"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l6u-cA-0x6">
+                                <rect key="frame" x="135" y="111" width="37" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="a" id="OOg-GO-K2y">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="JDo-od-sS7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1507" y="314"/>
+        </scene>
+        <!--Interpreter-->
+        <scene sceneID="VZ1-6h-2Mf">
+            <objects>
+                <viewController title="Interpreter" id="JY6-k0-QsS" sceneMemberID="viewController">
+                    <view key="view" id="K2n-qM-FsO">
+                        <rect key="frame" x="0.0" y="0.0" width="750" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUM-JM-MYr">
+                                <rect key="frame" x="284" y="141" width="37" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="b" id="a4F-Bm-NBE">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="KaZ-OO-Czj" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1507" y="616"/>
+        </scene>
+        <!--Editor-->
+        <scene sceneID="t4N-Ae-kE9">
+            <objects>
+                <viewController title="Editor" id="b3V-Ji-Eo7" sceneMemberID="viewController">
+                    <view key="view" id="gAQ-hf-nhM">
+                        <rect key="frame" x="0.0" y="0.0" width="750" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9D-GU-35N">
+                                <rect key="frame" x="493" y="227" width="37" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="c" id="PCY-L2-Hd4">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="Uj5-Dd-JPI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1507" y="972"/>
+        </scene>
+        <!--Workspace-->
+        <scene sceneID="yXr-dD-njz">
+            <objects>
+                <viewController title="Workspace" id="Rku-20-kef" sceneMemberID="viewController">
+                    <view key="view" id="mPk-kS-pPH">
+                        <rect key="frame" x="0.0" y="0.0" width="750" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJX-m9-tid">
+                                <rect key="frame" x="181" y="193" width="37" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="d" id="WVz-TO-awg">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="L72-c6-iBf" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1507" y="1327"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ButtonAdd" width="19" height="19"/>
         <image name="ButtonEdit" width="19" height="19"/>
         <image name="ButtonFolder" width="19" height="19"/>
         <image name="Logo" width="128" height="128"/>
+        <image name="NSAdvanced" width="32" height="32"/>
+        <image name="NSFolder" width="32" height="32"/>
+        <image name="NSFontPanel" width="32" height="32"/>
+        <image name="NSPreferencesGeneral" width="32" height="32"/>
         <image name="ZoneDashed" width="256" height="256"/>
     </resources>
 </document>
