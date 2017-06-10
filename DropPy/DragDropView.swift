@@ -114,7 +114,7 @@ class DragDropView: NSView {
                     try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
                 
                     // Send json file path to a function in ViewControler
-                    ViewController().runScriptJson(path: filePath.path)
+                    ViewControllerMain().runScriptJson(path: filePath.path)
                 } catch {
                     log.error(error.localizedDescription)
                 }

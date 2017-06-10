@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ViewControllerMain.swift
 //  DropPy
 //
 //  Created by Günther Eberl on 01.04.17.
@@ -9,7 +9,7 @@
 import Cocoa
 
 
-class ViewController: NSViewController {
+class ViewControllerMain: NSViewController {
     
     @IBOutlet weak var logoImage: NSImageCell!
     @IBOutlet weak var zoneImage: NSImageCell!
@@ -18,42 +18,42 @@ class ViewController: NSViewController {
         super.viewWillAppear()
     
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewController.setZoneLine(notification:)),
+                                               selector: #selector(ViewControllerMain.setZoneLine(notification:)),
                                                name: Notification.Name("draggingEnteredOk"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewController.setZoneDashed(notification:)),
+                                               selector: #selector(ViewControllerMain.setZoneDashed(notification:)),
                                                name: Notification.Name("draggingExited"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewController.setZoneDashed(notification:)),
+                                               selector: #selector(ViewControllerMain.setZoneDashed(notification:)),
                                                name: Notification.Name("draggingEnded"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewController.setLogo(notification:)),
+                                               selector: #selector(ViewControllerMain.setLogo(notification:)),
                                                name: Notification.Name("draggingExited"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewController.setLogo(notification:)),
+                                               selector: #selector(ViewControllerMain.setLogo(notification:)),
                                                name: Notification.Name("draggingEnded"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewController.setLogo(notification:)),
+                                               selector: #selector(ViewControllerMain.setLogo(notification:)),
                                                name: Notification.Name("workflowSelectionChanged"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewController.setZoneLogoError(notification:)),
+                                               selector: #selector(ViewControllerMain.setZoneLogoError(notification:)),
                                                name: Notification.Name("draggingEnteredNoWorkflowSelected"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewController.setZoneLogoError(notification:)),
+                                               selector: #selector(ViewControllerMain.setZoneLogoError(notification:)),
                                                name: Notification.Name("draggingUpdatedNoWorkflowSelected"),
                                                object: nil)
     }
