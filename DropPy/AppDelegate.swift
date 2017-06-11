@@ -83,6 +83,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Actually quit the application when the user closes the window
         return true
     }
+
+    lazy var preferencesWindowController: PreferencesWindowController  = {
+        let wcSB = NSStoryboard(name: "Preferences", bundle: Bundle.main)
+        return wcSB.instantiateInitialController() as! PreferencesWindowController
+    }()
+    
+    @IBAction func showPreferencesWindow(_ sender: Any) {
+        self.preferencesWindowController.showWindow(self)
+    }
     
     func getPosition() -> (Int, Int) {
         let window = NSApplication.shared().windows.first
