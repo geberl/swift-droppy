@@ -354,7 +354,7 @@
         <image name="ButtonAdd" width="19" height="19"/>
         <image name="ButtonEdit" width="19" height="19"/>
         <image name="ButtonFolder" width="19" height="19"/>
-        <image name="Logo" width="128" height="128"/>
+        <image name="Logo" width="256" height="256"/>
         <image name="NSAdvanced" width="32" height="32"/>
         <image name="NSFolder" width="32" height="32"/>
         <image name="NSFontPanel" width="32" height="32"/>

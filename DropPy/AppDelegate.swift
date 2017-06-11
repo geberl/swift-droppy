@@ -20,23 +20,17 @@ let log = Logger(configuration: configuration)
 struct Settings {
     static var baseFolder = "DropPy/" as String
     static var file = "settings.json" as String
-
-    static var frameworks = [String: Dictionary<String, String>]()
+    static var interpreters = [String: Dictionary<String, String>]()
     static var editor = "TextEdit" as String
-    
     static var screenSizes = [String: Dictionary<String, String>]()
-    
-        //static var configName = "Default" as String
-        //static var resolutionX = "not set" as String
-        //static var resolutionY = "not set" as String
-        //static var positionX = "not set" as String
-        //static var positionY = "not set" as String
 }
 
 // Workflows object
 struct Workflows {
     static var workflows = [String: Dictionary<String, Any>]()
+    
     static var activeName = "" as String
+    static var activeInterpreterName = "" as String
     static var activeAccepts = [] as Array<String>
     static var activeJsonFile = "" as String
     static var activeLogoFilePath = "" as String
@@ -75,6 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let changesDetected: Bool = self.reloadWorkflows()
         if changesDetected {
             Workflows.activeName = ""
+            Workflows.activeInterpreterName = ""
             Workflows.activeAccepts = []
             Workflows.activeJsonFile = ""
             Workflows.activeLogoFilePath = ""
@@ -128,7 +123,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         Settings.editor = jsonObj["editor"].stringValue
                     }
 
-                    // Window positions for screen sizes
+                    // Window positions for all screen sizes
                     if jsonObj["screenSizes"] != JSON.null {
                         Settings.screenSizes = jsonObj["screenSizes"].rawValue as! [String : Dictionary<String, String>]
                         
@@ -137,7 +132,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         var resolutionY: Int
                         (resolutionX, resolutionY) = getResolution()
 
-                        // Pick current window configurations for all screen sizes
+                        // Pick current window configurations for all screen sizes (if available)
                         var screenSizeFound: Bool = false
                         for (name, value):(String, Dictionary<String, String>) in Settings.screenSizes {
                             if name == "\(resolutionX)x\(resolutionY)" {
@@ -155,12 +150,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         log.debug("Config contains no screen sizes, loading default window position (centered).")
                     }
 
-                    let allFrameworks = jsonObj["frameworks"].dictionaryValue as Dictionary
-                    for (name, paramsJson):(String, JSON) in allFrameworks {
-                        Settings.frameworks[name] = [String: String]()
+                    // Interpreters
+                    let allInterpreters = jsonObj["interpreters"].dictionaryValue as Dictionary
+                    for (name, paramsJson):(String, JSON) in allInterpreters {
+                        Settings.interpreters[name] = [String: String]()
                         let params = paramsJson.dictionaryValue as Dictionary
                         for (param, value):(String, JSON) in params {
-                            Settings.frameworks[name]?[param] = value.stringValue
+                            Settings.interpreters[name]?[param] = value.stringValue
                         }
                     }
 
@@ -190,7 +186,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Create SwiftyJSON object from the values that should be saved
         let jsonObject: JSON = ["editor": Settings.editor,
                                 "screenSizes": Settings.screenSizes,
-                                "frameworks": Settings.frameworks]
+                                "interpreters": Settings.interpreters]
   
         // Convert SwiftyJSON object to string
         let jsonString = jsonObject.description
@@ -227,6 +223,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         workflowsTemp[jsonObj["name"].stringValue]?["image"] = jsonObj["image"].stringValue
                         workflowsTemp[jsonObj["name"].stringValue]?["file"] = element
                         workflowsTemp[jsonObj["name"].stringValue]?["accepts"] = jsonObj["accepts"].arrayObject
+                        workflowsTemp[jsonObj["name"].stringValue]?["interpreterName"] = jsonObj["interpreterName"].stringValue
                     }
                 } catch let error {
                     log.error(error.localizedDescription)
@@ -263,6 +260,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     return true
                 } else {
                 log.debug("Workflow '\(name)' image is identical.")
+                }
+                
+                if workflowsOld[name]?["interpreterName"] as! String != workflowsNew[name]?["interpreterName"] as! String {
+                    log.debug("Workflow '\(name)' interpreterName has changed, changes detected, reloading.")
+                    return true
+                } else {
+                    log.debug("Workflow '\(name)' interpreterName is identical.")
                 }
                 
                 if workflowsOld[name]?["accepts"] as! Array<String> != workflowsNew[name]?["accepts"] as! Array<String> {

@@ -70,6 +70,7 @@ class WindowControllerMain: NSWindowController {
     
     func selectEmptyWorkflow() {
         Workflows.activeJsonFile = ""
+        Workflows.activeInterpreterName = ""
         Workflows.activeLogoFilePath = ""
         Workflows.activeName = ""
         Workflows.activeAccepts = []
@@ -87,16 +88,21 @@ class WindowControllerMain: NSWindowController {
         for (name, _):(String, Dictionary<String, Any>) in Workflows.workflows {
             if name == Workflows.activeName {
                 let workflowJsonFile: String = Workflows.workflows[name]?["file"] as! String
-                log.debug("Workflow definition '\(workflowJsonFile)' is now active")
+                log.debug("Workflow definition '\(workflowJsonFile)' is now active.")
                 Workflows.activeJsonFile = workflowJsonFile
                 
                 let workflowLogoFile: String = Workflows.workflows[name]?["image"] as! String
-                log.debug("Workflow logo '\(workflowLogoFile)' is now active")
+                log.debug("Workflow logo '\(workflowLogoFile)' is now active.")
                 let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
                 Workflows.activeLogoFilePath = "\(userDir)/\(Settings.baseFolder)Workflows/\(workflowLogoFile)"
                 
                 let workflowAccepts: Array = Workflows.workflows[name]!["accepts"] as! Array<String>
+                log.debug("Workflow accepts '\(workflowAccepts)' for drag & drop.")
                 Workflows.activeAccepts = workflowAccepts
+                
+                let workflowInterpreterName: String = Workflows.workflows[name]?["interpreterName"] as! String
+                log.debug("Workflow will use the interpreter named '\(workflowInterpreterName)'.")
+                Workflows.activeInterpreterName = workflowInterpreterName
 
                 break
             }
@@ -145,13 +151,14 @@ class WindowControllerMain: NSWindowController {
             // Determine Workflow name (for inside the JSON file) and the JSON file's filename.
             let workflowName: String = "New Workflow \(stringFromDate)"
             let workflowFileName: String = "new_workflow_\(stringFromDate).json"
+            let workflowInterpreterName: String = "default"
         
             // Create SwiftyJSON object
             let jsonObject: JSON = ["name": workflowName,
                                     "author": "Your name here",
                                     "description": "A short description what this Workflow does. Currently not accessed by DropPy. For now just for your own documentation purposes.",
                                     "image": "",
-                                    "executable": "Python 3",
+                                    "interpreterName": workflowInterpreterName,
                                     "accepts": ["file", "url"],
                                     "tasks": []]
         
@@ -166,6 +173,7 @@ class WindowControllerMain: NSWindowController {
             try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
 
             // Update global Workflow object
+            Workflows.activeInterpreterName = workflowInterpreterName
             Workflows.activeJsonFile = workflowFileName
             Workflows.activeName = workflowName
             Workflows.activeAccepts = ["file", "url"]

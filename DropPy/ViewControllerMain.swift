@@ -122,37 +122,28 @@ class ViewControllerMain: NSViewController {
     }
     
     func runScriptJson(path: String) {
-        // Run python script through interpreter
-        // Passing -B to not get a __pycache__folder, the full path to executor.py and the full path to the json file
+        // On default passing -B to not get a __pycache__folder, the full path to run.py and the full path to the json file
         // The final output of the command is empty, no point in printing it to the log, the piped messages already are printed
         
-        //let commandOutput = executeCommand(command: "/bin/echo", args: ["Hello, I am here!"])
-        //let commandOutput = executeCommand(command: "/bin/cp", args: [path, path + ".bak"])
-        //log.debug("Command Outout: \(commandOutput)")
-        
-        let framework = "Python 3"
+        // Check if the workflow's set interpreter is present in the settings object
+        if Settings.interpreters[Workflows.activeInterpreterName] != nil {
+            log.debug("Interpreter '\(Workflows.activeInterpreterName)' found")
 
-        if Settings.frameworks[framework] != nil {
-            log.debug("Framework '\(framework)' found")
-
-            let interpreter: String = Settings.frameworks[framework]!["interpreter"]!
-            let interpreterArgs: String = Settings.frameworks[framework]!["interpreter args"]!
-            
-            let runner: String = Settings.frameworks[framework]!["runner"]!
-            let userDir: URL = FileManager.default.homeDirectoryForCurrentUser
-            let runnerPath: URL = userDir.appendingPathComponent("\(Settings.baseFolder)\(framework)/\(runner)")
-            let strRunnerPath: String = runnerPath.path
-            
-            var runnerArgs: String = Settings.frameworks[framework]!["runner args"]!
+            // Get the needed arguments from the sessings object
+            let executablePath: String = Settings.interpreters[Workflows.activeInterpreterName]!["executablePath"]!
+            let executableArgs: String = Settings.interpreters[Workflows.activeInterpreterName]!["executableArgs"]!
+            let runnerPath: String = Settings.interpreters[Workflows.activeInterpreterName]!["runnerPath"]!
+            var runnerArgs: String = Settings.interpreters[Workflows.activeInterpreterName]!["runnerArgs"]!
             runnerArgs = runnerArgs.replacingOccurrences(of: "$(JSONFILE)", with: path)
             
-            log.debug("  Interpreter: \(interpreter) \(interpreterArgs)")
-            log.debug("  Runner: \(strRunnerPath) \(runnerArgs)")
+            log.debug("  Executable: \(executablePath) \(executableArgs)")
+            log.debug("  Runner: \(runnerPath) \(runnerArgs)")
 
-            _ = executeCommand(command: interpreter, args: [interpreterArgs, strRunnerPath, runnerArgs])
+            // Call Python executable with arguments
+            _ = executeCommand(command: executablePath, args: [executableArgs, runnerPath, runnerArgs])
         }
         else {
-            log.error("Framework '\(framework)' not found in settings.json!")
+            log.error("Interpreter '\(Workflows.activeInterpreterName)' not found in settings.json!")
         }
     }
 }
