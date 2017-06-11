@@ -19,10 +19,11 @@ let log = Logger(configuration: configuration)
 // Settings object (with defaults)
 struct Settings {
     static var baseFolder = "DropPy/" as String
+    
     static var file = "settings.json" as String
-    static var interpreters = [String: Dictionary<String, String>]()
     static var editor = "TextEdit" as String
     static var screenSizes = [String: Dictionary<String, String>]()
+    static var interpreters = [String: Dictionary<String, String>]()
 }
 
 // Workflows object
@@ -119,7 +120,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 if jsonObj != JSON.null {
 
                     // User defined editor
-                    if jsonObj["editor"] != JSON.null {
+                    if jsonObj["editor"] != "" {
                         Settings.editor = jsonObj["editor"].stringValue
                     }
 
@@ -150,7 +151,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         log.debug("Config contains no screen sizes, loading default window position (centered).")
                     }
 
-                    // Interpreters
+                    // Interpreter default
+                    Settings.interpreters["default"] = [String: String]()
+                    Settings.interpreters["default"]?["executablePath"] = "/usr/bin/python"  // Python 2.7.10 on Sierra & High Sierra
+                    Settings.interpreters["default"]?["executableArgs"] = "-B"
+                    let runnerPath: String = userDir.appendingPathComponent("\(Settings.baseFolder)/Runners/run.py").path
+                    Settings.interpreters["default"]?["runnerPath"] = runnerPath
+                    Settings.interpreters["default"]?["runnerArgs"] = "--items=$(JSONFILE)"
+                    
+                    // Interpreters custom
                     let allInterpreters = jsonObj["interpreters"].dictionaryValue as Dictionary
                     for (name, paramsJson):(String, JSON) in allInterpreters {
                         Settings.interpreters[name] = [String: String]()
@@ -182,6 +191,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func saveSettings() {
         log.debug("Saving settings")
+        
+        // Check for defaults, remove them before saving
+        if Settings.editor == "TextEdit" {
+            Settings.editor = ""
+        }
+        if Settings.interpreters["default"] != nil {
+            Settings.interpreters.removeValue(forKey: "default")
+        }
 
         // Create SwiftyJSON object from the values that should be saved
         let jsonObject: JSON = ["editor": Settings.editor,
