@@ -19,9 +19,10 @@ let log = Logger(configuration: configuration)
 // Settings object (with defaults)
 struct Settings {
     static var baseFolder = "DropPy/" as String
-    
     static var file = "settings.json" as String
+
     static var editor = "TextEdit" as String
+    static var useTextEditorForWorkflows = true as Bool
     static var screenSizes = [String: Dictionary<String, String>]()
     static var interpreters = [String: Dictionary<String, String>]()
 }
@@ -40,11 +41,53 @@ struct Workflows {
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
+    let userDefaults = UserDefaults.standard
+    
+    let workspacePath: String = "workspacePath"
+    let workspacePathDefault: String = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("DropPy").path
+    let runCounter: String = "runCounter"
+    let runCounterDefault: Int = 0
+    
     func applicationWillFinishLaunching(_ notification: Notification) {
         log.enabled = true
-        self.loadSettings()
+        //self.loadSettings()
+        
+        // TODO remove, have a button to reset everthing to defaults in advanced tab of preferences instead (closes the app also)
+        // self.clearUserDefaults()
+        
+        // Check if the user has set a Workspace directory
+        if self.isKeyPresentInUserDefaults(key: workspacePath) {
+            
+            // Check if the set Workspace directory still exists
+            // TODO
+            
+        } else {
+            // Start out with default Settings, don't open the Preferences Window, make it as simple and painless and little confusing as possible
+            userDefaults.set(workspacePathDefault, forKey: workspacePath)
+            userDefaults.set(runCounterDefault, forKey: runCounter)
+            // TODO others
+            
+            // userDefaults.set("/Users/guenther/Development/droppy-workspace", forKey: workspacePath)  // TODO mine, until I can set this in Preferences
+            
+            // First Run Experience
+            self.firstRunWindowController.showWindow(self)
+        }
     }
-
+    
+    func applicationWillBecomeActive(_ notification: Notification) {
+            // Reload workflows from Workflow sub-directory now to account for json files that could have been added/edited/deleted
+//            let changesDetected: Bool = self.reloadWorkflows()
+//            if changesDetected {
+//                Workflows.activeName = ""
+//                Workflows.activeInterpreterName = ""
+//                Workflows.activeAccepts = []
+//                Workflows.activeJsonFile = ""
+//                Workflows.activeLogoFilePath = ""
+//                NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
+//                NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
+//            }
+    }
+    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Get current window position
         var positionX: Int
@@ -65,32 +108,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.enabled = false
     }
     
-    func applicationWillBecomeActive(_ notification: Notification) {
-        // Reload workflows from workflow dir now to account for json files that could have been added/edited/deleted
-        let changesDetected: Bool = self.reloadWorkflows()
-        if changesDetected {
-            Workflows.activeName = ""
-            Workflows.activeInterpreterName = ""
-            Workflows.activeAccepts = []
-            Workflows.activeJsonFile = ""
-            Workflows.activeLogoFilePath = ""
-            NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
-            NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
-        }
-    }
-    
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         // Actually quit the application when the user closes the window
         return true
     }
 
-    lazy var preferencesWindowController: PreferencesWindowController  = {
+    lazy var preferencesWindowController: WindowControllerPrefs  = {
         let wcSB = NSStoryboard(name: "Preferences", bundle: Bundle.main)
-        return wcSB.instantiateInitialController() as! PreferencesWindowController
+        return wcSB.instantiateInitialController() as! WindowControllerPrefs
     }()
     
     @IBAction func showPreferencesWindow(_ sender: Any) {
         self.preferencesWindowController.showWindow(self)
+    }
+    
+    lazy var firstRunWindowController: WindowControllerFirstRun  = {
+        let wcSB = NSStoryboard(name: "FirstRun", bundle: Bundle.main)
+        return wcSB.instantiateInitialController() as! WindowControllerFirstRun
+    }()
+
+    @IBAction func showFirstRunWindow(_ sender: Any) {
+        self.firstRunWindowController.showWindow(self)
     }
     
     func getPosition() -> (Int, Int) {
@@ -128,9 +166,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let jsonObj = JSON(data: data)
                 if jsonObj != JSON.null {
 
-                    // User defined editor
+                    // Text editor
                     if jsonObj["editor"] != "" {
                         Settings.editor = jsonObj["editor"].stringValue
+                    }
+                    
+                    // Workflow editor
+                    if jsonObj["useTextEditorForWorkflows"] != "" {
+                        Settings.useTextEditorForWorkflows = jsonObj["useTextEditorForWorkflows"].boolValue
                     }
 
                     // Window positions for all screen sizes
@@ -156,8 +199,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         if screenSizeFound == false {
                             log.debug("Screen Size '\(resolutionX)x\(resolutionY)' not found, loading default window position (centered).")
                         }
-                    } else {
-                        log.debug("Config contains no screen sizes, loading default window position (centered).")
                     }
 
                     // Interpreter default
@@ -168,13 +209,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     Settings.interpreters["default"]?["runnerPath"] = runnerPath
                     Settings.interpreters["default"]?["runnerArgs"] = "--items=$(JSONFILE)"
                     
-                    // Interpreters custom
-                    let allInterpreters = jsonObj["interpreters"].dictionaryValue as Dictionary
-                    for (name, paramsJson):(String, JSON) in allInterpreters {
-                        Settings.interpreters[name] = [String: String]()
-                        let params = paramsJson.dictionaryValue as Dictionary
-                        for (param, value):(String, JSON) in params {
-                            Settings.interpreters[name]?[param] = value.stringValue
+                    // Interpreters user defined
+                    if jsonObj["interpreters"] != JSON.null {
+                        let allInterpreters = jsonObj["interpreters"].dictionaryValue as Dictionary
+                        for (name, paramsJson):(String, JSON) in allInterpreters {
+                            Settings.interpreters[name] = [String: String]()
+                            let params = paramsJson.dictionaryValue as Dictionary
+                            for (param, value):(String, JSON) in params {
+                                Settings.interpreters[name]?[param] = value.stringValue
+                            }
                         }
                     }
 
@@ -211,6 +254,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Create SwiftyJSON object from the values that should be saved
         let jsonObject: JSON = ["editor": Settings.editor,
+                                "useTextEditorForWorkflows": Settings.useTextEditorForWorkflows,
                                 "screenSizes": Settings.screenSizes,
                                 "interpreters": Settings.interpreters]
   
@@ -229,10 +273,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    func clearUserDefaults() {
+        if let bundle = Bundle.main.bundleIdentifier {
+            userDefaults.removePersistentDomain(forName: bundle)
+        }
+    }
+    
+    func isKeyPresentInUserDefaults(key: String) -> Bool {
+        if self.userDefaults.object(forKey: key) == nil {
+            log.debug("UserDefault for \(key) is not present.")
+            return false
+        } else {
+            log.debug("UserDefault for \(key) is set to '\(self.userDefaults.string(forKey: key) ?? "no default")'.")
+            return true
+        }
+    }
+    
     func reloadWorkflows() -> Bool {
-        let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
-        let workflowDir = "\(userDir)/\(Settings.baseFolder)Workflows"
-        log.debug("Reloading Workflows from '\(workflowDir)'")
+
+        //let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
+        let workflowDir = "\(userDefaults.string(forKey: workspacePath) ?? "no default")/Workflows"
+        log.debug("Reloading Workflows from '\(workflowDir)'.")
 
         let fileManager = FileManager.default
         let enumerator: FileManager.DirectoryEnumerator = fileManager.enumerator(atPath: workflowDir)!
