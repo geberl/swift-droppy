@@ -11,6 +11,8 @@ import Cocoa
 
 class ViewControllerMain: NSViewController {
     
+    let userDefaults = UserDefaults.standard
+    
     @IBOutlet weak var logoImage: NSImageCell!
     @IBOutlet weak var zoneImage: NSImageCell!
 
@@ -126,14 +128,19 @@ class ViewControllerMain: NSViewController {
         // The final output of the command is empty, no point in printing it to the log, the piped messages already are printed
         
         // Check if the workflow's set interpreter is present in the settings object
-        if Settings.interpreters[Workflows.activeInterpreterName] != nil {
+        if userDefaults.dictionary(forKey: UserDefaultStruct.interpreters)![Workflows.activeInterpreterName] != nil {
+
             log.debug("Interpreter '\(Workflows.activeInterpreterName)' found")
+            
+            let interpreterInfo: Dictionary<String, String> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters)![Workflows.activeInterpreterName] as! Dictionary<String, String>
 
             // Get the needed arguments from the sessings object
-            let executablePath: String = Settings.interpreters[Workflows.activeInterpreterName]!["executablePath"]!
-            let executableArgs: String = Settings.interpreters[Workflows.activeInterpreterName]!["executableArgs"]!
-            let runnerPath: String = Settings.interpreters[Workflows.activeInterpreterName]!["runnerPath"]!
-            var runnerArgs: String = Settings.interpreters[Workflows.activeInterpreterName]!["runnerArgs"]!
+            let executablePath: String = interpreterInfo["executablePath"]!
+            let executableArgs: String = interpreterInfo["executableArgs"]!
+            let runnerName: String = interpreterInfo["runnerName"]!
+            let runnerDir = "\(userDefaults.string(forKey: UserDefaultStruct.workspacePath) ?? "no default")/Runners"
+            let runnerPath: String = "\(runnerDir)/\(runnerName)"
+            var runnerArgs: String = interpreterInfo["runnerArgs"]!
             runnerArgs = runnerArgs.replacingOccurrences(of: "$(JSONFILE)", with: path)
             
             log.debug("  Executable: \(executablePath) \(executableArgs)")
@@ -143,7 +150,7 @@ class ViewControllerMain: NSViewController {
             _ = executeCommand(command: executablePath, args: [executableArgs, runnerPath, runnerArgs])
         }
         else {
-            log.error("Interpreter '\(Workflows.activeInterpreterName)' not found in settings.json!")
+            log.error("Interpreter '\(Workflows.activeInterpreterName)' not found in userDefaults!")
         }
     }
 }

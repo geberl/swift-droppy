@@ -10,13 +10,15 @@ import Cocoa
 
 class ViewControllerEditor: NSViewController {
     
+    let userDefaults = UserDefaults.standard
+    
     override func viewWillAppear() {
         super.viewWillAppear()
         self.applySettings()
     }
 
     @IBAction func onButtonRestoreDefault(_ sender: NSButton) {
-        Settings.editor = "TextEdit"
+        userDefaults.set(UserDefaultStruct.editorAppDefault, forKey: UserDefaultStruct.editorApp)
     }
     
     @IBOutlet weak var radioInternal: NSButton!
@@ -25,15 +27,15 @@ class ViewControllerEditor: NSViewController {
 
     @IBAction func onRadioWorkflowEditor(_ sender: NSButton) {
         if sender.title == "External text editor" {
-            Settings.useTextEditorForWorkflows = true
+            userDefaults.set(true, forKey: UserDefaultStruct.useTextEditorForWorkflows)
             }
         if sender.title == "Internal Workflow editor" {
-            Settings.useTextEditorForWorkflows = false
+            userDefaults.set(false, forKey: UserDefaultStruct.useTextEditorForWorkflows)
         }
     }
     
     func applySettings() {
-        if Settings.useTextEditorForWorkflows == true {
+        if userDefaults.bool(forKey: UserDefaultStruct.useTextEditorForWorkflows) == true {
             radioInternal.state = 0
             radioExternal.state = 1
         } else {

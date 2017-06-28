@@ -13,6 +13,8 @@ import SwiftyJSON
 
 class WindowControllerMain: NSWindowController {
     
+    let userDefaults = UserDefaults.standard
+    
     @IBOutlet weak var ToolbarDropdown: NSMenu!
     
     @IBAction func ToolbarActions(_ sender: NSSegmentedControl) {
@@ -93,8 +95,9 @@ class WindowControllerMain: NSWindowController {
                 
                 let workflowLogoFile: String = Workflows.workflows[name]?["image"] as! String
                 log.debug("Workflow logo '\(workflowLogoFile)' is now active.")
-                let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
-                Workflows.activeLogoFilePath = "\(userDir)/\(Settings.baseFolder)Workflows/\(workflowLogoFile)"
+                
+                let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
+                Workflows.activeLogoFilePath = "\(workspacePath)/Workflows/\(workflowLogoFile)"
                 
                 let workflowAccepts: Array = Workflows.workflows[name]!["accepts"] as! Array<String>
                 log.debug("Workflow accepts '\(workflowAccepts)' for drag & drop.")
@@ -125,9 +128,9 @@ class WindowControllerMain: NSWindowController {
     
     func openFinder() {
         log.debug("Toolbar Action: Open")
-        let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
-        NSWorkspace.shared().selectFile("\(userDir)/\(Settings.baseFolder)Workflows/\(Workflows.activeJsonFile)",
-            inFileViewerRootedAtPath: "\(userDir)")
+        let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
+        NSWorkspace.shared().selectFile("\(workspacePath)/Workflows/\(Workflows.activeJsonFile)",
+            inFileViewerRootedAtPath: "\(workspacePath)")
     }
     
     func editWorkflow() {
@@ -135,9 +138,10 @@ class WindowControllerMain: NSWindowController {
         if Workflows.activeName == "" {
             NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
         } else {
-            let userDir: String = FileManager.default.homeDirectoryForCurrentUser.path
-            NSWorkspace.shared().openFile("\(userDir)/\(Settings.baseFolder)Workflows/\(Workflows.activeJsonFile)",
-                withApplication: Settings.editor)
+            let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
+            let editorApp: String = self.userDefaults.string(forKey: UserDefaultStruct.editorApp)!
+            NSWorkspace.shared().openFile("\(workspacePath)/Workflows/\(Workflows.activeJsonFile)",
+                withApplication: editorApp)
         }
     }
     
@@ -166,8 +170,8 @@ class WindowControllerMain: NSWindowController {
             let jsonString = jsonObject.description
         
             // Setup objects needed for directory and file access
-            let userDir: URL = FileManager.default.homeDirectoryForCurrentUser
-            let filePath: URL = userDir.appendingPathComponent("\(Settings.baseFolder)Workflows/\(workflowFileName)")
+            let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
+            let filePath: URL = NSURL.fileURL(withPath: "\(workspacePath)/Workflows/\(workflowFileName)")
         
             // Write json string to file, this overwrites a preexisting file here
             try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
