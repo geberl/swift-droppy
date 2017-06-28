@@ -147,6 +147,7 @@ class ViewControllerMain: NSViewController {
             log.debug("  Runner: \(runnerPath) \(runnerArgs)")
 
             // Call Python executable with arguments
+            // TODO also pass temp folder to use here, allow the workflow to use "debug" mode and save all temp files there
             _ = executeCommand(command: executablePath, args: [executableArgs, runnerPath, runnerArgs])
         }
         else {
