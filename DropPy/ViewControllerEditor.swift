@@ -21,6 +21,12 @@ class ViewControllerEditor: NSViewController {
         userDefaults.set(UserDefaultStruct.editorAppDefault, forKey: UserDefaultStruct.editorApp)
     }
     
+    @IBAction func onHelpButton(_ sender: NSButton) {
+        if let url = URL(string: "https://www.google.com"), NSWorkspace.shared().open(url) {
+            log.debug("Help site for Editor openened.")
+        }
+    }
+    
     @IBOutlet weak var radioInternal: NSButton!
     
     @IBOutlet weak var radioExternal: NSButton!
