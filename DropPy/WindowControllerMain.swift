@@ -128,20 +128,35 @@ class WindowControllerMain: NSWindowController {
     
     func openFinder() {
         log.debug("Toolbar Action: Open")
+        
         let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
-        NSWorkspace.shared().selectFile("\(workspacePath)/Workflows/\(Workflows.activeJsonFile)",
-            inFileViewerRootedAtPath: "\(workspacePath)")
+        NSWorkspace.shared().selectFile("\(workspacePath)/Workflows/\(Workflows.activeJsonFile)", inFileViewerRootedAtPath: "\(workspacePath)")
     }
     
     func editWorkflow() {
         log.debug("Toolbar Action: Edit")
+        
         if Workflows.activeName == "" {
             NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
         } else {
             let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
-            let editorApp: String = self.userDefaults.string(forKey: UserDefaultStruct.editorApp)!
-            NSWorkspace.shared().openFile("\(workspacePath)/Workflows/\(Workflows.activeJsonFile)",
-                withApplication: editorApp)
+            let workflowFile: String = "\(workspacePath)/Workflows/\(Workflows.activeJsonFile)"
+            
+            if let editorForWorkflows: String = self.userDefaults.string(forKey: UserDefaultStruct.editorForWorkflows) {
+                
+                if editorForWorkflows == "Internal Workflow editor" {
+                    log.debug("Open internal Workflow editor now")
+                    
+                } else if editorForWorkflows == "Internal text editor" {
+                    log.debug("Open internal text editor now")
+                    
+                } else if editorForWorkflows == "External text editor" {
+                    // This way of launching an external program hopefully is ok with the app sandbox, Process() may not be.
+                    // However this is why passing custom parameters to the external editor is currently not possible.
+                    let editorApp: String = self.userDefaults.string(forKey: UserDefaultStruct.editorAppPath)!
+                    NSWorkspace.shared().openFile(workflowFile, withApplication: editorApp)
+                }
+            }
         }
     }
     

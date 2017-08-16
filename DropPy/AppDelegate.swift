@@ -18,12 +18,18 @@ let log = Logger(configuration: configuration)
 struct UserDefaultStruct {
     static var workspacePath: String = "workspacePath"
     static var workspacePathDefault: String = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("DropPy").path
+    
     static var dropCounter: String = "dropCounter"
     static var dropCounterDefault: Int = 0
-    static var editorApp: String = "editorApp"
-    static var editorAppDefault: String = "TextEdit"
-    static var useTextEditorForWorkflows: String = "useTextEditorForWorkflows"
-    static var useTextEditorForWorkflowsDefault: Bool = true
+    
+    static var editorAppPath: String = "editorAppPath"
+    static var editorAppPathDefault: String = ""
+    static var editorIconPath: String = "editorIconPath"
+    static var editorForWorkflows: String = "editorForWorkflows"
+    static var editorForWorkflowsDefault: String = "Internal Workflow editor"
+    static var editorForTasks: String = "editorForTasks"
+    static var editorForTasksDefault: String = "Internal text editor"
+    
     static var interpreters: String = "interpreters"
     static var interpretersDefault: Dictionary = ["default": ["executablePath": "/usr/bin/python",
                                                               "executableArgs": "-B",
@@ -96,7 +102,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func loadUserDefaults() {
         // TODO have a button to reset everthing to defaults in advanced tab of preferences instead (closes the app also)
-        // self.clearUserDefaults()
+        //self.clearUserDefaults()
         
         // User's DropPy Workspace directory
         if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.workspacePath) == false{
@@ -115,14 +121,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // TODO
         }
         
-        // User's text editor
-        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorApp) == false {
-            userDefaults.set(UserDefaultStruct.editorAppDefault, forKey: UserDefaultStruct.editorApp)
+        // User's external text editor.
+        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorAppPath) == false {
+            userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
         }
         
-        // User's preference for how to edit Workflows
-        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.useTextEditorForWorkflows) == false {
-            userDefaults.set(UserDefaultStruct.useTextEditorForWorkflowsDefault, forKey: UserDefaultStruct.useTextEditorForWorkflows)
+        // User's preference for how to edit Workflows.
+        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorForWorkflows) == false {
+            userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
+        }
+        
+        // User's preference for how to edit Tasks.
+        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorForTasks) == false {
+            userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
         }
         
         // User's Python interpreters and Runners to use with them

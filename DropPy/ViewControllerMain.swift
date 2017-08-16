@@ -109,6 +109,8 @@ class ViewControllerMain: NSViewController {
     }
     
     func executeCommand(command: String, args: [String]) -> String {
+        // TODO not sure if this is ok with the app sandbox.
+        
         let task = Process()
         task.launchPath = command
         task.arguments = args
