@@ -16,6 +16,9 @@ let configuration = LoggerConfiguration(modifiers: modifiers)
 let log = Logger(configuration: configuration)
 
 struct UserDefaultStruct {
+    // This struct ALWAYS needs to contain TWO static variables for each plist record.
+    // One to set the KEY's name and one to set the default VALUE and its type.
+    
     static var workspacePath: String = "workspacePath"
     static var workspacePathDefault: String = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("DropPy").path
     
@@ -25,6 +28,7 @@ struct UserDefaultStruct {
     static var editorAppPath: String = "editorAppPath"
     static var editorAppPathDefault: String = ""
     static var editorIconPath: String = "editorIconPath"
+    static var editorIconPathDefault: String = ""
     static var editorForWorkflows: String = "editorForWorkflows"
     static var editorForWorkflowsDefault: String = "Internal Workflow editor"
     static var editorForTasks: String = "editorForTasks"
@@ -124,6 +128,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // User's external text editor.
         if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorAppPath) == false {
             userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
+        }
+        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorIconPath) == false {
+            userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
         }
         
         // User's preference for how to edit Workflows.
