@@ -411,7 +411,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="onHelpButton:" target="b3V-Ji-Eo7" id="zm0-g2-fCK"/>
+                                    <action selector="onHelpButton:" target="Rku-20-kef" id="Ycr-e6-8qZ"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJX-m9-tid">

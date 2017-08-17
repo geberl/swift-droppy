@@ -16,6 +16,12 @@ class ViewControllerWorkspace: NSViewController {
         super.viewWillAppear()
         self.loadSettings()
     }
+    
+    @IBAction func onHelpButton(_ sender: NSButton) {
+        if let url = URL(string: "https://droppyapp.com/settings/workspace"), NSWorkspace.shared().open(url) {
+            log.debug("Documentation site for Workspace openened.")
+        }
+    }
 
     func loadSettings() {
         log.debug("Load workspace settings now.")
