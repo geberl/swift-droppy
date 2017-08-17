@@ -9,7 +9,7 @@
 import Cocoa
 
 class WindowControllerEditor: NSWindowController {
-    
+
     override func windowDidLoad() {
         super.windowDidLoad()
         self.window?.center()
@@ -23,5 +23,5 @@ class WindowControllerEditor: NSWindowController {
     func closeWindow(notification: Notification) {
         self.close()
     }
-    
+
 }

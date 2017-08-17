@@ -9,9 +9,9 @@
         <!--Window Controller-->
         <scene sceneID="46q-PU-nrC">
             <objects>
-                <windowController id="jvd-S4-lKo" customClass="WindowControllerEditor" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController showSeguePresentationStyle="single" id="jvd-S4-lKo" customClass="WindowControllerEditor" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="gqn-Oj-U2d">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="294" y="363" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
@@ -30,11 +30,11 @@
             <objects>
                 <viewController id="AxO-qe-rmV" customClass="ViewControllerEditor" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="dBh-ta-seF">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="720" height="489"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgV-4v-6ch">
-                                <rect key="frame" x="18" y="234" width="72" height="17"/>
+                                <rect key="frame" x="18" y="453" width="72" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Editing file:" id="aXR-5O-RS7">
                                     <font key="font" metaFont="system"/>
@@ -43,7 +43,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMJ-yZ-qNQ">
-                                <rect key="frame" x="94" y="234" width="368" height="17"/>
+                                <rect key="frame" x="94" y="453" width="608" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(file path here)" id="saN-kE-5gO">
                                     <font key="font" metaFont="system"/>
@@ -52,26 +52,18 @@
                                 </textFieldCell>
                             </textField>
                             <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePG-dT-cvB">
-                                <rect key="frame" x="20" y="61" width="440" height="157"/>
+                                <rect key="frame" x="20" y="61" width="680" height="376"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="Ej6-4v-qHc">
-                                    <rect key="frame" x="1" y="1" width="423" height="155"/>
+                                    <rect key="frame" x="1" y="1" width="663" height="374"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView ambiguous="YES" importsGraphics="NO" richText="NO" baseWritingDirection="leftToRight" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="MZM-cr-6i1">
-                                            <rect key="frame" x="0.0" y="0.0" width="423" height="155"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="663" height="374"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="423" height="155"/>
-                                            <size key="maxSize" width="463" height="10000000"/>
-                                            <attributedString key="textStorage">
-                                                <fragment content="(file content here)">
-                                                    <attributes>
-                                                        <font key="NSFont" size="15" name="Courier"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
+                                            <size key="minSize" width="663" height="374"/>
+                                            <size key="maxSize" width="663" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
                                     </subviews>
@@ -82,12 +74,12 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="GGq-Mr-ZQo">
-                                    <rect key="frame" x="424" y="1" width="15" height="155"/>
+                                    <rect key="frame" x="664" y="1" width="15" height="374"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fhe-HK-5Yp">
-                                <rect key="frame" x="304" y="13" width="81" height="32"/>
+                                <rect key="frame" x="544" y="13" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="our-QD-NYE">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -101,7 +93,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bf7-ZX-YA8">
-                                <rect key="frame" x="385" y="13" width="81" height="32"/>
+                                <rect key="frame" x="625" y="13" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="X5F-Zu-IgP">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -120,7 +112,7 @@ Gw
                 </viewController>
                 <customObject id="rn3-Rq-dfJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="384" y="264"/>
+            <point key="canvasLocation" x="384" y="360"/>
         </scene>
     </scenes>
 </document>

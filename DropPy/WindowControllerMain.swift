@@ -154,9 +154,11 @@ class WindowControllerMain: NSWindowController {
                     log.debug("Open internal Workflow editor now")
                     
                 } else if editorForWorkflows == "Internal text editor" {
-                    log.debug("Open internal text editor now")
                     self.editorWindowController.showWindow(self)
                     
+                    let pathDict:[String: String] = ["path": workflowFile]
+                    NotificationCenter.default.post(name: Notification.Name("loadFileInEditor"), object: nil, userInfo: pathDict)
+
                 } else if editorForWorkflows == "External text editor" {
                     // This way of launching an external program hopefully is ok with the app sandbox, Process() may not be.
                     // However this is why passing custom parameters to the external editor is currently not possible.
