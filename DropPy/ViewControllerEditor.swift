@@ -20,7 +20,7 @@ class ViewControllerEditor: NSViewController {
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        self.applySettings()
+        self.loadSettings()
     }
     
     override func viewWillDisappear() {
@@ -52,7 +52,7 @@ class ViewControllerEditor: NSViewController {
         }
     }
 
-    func applySettings() {
+    func loadSettings() {
         if let appPathString:String = userDefaults.string(forKey: UserDefaultStruct.editorAppPath) {
             self.editorIcon.appPath = appPathString
         }
