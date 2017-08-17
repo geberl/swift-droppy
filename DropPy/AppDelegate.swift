@@ -22,6 +22,9 @@ struct UserDefaultStruct {
     static var workspacePath: String = "workspacePath"
     static var workspacePathDefault: String = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("DropPy").path
     
+    static var devModeEnabled: String = "devModeEnabled"
+    static var devModeEnabledDefault: Bool = false
+    
     static var dropCounter: String = "dropCounter"
     static var dropCounterDefault: Int = 0
     
@@ -123,6 +126,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             // Check if the set Workspace directory actually still exists, if not open preferences and prompt to change
             // TODO
+        }
+        
+        // Dev mode.
+        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.devModeEnabled) == false {
+            userDefaults.set(UserDefaultStruct.devModeEnabledDefault, forKey: UserDefaultStruct.devModeEnabled)
         }
         
         // User's external text editor.

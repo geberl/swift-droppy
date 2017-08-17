@@ -58,7 +58,7 @@
         <!--General-->
         <scene sceneID="8G7-ea-auJ">
             <objects>
-                <viewController title="General" showSeguePresentationStyle="single" id="F1A-We-v2b" sceneMemberID="viewController">
+                <viewController title="General" showSeguePresentationStyle="single" id="F1A-We-v2b" customClass="ViewControllerGeneral" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="c5X-MK-dK9">
                         <rect key="frame" x="0.0" y="0.0" width="750" height="221"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -79,6 +79,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onRadioEnableDevMode:" target="F1A-We-v2b" id="wrC-tj-Gul"/>
+                                </connections>
                             </button>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVP-tJ-Tcd">
                                 <rect key="frame" x="313" y="101" width="419" height="51"/>
@@ -130,6 +133,9 @@
                             </button>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="radioEnableDevMode" destination="g0k-bV-7OQ" id="xp6-cj-JSI"/>
+                    </connections>
                 </viewController>
                 <customObject id="JDo-od-sS7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -348,12 +354,12 @@
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5nX-ti-adG">
                                 <rect key="frame" x="294" y="38" width="245" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="Internal text editor" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3LN-Wy-cNL" id="LeG-mA-fdG">
+                                <popUpButtonCell key="cell" type="push" title="Internal text editor" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3LN-Wy-cNL" id="LeG-mA-fdG">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="DUf-eT-bht">
                                         <items>
-                                            <menuItem title="Internal text editor" id="3LN-Wy-cNL"/>
+                                            <menuItem title="Internal text editor" state="on" id="3LN-Wy-cNL"/>
                                             <menuItem title="External text editor" id="eHo-f9-q9A"/>
                                         </items>
                                     </menu>
