@@ -18,7 +18,15 @@ class ViewControllerInterpreter: NSViewController {
         self.loadSettings()
     }
     
+    @IBAction func onPlusButton(_ sender: Any) {
+        log.debug("Add an interpreter/env now.")
+    }
+    
+    @IBAction func onMinusButton(_ sender: Any) {
+        log.debug("Remove selected interpreter/env now.")
+    }
+    
     func loadSettings() {
-        log.debug("Load settings now")
+        log.debug("Load interpreter settings now.")
     }
 }
