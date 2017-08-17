@@ -26,6 +26,12 @@ class ViewControllerInterpreter: NSViewController {
         log.debug("Remove selected interpreter/env now.")
     }
     
+    @IBAction func onHelpButton(_ sender: NSButton) {
+        if let url = URL(string: "https://droppyapp.com/settings/interpreter"), NSWorkspace.shared().open(url) {
+            log.debug("Documentation site for Interpreter openened.")
+        }
+    }
+    
     func loadSettings() {
         log.debug("Load interpreter settings now.")
     }

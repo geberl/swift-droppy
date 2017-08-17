@@ -24,6 +24,12 @@ class ViewControllerGeneral: NSViewController {
                               forKey: UserDefaultStruct.devModeEnabled)
     }
     
+    @IBAction func onHelpButton(_ sender: NSButton) {
+        if let url = URL(string: "https://droppyapp.com/settings/general"), NSWorkspace.shared().open(url) {
+            log.debug("Documentation site for General openened.")
+        }
+    }
+    
     func loadSettings() {
         self.radioEnableDevMode.state = Int(userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled) as NSNumber)
     }

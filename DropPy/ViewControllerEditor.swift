@@ -47,8 +47,8 @@ class ViewControllerEditor: NSViewController {
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://www.google.com"), NSWorkspace.shared().open(url) {
-            log.debug("Help site for Editor openened.")
+        if let url = URL(string: "https://droppyapp.com/settings/editor"), NSWorkspace.shared().open(url) {
+            log.debug("Documentation site for Editor openened.")
         }
     }
 
