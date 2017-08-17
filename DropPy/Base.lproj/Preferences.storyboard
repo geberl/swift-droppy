@@ -144,7 +144,7 @@
         <!--Interpreter-->
         <scene sceneID="VZ1-6h-2Mf">
             <objects>
-                <viewController title="Interpreter" showSeguePresentationStyle="single" id="JY6-k0-QsS" sceneMemberID="viewController">
+                <viewController title="Interpreter" showSeguePresentationStyle="single" id="JY6-k0-QsS" customClass="ViewControllerInterpreter" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="K2n-qM-FsO">
                         <rect key="frame" x="0.0" y="0.0" width="750" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
