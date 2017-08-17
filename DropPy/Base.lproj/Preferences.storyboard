@@ -277,7 +277,7 @@
         <!--Editor-->
         <scene sceneID="t4N-Ae-kE9">
             <objects>
-                <viewController title="Editor" showSeguePresentationStyle="single" id="b3V-Ji-Eo7" customClass="ViewControllerEditor" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Editor" showSeguePresentationStyle="single" id="b3V-Ji-Eo7" customClass="ViewControllerEditorPrefs" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="gAQ-hf-nhM">
                         <rect key="frame" x="0.0" y="0.0" width="750" height="216"/>
                         <autoresizingMask key="autoresizingMask"/>

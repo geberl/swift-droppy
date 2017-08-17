@@ -1,5 +1,5 @@
 //
-//  ViewControllerEditor.swift
+//  ViewControllerEditorPrefs.swift
 //  DropPy
 //
 //  Created by Günther Eberl on 11.06.17.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ViewControllerEditor: NSViewController {
+class ViewControllerEditorPrefs: NSViewController {
     
     let userDefaults = UserDefaults.standard
     
