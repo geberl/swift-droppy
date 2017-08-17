@@ -29,6 +29,11 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
+    lazy var editorWindowController: WindowControllerEditor  = {
+        let wcSB = NSStoryboard(name: "Editor", bundle: Bundle.main)
+        return wcSB.instantiateInitialController() as! WindowControllerEditor
+    }()
+
     override func windowWillLoad() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.refreshToolbarDropdown(notification:)),
@@ -42,7 +47,7 @@ class WindowControllerMain: NSWindowController {
                                                selector: #selector(WindowControllerMain.unupportedType(notification:)),
                                                name: Notification.Name("unsupportedType"), object: nil)
     }
-    
+
     func refreshToolbarDropdown(notification: Notification){
         log.debug("Toolbar Dropdown refreshing")
         
@@ -145,10 +150,12 @@ class WindowControllerMain: NSWindowController {
             if let editorForWorkflows: String = self.userDefaults.string(forKey: UserDefaultStruct.editorForWorkflows) {
                 
                 if editorForWorkflows == "Internal Workflow editor" {
+                    // TODO: Implement internal Workflow editor and have it open from here.
                     log.debug("Open internal Workflow editor now")
                     
                 } else if editorForWorkflows == "Internal text editor" {
                     log.debug("Open internal text editor now")
+                    self.editorWindowController.showWindow(self)
                     
                 } else if editorForWorkflows == "External text editor" {
                     // This way of launching an external program hopefully is ok with the app sandbox, Process() may not be.
