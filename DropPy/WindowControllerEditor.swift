@@ -1,5 +1,5 @@
 //
-//  ViewControllerEditor.swift
+//  WindowControllerEditor.swift
 //  DropPy
 //
 //  Created by Günther Eberl on 17.08.17.
