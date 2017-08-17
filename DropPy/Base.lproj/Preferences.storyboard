@@ -348,14 +348,14 @@
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wgz-bW-1y9">
                                 <rect key="frame" x="294" y="69" width="245" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="Internal Workflow editor" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ce6-ir-N3V" id="oDr-UM-9J2">
+                                <popUpButtonCell key="cell" type="push" title="Internal text editor" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="djL-MK-gRX" id="oDr-UM-9J2">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="Io0-EQ-Max">
                                         <items>
-                                            <menuItem title="Internal Workflow editor" state="on" id="ce6-ir-N3V"/>
-                                            <menuItem title="Internal text editor" id="djL-MK-gRX"/>
+                                            <menuItem title="Internal text editor" state="on" id="djL-MK-gRX"/>
                                             <menuItem title="External text editor" id="9RT-gh-3oG"/>
+                                            <menuItem title="Internal Workflow editor" id="ce6-ir-N3V"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
