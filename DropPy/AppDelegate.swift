@@ -106,6 +106,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func showFirstRunWindow(_ sender: Any) {
         self.firstRunWindowController.showWindow(self)
     }
+    
+    func directoryExists(path: String) -> Bool {
+        let fileManager = FileManager.default
+        var isDir : ObjCBool = true
+        if fileManager.fileExists(atPath: path, isDirectory: &isDir) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func fileExists(path: String) -> Bool {
+        let fileManager = FileManager.default
+        var isDir : ObjCBool = false
+        if fileManager.fileExists(atPath: path, isDirectory: &isDir) {
+            return true
+        } else {
+            return false
+        }
+    }
 
     func loadUserDefaults() {
         // TODO have a button to reset everthing to defaults in advanced tab of preferences instead (closes the app also)
@@ -136,9 +156,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // User's external text editor.
         if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorAppPath) == false {
             userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
+        } else {
+            // The key exists but not sure if the specified editor also still exists as an app on the system.
+            if !self.directoryExists(path: userDefaults.string(forKey: UserDefaultStruct.editorAppPath)!) {
+                userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
+                userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
+                userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
+                userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
+            }
         }
         if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorIconPath) == false {
             userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
+        } else {
+            // The key exists but not sure if the specified editor also still exists as an app on the system.
+            if !self.fileExists(path: userDefaults.string(forKey: UserDefaultStruct.editorIconPath)!) {
+                userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
+                userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
+                userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
+                userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
+            }
         }
         
         // User's preference for how to edit Workflows.
