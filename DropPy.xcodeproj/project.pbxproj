@@ -24,6 +24,7 @@
 		A463934E1E8FDA40000C7BDB /* DropPyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A463934D1E8FDA40000C7BDB /* DropPyUITests.swift */; };
 		A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */; };
 		A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */; };
+		A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */; };
 		A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */; };
 		A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E8DF931EDAA29100D12029 /* DragDropView.swift */; };
 /* End PBXBuildFile section */
@@ -74,6 +75,7 @@
 		A463934F1E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerGeneral.swift; sourceTree = "<group>"; };
 		A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerInterpreter.swift; sourceTree = "<group>"; };
+		A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWorkspace.swift; sourceTree = "<group>"; };
 		A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerMain.swift; sourceTree = "<group>"; };
 		A4E8DF931EDAA29100D12029 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
 		FAC7B670493565E826211E5E /* Pods-DropPyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */,
 				A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */,
 				A432EA711EED81BB00DCF128 /* ViewControllerEditor.swift */,
+				A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */,
 				A432EA721EED81BB00DCF128 /* ViewControllerEditor.swift in Sources */,
 				A444507F1EF0EDD200EBB485 /* WindowControllerFirstRun.swift in Sources */,
+				A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */,
 				A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */,
 				A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,
