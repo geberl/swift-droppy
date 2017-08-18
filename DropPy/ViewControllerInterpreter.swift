@@ -9,8 +9,12 @@
 // Tutorial for tableView:
 // https://www.raywenderlich.com/143828/macos-nstableview-tutorial
 
-// Maybe also useful for getting editing to work:
-// https://stackoverflow.com/questions/28281045/view-based-nstableview-editing
+// Getting cell text editing to work:
+// https://stackoverflow.com/questions/33354596/nstableview-detect-nstablecolumn-for-selected-cell-at-start-of-cell-edition
+
+// Modes of NSTableView:
+// - cell-based (NSCell), older and lighter (NOT used here)
+// - view-based (NSView), more powerful     (used here)
 
 import Cocoa
 
@@ -18,12 +22,11 @@ class ViewControllerInterpreter: NSViewController {
     
     let userDefaults = UserDefaults.standard
     
-    var mySampleInterpreters: [String] = []
+    var interpreterNames: [String] = []
     
     override func viewWillAppear() {
         super.viewWillAppear()
         self.loadSettings()
-        
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -47,11 +50,15 @@ class ViewControllerInterpreter: NSViewController {
     func loadSettings() {
         log.debug("Load interpreter settings now.")
         
-        self.mySampleInterpreters = ["macOS bundled", "Homebrew 2.7", "Homebrew 3.5", "My PDF env"]
+        //self.interpreterNames = ["macOS bundled", "Homebrew 2.7", "Homebrew 3.5", "My PDF env"]
         
+        if let interpreterDict: Dictionary = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) {
+            log.debug("\(interpreterDict)")
+            self.interpreterNames = Array(interpreterDict.keys)
+        }
     }
     
-    func updateStatus() {
+    func updateProperties() {
         let itemsSelectedd = tableView.numberOfSelectedRows
         log.debug("b \(itemsSelectedd)")
         
@@ -64,16 +71,12 @@ class ViewControllerInterpreter: NSViewController {
 extension ViewControllerInterpreter: NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return self.mySampleInterpreters.count
+        return self.interpreterNames.count
     }
-    
-    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
-        log.debug("edit")
-    }
-    
+
 }
 
-extension ViewControllerInterpreter: NSTableViewDelegate {
+extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
 
     fileprivate enum CellIdentifiers {
         static let NameCell = "NameCellID"
@@ -84,11 +87,11 @@ extension ViewControllerInterpreter: NSTableViewDelegate {
         var text: String = ""
         var cellIdentifier: String = ""
 
-        let item = mySampleInterpreters[row]
+        let interpreterName = interpreterNames[row]
         
         // Based on the column where the cell will display, it sets the cell identifier and text.
         if tableColumn == tableView.tableColumns[0] {
-            text = item
+            text = interpreterName
             cellIdentifier = CellIdentifiers.NameCell
         }
         
@@ -96,8 +99,8 @@ extension ViewControllerInterpreter: NSTableViewDelegate {
         if let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
             cell.textField?.stringValue = text
             
-            if text == "macOS bundled" {
-                cell.textField?.isEditable = false
+            if text == userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)! {
+                cell.textField?.isEditable = true
             } else {
                 cell.textField?.isEditable = true
             }
@@ -109,6 +112,36 @@ extension ViewControllerInterpreter: NSTableViewDelegate {
     }
     
     func tableViewSelectionDidChange(_ notification: Notification) {
-        updateStatus()
+        // Update the values shown on the right side.
+        self.updateProperties()
+        
+        // A change of selection can also be the first step of an editing session. Watch out for this.
+        let selectedRow = self.tableView.selectedRow
+        
+        // When no row is selected, the index is -1.
+        if (selectedRow > -1) {
+            let selectedCell = self.tableView.view(atColumn: self.tableView.column(withIdentifier: CellIdentifiers.NameCell),
+                                                   row: selectedRow,
+                                                   makeIfNecessary: true) as! NSTableCellView
+            
+            // Get the textField to detect and add it the delegate.
+            let textField = selectedCell.textField
+            textField?.delegate = self
+        }
+    }
+
+    override func controlTextDidBeginEditing(_ obj: Notification) {
+        // Triggered once the user adds/removes the first character. Not when the textfield changes to editing mode.
+        log.debug("controlTextDidBeginEditing")
+    }
+    
+    override func controlTextDidEndEditing(_ obj: Notification) {
+        // Triggered when in editing mode and textfield is deselected or enter is pressed (doesn't matter if text actually changed or not).
+        log.debug("controlTextDidEndEditing")
+    }
+
+    override func controlTextDidChange(_ obj: Notification) {
+        // Get the data every time the user writes a character. But not when using the arrow keys.
+        log.debug("controlTextDidChange")
     }
 }

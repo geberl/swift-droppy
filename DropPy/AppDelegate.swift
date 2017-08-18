@@ -38,10 +38,10 @@ struct UserDefaultStruct {
     static var editorForTasksDefault: String = "Internal text editor"
     
     static var interpreters: String = "interpreters"
-    static var interpretersDefault: Dictionary = ["default": ["executablePath": "/usr/bin/python",
-                                                              "executableArgs": "-B",
-                                                              "runnerName": "run.py",
-                                                              "runnerArgs": "--items=$(JSONFILE)"]]  // Python 2.7.10 on Sierra & High Sierra
+    static var interpretersDefault: Dictionary = ["macOS bundled": ["executable": "/usr/bin/python",
+                                                                    "arguments": "-B"]]
+    static var interpreterStockName: String = "interpreterStockName"
+    static var interpreterStockNameDefault: String = "macOS bundled"
 }
 
 // Workflows object
@@ -187,10 +187,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
         }
         
-        // User's Python interpreters and Runners to use with them
+        // User's Python interpreters and virtual envs.
         if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.interpreters) == false {
             userDefaults.set(UserDefaultStruct.interpretersDefault, forKey: UserDefaultStruct.interpreters)
         }
+        userDefaults.set(UserDefaultStruct.interpreterStockNameDefault, forKey: UserDefaultStruct.interpreterStockName)
         
         // Get current screen size
         let resolutionX: Int
