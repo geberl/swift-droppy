@@ -16,16 +16,27 @@ class ViewControllerEditorPrefs: NSViewController {
     
     @IBOutlet weak var workflowEditor: NSPopUpButton!
     
+    @IBAction func onWorkflowEditor(_ sender: Any) {
+        if (self.workflowEditor.selectedItem != nil) {
+            self.userDefaults.set(self.workflowEditor.selectedItem!.title, forKey: UserDefaultStruct.editorForWorkflows)
+        } else {
+            self.userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
+        }
+    }
+    
     @IBOutlet weak var taskEditor: NSPopUpButton!
+    
+    @IBAction func onTaskEditor(_ sender: Any) {
+        if (self.taskEditor.selectedItem != nil) {
+            self.userDefaults.set(self.taskEditor.selectedItem!.title, forKey: UserDefaultStruct.editorForTasks)
+        } else {
+            self.userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
+        }
+    }
 
     override func viewWillAppear() {
         super.viewWillAppear()
         self.loadSettings()
-    }
-    
-    override func viewWillDisappear() {
-        self.saveSettings()
-        super.viewWillDisappear()
     }
     
     @IBAction func onButtonClearEditor(_ sender: Any) {
@@ -36,12 +47,14 @@ class ViewControllerEditorPrefs: NSViewController {
         if (self.workflowEditor.selectedItem != nil) {
             if self.workflowEditor.selectedItem!.title == "External text editor" {
                 self.workflowEditor.selectItem(withTitle: UserDefaultStruct.editorForWorkflowsDefault)
+                self.userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
             }
         }
         
         if (self.taskEditor.selectedItem != nil) {
             if self.taskEditor.selectedItem!.title == "External text editor" {
                 self.taskEditor.selectItem(withTitle: UserDefaultStruct.editorForTasksDefault)
+                self.userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
             }
         }
     }
@@ -70,26 +83,11 @@ class ViewControllerEditorPrefs: NSViewController {
             self.taskEditor.selectItem(withTitle: taskEditorString)
         }
     }
-    
-    func saveSettings() {
-        self.userDefaults.set(self.editorIcon.appPath, forKey: UserDefaultStruct.editorAppPath)
-        self.userDefaults.set(self.editorIcon.iconPath, forKey: UserDefaultStruct.editorIconPath)
-
-        if (self.workflowEditor.selectedItem != nil) {
-            self.userDefaults.set(self.workflowEditor.selectedItem!.title, forKey: UserDefaultStruct.editorForWorkflows)
-        } else {
-            self.userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
-        }
-
-        if (self.taskEditor.selectedItem != nil) {
-            self.userDefaults.set(self.taskEditor.selectedItem!.title, forKey: UserDefaultStruct.editorForTasks)
-        } else {
-            self.userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
-        }
-    }
 }
 
 class EditorAppImageView: NSImageView {
+    
+    let userDefaults = UserDefaults.standard
 
     var appPath: String = ""
     var iconPath: String = ""
@@ -158,6 +156,10 @@ class EditorAppImageView: NSImageView {
                 self.appPath = board[0] as! String
                 self.iconPath = getAppIconPath(appPath: appPath)
                 self.setAppIcnsFile()
+                
+                self.userDefaults.set(self.appPath, forKey: UserDefaultStruct.editorAppPath)
+                self.userDefaults.set(self.iconPath, forKey: UserDefaultStruct.editorIconPath)
+                
                 return true
             } else {
                 log.debug("More than one item in pasteboard.")

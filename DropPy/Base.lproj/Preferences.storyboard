@@ -359,6 +359,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="onWorkflowEditor:" target="b3V-Ji-Eo7" id="iaK-io-vye"/>
+                                </connections>
                             </popUpButton>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5nX-ti-adG">
                                 <rect key="frame" x="294" y="38" width="245" height="26"/>
@@ -373,6 +376,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="onTaskEditor:" target="b3V-Ji-Eo7" id="HyR-8c-gEb"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6mt-fS-4IY">
                                 <rect key="frame" x="18" y="44" width="272" height="17"/>
