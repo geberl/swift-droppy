@@ -16,6 +16,8 @@ class ViewControllerEditorPrefs: NSViewController {
     
     @IBOutlet weak var workflowEditor: NSPopUpButton!
     
+    @IBOutlet weak var workflowEditorExternalTextEditor: NSMenuItem!
+    
     @IBAction func onWorkflowEditor(_ sender: Any) {
         if (self.workflowEditor.selectedItem != nil) {
             self.userDefaults.set(self.workflowEditor.selectedItem!.title, forKey: UserDefaultStruct.editorForWorkflows)
@@ -25,6 +27,8 @@ class ViewControllerEditorPrefs: NSViewController {
     }
     
     @IBOutlet weak var taskEditor: NSPopUpButton!
+    
+    @IBOutlet weak var taskEditorExternalTextEditor: NSMenuItem!
     
     @IBAction func onTaskEditor(_ sender: Any) {
         if (self.taskEditor.selectedItem != nil) {
@@ -37,6 +41,11 @@ class ViewControllerEditorPrefs: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         self.loadSettings()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerEditorPrefs.onEditorDropped(notification:)),
+                                               name: Notification.Name("editorDropped"),
+                                               object: nil)
     }
     
     @IBAction func onButtonClearEditor(_ sender: Any) {
@@ -44,12 +53,17 @@ class ViewControllerEditorPrefs: NSViewController {
         self.editorIcon.iconPath = ""
         self.editorIcon.image = nil
         
+        self.userDefaults.set(self.editorIcon.appPath, forKey: UserDefaultStruct.editorAppPath)
+        self.userDefaults.set(self.editorIcon.iconPath, forKey: UserDefaultStruct.editorIconPath)
+        
         if (self.workflowEditor.selectedItem != nil) {
             if self.workflowEditor.selectedItem!.title == "External text editor" {
                 self.workflowEditor.selectItem(withTitle: UserDefaultStruct.editorForWorkflowsDefault)
                 self.userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
             }
         }
+        self.workflowEditorExternalTextEditor.isEnabled = false
+
         
         if (self.taskEditor.selectedItem != nil) {
             if self.taskEditor.selectedItem!.title == "External text editor" {
@@ -57,6 +71,7 @@ class ViewControllerEditorPrefs: NSViewController {
                 self.userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
             }
         }
+        self.taskEditorExternalTextEditor.isEnabled = false
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
@@ -64,10 +79,22 @@ class ViewControllerEditorPrefs: NSViewController {
             log.debug("Documentation site for Editor openened.")
         }
     }
+    
+    func onEditorDropped(notification: Notification) {
+        self.workflowEditorExternalTextEditor.isEnabled = true
+        self.taskEditorExternalTextEditor.isEnabled = true
+    }
 
     func loadSettings() {
         if let appPathString:String = userDefaults.string(forKey: UserDefaultStruct.editorAppPath) {
             self.editorIcon.appPath = appPathString
+            if appPathString == "" {
+                self.workflowEditorExternalTextEditor.isEnabled = false
+                self.taskEditorExternalTextEditor.isEnabled = false
+            } else {
+                self.workflowEditorExternalTextEditor.isEnabled = true
+                self.taskEditorExternalTextEditor.isEnabled = true
+            }
         }
         
         if let editorIconPathString:String = userDefaults.string(forKey: UserDefaultStruct.editorIconPath) {
@@ -115,7 +142,6 @@ class EditorAppImageView: NSImageView {
         let pasteboard = sender.draggingPasteboard()
         
         if pasteboard.types?.contains(pasteboardType) == true {
-            log.debug("Type contains '\(pasteboardType)'.")
             return true
         } else {
             log.debug("Type doesn't contain '\(pasteboardType)'.")
@@ -126,7 +152,6 @@ class EditorAppImageView: NSImageView {
     func countNumberOfItems(sender: NSDraggingInfo, pasteboardType: String) -> Int {
         if let board = sender.draggingPasteboard().propertyList(forType: pasteboardType) as? NSArray {
             let itemsCount = board.count
-            log.debug("Found \(itemsCount) \(pasteboardType)s in pasteboard.")
             return itemsCount
         } else {
             log.debug("Error opening pasteboard.")
@@ -138,7 +163,6 @@ class EditorAppImageView: NSImageView {
         if let board = sender.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
             if board.count == 1 {
                 let fileExtension = (board[0] as! NSString).pathExtension
-                log.debug("File extension is '\(fileExtension)'.")
                 return fileExtension
             } else {
                 log.debug("More than one item in pasteboard.")
@@ -159,6 +183,8 @@ class EditorAppImageView: NSImageView {
                 
                 self.userDefaults.set(self.appPath, forKey: UserDefaultStruct.editorAppPath)
                 self.userDefaults.set(self.iconPath, forKey: UserDefaultStruct.editorIconPath)
+                
+                NotificationCenter.default.post(name: Notification.Name("editorDropped"), object: nil)
                 
                 return true
             } else {
@@ -208,6 +234,5 @@ class EditorAppImageView: NSImageView {
     
     func setAppIcnsFile() {
         self.image = NSImage(contentsOfFile: self.iconPath)
-        log.debug("Image of editor set to '\(self.iconPath)'")
     }
 }

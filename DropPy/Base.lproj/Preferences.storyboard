@@ -348,14 +348,14 @@
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wgz-bW-1y9">
                                 <rect key="frame" x="294" y="69" width="245" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="Internal text editor" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="djL-MK-gRX" id="oDr-UM-9J2">
+                                <popUpButtonCell key="cell" type="push" title="Internal text editor" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="djL-MK-gRX" id="oDr-UM-9J2">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="Io0-EQ-Max">
+                                    <menu key="menu" autoenablesItems="NO" id="Io0-EQ-Max">
                                         <items>
                                             <menuItem title="Internal text editor" state="on" id="djL-MK-gRX"/>
-                                            <menuItem title="External text editor" id="9RT-gh-3oG"/>
-                                            <menuItem title="Internal Workflow editor" id="ce6-ir-N3V"/>
+                                            <menuItem title="External text editor" enabled="NO" id="9RT-gh-3oG"/>
+                                            <menuItem title="Internal Workflow editor" enabled="NO" id="ce6-ir-N3V"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
@@ -366,13 +366,13 @@
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5nX-ti-adG">
                                 <rect key="frame" x="294" y="38" width="245" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="Internal text editor" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3LN-Wy-cNL" id="LeG-mA-fdG">
+                                <popUpButtonCell key="cell" type="push" title="Internal text editor" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="3LN-Wy-cNL" id="LeG-mA-fdG">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="DUf-eT-bht">
+                                    <menu key="menu" autoenablesItems="NO" id="DUf-eT-bht">
                                         <items>
                                             <menuItem title="Internal text editor" state="on" id="3LN-Wy-cNL"/>
-                                            <menuItem title="External text editor" id="eHo-f9-q9A"/>
+                                            <menuItem title="External text editor" enabled="NO" id="eHo-f9-q9A"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
@@ -394,7 +394,9 @@
                     <connections>
                         <outlet property="editorIcon" destination="mZP-mC-sq4" id="jnl-8Q-Hc9"/>
                         <outlet property="taskEditor" destination="5nX-ti-adG" id="UnH-g1-7Lq"/>
+                        <outlet property="taskEditorExternalTextEditor" destination="eHo-f9-q9A" id="AJk-uW-65U"/>
                         <outlet property="workflowEditor" destination="Wgz-bW-1y9" id="YNj-kD-rmO"/>
+                        <outlet property="workflowEditorExternalTextEditor" destination="9RT-gh-3oG" id="RjP-KE-JGb"/>
                     </connections>
                 </viewController>
                 <customObject id="Uj5-Dd-JPI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
