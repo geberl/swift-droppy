@@ -122,10 +122,10 @@ class ViewControllerMain: NSViewController {
             // Get the needed arguments from the sessings object
             let executablePath: String = interpreterInfo["executable"]!
             let executableArgs: String = interpreterInfo["arguments"]!
-            let runnerName: String = interpreterInfo["runnerName"]!
+            let runnerName: String = "run.py"
             let runnerDir = "\(userDefaults.string(forKey: UserDefaultStruct.workspacePath) ?? "no default")/Runners"
             let runnerPath: String = "\(runnerDir)/\(runnerName)"
-            var runnerArgs: String = interpreterInfo["runnerArgs"]!
+            var runnerArgs: String = "--items=$(JSONFILE)"
             runnerArgs = runnerArgs.replacingOccurrences(of: "$(JSONFILE)", with: path)
             
             log.debug("  Executable: \(executablePath) \(executableArgs)")
