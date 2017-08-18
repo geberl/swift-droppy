@@ -108,23 +108,6 @@ class ViewControllerMain: NSViewController {
         return NSImage(data: newImage.tiffRepresentation!)!
     }
     
-    func executeCommand(command: String, args: [String]) -> String {
-        // TODO not sure if this is ok with the app sandbox.
-        
-        let task = Process()
-        task.launchPath = command
-        task.arguments = args
-        
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        task.launch()
-        
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue)! as String
-        
-        return output        
-    }
-    
     func runScriptJson(path: String) {
         // On default passing -B to not get a __pycache__folder, the full path to run.py and the full path to the json file
         // The final output of the command is empty, no point in printing it to the log, the piped messages already are printed
@@ -137,8 +120,8 @@ class ViewControllerMain: NSViewController {
             let interpreterInfo: Dictionary<String, String> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters)![Workflows.activeInterpreterName] as! Dictionary<String, String>
 
             // Get the needed arguments from the sessings object
-            let executablePath: String = interpreterInfo["executablePath"]!
-            let executableArgs: String = interpreterInfo["executableArgs"]!
+            let executablePath: String = interpreterInfo["executable"]!
+            let executableArgs: String = interpreterInfo["arguments"]!
             let runnerName: String = interpreterInfo["runnerName"]!
             let runnerDir = "\(userDefaults.string(forKey: UserDefaultStruct.workspacePath) ?? "no default")/Runners"
             let runnerPath: String = "\(runnerDir)/\(runnerName)"

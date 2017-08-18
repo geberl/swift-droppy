@@ -351,3 +351,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
 }
+
+func executeCommand(command: String, args: [String]) -> (output: [String], error: [String], exitCode: Int32) {
+    // TODO not sure if this is ok with the app sandbox.
+    // Source: https://stackoverflow.com/questions/29514738/get-terminal-output-after-a-command-swift#29519615
+    
+    var output : [String] = []
+    var error : [String] = []
+    
+    let task = Process()
+    task.launchPath = command
+    task.arguments = args
+    
+    let outpipe = Pipe()
+    task.standardOutput = outpipe
+    let errpipe = Pipe()
+    task.standardError = errpipe
+    
+    task.launch()
+
+    let outdata = outpipe.fileHandleForReading.readDataToEndOfFile()
+    if var string = String(data: outdata, encoding: .utf8) {
+        string = string.trimmingCharacters(in: .newlines)
+        output = string.components(separatedBy: "\n")
+    }
+    
+    let errdata = errpipe.fileHandleForReading.readDataToEndOfFile()
+    if var string = String(data: errdata, encoding: .utf8) {
+        string = string.trimmingCharacters(in: .newlines)
+        error = string.components(separatedBy: "\n")
+    }
+    
+    task.waitUntilExit()
+    let status = task.terminationStatus
+    
+    return (output, error, status)
+}

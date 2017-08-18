@@ -10,7 +10,6 @@ import Cocoa
 import SwiftyJSON
 
 
-
 class WindowControllerMain: NSWindowController {
     
     let userDefaults = UserDefaults.standard
