@@ -21,17 +21,28 @@ import Cocoa
 class ViewControllerInterpreter: NSViewController {
     
     let userDefaults = UserDefaults.standard
-    
+
     var interpreterNames: [String] = []
     
     override func viewWillAppear() {
         super.viewWillAppear()
         self.loadSettings()
+        
         tableView.delegate = self
         tableView.dataSource = self
     }
     
     @IBOutlet weak var tableView: NSTableView!
+    
+    @IBOutlet weak var executableTextField: NSTextField!
+    
+    @IBOutlet weak var argumentsTextField: NSTextField!
+    
+    @IBOutlet weak var infoVersionTextField: NSTextField!
+    
+    @IBOutlet weak var infoSystemDefaultTextField: NSTextField!
+    
+    @IBOutlet weak var infoVirtualenvTextField: NSTextField!
     
     @IBAction func onPlusButton(_ sender: Any) {
         log.debug("Add an interpreter/env now.")
@@ -48,24 +59,106 @@ class ViewControllerInterpreter: NSViewController {
     }
     
     func loadSettings() {
-        log.debug("Load interpreter settings now.")
-        
-        //self.interpreterNames = ["macOS bundled", "Homebrew 2.7", "Homebrew 3.5", "My PDF env"]
-        
         if let interpreterDict: Dictionary = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) {
-            log.debug("\(interpreterDict)")
-            self.interpreterNames = Array(interpreterDict.keys)
+            self.interpreterNames = Array(interpreterDict.keys).sorted()
         }
     }
     
     func updateProperties() {
-        let itemsSelectedd = tableView.numberOfSelectedRows
-        log.debug("b \(itemsSelectedd)")
-        
-        let itemsSelectedc = tableView.selectedRowIndexes.first
-        log.debug("c \(String(describing: itemsSelectedc))")  // is optinal, may therfor be nil
-    }
+        if let selectedInterpreterIndex = tableView.selectedRowIndexes.first {
+            // There is an item selected in the tableView.
+            
+            if let allInterpreterDict: Dictionary = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) {
+                let selectedInterpreterName:String = self.interpreterNames[selectedInterpreterIndex]
+                
+                if let selectedInterpreterValues: Dictionary<String, String> = allInterpreterDict[selectedInterpreterName] as? Dictionary {
+                    if let executableValue: String = selectedInterpreterValues["executable"] {
+                        self.executableTextField.stringValue = executableValue
+                        self.executableTextField.isEnabled = true
 
+                        if let versionInfo: String = self.getInfoVersion(executable: executableValue) {
+                            self.infoVersionTextField.stringValue = versionInfo
+                            self.infoVersionTextField.isEnabled = true
+                        } else {
+                            self.infoVersionTextField.stringValue = "error"
+                            self.infoVersionTextField.isEnabled = false
+                        }
+                        
+                        if let systemDefaultInfo: String = self.getInfoSystemDefault(executable: executableValue) {
+                            self.infoSystemDefaultTextField.stringValue = systemDefaultInfo
+                            self.infoSystemDefaultTextField.isEnabled = true
+                        } else {
+                            self.infoSystemDefaultTextField.stringValue = "error"
+                            self.infoSystemDefaultTextField.isEnabled = false
+                        }
+                        
+                        if let virtualenvInfo: String = self.getInfoVirtualEnv(executable: executableValue) {
+                            self.infoVirtualenvTextField.stringValue = virtualenvInfo
+                            self.infoVirtualenvTextField.isEnabled = true
+                        } else {
+                            self.infoVirtualenvTextField.stringValue = "error"
+                            self.infoVirtualenvTextField.isEnabled = false
+                        }
+                    }
+                    
+                    if let argumentsValue: String = selectedInterpreterValues["arguments"] {
+                        self.argumentsTextField.stringValue = argumentsValue
+                        self.argumentsTextField.isEnabled = true
+                    }
+                }
+                
+                if selectedInterpreterName == userDefaults.string(forKey: UserDefaultStruct.interpreterStockName) {
+                    self.argumentsTextField.isEditable = false
+                    self.executableTextField.isEditable = false
+                } else {
+                    self.argumentsTextField.isEditable = true
+                    self.executableTextField.isEditable = true
+                }
+            }
+        } else {
+            
+            // No item is selected in the tableView.
+            self.executableTextField.stringValue = ""
+            self.argumentsTextField.stringValue = ""
+            
+            self.executableTextField.isEnabled = true
+            self.argumentsTextField.isEnabled = true
+            
+            self.infoVersionTextField.stringValue = ""
+            self.infoVersionTextField.isEnabled = false
+            
+            self.infoSystemDefaultTextField.stringValue = ""
+            self.infoSystemDefaultTextField.isEnabled = false
+            
+            self.infoVirtualenvTextField.stringValue = ""
+            self.infoVirtualenvTextField.isEnabled = false
+        }
+    }
+    
+    func getInfoVersion(executable: String) -> String? {
+        let (_, error, status) = executeCommand(command: executable, args: ["--version"])
+        if status == 0 {
+            return error[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
+        }
+        return nil
+    }
+    
+    func getInfoSystemDefault(executable: String) -> String? {
+        let (output, _, status) = executeCommand(command: "/usr/bin/which", args: ["python"])
+        if status == 0 {
+            if executable == output[0] {
+                return "yes"
+            } else {
+                return "no"
+            }
+        }
+        return nil
+    }
+    
+    func getInfoVirtualEnv(executable: String) -> String? {
+        // TODO implement
+        return "no"
+    }
 }
 
 extension ViewControllerInterpreter: NSTableViewDataSource {
@@ -100,7 +193,7 @@ extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
             cell.textField?.stringValue = text
             
             if text == userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)! {
-                cell.textField?.isEditable = true
+                cell.textField?.isEditable = false
             } else {
                 cell.textField?.isEditable = true
             }
