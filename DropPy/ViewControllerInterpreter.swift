@@ -23,10 +23,11 @@ class ViewControllerInterpreter: NSViewController {
     let userDefaults = UserDefaults.standard
 
     var interpreterNames: [String] = []
+    var selectedRow: Int = -1  // initialized value corresponding to state "no row selected"
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        self.loadSettings()
+        self.reloadSettings()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -45,11 +46,23 @@ class ViewControllerInterpreter: NSViewController {
     @IBOutlet weak var infoVirtualenvTextField: NSTextField!
     
     @IBAction func onPlusButton(_ sender: Any) {
-        log.debug("Add an interpreter/env now.")
+        self.addInterpreter()
+        self.reloadSettings()
+        self.tableView.reloadData()
     }
     
     @IBAction func onMinusButton(_ sender: Any) {
-        log.debug("Remove selected interpreter/env now.")
+        if (self.selectedRow > -1) {
+            let selectedInterpreterName: String = self.interpreterNames[self.selectedRow]
+            if selectedInterpreterName == userDefaults.string(forKey: UserDefaultStruct.interpreterStockName) {
+                self.errorAlert(title: "Unable to remove", explanation: "The interpreter that comes with macOS cannot be removed.")
+            } else {
+                // TODO alert with YES/NO asking again if actually should be removed
+                self.removeInterpreter(name: selectedInterpreterName)
+                self.reloadSettings()
+                self.tableView.reloadData()
+            }
+        }
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
@@ -58,7 +71,7 @@ class ViewControllerInterpreter: NSViewController {
         }
     }
     
-    func loadSettings() {
+    func reloadSettings() {
         if let interpreterDict: Dictionary = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) {
             self.interpreterNames = Array(interpreterDict.keys).sorted()
         }
@@ -159,6 +172,64 @@ class ViewControllerInterpreter: NSViewController {
         // TODO implement
         return "no"
     }
+    
+    func renameInterpreter(oldName: String, newName: String) {
+        let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
+        
+        var newInterpreterDict = oldInterpreterDict
+        newInterpreterDict[newName] = ["executable": oldInterpreterDict[oldName]!["executable"]!,
+                                       "arguments": oldInterpreterDict[oldName]!["arguments"]!]
+        newInterpreterDict.removeValue(forKey: oldName)
+        userDefaults.set(newInterpreterDict, forKey: UserDefaultStruct.interpreters)
+    }
+    
+    func addInterpreter() {
+        let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
+        
+        let defaultExecutable: String = oldInterpreterDict[userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)!]!["executable"]!
+        let defaultArguments: String = oldInterpreterDict[userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)!]!["arguments"]!
+        
+        var newInterpreterName: String = "New Interpreter"
+        if self.interpreterNames.contains(newInterpreterName) {
+            var occurrances: Int = 1
+            for interpreter in self.interpreterNames {
+                if interpreter.hasPrefix("New Interpreter") {
+                    occurrances += 1
+                }
+            }
+            newInterpreterName = "New Interpreter \(occurrances)"
+        }
+        
+        var newInterpreterDict = oldInterpreterDict
+        newInterpreterDict[newInterpreterName] = ["executable": defaultExecutable,
+                                                  "arguments": defaultArguments]
+        userDefaults.set(newInterpreterDict, forKey: UserDefaultStruct.interpreters)
+    }
+    
+    func removeInterpreter(name: String) {
+        let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
+        var newInterpreterDict = oldInterpreterDict
+        newInterpreterDict.removeValue(forKey: name)
+        userDefaults.set(newInterpreterDict, forKey: UserDefaultStruct.interpreters)
+    }
+    
+    func errorAlert(title: String, explanation: String) {
+        let myAlert = NSAlert()
+        myAlert.showsHelp = false
+        myAlert.messageText = title
+        myAlert.informativeText = explanation
+        myAlert.layout()
+        myAlert.alertStyle = .warning
+        myAlert.icon = NSImage(named: "LogoError")
+        
+        myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!) { (response) in
+            if (response == NSAlertFirstButtonReturn) {
+                // You expect to arrive here ...
+            } else {
+                // ... alert always closes here though. Doesn't matter.
+            }
+        }
+    }
 }
 
 extension ViewControllerInterpreter: NSTableViewDataSource {
@@ -209,12 +280,12 @@ extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
         self.updateProperties()
         
         // A change of selection can also be the first step of an editing session. Watch out for this.
-        let selectedRow = self.tableView.selectedRow
+        self.selectedRow = self.tableView.selectedRow
         
         // When no row is selected, the index is -1.
-        if (selectedRow > -1) {
+        if (self.selectedRow > -1) {
             let selectedCell = self.tableView.view(atColumn: self.tableView.column(withIdentifier: CellIdentifiers.NameCell),
-                                                   row: selectedRow,
+                                                   row: self.selectedRow,
                                                    makeIfNecessary: true) as! NSTableCellView
             
             // Get the textField to detect and add it the delegate.
@@ -225,16 +296,45 @@ extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
 
     override func controlTextDidBeginEditing(_ obj: Notification) {
         // Triggered once the user adds/removes the first character. Not when the textfield changes to editing mode.
-        log.debug("controlTextDidBeginEditing")
+        
+        // Does not matter, I just want to save the new value.
     }
     
     override func controlTextDidEndEditing(_ obj: Notification) {
         // Triggered when in editing mode and textfield is deselected or enter is pressed (doesn't matter if text actually changed or not).
-        log.debug("controlTextDidEndEditing")
+
+        if let editedTextField: NSTextField = obj.object as? NSTextField {
+
+            let oldName: String = self.interpreterNames[self.selectedRow]
+            let newName: String = editedTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            // Empty value not allowed, reset to previous value.
+            if editedTextField.stringValue.characters.count == 0 {
+                self.errorAlert(title: "Interpreter name can not be empty", explanation: "The value will be reset.")
+                editedTextField.stringValue = oldName
+                return
+            }
+
+            // Already existing value not allowed, reset to previous value.
+            var otherInterpreterNames = self.interpreterNames
+            otherInterpreterNames.remove(at: self.selectedRow)
+            if otherInterpreterNames.contains(editedTextField.stringValue) {
+                self.errorAlert(title: "Interpreter name already in use", explanation: "The value will be reset.")
+                editedTextField.stringValue = oldName
+                return
+            }
+
+            // Everything ok.
+            self.renameInterpreter(oldName: oldName, newName: newName)
+            self.reloadSettings()
+            self.tableView.reloadData()
+        }
     }
 
     override func controlTextDidChange(_ obj: Notification) {
         // Get the data every time the user writes a character. But not when using the arrow keys.
-        log.debug("controlTextDidChange")
+
+        // Not necessary to use this to provide live behavior.
+        // To use the new value in the main window the user expects to have to deselect the textfield.
     }
 }
