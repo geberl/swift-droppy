@@ -394,6 +394,11 @@ extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
 
             let oldName: String = self.interpreterNames[self.selectedRow]
             let newName: String = editedTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            // Skip everything if the item was not renamed.
+            if oldName == newName {
+                return
+            }
 
             // Empty value not allowed, reset to previous value.
             if editedTextField.stringValue.characters.count == 0 {
