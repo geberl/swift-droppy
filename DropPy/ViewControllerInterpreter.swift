@@ -37,7 +37,50 @@ class ViewControllerInterpreter: NSViewController {
     
     @IBOutlet weak var executableTextField: NSTextField!
     
+    @IBAction func onExecutableTextField(_ sender: Any) {
+        let selectedInterpreterName = self.interpreterNames[self.selectedRow]
+        let newExecutable = self.executableTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // String must not be empty.
+        if newExecutable.characters.count == 0 {
+            self.errorAlert(title: "Invalid executable", explanation: "You have to specify an executable.\n\nChanges were not saved.")
+            return
+        }
+        
+        // String must not contain spaces, that's what the argument textfield is for.
+        if newExecutable.range(of:" ") != nil {
+            self.errorAlert(title: "Invalid executable", explanation: "The path to the executable must not contain spaces. Use the \"arguments\" textbox instead.\n\nChanges were not saved.")
+            return
+        }
+        
+        // String must start with "/".
+        if !newExecutable.hasPrefix("/") {
+            self.errorAlert(title: "Invalid executable", explanation: "The path to the executable must start with \"/\". Relative paths are not supported.\n\nChanges were not saved.")
+            return
+        }
+        
+        // String must end with "python" (case sensitive).
+        if !(newExecutable.hasSuffix("python") || newExecutable.hasSuffix("python3")) {
+            self.errorAlert(title: "Invalid executable", explanation: "The path must point to a executable named \"python\" or \"python3\".\n\nChanges were not saved.")
+            return
+        }
+        
+        // File must exist.
+        if !fileExists(path: newExecutable) {
+            self.errorAlert(title: "Invalid executable", explanation: "File not found. Check executable path.\n\nChanges were not saved.")
+            return
+        }
+        
+        self.editExecutable(interpreterName: selectedInterpreterName, newExecutable: newExecutable)
+    }
+    
     @IBOutlet weak var argumentsTextField: NSTextField!
+    
+    @IBAction func onArgumentsTextField(_ sender: Any) {
+        let selectedInterpreterName = self.interpreterNames[self.selectedRow]
+        let newArguments = self.argumentsTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.editArguments(interpreterName: selectedInterpreterName, newArguments: newArguments)
+    }
     
     @IBOutlet weak var infoVersionTextField: NSTextField!
     
@@ -57,10 +100,10 @@ class ViewControllerInterpreter: NSViewController {
             if selectedInterpreterName == userDefaults.string(forKey: UserDefaultStruct.interpreterStockName) {
                 self.errorAlert(title: "Unable to remove", explanation: "The interpreter that comes with macOS cannot be removed.")
             } else {
-                // TODO alert with YES/NO asking again if actually should be removed
-                self.removeInterpreter(name: selectedInterpreterName)
-                self.reloadSettings()
-                self.tableView.reloadData()
+                self.deleteInterpreterAlert(title: "Are you sure you want to remove this interpreter?",
+                                            explanation: "There is no undo. You'll have to manually add it again.",
+                                            trueButtonText: "Remove interpreter",
+                                            selectedInterpreterName: selectedInterpreterName)
             }
         }
     }
@@ -173,6 +216,16 @@ class ViewControllerInterpreter: NSViewController {
         return "no"
     }
     
+    func editExecutable(interpreterName: String, newExecutable: String) {
+        log.debug("\(interpreterName)")
+        log.debug("\(newExecutable)")
+    }
+    
+    func editArguments(interpreterName: String, newArguments: String) {
+        log.debug("\(interpreterName)")
+        log.debug("\(newArguments)")
+    }
+    
     func renameInterpreter(oldName: String, newName: String) {
         let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
         
@@ -218,17 +271,35 @@ class ViewControllerInterpreter: NSViewController {
         myAlert.showsHelp = false
         myAlert.messageText = title
         myAlert.informativeText = explanation
+        myAlert.addButton(withTitle: "Ok")
         myAlert.layout()
-        myAlert.alertStyle = .warning
-        myAlert.icon = NSImage(named: "LogoError")
+        myAlert.alertStyle = NSAlertStyle.warning
+        myAlert.icon = NSImage(named: "error")
+        myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!)
+    }
+
+    func deleteInterpreterAlert(title: String, explanation: String, trueButtonText: String, selectedInterpreterName: String) {
+        let myAlert = NSAlert()
+        myAlert.showsHelp = false
+        myAlert.messageText = title
+        myAlert.informativeText = explanation
+        myAlert.addButton(withTitle: trueButtonText)
+        myAlert.addButton(withTitle: "Cancel")
+        myAlert.layout()
+        myAlert.alertStyle = NSAlertStyle.critical
+        myAlert.icon = NSImage(named: "alert")
         
-        myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!) { (response) in
-            if (response == NSAlertFirstButtonReturn) {
-                // You expect to arrive here ...
-            } else {
-                // ... alert always closes here though. Doesn't matter.
+        myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSAlertFirstButtonReturn {
+                self.removeInterpreter(name: selectedInterpreterName)
+                self.reloadSettings()
+                self.tableView.reloadData()
             }
-        }
+        })
+    }
+
+    func abc () {
+        log.debug("called")
     }
 }
 
