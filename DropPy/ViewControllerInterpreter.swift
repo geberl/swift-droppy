@@ -218,8 +218,16 @@ class ViewControllerInterpreter: NSViewController {
     }
     
     func getInfoVirtualEnv(executable: String) -> String? {
-        // TODO implement
-        return "no"
+        // Check for existence of "activate" script in same folder as executable.
+        var fileURL: URL = URL(fileURLWithPath: executable)
+        fileURL = fileURL.deletingLastPathComponent()
+        fileURL.appendPathComponent("activate")
+
+        if fileExists(path: fileURL.path) == true {
+            return "yes"
+        } else {
+            return "no"
+        }
     }
     
     func editExecutable(interpreterName: String, newExecutable: String) {
