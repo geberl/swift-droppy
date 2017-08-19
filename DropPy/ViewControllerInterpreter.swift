@@ -192,9 +192,15 @@ class ViewControllerInterpreter: NSViewController {
     }
     
     func getInfoVersion(executable: String) -> String? {
-        let (_, error, status) = executeCommand(command: executable, args: ["--version"])
+        let (output, error, status) = executeCommand(command: executable, args: ["--version"])
         if status == 0 {
-            return error[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
+            // Python 2 returns version string in stderr, but Python 3 in stdout; exit code is always 0 though.
+            if output[0] != "" {
+                return output[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
+            }
+            if error[0] != "" {
+                return error[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
+            }
         }
         return nil
     }
@@ -217,13 +223,19 @@ class ViewControllerInterpreter: NSViewController {
     }
     
     func editExecutable(interpreterName: String, newExecutable: String) {
-        log.debug("\(interpreterName)")
-        log.debug("\(newExecutable)")
+        let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
+        
+        var newInterpreterDict = oldInterpreterDict
+        newInterpreterDict[interpreterName]?["executable"] = newExecutable
+        userDefaults.set(newInterpreterDict, forKey: UserDefaultStruct.interpreters)
     }
     
     func editArguments(interpreterName: String, newArguments: String) {
-        log.debug("\(interpreterName)")
-        log.debug("\(newArguments)")
+        let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
+        
+        var newInterpreterDict = oldInterpreterDict
+        newInterpreterDict[interpreterName]?["arguments"] = newArguments
+        userDefaults.set(newInterpreterDict, forKey: UserDefaultStruct.interpreters)
     }
     
     func renameInterpreter(oldName: String, newName: String) {
@@ -296,10 +308,6 @@ class ViewControllerInterpreter: NSViewController {
                 self.tableView.reloadData()
             }
         })
-    }
-
-    func abc () {
-        log.debug("called")
     }
 }
 
