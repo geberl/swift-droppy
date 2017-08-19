@@ -217,7 +217,7 @@ class WindowControllerMain: NSWindowController {
         let alert = NSAlert()
         alert.messageText = "Error: No Workflow selected"
         alert.informativeText = "You can't perform this action when no Workflow is selected.\n\nSelect a Workflow from the dropdown and try again."
-        alert.icon = NSImage(named: "LogoError")
+        alert.icon = NSImage(named: "error")
         alert.runModal()
     }
     
@@ -226,7 +226,7 @@ class WindowControllerMain: NSWindowController {
         let alert = NSAlert()
         alert.messageText = "Error: Unsupported Type"
         alert.informativeText = "The item you dropped doesn't support the types of your selected Workflow: \(Workflows.activeAccepts)\n\nDropPy itself currently only supports the 'filename' type."
-        alert.icon = NSImage(named: "LogoError")
+        alert.icon = NSImage(named: "error")
         alert.runModal()
     }
 }

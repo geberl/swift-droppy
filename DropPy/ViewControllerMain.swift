@@ -89,7 +89,7 @@ class ViewControllerMain: NSViewController {
     func setZoneLogoError(notification: Notification) {
         if Workflows.activeLogoFilePath == "" {
             log.debug("Changing workflow logo to error.")
-            logoImage.image = NSImage(named: "LogoError")
+            logoImage.image = NSImage(named: "error")
             
             log.debug("Changing zone image to error.")
             zoneImage.image = NSImage(named: "ZoneError")
