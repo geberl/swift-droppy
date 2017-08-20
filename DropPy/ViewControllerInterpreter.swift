@@ -90,8 +90,6 @@ class ViewControllerInterpreter: NSViewController {
     
     @IBAction func onPlusButton(_ sender: Any) {
         self.addInterpreter()
-        self.reloadSettings()
-        self.tableView.reloadData()
     }
     
     @IBAction func onMinusButton(_ sender: Any) {
@@ -100,10 +98,10 @@ class ViewControllerInterpreter: NSViewController {
             if selectedInterpreterName == userDefaults.string(forKey: UserDefaultStruct.interpreterStockName) {
                 self.errorAlert(title: "Unable to remove", explanation: "The interpreter that comes with macOS cannot be removed.")
             } else {
-                self.deleteInterpreterAlert(title: "Are you sure you want to remove this interpreter?",
-                                            explanation: "There is no undo. You'll have to manually add it again.",
-                                            trueButtonText: "Remove interpreter",
-                                            selectedInterpreterName: selectedInterpreterName)
+                self.criticalAlert(title: "Are you sure you want to remove this interpreter?",
+                                   explanation: "There is no undo. You'll have to manually add it again.",
+                                   confirmButtonText: "Remove interpreter",
+                                   confirmFunction: self.removeSelectedInterpreter)
             }
         }
     }
@@ -262,6 +260,7 @@ class ViewControllerInterpreter: NSViewController {
         let defaultExecutable: String = oldInterpreterDict[userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)!]!["executable"]!
         let defaultArguments: String = oldInterpreterDict[userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)!]!["arguments"]!
         
+        // TODO this algorithm doesnt work
         var newInterpreterName: String = "New Interpreter"
         if self.interpreterNames.contains(newInterpreterName) {
             var occurrances: Int = 1
@@ -277,13 +276,19 @@ class ViewControllerInterpreter: NSViewController {
         newInterpreterDict[newInterpreterName] = ["executable": defaultExecutable,
                                                   "arguments": defaultArguments]
         userDefaults.set(newInterpreterDict, forKey: UserDefaultStruct.interpreters)
+        
+        self.reloadSettings()
+        self.tableView.reloadData()
     }
     
-    func removeInterpreter(name: String) {
+    func removeSelectedInterpreter() {
         let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
         var newInterpreterDict = oldInterpreterDict
-        newInterpreterDict.removeValue(forKey: name)
+        newInterpreterDict.removeValue(forKey: self.interpreterNames[self.selectedRow])
         userDefaults.set(newInterpreterDict, forKey: UserDefaultStruct.interpreters)
+        
+        self.reloadSettings()
+        self.tableView.reloadData()
     }
     
     func errorAlert(title: String, explanation: String) {
@@ -298,12 +303,12 @@ class ViewControllerInterpreter: NSViewController {
         myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!)
     }
 
-    func deleteInterpreterAlert(title: String, explanation: String, trueButtonText: String, selectedInterpreterName: String) {
+    func criticalAlert(title: String, explanation: String, confirmButtonText: String, confirmFunction: @escaping () -> Void) {
         let myAlert = NSAlert()
         myAlert.showsHelp = false
         myAlert.messageText = title
         myAlert.informativeText = explanation
-        myAlert.addButton(withTitle: trueButtonText)
+        myAlert.addButton(withTitle: confirmButtonText)
         myAlert.addButton(withTitle: "Cancel")
         myAlert.layout()
         myAlert.alertStyle = NSAlertStyle.critical
@@ -311,9 +316,7 @@ class ViewControllerInterpreter: NSViewController {
         
         myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSAlertFirstButtonReturn {
-                self.removeInterpreter(name: selectedInterpreterName)
-                self.reloadSettings()
-                self.tableView.reloadData()
+                confirmFunction()
             }
         })
     }
