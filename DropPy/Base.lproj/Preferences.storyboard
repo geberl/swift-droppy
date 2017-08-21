@@ -60,11 +60,11 @@
             <objects>
                 <viewController title="General" showSeguePresentationStyle="single" id="F1A-We-v2b" customClass="ViewControllerGeneral" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="c5X-MK-dK9">
-                        <rect key="frame" x="0.0" y="0.0" width="750" height="221"/>
+                        <rect key="frame" x="0.0" y="0.0" width="750" height="129"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qr4-7X-bh9">
-                                <rect key="frame" x="18" y="184" width="272" height="17"/>
+                                <rect key="frame" x="18" y="92" width="272" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Development mode:" id="giq-du-0Wi">
                                     <font key="font" metaFont="system"/>
@@ -73,7 +73,7 @@
                                 </textFieldCell>
                             </textField>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g0k-bV-7OQ">
-                                <rect key="frame" x="294" y="183" width="438" height="18"/>
+                                <rect key="frame" x="294" y="91" width="438" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Enable" bezelStyle="regularSquare" imagePosition="left" inset="2" id="01Y-cW-ed5">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -83,38 +83,10 @@
                                     <action selector="onRadioEnableDevMode:" target="F1A-We-v2b" id="wrC-tj-Gul"/>
                                 </connections>
                             </button>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVP-tJ-Tcd">
-                                <rect key="frame" x="313" y="101" width="419" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="7gg-HR-PRI">
-                                    <font key="font" metaFont="system"/>
-                                    <string key="title">- Intermediary files of each Task are placed in the "temp" directory of your DropPy Workspace instead of deep down in your system's temp folder.</string>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhb-Mv-pB2">
-                                <rect key="frame" x="313" y="76" width="419" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="- Log files are also created there." id="b0R-8N-Sxj">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gi9-Xq-9Ki">
-                                <rect key="frame" x="294" y="160" width="438" height="17"/>
+                                <rect key="frame" x="294" y="43" width="438" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Enabling dev mode has the following effects:" id="AWk-Nw-gOI">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jMx-3R-BD3">
-                                <rect key="frame" x="313" y="34" width="419" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="- All these files are not deleted automatically after successful execution of the Workflow." id="3DR-q4-S8Q">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Intermediary files will not be saved." id="AWk-Nw-gOI">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -134,12 +106,13 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="intermediaryFilesTextField" destination="Gi9-Xq-9Ki" id="nif-Kb-oIV"/>
                         <outlet property="radioEnableDevMode" destination="g0k-bV-7OQ" id="xp6-cj-JSI"/>
                     </connections>
                 </viewController>
                 <customObject id="JDo-od-sS7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-506" y="1032.5"/>
+            <point key="canvasLocation" x="-506" y="986.5"/>
         </scene>
         <!--Interpreter-->
         <scene sceneID="VZ1-6h-2Mf">

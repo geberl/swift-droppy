@@ -110,7 +110,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func loadUserDefaults() {
         // TODO have a button to reset everthing to defaults in advanced tab of preferences instead (closes the app also)
-        self.clearUserDefaults()
+        // self.clearUserDefaults()
         
         // User's DropPy Workspace directory
         if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.workspacePath) == false{

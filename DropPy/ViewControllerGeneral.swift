@@ -22,7 +22,10 @@ class ViewControllerGeneral: NSViewController {
     @IBAction func onRadioEnableDevMode(_ sender: Any) {
         self.userDefaults.set(Bool(self.radioEnableDevMode.state as NSNumber),
                               forKey: UserDefaultStruct.devModeEnabled)
+        self.adjustIntermediaryFilesLabel()
     }
+    
+    @IBOutlet weak var intermediaryFilesTextField: NSTextField!
     
     @IBAction func onHelpButton(_ sender: NSButton) {
         if let url = URL(string: "https://droppyapp.com/settings/general"), NSWorkspace.shared().open(url) {
@@ -32,5 +35,15 @@ class ViewControllerGeneral: NSViewController {
     
     func loadSettings() {
         self.radioEnableDevMode.state = Int(userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled) as NSNumber)
+        self.adjustIntermediaryFilesLabel()
+    }
+    
+    func adjustIntermediaryFilesLabel() {
+        if self.radioEnableDevMode.state == 1 {
+            let intermediaryFilesDir: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/temp"
+            self.intermediaryFilesTextField.stringValue = "Intermediary files will be saved to:\n\"\(intermediaryFilesDir)\""
+        } else {
+            self.intermediaryFilesTextField.stringValue = "Intermediary files will not be saved."
+        }
     }
 }
