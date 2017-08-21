@@ -60,6 +60,40 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Edit" id="Tc8-3Q-msb">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Edit" id="pu6-B4-dpk">
+                                    <items>
+                                        <menuItem title="Cut" keyEquivalent="x" id="Jgz-Kj-GhE">
+                                            <connections>
+                                                <action selector="cut:" target="Ady-hI-5gd" id="7qo-9b-xIl"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Copy" keyEquivalent="c" id="JZz-OL-Mop">
+                                            <connections>
+                                                <action selector="copy:" target="Ady-hI-5gd" id="Rkp-lo-BC6"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Paste" keyEquivalent="v" id="h5b-uR-bcL">
+                                            <connections>
+                                                <action selector="paste:" target="Ady-hI-5gd" id="SmJ-z8-bis"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Delete" id="Lap-BB-p0N">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="delete:" target="Ady-hI-5gd" id="fzS-Hi-tVt"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="TF7-9V-eHH"/>
+                                        <menuItem title="Select All" keyEquivalent="a" id="A1D-8V-ieM">
+                                            <connections>
+                                                <action selector="selectAll:" target="Ady-hI-5gd" id="bdH-sn-7nY"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Workflow" id="dMs-cI-mzQ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Workflow" id="bib-Uj-vzu">
@@ -225,14 +259,14 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="698.5"/>
+            <point key="canvasLocation" x="75" y="698"/>
         </scene>
     </scenes>
     <resources>
         <image name="ButtonAdd" width="19" height="19"/>
         <image name="ButtonEdit" width="19" height="19"/>
         <image name="ButtonFolder" width="19" height="19"/>
-        <image name="Logo" width="128" height="128"/>
+        <image name="Logo" width="256" height="256"/>
         <image name="ZoneDashed" width="256" height="256"/>
     </resources>
 </document>
