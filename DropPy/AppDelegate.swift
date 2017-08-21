@@ -37,11 +37,12 @@ struct UserDefaultStruct {
     static var editorForTasks: String = "editorForTasks"
     static var editorForTasksDefault: String = "Internal text editor"
     
-    static var interpreters: String = "interpreters"
-    static var interpretersDefault: Dictionary = ["macOS bundled": ["executable": "/usr/bin/python",
-                                                                    "arguments": "-B"]]
     static var interpreterStockName: String = "interpreterStockName"
-    static var interpreterStockNameDefault: String = "macOS bundled"
+    static var interpreterStockNameDefault: String = "macOS pre-installed"
+    
+    static var interpreters: String = "interpreters"
+    static var interpretersDefault: Dictionary = ["macOS pre-installed": ["executable": "/usr/bin/python",
+                                                                          "arguments": "-B"]]
 }
 
 // Workflows object
@@ -109,7 +110,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func loadUserDefaults() {
         // TODO have a button to reset everthing to defaults in advanced tab of preferences instead (closes the app also)
-        //self.clearUserDefaults()
+        self.clearUserDefaults()
         
         // User's DropPy Workspace directory
         if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.workspacePath) == false{
