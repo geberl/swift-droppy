@@ -273,16 +273,11 @@ class ViewControllerInterpreter: NSViewController {
         let defaultExecutable: String = oldInterpreterDict[userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)!]!["executable"]!
         let defaultArguments: String = oldInterpreterDict[userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)!]!["arguments"]!
         
-        // TODO this algorithm doesnt work
         var newInterpreterName: String = "New Interpreter"
-        if self.interpreterNames.contains(newInterpreterName) {
-            var occurrances: Int = 1
-            for interpreter in self.interpreterNames {
-                if interpreter.hasPrefix("New Interpreter") {
-                    occurrances += 1
-                }
-            }
-            newInterpreterName = "New Interpreter \(occurrances)"
+        var nextSuffix: Int = 2  // on macOS the next item is called "New Interpreter 2", not "New Interpreter 1"
+        while self.interpreterNames.contains(newInterpreterName) {
+            newInterpreterName = "New Interpreter \(nextSuffix)"
+            nextSuffix += 1
         }
         
         var newInterpreterDict = oldInterpreterDict
