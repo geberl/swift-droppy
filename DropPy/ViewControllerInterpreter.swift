@@ -190,17 +190,24 @@ class ViewControllerInterpreter: NSViewController {
     }
     
     func getInfoVersion(executable: String) -> String? {
-        let (output, error, status) = executeCommand(command: executable, args: ["--version"])
-        if status == 0 {
-            // Python 2 returns version string in stderr, but Python 3 in stdout; exit code is always 0 though.
-            if output[0] != "" {
-                return output[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
+        
+        if fileExists(path: executable) {
+            
+            let (output, error, status) = executeCommand(command: executable, args: ["--version"])
+            if status == 0 {
+                // Python 2 returns version string in stderr, but Python 3 in stdout; exit code is always 0 though.
+                if output[0] != "" {
+                    return output[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
+                }
+                if error[0] != "" {
+                    return error[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
+                }
+            } else {
+                return nil
             }
-            if error[0] != "" {
-                return error[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
-            }
+            
         }
-        return nil
+        return "executable not found"
     }
     
     func getInfoSystemDefault(executable: String) -> String? {
@@ -216,16 +223,22 @@ class ViewControllerInterpreter: NSViewController {
     }
     
     func getInfoVirtualEnv(executable: String) -> String? {
-        // Check for existence of "activate" script in same folder as executable.
-        var fileURL: URL = URL(fileURLWithPath: executable)
-        fileURL = fileURL.deletingLastPathComponent()
-        fileURL.appendPathComponent("activate")
+        
+        if fileExists(path: executable) {
+            
+            // Check for existence of "activate" script in same folder as executable.
+            var fileURL: URL = URL(fileURLWithPath: executable)
+            fileURL = fileURL.deletingLastPathComponent()
+            fileURL.appendPathComponent("activate")
 
-        if fileExists(path: fileURL.path) == true {
-            return "yes"
-        } else {
-            return "no"
+            if fileExists(path: fileURL.path) == true {
+                return "yes"
+            } else {
+                return "no"
+            }
+            
         }
+        return nil
     }
     
     func editExecutable(interpreterName: String, newExecutable: String) {
