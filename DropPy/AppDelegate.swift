@@ -354,7 +354,7 @@ func fileExists(path: String) -> Bool {
 }
 
 func executeCommand(command: String, args: [String]) -> (output: [String], error: [String], exitCode: Int32) {
-    // TODO not sure if this is ok with the app sandbox.
+    // TODO probably not ok with the app sandbox.
     // Source: https://stackoverflow.com/questions/29514738/get-terminal-output-after-a-command-swift#29519615
     
     var output : [String] = []

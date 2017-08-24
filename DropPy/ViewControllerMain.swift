@@ -61,38 +61,38 @@ class ViewControllerMain: NSViewController {
     }
     
     func setZoneDashed(notification: Notification) {
-        log.debug("Changing zone image to dashed.")
-        zoneImage.image = NSImage(named: "ZoneDashed")
+        log.debug("Changing zone image to 'zone-dashed'.")
+        zoneImage.image = NSImage(named: "zone-dashed")
     }
     
     func setZoneLine(notification: Notification) {
-        log.debug("Changing zone image to line.")
-        zoneImage.image = NSImage(named: "ZoneLine")
+        log.debug("Changing zone image to 'zone-line'.")
+        zoneImage.image = NSImage(named: "zone-line")
     }
     
     func setLogo(notification: Notification) {
         if Workflows.activeLogoFilePath == "" {
-            log.debug("Changing workflow logo to default.")
-            logoImage.image = NSImage(named: "Logo")
+            log.debug("Changing workflow logo to 'logo'.")
+            logoImage.image = self.resizeNSImage(image: NSImage(named: "logo")!, width:128, height:128)
         } else {
             if let newLogo = NSImage(contentsOfFile: Workflows.activeLogoFilePath) {
-                log.debug("Workflow logo loaded successfully.")
-                let resizedLogo = self.resizeNSImage(image: newLogo, width:128, height:128)
-                logoImage.image = resizedLogo
+                log.debug("Workflow logo loaded successfully from '\(Workflows.activeLogoFilePath)'.")
+                logoImage.image = self.resizeNSImage(image: newLogo, width:128, height:128)
             } else {
-                log.error("Can't load workflow logo! Changing to default.")
-                logoImage.image = NSImage(named: "Logo")
+                log.error("Can't load workflow logo from '\(Workflows.activeLogoFilePath).")
+                log.debug("Changing workflow logo to 'logo'.")
+                logoImage.image = self.resizeNSImage(image: NSImage(named: "logo")!, width:128, height:128)
             }
         }
     }
     
     func setZoneLogoError(notification: Notification) {
         if Workflows.activeLogoFilePath == "" {
-            log.debug("Changing workflow logo to error.")
-            logoImage.image = NSImage(named: "error")
+            log.debug("Changing workflow logo to 'error'.")
+            logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!, width:128, height:128)
             
-            log.debug("Changing zone image to error.")
-            zoneImage.image = NSImage(named: "ZoneError")
+            log.debug("Changing zone image to 'zone-error'.")
+            zoneImage.image = NSImage(named: "zone-error")
         }
     }
     

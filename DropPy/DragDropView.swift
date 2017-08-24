@@ -54,7 +54,7 @@ class DragDropView: NSView {
         if Workflows.activeName == "" {
             workflowIsSelected = false
             NotificationCenter.default.post(name: Notification.Name("draggingEnteredNoWorkflowSelected"), object: nil)
-            return .copy // allow drop (catch later, provide message)
+            return .copy // allow drop (catch later, provide message -> better user experience)
             // return [] // don't even allow drop
         } else {
             workflowIsSelected = true
@@ -80,17 +80,10 @@ class DragDropView: NSView {
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        if workflowIsSelected == false {
-            // Display error message
-            NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
-            
-        } else if droppedTypeIsSupported == false {
-            // Display error message
-            NotificationCenter.default.post(name: Notification.Name("unsupportedType"), object: nil)
-            
-        } else {
-            // Process files
-        
+        // Process files if a Workflow was selected and the Workflow supports the dropped object type.
+        // Otherwise error messages are displayed afterwards, in concludeDragOperation.
+
+        if workflowIsSelected && droppedTypeIsSupported {
             if let board = sender.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
                 // Save paths in bulk to one json file
                 do {
@@ -118,11 +111,20 @@ class DragDropView: NSView {
                 } catch {
                     log.error(error.localizedDescription)
                 }
-                return true
             }
-            return true
         }
         return true
+    }
+    
+    override func concludeDragOperation(_ sender: NSDraggingInfo?) {
+        // Display eventual error messages after performDragOperation, after having discarded the dropped items.
+        // Otherwise the mouse cursor still contains a green circle with a white plus symbol while clicking the 'Ok' button.
+
+        if !workflowIsSelected {
+            NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
+        } else if !droppedTypeIsSupported {
+            NotificationCenter.default.post(name: Notification.Name("unsupportedType"), object: nil)
+        }
     }
     
     func checkType(sender: NSDraggingInfo) -> Bool {

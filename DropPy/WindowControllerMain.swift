@@ -212,20 +212,21 @@ class WindowControllerMain: NSWindowController {
             log.error(error.localizedDescription)
         }
     }
-    
+
     func actionOnEmptyWorkflow(notification: Notification) {
         let alert = NSAlert()
-        alert.messageText = "Error: No Workflow selected"
-        alert.informativeText = "You can't perform this action when no Workflow is selected.\n\nSelect a Workflow from the dropdown and try again."
+        alert.showsHelp = false
+        alert.messageText = "No Workflow selected"
+        alert.informativeText = "You can't drop objects if no Workflow is selected.\nSelect a Workflow and try again."
         alert.icon = NSImage(named: "error")
         alert.runModal()
     }
-    
+
     func unupportedType(notification: Notification) {
         // TODO support more types
         let alert = NSAlert()
-        alert.messageText = "Error: Unsupported Type"
-        alert.informativeText = "The item you dropped doesn't support the types of your selected Workflow: \(Workflows.activeAccepts)\n\nDropPy itself currently only supports the 'filename' type."
+        alert.messageText = "Unsupported Type"
+        alert.informativeText = "The object you dropped isn't supported by the Workflow \"\(Workflows.activeAccepts)\"."
         alert.icon = NSImage(named: "error")
         alert.runModal()
     }
