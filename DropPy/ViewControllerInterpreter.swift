@@ -37,48 +37,60 @@ class ViewControllerInterpreter: NSViewController {
     
     @IBOutlet weak var executableTextField: NSTextField!
     
-    @IBAction func onExecutableTextField(_ sender: Any) {
+    @IBAction func onExecutableTextField(_ sender: NSTextField) {
         let selectedInterpreterName = self.interpreterNames[self.selectedRow]
-        let newExecutable = self.executableTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
-        
+        var newExecutable = self.executableTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)  // silently trim when getting the value
+        self.executableTextField.stringValue = newExecutable  // write trimmed string back to input
+
         // String must not be empty.
         if newExecutable.characters.count == 0 {
-            self.errorAlert(title: "Invalid executable", explanation: "You have to specify an executable.\n\nChanges were not saved.")
-            return
+            self.errorAlert(title: "Invalid executable", explanation: "You have to specify an executable.")
         }
-        
-        // String must not contain spaces, that's what the argument textfield is for.
-        if newExecutable.range(of:" ") != nil {
-            self.errorAlert(title: "Invalid executable", explanation: "The path to the executable must not contain spaces. Use the \"arguments\" textbox instead.\n\nChanges were not saved.")
-            return
-        }
-        
         // String must start with "/".
-        if !newExecutable.hasPrefix("/") {
-            self.errorAlert(title: "Invalid executable", explanation: "The path to the executable must start with \"/\". Relative paths are not supported.\n\nChanges were not saved.")
-            return
+        else if !newExecutable.hasPrefix("/") {
+            self.errorAlert(title: "Invalid executable", explanation: "The path to the executable has to start with \"/\". Relative paths are not supported.")
         }
-        
-        // String must end with "python" (case sensitive).
-        if !(newExecutable.hasSuffix("python") || newExecutable.hasSuffix("python3")) {
-            self.errorAlert(title: "Invalid executable", explanation: "The path must point to a executable named \"python\" or \"python3\".\n\nChanges were not saved.")
-            return
+        // String must not contain spaces, that's what the argument textfield is for.
+        else if newExecutable.range(of:" ") != nil {
+            self.errorAlert(title: "Invalid executable", explanation: "The path to the executable must not contain spaces. Your input was adjusted. Please check the \"arguments\" textbox.")
+
+            var executableInvalidArray: Array = newExecutable.components(separatedBy: " ")
+            
+            newExecutable = executableInvalidArray[0]
+            self.executableTextField.stringValue = newExecutable
+            
+            executableInvalidArray.remove(at: 0)
+            var newArguments: String = executableInvalidArray.joined(separator: " ")
+            
+            let presentArguments = self.argumentsTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)  // silently trim when getting the value
+            if presentArguments.characters.count > 0 {
+                newArguments = presentArguments + " " + newArguments
+            }
+            self.argumentsTextField.stringValue = newArguments
+            self.editArguments(interpreterName: selectedInterpreterName, newArguments: newArguments)
         }
-        
         // File must exist.
-        if !fileExists(path: newExecutable) {
-            self.errorAlert(title: "Invalid executable", explanation: "File not found. Check executable path.\n\nChanges were not saved.")
-            return
+        else if !fileExists(path: newExecutable) {
+            self.errorAlert(title: "Invalid executable", explanation: "File not found. Check executable path.")
         }
-        
+        // String must end with "python" (case sensitive on purpose).
+        else if !(newExecutable.hasSuffix("python") || newExecutable.hasSuffix("python3")) {
+            self.errorAlert(title: "Invalid executable", explanation: "The path usually points to an executable named \"python\" or \"python3\".")
+        }
+
+        // Save value anyways for better user experience.
         self.editExecutable(interpreterName: selectedInterpreterName, newExecutable: newExecutable)
+        
+        // Refresh info values
+        self.updateProperties()
     }
     
     @IBOutlet weak var argumentsTextField: NSTextField!
     
     @IBAction func onArgumentsTextField(_ sender: Any) {
         let selectedInterpreterName = self.interpreterNames[self.selectedRow]
-        let newArguments = self.argumentsTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        let newArguments = self.argumentsTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)  // silently trim when getting the value
+        self.argumentsTextField.stringValue = newArguments  // write trimmed string back to input
         self.editArguments(interpreterName: selectedInterpreterName, newArguments: newArguments)
     }
     
@@ -191,23 +203,39 @@ class ViewControllerInterpreter: NSViewController {
     
     func getInfoVersion(executable: String) -> String? {
         
-        if fileExists(path: executable) {
-            
-            let (output, error, status) = executeCommand(command: executable, args: ["--version"])
-            if status == 0 {
-                // Python 2 returns version string in stderr, but Python 3 in stdout; exit code is always 0 though.
-                if output[0] != "" {
-                    return output[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
-                }
-                if error[0] != "" {
-                    return error[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
-                }
-            } else {
-                return nil
-            }
-            
+        // Executable must not be empty.
+        if executable.characters.count == 0 {
+            return "no executable set"
         }
-        return "executable not found"
+            
+        // Executable must start with "/".
+        if !executable.hasPrefix("/") {
+            return "no absolute path set"
+        }
+
+        // Executable must end with "python" (case sensitive).
+        if !(executable.hasSuffix("python") || executable.hasSuffix("python3")) {
+            return "not supported"
+        }
+
+        // File must exist.
+        if !fileExists(path: executable) {
+            return "executable not found"
+
+        }
+
+        let (output, error, status) = executeCommand(command: executable, args: ["--version"])
+        if status == 0 {
+            // Python 2 returns version string in stderr, but Python 3 in stdout; exit code is always 0 though.
+            if output[0] != "" {
+                return output[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
+            }
+            if error[0] != "" {
+                return error[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
+            }
+        }
+
+        return nil
     }
     
     func getInfoSystemDefault(executable: String) -> String? {
