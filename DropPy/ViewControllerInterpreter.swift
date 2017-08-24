@@ -52,7 +52,7 @@ class ViewControllerInterpreter: NSViewController {
         }
         // String must not contain spaces, that's what the argument textfield is for.
         else if newExecutable.range(of:" ") != nil {
-            self.errorAlert(title: "Invalid executable", explanation: "The path to the executable must not contain spaces. Your input was adjusted. Please check the \"arguments\" textbox.")
+            self.errorAlert(title: "Invalid executable", explanation: "The path to the executable must not contain spaces.\n\nYour input was adjusted. Please check the \"arguments\" textbox.")
 
             var executableInvalidArray: Array = newExecutable.components(separatedBy: " ")
             
