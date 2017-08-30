@@ -73,7 +73,7 @@ class ViewControllerMain: NSViewController {
     func setLogo(notification: Notification) {
         if Workflows.activeLogoFilePath == "" {
             log.debug("Changing workflow logo to 'logo'.")
-            logoImage.image = self.resizeNSImage(image: NSImage(named: "logo")!, width:128, height:128)
+            logoImage.image = self.resizeNSImage(image: NSImage(named: "logo")!, width: 128, height: 128)
         } else {
             if let newLogo = NSImage(contentsOfFile: Workflows.activeLogoFilePath) {
                 log.debug("Workflow logo loaded successfully from '\(Workflows.activeLogoFilePath)'.")
@@ -81,7 +81,7 @@ class ViewControllerMain: NSViewController {
             } else {
                 log.error("Can't load workflow logo from '\(Workflows.activeLogoFilePath).")
                 log.debug("Changing workflow logo to 'logo'.")
-                logoImage.image = self.resizeNSImage(image: NSImage(named: "logo")!, width:128, height:128)
+                logoImage.image = self.resizeNSImage(image: NSImage(named: "logo")!, width: 128, height: 128)
             }
         }
     }
@@ -89,7 +89,7 @@ class ViewControllerMain: NSViewController {
     func setZoneLogoError(notification: Notification) {
         if Workflows.activeLogoFilePath == "" {
             log.debug("Changing workflow logo to 'error'.")
-            logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!, width:128, height:128)
+            logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!, width: 128, height: 128)
             
             log.debug("Changing zone image to 'zone-error'.")
             zoneImage.image = NSImage(named: "zone-error")
@@ -97,6 +97,7 @@ class ViewControllerMain: NSViewController {
     }
     
     func resizeNSImage(image: NSImage, width: Int, height: Int) -> NSImage {
+        log.debug("begin resizing")
         let destSize = NSMakeSize(CGFloat(width), CGFloat(height))
         let newImage = NSImage(size: destSize)
         newImage.lockFocus()
@@ -109,6 +110,10 @@ class ViewControllerMain: NSViewController {
     }
     
     func runScriptJson(path: String) {
+        // TODO the following does not work, because the function is not called on the instance but without an instance!
+        // Result: bachball is found (not nil) but logoImage.image is nil and can't be set
+        // logoImage.image = self.resizeNSImage(image: NSImage(named: "beachball"), width: 128, height: 128)
+
         // On default passing -B to not get a __pycache__folder, the full path to run.py and the full path to the json file
         // The final output of the command is empty, no point in printing it to the log, the piped messages already are printed
         
