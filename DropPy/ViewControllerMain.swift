@@ -25,31 +25,6 @@ class ViewControllerMain: NSViewController {
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setZoneDashed(notification:)),
-                                               name: Notification.Name("draggingExited"),
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setZoneDashed(notification:)),
-                                               name: Notification.Name("draggingEnded"),
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogo(notification:)),
-                                               name: Notification.Name("draggingExited"),
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogo(notification:)),
-                                               name: Notification.Name("draggingEnded"),
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogo(notification:)),
-                                               name: Notification.Name("workflowSelectionChanged"),
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setZoneLogoError(notification:)),
                                                name: Notification.Name("draggingEnteredNoWorkflowSelected"),
                                                object: nil)
@@ -58,6 +33,37 @@ class ViewControllerMain: NSViewController {
                                                selector: #selector(ViewControllerMain.setZoneLogoError(notification:)),
                                                name: Notification.Name("draggingUpdatedNoWorkflowSelected"),
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setZoneDashed(notification:)),
+                                               name: Notification.Name("draggingExited"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setLogo(notification:)),
+                                               name: Notification.Name("draggingExited"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setLogo(notification:)),
+                                               name: Notification.Name("workflowSelectionChanged"),
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setLogoBeachball(notification:)),
+                                               name: Notification.Name("droppingOk"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setZoneDashed(notification:)),
+                                               name: Notification.Name("executionFinished"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setLogo(notification:)),
+                                               name: Notification.Name("executionFinished"),
+                                               object: nil)
+
     }
     
     func setZoneDashed(notification: Notification) {
@@ -72,23 +78,28 @@ class ViewControllerMain: NSViewController {
     
     func setLogo(notification: Notification) {
         if Workflows.activeLogoFilePath == "" {
-            log.debug("Changing workflow logo to 'logo'.")
-            logoImage.image = self.resizeNSImage(image: NSImage(named: "logo")!, width: 128, height: 128)
+            log.debug("Changing logo image to 'logo-default'.")
+            logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
         } else {
             if let newLogo = NSImage(contentsOfFile: Workflows.activeLogoFilePath) {
-                log.debug("Workflow logo loaded successfully from '\(Workflows.activeLogoFilePath)'.")
+                log.debug("Changing logo image to '\(Workflows.activeLogoFilePath)'.")
                 logoImage.image = self.resizeNSImage(image: newLogo, width:128, height:128)
             } else {
                 log.error("Can't load workflow logo from '\(Workflows.activeLogoFilePath).")
-                log.debug("Changing workflow logo to 'logo'.")
-                logoImage.image = self.resizeNSImage(image: NSImage(named: "logo")!, width: 128, height: 128)
+                log.debug("Changing logo image to 'logo-default'.")
+                logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
             }
         }
     }
     
+    func setLogoBeachball(notification: Notification) {
+        log.debug("Changing logo image to 'logo-beachball'.")
+        logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-beachball")!, width: 128, height: 128)
+    }
+    
     func setZoneLogoError(notification: Notification) {
         if Workflows.activeLogoFilePath == "" {
-            log.debug("Changing workflow logo to 'error'.")
+            log.debug("Changing logo image to 'error'.")
             logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!, width: 128, height: 128)
             
             log.debug("Changing zone image to 'zone-error'.")
@@ -97,7 +108,6 @@ class ViewControllerMain: NSViewController {
     }
     
     func resizeNSImage(image: NSImage, width: Int, height: Int) -> NSImage {
-        log.debug("begin resizing")
         let destSize = NSMakeSize(CGFloat(width), CGFloat(height))
         let newImage = NSImage(size: destSize)
         newImage.lockFocus()

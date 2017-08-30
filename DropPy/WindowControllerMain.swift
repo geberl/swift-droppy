@@ -16,6 +16,8 @@ class WindowControllerMain: NSWindowController {
     
     @IBOutlet weak var ToolbarDropdown: NSMenu!
     
+    @IBOutlet weak var actionButtons: NSSegmentedControl!
+    
     @IBAction func ToolbarActions(_ sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
             self.editWorkflow()
@@ -45,31 +47,63 @@ class WindowControllerMain: NSWindowController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.unupportedType(notification:)),
                                                name: Notification.Name("unsupportedType"), object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(WindowControllerMain.disableToolbar(notification:)),
+                                               name: Notification.Name("droppingOk"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(WindowControllerMain.enableToolbar(notification:)),
+                                               name: Notification.Name("executionFinished"),
+                                               object: nil)
+    }
+    
+    func disableToolbar(notification: Notification){
+        for menuItem in ToolbarDropdown.items {
+            menuItem.isEnabled = false
+        }
+        actionButtons.setEnabled(false, forSegment: 0)
+        actionButtons.setEnabled(false, forSegment: 1)
+        actionButtons.setEnabled(false, forSegment: 2)
+    }
+    
+    func enableToolbar(notification: Notification){
+        for menuItem in ToolbarDropdown.items {
+            menuItem.isEnabled = true
+        }
+        actionButtons.setEnabled(true, forSegment: 0)
+        actionButtons.setEnabled(true, forSegment: 1)
+        actionButtons.setEnabled(true, forSegment: 2)
     }
 
     func refreshToolbarDropdown(notification: Notification){
-        log.debug("Toolbar Dropdown refreshing")
-        
-        // Start fresh with an empty dropdown
+        self.refreshToolbarDropdown()
+    }
+    
+    func refreshToolbarDropdown() {
+        // Start fresh with an empty dropdown.
         ToolbarDropdown.removeAllItems()
         
-        // Add the empty string placeholder item to the dropdown
+        // Add the empty string placeholder item to the dropdown.
         let placeholderMenuItem = NSMenuItem()
         placeholderMenuItem.title = ""
         placeholderMenuItem.target = self
         placeholderMenuItem.action = #selector(selectEmptyWorkflow)
+        placeholderMenuItem.isEnabled = true
         ToolbarDropdown.addItem(placeholderMenuItem)
         
-        // Sort Workflow names alphabetically
+        // Sort Workflow names alphabetically.
         let allWorkflowNames:[String] = NSDictionary(dictionary: Workflows.workflows).allKeys as! [String]
         let sortedWorkflowNames = allWorkflowNames.sorted(){ $0 < $1 }
-
-        // Add Workflows to the dropdown in that order
+        
+        // Add Workflows to the dropdown in that order.
         for name:String in sortedWorkflowNames {
             let newMenuItem = NSMenuItem()
             newMenuItem.title = name
             newMenuItem.target = self
             newMenuItem.action = #selector(workflowSelectionChanged)
+            newMenuItem.isEnabled = true
             ToolbarDropdown.addItem(newMenuItem)
         }
     }

@@ -31,6 +31,7 @@
 		A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */; };
 		A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */; };
 		A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */; };
+		A4C61CF11F56982900759F57 /* PythonExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C61CF01F56982900759F57 /* PythonExecutor.swift */; };
 		A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */; };
 		A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E8DF931EDAA29100D12029 /* DragDropView.swift */; };
 /* End PBXBuildFile section */
@@ -88,6 +89,7 @@
 		A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerGeneral.swift; sourceTree = "<group>"; };
 		A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerInterpreter.swift; sourceTree = "<group>"; };
 		A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWorkspace.swift; sourceTree = "<group>"; };
+		A4C61CF01F56982900759F57 /* PythonExecutor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PythonExecutor.swift; sourceTree = "<group>"; };
 		A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerMain.swift; sourceTree = "<group>"; };
 		A4E8DF931EDAA29100D12029 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
 		FAC7B670493565E826211E5E /* Pods-DropPyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */,
 				A46393321E8FDA40000C7BDB /* ViewControllerMain.swift */,
 				A4E8DF931EDAA29100D12029 /* DragDropView.swift */,
+				A4C61CF01F56982900759F57 /* PythonExecutor.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4C61CF11F56982900759F57 /* PythonExecutor.swift in Sources */,
 				A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */,
 				A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */,
 				A46CE6BA1F459BEE000DEACB /* WindowControllerEditor.swift in Sources */,

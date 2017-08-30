@@ -173,17 +173,17 @@
                         <value key="maxSize" type="size" width="250" height="250"/>
                         <toolbar key="toolbar" implicitIdentifier="1C08101E-D7FF-456A-B98E-59B42D514B29" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="j1u-W3-IBL">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="65D732F6-BFE0-4AC5-A280-1513F43D0724" label="Workflows" paletteLabel="Workflows" id="OaY-gx-Bv8">
+                                <toolbarItem implicitItemIdentifier="65D732F6-BFE0-4AC5-A280-1513F43D0724" label="Workflows" paletteLabel="Workflows" autovalidates="NO" id="OaY-gx-Bv8">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="100" height="28"/>
                                     <size key="maxSize" width="130" height="28"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="RIK-BI-TL9">
                                         <rect key="frame" x="0.0" y="14" width="120" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="roundTextured" title="Item 1" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="7y1-tf-Tks" id="WFo-KC-yyW">
+                                        <popUpButtonCell key="cell" type="roundTextured" title="Item 1" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="7y1-tf-Tks" id="WFo-KC-yyW">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
-                                            <menu key="menu" id="38u-Uk-gZ8">
+                                            <menu key="menu" autoenablesItems="NO" id="38u-Uk-gZ8">
                                                 <items>
                                                     <menuItem title="Item 1" state="on" id="7y1-tf-Tks"/>
                                                     <menuItem title="Item 2" id="1gj-R0-RyO"/>
@@ -228,6 +228,7 @@
                     </window>
                     <connections>
                         <outlet property="ToolbarDropdown" destination="38u-Uk-gZ8" id="vUB-wz-bZK"/>
+                        <outlet property="actionButtons" destination="wrr-nz-pw1" id="aUt-d0-Wtl"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
                 </windowController>
@@ -246,7 +247,7 @@
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GMI-Zz-XD4">
                                 <rect key="frame" x="64" y="66" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" identifier="Logo" imageScaling="proportionallyDown" image="logo" id="DVK-e3-Ngl" userLabel="LogoImage"/>
+                                <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" identifier="Logo" imageScaling="proportionallyDown" image="logo-default" id="DVK-e3-Ngl" userLabel="LogoImage"/>
                             </imageView>
                             <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYf-lE-mJ8">
                                 <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
@@ -273,7 +274,7 @@
         <image name="ButtonAdd" width="19" height="19"/>
         <image name="ButtonEdit" width="19" height="19"/>
         <image name="ButtonFolder" width="19" height="19"/>
-        <image name="logo" width="128" height="128"/>
+        <image name="logo-default" width="128" height="128"/>
         <image name="zone-dashed" width="256" height="256"/>
     </resources>
 </document>

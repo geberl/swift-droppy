@@ -78,8 +78,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
             NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
         }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(AppDelegate.startPythonExecutor(notification:)),
+                                               name: Notification.Name("droppingOk"),
+                                               object: nil)
     }
-    
+
+    func startPythonExecutor(notification: Notification) {
+        log.debug("function startPythonExecutor called")
+        _ = PythonExecutor()
+        //NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
+        log.debug("function startPythonExecutor finished")
+    }
+
     func applicationWillTerminate(_ notification: Notification) {
         self.savePosition()
         log.enabled = false
@@ -254,7 +266,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func reloadWorkflows() -> Bool {
         let workflowDir = "\(userDefaults.string(forKey: UserDefaultStruct.workspacePath) ?? "no default")/Workflows"
-        log.debug("Reloading Workflows from '\(workflowDir)'.")
+        //log.debug("Reloading Workflows from '\(workflowDir)'.")
 
         let fileManager = FileManager.default
         let enumerator: FileManager.DirectoryEnumerator = fileManager.enumerator(atPath: workflowDir)!
@@ -293,37 +305,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Check for added and edited workflows (the-one-way)
         for (name, _):(String, Dictionary<String, Any>) in workflowsNew {
             if workflowsOld[name] != nil {
-                log.debug("Workflow '\(name)' was present before.")
+                //log.debug("Workflow '\(name)' was present before.")
                 
                 if workflowsOld[name]?["file"] as! String != workflowsNew[name]?["file"] as! String {
-                    log.debug("Workflow '\(name)' file has changed, changes detected, reloading.")
+                    //log.debug("Workflow '\(name)' file has changed, changes detected, reloading.")
                     return true
                 } else {
-                    log.debug("Workflow '\(name)' file is identical.")
+                    //log.debug("Workflow '\(name)' file is identical.")
                 }
                 
                 if workflowsOld[name]?["image"] as! String != workflowsNew[name]?["image"] as! String {
-                    log.debug("Workflow '\(name)' image has changed, changes detected, reloading.")
+                    //log.debug("Workflow '\(name)' image has changed, changes detected, reloading.")
                     return true
                 } else {
-                log.debug("Workflow '\(name)' image is identical.")
+                //log.debug("Workflow '\(name)' image is identical.")
                 }
                 
                 if workflowsOld[name]?["interpreterName"] as! String != workflowsNew[name]?["interpreterName"] as! String {
-                    log.debug("Workflow '\(name)' interpreterName has changed, changes detected, reloading.")
+                    //log.debug("Workflow '\(name)' interpreterName has changed, changes detected, reloading.")
                     return true
                 } else {
-                    log.debug("Workflow '\(name)' interpreterName is identical.")
+                    //log.debug("Workflow '\(name)' interpreterName is identical.")
                 }
                 
                 if workflowsOld[name]?["accepts"] as! Array<String> != workflowsNew[name]?["accepts"] as! Array<String> {
-                    log.debug("Workflow '\(name)' accepted objects have changed, changes detected, reloading.")
+                    //log.debug("Workflow '\(name)' accepted objects have changed, changes detected, reloading.")
                     return true
                 } else {
-                    log.debug("Workflow '\(name)' accepted objects are identical.")
+                    //log.debug("Workflow '\(name)' accepted objects are identical.")
                 }
             } else {
-                log.debug("Workflow '\(name) was NOT present before, changes detected, reloading.")
+                //log.debug("Workflow '\(name) was NOT present before, changes detected, reloading.")
                 return true
             }
         }
@@ -331,9 +343,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Check for removed workflows (the-other-way)
         for (name, _):(String, Dictionary<String, Any>) in workflowsOld {
             if workflowsNew[name] != nil {
-                log.debug("Workflow '\(name)' is still present.")
+                //log.debug("Workflow '\(name)' is still present.")
             } else {
-                log.debug("Workflow '\(name)' was removed, changes detected, reloading.")
+                //log.debug("Workflow '\(name)' was removed, changes detected, reloading.")
                 return true
             }
         }

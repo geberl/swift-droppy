@@ -70,10 +70,6 @@ class DragDropView: NSView {
             }
         }
     }
-
-    override func draggingEnded(_ sender: NSDraggingInfo?) {
-        NotificationCenter.default.post(name: Notification.Name("draggingEnded"), object: nil)
-    }
     
     override func draggingExited(_ sender: NSDraggingInfo?) {
         NotificationCenter.default.post(name: Notification.Name("draggingExited"), object: nil)
@@ -83,38 +79,41 @@ class DragDropView: NSView {
         // Process files if a Workflow was selected and the Workflow supports the dropped object type.
         // Otherwise error messages are displayed afterwards, in concludeDragOperation.
 
-        if workflowIsSelected && droppedTypeIsSupported {
-            if let board = sender.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
-                // Save paths in bulk to one json file
-                do {
-                    // Get the current datetime as a string
-                    let stringFromDate = Date().iso8601
-                
-                    // Create SwiftyJSON object
-                    let jsonObject: JSON = ["datetime start": stringFromDate,
-                                            "datetime end": "",
-                                            "workflow": Workflows.activeJsonFile,
-                                            "items": board]
-                
-                    // Convert SwiftyJSON object to string
-                    let jsonString = jsonObject.description
-                
-                    // Setup objects needed for directory and file access
-                    let tempDir: URL = FileManager.default.temporaryDirectory
-                    let filePath: URL = tempDir.appendingPathComponent("droppy_date_here.json")
-                
-                    // Write json string to file, this overwrites a preexisting file here
-                    try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
-                
-                    // Send json file path to a function in ViewController
-                    // TODO this is not called on a live instance but just by accessing its parent class!
-                    // Also work with a notification here and pass the needed data like I did in loadFile in ViewControllerEditor
-                    ViewControllerMain().runScriptJson(path: filePath.path)
-                } catch {
-                    log.error(error.localizedDescription)
-                }
-            }
-        }
+        //if workflowIsSelected && droppedTypeIsSupported {
+            
+            
+            
+//            if let board = sender.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
+//                // Save paths in bulk to one json file
+//                do {
+//                    // Get the current datetime as a string
+//                    let stringFromDate = Date().iso8601
+//                
+//                    // Create SwiftyJSON object
+//                    let jsonObject: JSON = ["datetime start": stringFromDate,
+//                                            "datetime end": "",
+//                                            "workflow": Workflows.activeJsonFile,
+//                                            "items": board]
+//                
+//                    // Convert SwiftyJSON object to string
+//                    let jsonString = jsonObject.description
+//                
+//                    // Setup objects needed for directory and file access
+//                    let tempDir: URL = FileManager.default.temporaryDirectory
+//                    let filePath: URL = tempDir.appendingPathComponent("droppy_date_here.json")
+//                
+//                    // Write json string to file, this overwrites a preexisting file here
+//                    try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
+//                
+//                    // Send json file path to a function in ViewController
+//                    // TODO this is not called on a live instance but just by accessing its parent class!
+//                    // Also work with a notification here and pass the needed data like I did in loadFile in ViewControllerEditor
+//                    ViewControllerMain().runScriptJson(path: filePath.path)
+//                } catch {
+//                    log.error(error.localizedDescription)
+//                }
+//            }
+        //}
         return true
     }
     
@@ -126,7 +125,20 @@ class DragDropView: NSView {
             NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
         } else if !droppedTypeIsSupported {
             NotificationCenter.default.post(name: Notification.Name("unsupportedType"), object: nil)
+        } else {
+            
+            // The pasteboard content (=file paths) is still accessible here, this is good
+            // Later attach this list to the notification
+            
+            //if let board = sender?.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
+            //    for item in board {
+            //        log.debug("\(item)")
+            //    }
+            //}
+            
+            NotificationCenter.default.post(name: Notification.Name("droppingOk"), object: nil)
         }
+        
     }
     
     func checkType(sender: NSDraggingInfo) -> Bool {
@@ -157,7 +169,7 @@ class DragDropView: NSView {
                     // iTunes (album, song)
                     // Mail (email)
                     // Calendar (item)
-                    log.debug("Returning: return url")
+                    log.debug("Returning: url")
                     return false
                 }
             } else if acceptedType == "image" {
