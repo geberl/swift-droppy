@@ -64,6 +64,8 @@ struct Workflows {
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     let userDefaults = UserDefaults.standard
+    
+    var executionInProgress: Bool = false
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         log.enabled = true
@@ -90,19 +92,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func startPythonExecutor(notification: Notification) {
-        DispatchQueue.global(qos: .background).async {
-            if let filePaths = notification.userInfo?["filePaths"] as? [String] {
-                let pythonExecutor = PythonExecutor(workflowFile: Workflows.activeJsonFile,
-                                                    filePaths: filePaths)
-                pythonExecutor.run()
-            }
-            DispatchQueue.main.async {
-                self.endPythonExecutor()
+        // Notification is sometimes sent (or received ?) twice.
+        // This workaround prevents multiple instantiation and execution of PythonExecutor.
+        if !executionInProgress {
+            executionInProgress = true
+
+            DispatchQueue.global(qos: .background).async {
+                if let filePaths = notification.userInfo?["filePaths"] as? [String] {
+                    let pythonExecutor = PythonExecutor(workflowFile: Workflows.activeJsonFile,
+                                                        filePaths: filePaths)
+                    pythonExecutor.run()
+                }
+                DispatchQueue.main.async {
+                    self.endPythonExecutor()
+                }
             }
         }
     }
 
     func endPythonExecutor() {
+        executionInProgress = false
         NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
     }
 
@@ -112,7 +121,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        // Actually quit the application when the user closes the window
+        // Actually quit the application when the user closes the window.
         return true
     }
 

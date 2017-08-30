@@ -55,18 +55,23 @@ class PythonExecutor: NSObject {
         log.debug(tempPath)
         print(isDir(path: tempPath))
 
-        for filePath in self.filePaths {
-            log.debug(filePath)
+        for (index, filePath) in self.filePaths.enumerated() {
+            let statusDict:[String: String] = ["taskCurrent": "1",
+                                               "taskTotal": "1",
+                                               "fileCurrent": String(index + 1),
+                                               "fileTotal": String(self.filePaths.count)]
+            NotificationCenter.default.post(name: Notification.Name("executionStatus"),
+                                            object: nil,
+                                            userInfo: statusDict)
+            
+            let (output, error, status) = executeCommand(command: "/bin/sleep", args: ["10"])
+            log.debug("o \(output)")
+            log.debug("e \(error)")
+            log.debug("s \(status)")
         }
-
-        let (output, error, status) = executeCommand(command: "/bin/sleep", args: ["2"])
-        log.debug("o \(output)")
-        log.debug("e \(error)")
-        log.debug("s \(status)")
 
         log.debug("pythonExecutor run finished")
     }
-
 }
 
 
