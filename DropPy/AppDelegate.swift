@@ -10,10 +10,12 @@ import Cocoa
 import Willow
 import SwiftyJSON
 
+
 // Logger configuration
 let modifiers: [LogLevel: [LogMessageModifier]] = [.all: [TimestampModifier()]]
 let configuration = LoggerConfiguration(modifiers: modifiers)
 let log = Logger(configuration: configuration)
+
 
 struct UserDefaultStruct {
     // This struct ALWAYS needs to contain TWO static variables for each plist record.
@@ -45,6 +47,7 @@ struct UserDefaultStruct {
                                                                           "arguments": "-B"]]
 }
 
+
 // Workflows object
 struct Workflows {
     static var workflows = [String: Dictionary<String, Any>]()
@@ -55,6 +58,7 @@ struct Workflows {
     static var activeJsonFile = "" as String
     static var activeLogoFilePath = "" as String
 }
+
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -78,7 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
             NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
         }
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(AppDelegate.startPythonExecutor(notification:)),
                                                name: Notification.Name("droppingOk"),
@@ -86,17 +90,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func startPythonExecutor(notification: Notification) {
-        log.debug("function startPythonExecutor called")
-        _ = PythonExecutor()
-        //NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
-        log.debug("function startPythonExecutor finished")
+        DispatchQueue.global(qos: .background).async {
+            log.debug("This is run on the background queue")
+            _ = PythonExecutor()
+            DispatchQueue.main.async {
+                self.endPythonExecutor()
+            }
+        }
+    }
+
+    func endPythonExecutor() {
+        NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
     }
 
     func applicationWillTerminate(_ notification: Notification) {
         self.savePosition()
         log.enabled = false
     }
-    
+
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         // Actually quit the application when the user closes the window
         return true
@@ -106,11 +117,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let wcSb = NSStoryboard(name: "Preferences", bundle: Bundle.main)
         return wcSb.instantiateInitialController() as! WindowControllerPrefs
     }()
-    
+
     @IBAction func showPreferencesWindow(_ sender: NSMenuItem) {
         self.preferencesWindowController.showWindow(self)
     }
-    
+
     lazy var registrationWindowController: WindowControllerRegistration  = {
         let wcSb = NSStoryboard(name: "Registration", bundle: Bundle.main)
         return wcSb.instantiateInitialController() as! WindowControllerRegistration
@@ -355,6 +366,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
+
 func directoryExists(path: String) -> Bool {
     let fileManager = FileManager.default
     var isDir : ObjCBool = true
@@ -365,6 +377,7 @@ func directoryExists(path: String) -> Bool {
     }
 }
 
+
 func fileExists(path: String) -> Bool {
     let fileManager = FileManager.default
     var isDir : ObjCBool = false
@@ -373,40 +386,4 @@ func fileExists(path: String) -> Bool {
     } else {
         return false
     }
-}
-
-func executeCommand(command: String, args: [String]) -> (output: [String], error: [String], exitCode: Int32) {
-    // TODO probably not ok with the app sandbox.
-    // Source: https://stackoverflow.com/questions/29514738/get-terminal-output-after-a-command-swift#29519615
-    
-    var output : [String] = []
-    var error : [String] = []
-    
-    let task = Process()
-    task.launchPath = command
-    task.arguments = args
-    
-    let outpipe = Pipe()
-    task.standardOutput = outpipe
-    let errpipe = Pipe()
-    task.standardError = errpipe
-    
-    task.launch()
-
-    let outdata = outpipe.fileHandleForReading.readDataToEndOfFile()
-    if var string = String(data: outdata, encoding: .utf8) {
-        string = string.trimmingCharacters(in: .newlines)
-        output = string.components(separatedBy: "\n")
-    }
-    
-    let errdata = errpipe.fileHandleForReading.readDataToEndOfFile()
-    if var string = String(data: errdata, encoding: .utf8) {
-        string = string.trimmingCharacters(in: .newlines)
-        error = string.components(separatedBy: "\n")
-    }
-    
-    task.waitUntilExit()
-    let status = task.terminationStatus
-    
-    return (output, error, status)
 }
