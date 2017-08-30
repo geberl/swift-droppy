@@ -122,8 +122,6 @@ class DragDropView: NSView {
             //                    try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
             //
             //                    // Send json file path to a function in ViewController
-            //                    // TODO this is not called on a live instance but just by accessing its parent class!
-            //                    // Also work with a notification here and pass the needed data like I did in loadFile in ViewControllerEditor
             //                    ViewControllerMain().runScriptJson(path: filePath.path)
             //                } catch {
             //                    log.error(error.localizedDescription)

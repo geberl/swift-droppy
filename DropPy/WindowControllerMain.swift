@@ -257,7 +257,7 @@ class WindowControllerMain: NSWindowController {
     }
 
     func unupportedType(notification: Notification) {
-        // TODO support more types
+        // TODO: Support more types.
         let alert = NSAlert()
         alert.messageText = "Unsupported Type"
         alert.informativeText = "The object you dropped isn't supported by the Workflow \"\(Workflows.activeAccepts)\"."

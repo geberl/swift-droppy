@@ -35,7 +35,7 @@ struct UserDefaultStruct {
     static var editorIconPath: String = "editorIconPath"
     static var editorIconPathDefault: String = ""
     static var editorForWorkflows: String = "editorForWorkflows"
-    static var editorForWorkflowsDefault: String = "Internal text editor" // Todo: Later "Internal Workflow editor" once done
+    static var editorForWorkflowsDefault: String = "Internal text editor" // TODO: Set "Internal Workflow editor" as default once done.
     static var editorForTasks: String = "editorForTasks"
     static var editorForTasksDefault: String = "Internal text editor"
     
@@ -142,7 +142,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func loadUserDefaults() {
-        // TODO have a button to reset everthing to defaults in advanced tab of preferences instead (closes the app also)
+        // TODO: Create a button to reset everthing (but registration info and demo start datetime) to defaults in advanced tab of preferences instead (closes the app also)
         // self.clearUserDefaults()
         
         // User's DropPy Workspace directory
@@ -158,8 +158,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // First Run Experience
             self.firstRunWindowController.showWindow(self)
         } else {
-            // Check if the set Workspace directory actually still exists, if not open preferences and prompt to change
-            // TODO
+            // TODO:Check if the set Workspace directory actually still exists, if not open preferences and prompt to change
         }
         
         // Dev mode.

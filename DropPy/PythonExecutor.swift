@@ -44,9 +44,9 @@ class PythonExecutor: NSObject {
 
 
 func executeCommand(command: String, args: [String]) -> (output: [String], error: [String], exitCode: Int32) {
-    // TODO probably not ok with the app sandbox.
+    // This is probably not ok with the app sandbox. Untested though.
     // Source: https://stackoverflow.com/questions/29514738/get-terminal-output-after-a-command-swift#29519615
-    
+
     var output: [String] = []
     var error: [String] = []
     var status: Int32
