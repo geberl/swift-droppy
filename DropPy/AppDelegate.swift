@@ -378,39 +378,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 
-func isDir(path: String) -> Bool {
-    let fileUrl = URL(fileURLWithPath: path)
-    if let values = try? fileUrl.resourceValues(forKeys: [.isDirectoryKey]) {
-        if values.isDirectory! {
-            return true  // a directory.
-        } else {
-            return false  // a file.
-        }
-    }
-    return false  // path not accessible at all.
-}
 
-
-func isFile(path: String) -> Bool {
-    let fileUrl = URL(fileURLWithPath: path)
-    if let values = try? fileUrl.resourceValues(forKeys: [.isDirectoryKey]) {
-        if values.isDirectory! {
-            return false  // not a file but a directory.
-        } else {
-            return true  // a file.
-        }
-    }
-    return false  // path not accessible at all.
-}
-
-
-func makeDirs(path: String) {
-    let filemgr = FileManager.default
-    do {
-        try filemgr.createDirectory(atPath: path,
-                                    withIntermediateDirectories: true,
-                                    attributes: nil)
-    } catch let error as NSError {
-        log.error(error.localizedDescription)
-    }
-}

@@ -13,6 +13,7 @@
 		A417ACE41EED7AFD00C08DED /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A417ACE21EED7AFD00C08DED /* Preferences.storyboard */; };
 		A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A417ACE51EED7D5300C08DED /* WindowControllerPrefs.swift */; };
 		A4180BBF1EED312B006A4B24 /* TabViewControllerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4180BBD1EED312B006A4B24 /* TabViewControllerPrefs.swift */; };
+		A41A701B1F57354100117E18 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41A701A1F57354100117E18 /* Common.swift */; };
 		A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432EA711EED81BB00DCF128 /* ViewControllerEditorPrefs.swift */; };
 		A444507D1EF0EC5600EBB485 /* FirstRun.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */; };
 		A444507F1EF0EDD200EBB485 /* WindowControllerFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A444507E1EF0EDD200EBB485 /* WindowControllerFirstRun.swift */; };
@@ -65,6 +66,7 @@
 		A417ACE31EED7AFD00C08DED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Preferences.storyboard; sourceTree = "<group>"; };
 		A417ACE51EED7D5300C08DED /* WindowControllerPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerPrefs.swift; sourceTree = "<group>"; };
 		A4180BBD1EED312B006A4B24 /* TabViewControllerPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabViewControllerPrefs.swift; path = ../TabViewControllerPrefs.swift; sourceTree = "<group>"; };
+		A41A701A1F57354100117E18 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		A432EA711EED81BB00DCF128 /* ViewControllerEditorPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEditorPrefs.swift; sourceTree = "<group>"; };
 		A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FirstRun.storyboard; sourceTree = "<group>"; };
 		A444507E1EF0EDD200EBB485 /* WindowControllerFirstRun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerFirstRun.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				A46393301E8FDA40000C7BDB /* AppDelegate.swift */,
+				A41A701A1F57354100117E18 /* Common.swift */,
 				A46022751EED37F00060FA75 /* Main */,
 				A46CE6B61F459A0B000DEACB /* Editor */,
 				A48706361F567D1B005EF67C /* Registration */,
@@ -549,6 +552,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A41A701B1F57354100117E18 /* Common.swift in Sources */,
 				A4C61CF11F56982900759F57 /* PythonExecutor.swift in Sources */,
 				A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */,
 				A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */,
