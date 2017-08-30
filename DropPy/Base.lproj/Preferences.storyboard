@@ -355,7 +355,7 @@
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C5W-DT-2FU">
                                 <rect key="frame" x="426" y="133" width="306" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="DropPy supports for example VS Code, MacVim, NeoVim or Atom." id="9Jy-av-xdj">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="DropPy supports for example VS Code, MacVim, Sublime Text or Atom." id="9Jy-av-xdj">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
