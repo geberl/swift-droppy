@@ -70,7 +70,7 @@ class ViewControllerInterpreter: NSViewController {
             self.editArguments(interpreterName: selectedInterpreterName, newArguments: newArguments)
         }
         // File must exist.
-        else if !fileExists(path: newExecutable) {
+        else if !isFile(path: newExecutable) {
             self.errorAlert(title: "Invalid executable", explanation: "File not found. Check executable path.")
         }
         // String must end with "python" (case sensitive on purpose).
@@ -219,7 +219,7 @@ class ViewControllerInterpreter: NSViewController {
         }
 
         // File must exist.
-        if !fileExists(path: executable) {
+        if !isFile(path: executable) {
             return "executable not found"
 
         }
@@ -252,14 +252,15 @@ class ViewControllerInterpreter: NSViewController {
     
     func getInfoVirtualEnv(executable: String) -> String? {
         
-        if fileExists(path: executable) {
+        // Check for existance of interpreter executable.
+        if isFile(path: executable) {
             
             // Check for existence of "activate" script in same folder as executable.
             var fileURL: URL = URL(fileURLWithPath: executable)
             fileURL = fileURL.deletingLastPathComponent()
             fileURL.appendPathComponent("activate")
 
-            if fileExists(path: fileURL.path) == true {
+            if isFile(path: fileURL.path) == true {
                 return "yes"
             } else {
                 return "no"

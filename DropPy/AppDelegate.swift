@@ -91,8 +91,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func startPythonExecutor(notification: Notification) {
         DispatchQueue.global(qos: .background).async {
-            log.debug("This is run on the background queue")
-            _ = PythonExecutor()
+            let pythonExecutor = PythonExecutor(interpreter: "a", workflow: "b")
+            pythonExecutor.run()
             DispatchQueue.main.async {
                 self.endPythonExecutor()
             }
@@ -172,7 +172,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
         } else {
             // The key exists, now check if the specified editor (app) also still exists on the system.
-            if !directoryExists(path: userDefaults.string(forKey: UserDefaultStruct.editorAppPath)!) {
+            if !isDir(path: userDefaults.string(forKey: UserDefaultStruct.editorAppPath)!) {
                 userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
                 userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
                 userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
@@ -183,7 +183,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
         } else {
             // The key exists, now check if the specified editor (icns) also still exists on the system.
-            if !fileExists(path: userDefaults.string(forKey: UserDefaultStruct.editorIconPath)!) {
+            if !isFile(path: userDefaults.string(forKey: UserDefaultStruct.editorIconPath)!) {
                 userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
                 userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
                 userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
@@ -367,23 +367,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 
-func directoryExists(path: String) -> Bool {
-    let fileManager = FileManager.default
-    var isDir : ObjCBool = true
-    if fileManager.fileExists(atPath: path, isDirectory: &isDir) {
-        return true
-    } else {
-        return false
+func isDir(path: String) -> Bool {
+    let fileUrl = URL(fileURLWithPath: path)
+    if let values = try? fileUrl.resourceValues(forKeys: [.isDirectoryKey]) {
+        if values.isDirectory! {
+            return true  // a directory.
+        } else {
+            return false  // a file.
+        }
     }
+    return false  // path not accessible at all.
 }
 
 
-func fileExists(path: String) -> Bool {
-    let fileManager = FileManager.default
-    var isDir : ObjCBool = false
-    if fileManager.fileExists(atPath: path, isDirectory: &isDir) {
-        return true
-    } else {
-        return false
+func isFile(path: String) -> Bool {
+    let fileUrl = URL(fileURLWithPath: path)
+    if let values = try? fileUrl.resourceValues(forKeys: [.isDirectoryKey]) {
+        if values.isDirectory! {
+            return false  // not a file but a directory.
+        } else {
+            return true  // a file.
+        }
     }
+    return false  // path not accessible at all.
 }
