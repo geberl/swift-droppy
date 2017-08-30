@@ -393,3 +393,15 @@ func isFile(path: String) -> Bool {
     }
     return false  // path not accessible at all.
 }
+
+
+func makeDirs(path: String) {
+    let filemgr = FileManager.default
+    do {
+        try filemgr.createDirectory(atPath: path,
+                                    withIntermediateDirectories: true,
+                                    attributes: nil)
+    } catch let error as NSError {
+        log.error(error.localizedDescription)
+    }
+}

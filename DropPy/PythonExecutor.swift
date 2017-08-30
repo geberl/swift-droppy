@@ -12,11 +12,10 @@ import Cocoa
 class PythonExecutor: NSObject {
 
     let userDefaults = UserDefaults.standard
-    // I need:
-    // - debug mode yes or no (for temp files and log creation)
-    // - workflow directory (i only have the file name)
-    // - associated interpreter executable path
-    // - associated interpreter arguments
+
+    var userDefaultDevModeEnabled: Bool = false
+    var userDefaultWorkspacePath: String? = nil
+    var userDefaultInterpreters: Dictionary<String, Dictionary<String, String>> = [:]
 
     var workflowFile: String?
     var filePaths: [String]
@@ -24,23 +23,38 @@ class PythonExecutor: NSObject {
     init(workflowFile: String, filePaths: [String]) {
         self.workflowFile = workflowFile
         self.filePaths = filePaths
-
         super.init()
-
         self.loadSettings()
     }
 
     func loadSettings() {
-        log.debug("Loading needed settings now")
+        // It's only save to store the settings as they were on drop and access them from here.
+        // Since the app stays responsive the user could change the settings during execution.
+
+        userDefaultDevModeEnabled = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
+        userDefaultWorkspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath)
+        userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
     }
 
     func run() {
         log.debug("pythonExecutor run started")
 
-        if let workflowFile = self.workflowFile {
-            log.debug(workflowFile)
+        guard let workflowFile = self.workflowFile else { return }
+        guard let workspacePath = self.userDefaultWorkspacePath else { return }
+
+        let workflowPath = workspacePath + "/" + workflowFile
+        log.debug(workflowPath)
+
+        var tempPath: String = NSTemporaryDirectory()
+        if self.userDefaultDevModeEnabled {
+            tempPath = workspacePath + "/" + "Temp" + "/"
+            if !isDir(path: tempPath) {
+                makeDirs(path: tempPath)
+            }
         }
-        
+        log.debug(tempPath)
+        print(isDir(path: tempPath))
+
         for filePath in self.filePaths {
             log.debug(filePath)
         }
