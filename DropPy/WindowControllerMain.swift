@@ -189,6 +189,7 @@ class WindowControllerMain: NSWindowController {
                 } else if editorForWorkflows == "Internal text editor" {
                     self.editorWindowController.showWindow(self)
                     
+                    // Put path into dict inside Notification.
                     let pathDict:[String: String] = ["path": workflowFile]
                     NotificationCenter.default.post(name: Notification.Name("loadFileInEditor"), object: nil, userInfo: pathDict)
 

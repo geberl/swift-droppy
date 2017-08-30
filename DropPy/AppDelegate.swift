@@ -91,8 +91,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func startPythonExecutor(notification: Notification) {
         DispatchQueue.global(qos: .background).async {
-            let pythonExecutor = PythonExecutor(interpreter: "a", workflow: "b")
-            pythonExecutor.run()
+            if let filePaths = notification.userInfo?["filePaths"] as? [String] {
+                let pythonExecutor = PythonExecutor(workflowFile: Workflows.activeJsonFile,
+                                                    filePaths: filePaths)
+                pythonExecutor.run()
+            }
             DispatchQueue.main.async {
                 self.endPythonExecutor()
             }

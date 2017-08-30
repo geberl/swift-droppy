@@ -10,33 +10,46 @@ import Cocoa
 
 
 class PythonExecutor: NSObject {
-    
+
     let userDefaults = UserDefaults.standard
-    
-    var interpreter: String?
-    var workflow: String?
-    
-    init(interpreter: String, workflow: String) {
-        self.interpreter = interpreter
-        self.workflow = workflow
+    // I need:
+    // - debug mode yes or no (for temp files and log creation)
+    // - workflow directory (i only have the file name)
+    // - associated interpreter executable path
+    // - associated interpreter arguments
+
+    var workflowFile: String?
+    var filePaths: [String]
+
+    init(workflowFile: String, filePaths: [String]) {
+        self.workflowFile = workflowFile
+        self.filePaths = filePaths
+
+        super.init()
+
+        self.loadSettings()
     }
-    
+
+    func loadSettings() {
+        log.debug("Loading needed settings now")
+    }
+
     func run() {
-        if let interpreter = self.interpreter {
-            log.debug(interpreter)
+        log.debug("pythonExecutor run started")
+
+        if let workflowFile = self.workflowFile {
+            log.debug(workflowFile)
         }
         
-        if let workflow = self.workflow {
-            log.debug(workflow)
+        for filePath in self.filePaths {
+            log.debug(filePath)
         }
 
-        log.debug("pythonExecutor run started")
-        
         let (output, error, status) = executeCommand(command: "/bin/sleep", args: ["2"])
-        log.debug("\(output)")
-        log.debug("\(error)")
-        log.debug("\(status)")
-        
+        log.debug("o \(output)")
+        log.debug("e \(error)")
+        log.debug("s \(status)")
+
         log.debug("pythonExecutor run finished")
     }
 

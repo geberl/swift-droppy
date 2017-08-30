@@ -56,6 +56,7 @@ class ViewControllerEditor: NSViewController {
     }
     
     func loadFile(notification: Notification) {
+        // Extract path String from Notification.
         if let path = notification.userInfo?["path"] as? String {
             self.jsonPath = path
             self.setPathLabel(path: self.jsonPath)

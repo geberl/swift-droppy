@@ -88,16 +88,12 @@ class DragDropView: NSView {
         } else if !droppedTypeIsSupported {
             NotificationCenter.default.post(name: Notification.Name("unsupportedType"), object: nil)
         } else {
-            
-            // The pasteboard content (=file paths) is still accessible here, this is good
-            // Later attach this list to the notification
-            
-            //if let board = sender?.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
-            //    for item in board {
-            //        log.debug("\(item)")
-            //    }
-            //}
-            
+            if let board = sender?.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
+                // Put filePaths into dict inside Notification.
+                let pathDict:[String: NSArray] = ["filePaths": board]
+                NotificationCenter.default.post(name: Notification.Name("droppingOk"), object: nil, userInfo: pathDict)
+            }
+
             // Old version:
             //            if let board = sender.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
             //                // Save paths in bulk to one json file
@@ -127,10 +123,8 @@ class DragDropView: NSView {
             //                    log.error(error.localizedDescription)
             //                }
             //            }
-            
-            NotificationCenter.default.post(name: Notification.Name("droppingOk"), object: nil)
+
         }
-        
     }
     
     func checkType(sender: NSDraggingInfo) -> Bool {
