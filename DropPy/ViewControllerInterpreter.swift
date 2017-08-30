@@ -74,8 +74,8 @@ class ViewControllerInterpreter: NSViewController {
             self.errorAlert(title: "Invalid executable", explanation: "File not found. Check executable path.")
         }
         // String must end with "python" (case sensitive on purpose).
-        else if !(newExecutable.hasSuffix("python") || newExecutable.hasSuffix("python3")) {
-            self.errorAlert(title: "Invalid executable", explanation: "The path usually points to an executable named \"python\" or \"python3\".")
+        else if !(newExecutable.hasSuffix("python") || newExecutable.hasSuffix("python2") || newExecutable.hasSuffix("python3")) {
+            self.errorAlert(title: "Invalid executable", explanation: "The path usually points to an executable named \"python\", \"python2\" or \"python3\".")
         }
 
         // Save value anyways for better user experience.
@@ -213,8 +213,8 @@ class ViewControllerInterpreter: NSViewController {
             return "no absolute path set"
         }
 
-        // Executable must end with "python" (case sensitive).
-        if !(executable.hasSuffix("python") || executable.hasSuffix("python3")) {
+        // Executable must be a known "python" executable (case sensitive).
+        if !(executable.hasSuffix("python") || executable.hasSuffix("python2") || executable.hasSuffix("python3")) {
             return "not supported"
         }
 
