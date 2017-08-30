@@ -47,13 +47,13 @@ class PythonExecutor: NSObject {
 
         var tempPath: String = NSTemporaryDirectory()
         if self.userDefaultDevModeEnabled {
-            tempPath = workspacePath + "/" + "Temp" + "/"
+            let stringFromDate = Date().iso8601
+            tempPath = workspacePath + "/" + "Temp/" + stringFromDate + "/"
             if !isDir(path: tempPath) {
                 makeDirs(path: tempPath)
             }
         }
         log.debug(tempPath)
-        print(isDir(path: tempPath))
 
         for (index, filePath) in self.filePaths.enumerated() {
             let statusDict:[String: String] = ["taskCurrent": "1",
