@@ -223,24 +223,24 @@ class WindowControllerMain: NSWindowController {
                                     "accepts": ["file", "url"],
                                     "tasks": []]
         
-            // Convert SwiftyJSON object to string
+            // Convert SwiftyJSON object to string.
             let jsonString = jsonObject.description
         
-            // Setup objects needed for directory and file access
+            // Setup objects needed for directory and file access.
             let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
             let filePath: URL = NSURL.fileURL(withPath: "\(workspacePath)/Workflows/\(workflowFileName)")
         
-            // Write json string to file, this overwrites a preexisting file here
+            // Write json string to file, this overwrites a preexisting file here.
             try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
 
-            // Update global Workflow object
+            // Update global Workflow object.
             Workflows.activeInterpreterName = workflowInterpreterName
             Workflows.activeJsonFile = workflowFileName
             Workflows.activeName = workflowName
             Workflows.activeAccepts = ["file", "url"]
             Workflows.activeLogoFilePath = ""
         
-            // Open new file in editor
+            // Open new file in editor.
             self.editWorkflow()
         } catch {
             log.error(error.localizedDescription)

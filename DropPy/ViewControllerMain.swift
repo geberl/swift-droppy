@@ -10,9 +10,13 @@ import Cocoa
 
 
 class ViewControllerMain: NSViewController {
-    
+
     let userDefaults = UserDefaults.standard
-    
+
+    @IBOutlet weak var logoImageView: NSImageView!
+
+    @IBOutlet weak var zoneImageView: NSImageView!
+
     @IBOutlet weak var logoImage: NSImageCell!
     @IBOutlet weak var zoneImage: NSImageCell!
 
@@ -50,7 +54,7 @@ class ViewControllerMain: NSViewController {
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogoBeachball(notification:)),
+                                               selector: #selector(ViewControllerMain.setLogoSpinner(notification:)),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
         
@@ -65,18 +69,21 @@ class ViewControllerMain: NSViewController {
                                                object: nil)
 
     }
-    
+
     func setZoneDashed(notification: Notification) {
         log.debug("Changing zone image to 'zone-dashed'.")
         zoneImage.image = NSImage(named: "zone-dashed")
     }
-    
+
     func setZoneLine(notification: Notification) {
         log.debug("Changing zone image to 'zone-line'.")
         zoneImage.image = NSImage(named: "zone-line")
     }
-    
+
     func setLogo(notification: Notification) {
+        logoImageView.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+        logoImageView.animates = false
+
         if Workflows.activeLogoFilePath == "" {
             log.debug("Changing logo image to 'logo-default'.")
             logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
@@ -91,12 +98,16 @@ class ViewControllerMain: NSViewController {
             }
         }
     }
-    
-    func setLogoBeachball(notification: Notification) {
-        log.debug("Changing logo image to 'logo-beachball'.")
-        logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-beachball")!, width: 128, height: 128)
+
+    func setLogoSpinner(notification: Notification) {
+        log.debug("Changing logo image to 'logo-spinner'.")
+        if let asset = NSDataAsset(name: "logo-spinner", bundle: Bundle.main) {
+            logoImageView.imageScaling = NSImageScaling.scaleNone
+            logoImageView.animates = true
+            logoImage.image = NSImage(data: asset.data)
+        }
     }
-    
+
     func setZoneLogoError(notification: Notification) {
         if Workflows.activeLogoFilePath == "" {
             log.debug("Changing logo image to 'error'.")
@@ -106,7 +117,7 @@ class ViewControllerMain: NSViewController {
             zoneImage.image = NSImage(named: "zone-error")
         }
     }
-    
+
     func resizeNSImage(image: NSImage, width: Int, height: Int) -> NSImage {
         let destSize = NSMakeSize(CGFloat(width), CGFloat(height))
         let newImage = NSImage(size: destSize)
@@ -118,12 +129,8 @@ class ViewControllerMain: NSViewController {
         newImage.size = destSize
         return NSImage(data: newImage.tiffRepresentation!)!
     }
-    
-    func runScriptJson(path: String) {
-        // TODO the following does not work, because the function is not called on the instance but without an instance!
-        // Result: bachball is found (not nil) but logoImage.image is nil and can't be set
-        // logoImage.image = self.resizeNSImage(image: NSImage(named: "beachball"), width: 128, height: 128)
 
+    func runScriptJson(path: String) {
         // On default passing -B to not get a __pycache__folder, the full path to run.py and the full path to the json file
         // The final output of the command is empty, no point in printing it to the log, the piped messages already are printed
         

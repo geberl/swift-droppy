@@ -262,7 +262,9 @@
                     </view>
                     <connections>
                         <outlet property="logoImage" destination="DVK-e3-Ngl" id="aTM-bX-3qy"/>
+                        <outlet property="logoImageView" destination="GMI-Zz-XD4" id="JtM-go-XIs"/>
                         <outlet property="zoneImage" destination="ijI-bt-2u5" id="j3a-mk-Xze"/>
+                        <outlet property="zoneImageView" destination="uYf-lE-mJ8" id="bUq-ab-xCb"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
