@@ -37,6 +37,8 @@ class PythonExecutor: NSObject {
     }
 
     func run() {
+        // TODO this run function needs some more work
+
         log.debug("pythonExecutor run started")
 
         guard let workflowFile = self.workflowFile else { return }
@@ -71,5 +73,36 @@ class PythonExecutor: NSObject {
         }
 
         log.debug("pythonExecutor run finished")
+    }
+}
+
+
+// TODO remove this previous version of passing all needed data to Python
+func runScriptJson(path: String) {
+
+    // Check if the workflow's set interpreter is present in the settings object
+    if userDefaults.dictionary(forKey: UserDefaultStruct.interpreters)![Workflows.activeInterpreterName] != nil {
+        
+        log.debug("Interpreter '\(Workflows.activeInterpreterName)' found")
+        
+        let interpreterInfo: Dictionary<String, String> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters)![Workflows.activeInterpreterName] as! Dictionary<String, String>
+        
+        // Get the needed arguments from the sessings object
+        let executablePath: String = interpreterInfo["executable"]!
+        let executableArgs: String = interpreterInfo["arguments"]!
+        let runnerName: String = "run.py"
+        let runnerDir = "\(userDefaults.string(forKey: UserDefaultStruct.workspacePath) ?? "no default")/Runners"
+        let runnerPath: String = "\(runnerDir)/\(runnerName)"
+        var runnerArgs: String = "--items=$(JSONFILE)"
+        runnerArgs = runnerArgs.replacingOccurrences(of: "$(JSONFILE)", with: path)
+        
+        log.debug("  Executable: \(executablePath) \(executableArgs)")
+        log.debug("  Runner: \(runnerPath) \(runnerArgs)")
+        
+        // Call Python executable with arguments
+        _ = executeCommand(command: executablePath, args: [executableArgs, runnerPath, runnerArgs])
+    }
+    else {
+        log.error("Interpreter '\(Workflows.activeInterpreterName)' not found in userDefaults!")
     }
 }

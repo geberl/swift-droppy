@@ -170,7 +170,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // First Run Experience
             self.firstRunWindowController.showWindow(self)
         } else {
-            // TODO:Check if the set Workspace directory actually still exists, if not open preferences and prompt to change
+            // TODO: Check if the currently set Workspace directory actually still exists, if not open preferences and prompt to change
         }
         
         // Dev mode.

@@ -76,37 +76,6 @@ class DragDropView: NSView {
                 let pathDict:[String: NSArray] = ["filePaths": board]
                 NotificationCenter.default.post(name: Notification.Name("droppingOk"), object: nil, userInfo: pathDict)
             }
-
-            // Old version:
-            //            if let board = sender.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
-            //                // Save paths in bulk to one json file
-            //                do {
-            //                    // Get the current datetime as a string
-            //                    let stringFromDate = Date().iso8601
-            //
-            //                    // Create SwiftyJSON object
-            //                    let jsonObject: JSON = ["datetime start": stringFromDate,
-            //                                            "datetime end": "",
-            //                                            "workflow": Workflows.activeJsonFile,
-            //                                            "items": board]
-            //
-            //                    // Convert SwiftyJSON object to string
-            //                    let jsonString = jsonObject.description
-            //
-            //                    // Setup objects needed for directory and file access
-            //                    let tempDir: URL = FileManager.default.temporaryDirectory
-            //                    let filePath: URL = tempDir.appendingPathComponent("droppy_date_here.json")
-            //
-            //                    // Write json string to file, this overwrites a preexisting file here
-            //                    try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
-            //
-            //                    // Send json file path to a function in ViewController
-            //                    ViewControllerMain().runScriptJson(path: filePath.path)
-            //                } catch {
-            //                    log.error(error.localizedDescription)
-            //                }
-            //            }
-
         }
     }
     
