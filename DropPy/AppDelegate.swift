@@ -80,7 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func applicationWillTerminate(_ aNotification: Notification) {
+    func applicationWillTerminate(_ notification: Notification) {
         self.savePosition()
         log.enabled = false
     }
@@ -91,13 +91,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     lazy var preferencesWindowController: WindowControllerPrefs  = {
-        let wcSB = NSStoryboard(name: "Preferences", bundle: Bundle.main)
-        return wcSB.instantiateInitialController() as! WindowControllerPrefs
+        let wcSb = NSStoryboard(name: "Preferences", bundle: Bundle.main)
+        return wcSb.instantiateInitialController() as! WindowControllerPrefs
     }()
     
-    @IBAction func showPreferencesWindow(_ sender: Any) {
+    @IBAction func showPreferencesWindow(_ sender: NSMenuItem) {
         self.preferencesWindowController.showWindow(self)
     }
+    
+    lazy var registrationWindowController: WindowControllerRegistration  = {
+        let wcSb = NSStoryboard(name: "Registration", bundle: Bundle.main)
+        return wcSb.instantiateInitialController() as! WindowControllerRegistration
+    }()
+    
+    @IBAction func showRegistrationWindow(_ sender: NSMenuItem) {
+        self.registrationWindowController.showWindow(self)
+    }
+    
     
     lazy var firstRunWindowController: WindowControllerFirstRun  = {
         let wcSB = NSStoryboard(name: "FirstRun", bundle: Bundle.main)

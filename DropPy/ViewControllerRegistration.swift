@@ -9,10 +9,13 @@
 import Cocoa
 
 class ViewControllerRegistration: NSViewController {
+    
+    let userDefaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        
+        log.debug("123")
     }
     
 }
