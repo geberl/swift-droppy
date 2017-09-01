@@ -43,11 +43,7 @@ class WindowControllerMain: NSWindowController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.actionOnEmptyWorkflow(notification:)),
                                                name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.unupportedType(notification:)),
-                                               name: Notification.Name("unsupportedType"), object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.disableToolbar(notification:)),
                                                name: Notification.Name("droppingOk"),
@@ -113,7 +109,6 @@ class WindowControllerMain: NSWindowController {
         Workflows.activeInterpreterName = ""
         Workflows.activeLogoFilePath = ""
         Workflows.activeName = ""
-        Workflows.activeAccepts = []
 
         NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
     }
@@ -136,10 +131,6 @@ class WindowControllerMain: NSWindowController {
                 
                 let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
                 Workflows.activeLogoFilePath = "\(workspacePath)/Workflows/\(workflowLogoFile)"
-                
-                let workflowAccepts: Array = Workflows.workflows[name]!["accepts"] as! Array<String>
-                log.debug("Workflow accepts '\(workflowAccepts)' for drag & drop.")
-                Workflows.activeAccepts = workflowAccepts
                 
                 let workflowInterpreterName: String = Workflows.workflows[name]?["interpreterName"] as! String
                 log.debug("Workflow will use the interpreter named '\(workflowInterpreterName)'.")
@@ -221,7 +212,6 @@ class WindowControllerMain: NSWindowController {
                                     "description": "A short description what this Workflow does. Currently not accessed by DropPy. For now just for your own documentation purposes.",
                                     "image": "",
                                     "interpreterName": workflowInterpreterName,
-                                    "accepts": ["file", "url"],
                                     "tasks": []]
         
             // Convert SwiftyJSON object to string.
@@ -238,7 +228,6 @@ class WindowControllerMain: NSWindowController {
             Workflows.activeInterpreterName = workflowInterpreterName
             Workflows.activeJsonFile = workflowFileName
             Workflows.activeName = workflowName
-            Workflows.activeAccepts = ["file", "url"]
             Workflows.activeLogoFilePath = ""
         
             // Open new file in editor.
@@ -257,12 +246,4 @@ class WindowControllerMain: NSWindowController {
         alert.runModal()
     }
 
-    func unupportedType(notification: Notification) {
-        // TODO: Support more types.
-        let alert = NSAlert()
-        alert.messageText = "Unsupported Type"
-        alert.informativeText = "The object you dropped isn't supported by the Workflow \"\(Workflows.activeAccepts)\"."
-        alert.icon = NSImage(named: "error")
-        alert.runModal()
-    }
 }

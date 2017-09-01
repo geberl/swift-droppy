@@ -54,7 +54,6 @@ struct Workflows {
     
     static var activeName = "" as String
     static var activeInterpreterName = "" as String
-    static var activeAccepts = [] as Array<String>
     static var activeJsonFile = "" as String
     static var activeLogoFilePath = "" as String
 }
@@ -78,7 +77,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if changesDetected {
             Workflows.activeName = ""
             Workflows.activeInterpreterName = ""
-            Workflows.activeAccepts = []
             Workflows.activeJsonFile = ""
             Workflows.activeLogoFilePath = ""
             NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
@@ -304,7 +302,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         workflowsTemp[jsonObj["name"].stringValue] = [String: String]()
                         workflowsTemp[jsonObj["name"].stringValue]?["image"] = jsonObj["image"].stringValue
                         workflowsTemp[jsonObj["name"].stringValue]?["file"] = element
-                        workflowsTemp[jsonObj["name"].stringValue]?["accepts"] = jsonObj["accepts"].arrayObject
                         workflowsTemp[jsonObj["name"].stringValue]?["interpreterName"] = jsonObj["interpreterName"].stringValue
                     }
                 } catch let error {
@@ -349,13 +346,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 } else {
                     //log.debug("Workflow '\(name)' interpreterName is identical.")
                 }
-                
-                if workflowsOld[name]?["accepts"] as! Array<String> != workflowsNew[name]?["accepts"] as! Array<String> {
-                    //log.debug("Workflow '\(name)' accepted objects have changed, changes detected, reloading.")
-                    return true
-                } else {
-                    //log.debug("Workflow '\(name)' accepted objects are identical.")
-                }
+
             } else {
                 //log.debug("Workflow '\(name) was NOT present before, changes detected, reloading.")
                 return true
@@ -376,6 +367,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
 }
-
-
-
