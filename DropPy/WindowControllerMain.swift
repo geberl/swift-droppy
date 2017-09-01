@@ -130,7 +130,7 @@ class WindowControllerMain: NSWindowController {
                 log.debug("Workflow logo '\(workflowLogoFile)' is now active.")
                 
                 let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
-                Workflows.activeLogoFilePath = "\(workspacePath)/Workflows/\(workflowLogoFile)"
+                Workflows.activeLogoFilePath = "\(workspacePath)/Images/\(workflowLogoFile)"
                 
                 let workflowInterpreterName: String = Workflows.workflows[name]?["interpreterName"] as! String
                 log.debug("Workflow will use the interpreter named '\(workflowInterpreterName)'.")
@@ -229,7 +229,7 @@ class WindowControllerMain: NSWindowController {
             Workflows.activeJsonFile = workflowFileName
             Workflows.activeName = workflowName
             Workflows.activeLogoFilePath = ""
-        
+
             // Open new file in editor.
             self.editWorkflow()
         } catch {
