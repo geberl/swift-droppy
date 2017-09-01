@@ -154,17 +154,17 @@ class WindowControllerMain: NSWindowController {
             return ToolbarDropdown.item(at: 0)!.title
         }
     }
-    
+
     func openFinder() {
         log.debug("Toolbar Action: Open")
-        
+
         let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
         NSWorkspace.shared().selectFile("\(workspacePath)/Workflows/\(Workflows.activeJsonFile)", inFileViewerRootedAtPath: "\(workspacePath)")
     }
-    
+
     func editWorkflow() {
         log.debug("Toolbar Action: Edit")
-        
+
         if Workflows.activeName == "" {
             NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
         } else {

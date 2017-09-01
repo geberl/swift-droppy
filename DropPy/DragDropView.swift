@@ -59,6 +59,7 @@ class DragDropView: NSView {
 
         if !workflowIsSelected {
             NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("draggingExited"), object: nil)
         } else {
             // TODO: Probably do something more/else for other pboardtypes here (url, plaintext, ...).
             if let board = sender?.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
