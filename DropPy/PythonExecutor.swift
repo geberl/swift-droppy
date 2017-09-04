@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftyJSON
 
 
 class PythonExecutor: NSObject {
@@ -36,7 +37,7 @@ class PythonExecutor: NSObject {
         userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
     }
     
-    func prepareTempDirs(workspacePath: String) -> (inputDir: String, outputDir: String, runPath: String) {
+    func prepareTempDir(workspacePath: String) -> (tempPath: String, inputPath: String, outputPath: String, runPath: String) {
 
         // Determine which directory to use as the temp dir.
         var tempPath: String = NSTemporaryDirectory()
@@ -46,13 +47,13 @@ class PythonExecutor: NSObject {
         }
         
         // Setup the directory structure here.
-        let inputDir: String = tempPath + "0"
-        let outputDir: String = tempPath + "1"
-        if !isDir(path: inputDir) {
-            makeDirs(path: inputDir)
+        let inputPath: String = tempPath + "0"
+        let outputPath: String = tempPath + "1"
+        if !isDir(path: inputPath) {
+            makeDirs(path: inputPath)
         }
-        if !isDir(path: outputDir) {
-            makeDirs(path: outputDir)
+        if !isDir(path: outputPath) {
+            makeDirs(path: outputPath)
         }
         
         // Copy run.py from assets to the temp directory.
@@ -65,17 +66,25 @@ class PythonExecutor: NSObject {
             }
         }
 
-        return (inputDir, outputDir, runPath)
+        return (tempPath, inputPath, outputPath, runPath)
     }
     
-    func copyDroppedFiles(inputDir: String) {
+    func prepareNextTempDir(tempPath: String, taskNumber: Int) -> String {
+        let outputPath: String = tempPath + String(taskNumber)
+        if !isDir(path: outputPath) {
+            makeDirs(path: outputPath)
+        }
+        return outputPath
+    }
+    
+    func copyDroppedFiles(inputPath: String) {
         // Copy the originally dropped files to the "0" directory.
         let fileManager = FileManager.default
         for srcPath in self.filePaths {
             
             let srcURL: URL = URL(fileURLWithPath: srcPath)
             
-            var dstURL: URL = URL(fileURLWithPath: inputDir)
+            var dstURL: URL = URL(fileURLWithPath: inputPath)
             dstURL.appendPathComponent(srcURL.lastPathComponent)
             
             do {
@@ -90,33 +99,55 @@ class PythonExecutor: NSObject {
         guard let workspacePath = self.userDefaultWorkspacePath else { return }
         guard let workflowFile = self.workflowFile else { return }
         guard let interpreterInfo: Dictionary<String, String> = self.userDefaultInterpreters[Workflows.activeInterpreterName] else { return }
-
+        
+        let workflowPath = workspacePath + "/" + "Workflows" + "/" + workflowFile
         let executablePath: String = interpreterInfo["executable"]!
         let executableArgs: String = interpreterInfo["arguments"]!
 
-        let (inputDir, outputDir, runPath) = self.prepareTempDirs(workspacePath: workspacePath)
+        var (tempPath, inputPath, outputPath, runPath) = self.prepareTempDir(workspacePath: workspacePath)
 
-        self.copyDroppedFiles(inputDir: inputDir)
+        self.copyDroppedFiles(inputPath: inputPath)
+        
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: workflowPath), options: .alwaysMapped)
+            let jsonObj = JSON(data: data)
+            if jsonObj != JSON.null {
+                let queue: Array = jsonObj["queue"].arrayValue
+                for (taskNumber, queueItem) in queue.enumerated() {
+                    
+                    log.debug("\(taskNumber)")
+                    //log.debug(queueItem["name"])
+                    log.debug(inputPath)
+                    log.debug(outputPath)
+                    
+                    let statusDict:[String: String] = ["taskCurrent": String(taskNumber),
+                                                       "taskTotal": String(queue.count)]
 
-        let statusDict:[String: String] = ["taskCurrent": "1",
-                                           "taskTotal": "1"]
-        NotificationCenter.default.post(name: Notification.Name("executionStatus"),
-                                        object: nil,
-                                        userInfo: statusDict)
+                    NotificationCenter.default.post(name: Notification.Name("executionStatus"),
+                                                    object: nil,
+                                                    userInfo: statusDict)
 
-        let (out, err, exit) = executeCommand(command: executablePath,
-                                              args: [executableArgs,
-                                                     runPath,
-                                                     "-w" + workspacePath,
-                                                     "-j" + workflowFile,
-                                                     "-i" + inputDir,
-                                                     "-o" + outputDir])
-
-        // let (output, error, status) = executeCommand(command: "/bin/sleep", args: ["10"])
-
-        log.debug("o \(out)")
-        log.debug("e \(err)")
-        log.debug("s \(exit)")
-
+                    let (out, err, exit) = executeCommand(command: executablePath,
+                                                          args: [executableArgs,
+                                                                 runPath,
+                                                                 "-w" + workspacePath,
+                                                                 "-j" + workflowFile,
+                                                                 "-i" + inputPath,
+                                                                 "-o" + outputPath])
+                    
+                    log.debug("o \(out)")
+                    log.debug("e \(err)")
+                    log.debug("s \(exit)")
+                    
+                    // Prepare folders for next iteration.
+                    if taskNumber + 1 < queue.count {
+                        inputPath = outputPath
+                        outputPath = self.prepareNextTempDir(tempPath: tempPath, taskNumber: taskNumber + 2)
+                    }
+                }
+            }
+        } catch let error {
+            log.error(error.localizedDescription)
+        }
     }
 }
