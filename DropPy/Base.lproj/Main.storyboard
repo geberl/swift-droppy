@@ -259,18 +259,9 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhT-H0-X1I">
-                                        <rect key="frame" x="25" y="6" width="92" height="40"/>
+                                        <rect key="frame" x="-2" y="6" width="238" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Task ?/?" id="M4X-9W-nfp">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VvK-AU-VzL">
-                                        <rect key="frame" x="116" y="6" width="92" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="File ?/?" id="BlS-QC-Yps">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -281,7 +272,6 @@
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="fileTextField" destination="VvK-AU-VzL" id="bdK-h3-egy"/>
                         <outlet property="logoImage" destination="DVK-e3-Ngl" id="aTM-bX-3qy"/>
                         <outlet property="logoImageView" destination="GMI-Zz-XD4" id="JtM-go-XIs"/>
                         <outlet property="taskTextField" destination="lhT-H0-X1I" id="95K-Cc-nZT"/>

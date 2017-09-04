@@ -20,9 +20,7 @@ class ViewControllerMain: NSViewController {
     @IBOutlet weak var logoImage: NSImageCell!
 
     @IBOutlet weak var zoneImage: NSImageCell!
-    
-    @IBOutlet weak var fileTextField: NSTextField!
-    
+
     @IBOutlet weak var taskTextField: NSTextField!
 
     override func viewWillAppear() {
@@ -74,37 +72,28 @@ class ViewControllerMain: NSViewController {
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setTextFieldsHidden(notification:)),
+                                               selector: #selector(ViewControllerMain.setTextFieldHidden(notification:)),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setTextFieldsStatus(notification:)),
+                                               selector: #selector(ViewControllerMain.setTextFieldStatus(notification:)),
                                                name: Notification.Name("executionStatus"),
                                                object: nil)
     }
 
-    func setTextFieldsHidden(notification: Notification) {
+    func setTextFieldHidden(notification: Notification) {
         taskTextField.isHidden = true
-        fileTextField.isHidden = true
-
         taskTextField.stringValue = "Task ?/?"
-        fileTextField.stringValue = "File ?/?"
     }
 
-    func setTextFieldsStatus(notification: Notification) {
+    func setTextFieldStatus(notification: Notification) {
         // Async execution is needed so the first file actually shows up when it is being processed and not when the second one is.
         DispatchQueue.main.async {
             self.taskTextField.isHidden = false
-            self.fileTextField.isHidden = false
-            
             guard let taskCurrent = notification.userInfo?["taskCurrent"] as? String else { return }
             guard let taskTotal = notification.userInfo?["taskTotal"] as? String else { return }
             self.taskTextField.stringValue = "Task " + taskCurrent + "/" + taskTotal
-            
-            guard let fileCurrent = notification.userInfo?["fileCurrent"] as? String else { return }
-            guard let fileTotal = notification.userInfo?["fileTotal"] as? String else { return }
-            self.fileTextField.stringValue = "File " + fileCurrent + "/" + fileTotal
         }
     }
 
@@ -123,22 +112,18 @@ class ViewControllerMain: NSViewController {
         logoImageView.animates = false
 
         if Workflows.activeLogoFilePath == "" {
-            log.debug("Changing logo image to 'logo-default'.")
             logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
         } else {
             if let newLogo = NSImage(contentsOfFile: Workflows.activeLogoFilePath) {
-                log.debug("Changing logo image to '\(Workflows.activeLogoFilePath)'.")
                 logoImage.image = self.resizeNSImage(image: newLogo, width:128, height:128)
             } else {
                 log.error("Can't load workflow logo from '\(Workflows.activeLogoFilePath).")
-                log.debug("Changing logo image to 'logo-default'.")
                 logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
             }
         }
     }
 
     func setLogoSpinner(notification: Notification) {
-        log.debug("Changing logo image to 'logo-spinner'.")
         if let asset = NSDataAsset(name: "logo-spinner", bundle: Bundle.main) {
             logoImageView.imageScaling = NSImageScaling.scaleNone
             logoImageView.animates = true
@@ -148,10 +133,8 @@ class ViewControllerMain: NSViewController {
 
     func setZoneLogoError(notification: Notification) {
         if Workflows.activeLogoFilePath == "" {
-            log.debug("Changing logo image to 'error'.")
-            logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!, width: 128, height: 128)
-            
-            log.debug("Changing zone image to 'zone-error'.")
+            logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!,
+                                                 width: 128, height: 128)
             zoneImage.image = NSImage(named: "zone-error")
         }
     }

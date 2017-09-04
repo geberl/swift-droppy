@@ -35,74 +35,88 @@ class PythonExecutor: NSObject {
         userDefaultWorkspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath)
         userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
     }
+    
+    func prepareTempDirs(workspacePath: String) -> (inputDir: String, outputDir: String, runPath: String) {
 
-    func run() {
-        // TODO this run function needs some more work
-
-        log.debug("pythonExecutor run started")
-
-        guard let workflowFile = self.workflowFile else { return }
-        guard let workspacePath = self.userDefaultWorkspacePath else { return }
-
-        let workflowPath = workspacePath + "/" + workflowFile
-        log.debug(workflowPath)
-
+        // Determine which directory to use as the temp dir.
         var tempPath: String = NSTemporaryDirectory()
         if self.userDefaultDevModeEnabled {
             let stringFromDate = Date().iso8601
             tempPath = workspacePath + "/" + "Temp/" + stringFromDate + "/"
-            if !isDir(path: tempPath) {
-                makeDirs(path: tempPath)
+        }
+        
+        // Setup the directory structure here.
+        let inputDir: String = tempPath + "0"
+        let outputDir: String = tempPath + "1"
+        if !isDir(path: inputDir) {
+            makeDirs(path: inputDir)
+        }
+        if !isDir(path: outputDir) {
+            makeDirs(path: outputDir)
+        }
+        
+        // Copy run.py from assets to the temp directory.
+        let runPath: String = tempPath + "run.py"
+        if let asset = NSDataAsset(name: "run", bundle: Bundle.main) {
+            do {
+                try asset.data.write(to: URL(fileURLWithPath: runPath))
+            } catch {
+                log.error("Unable to output run.py from assets")
             }
         }
-        log.debug(tempPath)
 
-        for (index, filePath) in self.filePaths.enumerated() {
-            let statusDict:[String: String] = ["taskCurrent": "1",
-                                               "taskTotal": "1",
-                                               "fileCurrent": String(index + 1),
-                                               "fileTotal": String(self.filePaths.count)]
-            NotificationCenter.default.post(name: Notification.Name("executionStatus"),
-                                            object: nil,
-                                            userInfo: statusDict)
+        return (inputDir, outputDir, runPath)
+    }
+    
+    func copyDroppedFiles(inputDir: String) {
+        // Copy the originally dropped files to the "0" directory.
+        let fileManager = FileManager.default
+        for srcPath in self.filePaths {
             
-            let (output, error, status) = executeCommand(command: "/bin/sleep", args: ["10"])
-            log.debug("o \(output)")
-            log.debug("e \(error)")
-            log.debug("s \(status)")
+            let srcURL: URL = URL(fileURLWithPath: srcPath)
+            
+            var dstURL: URL = URL(fileURLWithPath: inputDir)
+            dstURL.appendPathComponent(srcURL.lastPathComponent)
+            
+            do {
+                try fileManager.copyItem(at: srcURL, to: dstURL)
+            } catch {
+                log.error("Unable to copy file '\(srcPath)'.")
+            }
         }
+    }
 
-        log.debug("pythonExecutor run finished")
+    func run() {
+        guard let workspacePath = self.userDefaultWorkspacePath else { return }
+        guard let workflowFile = self.workflowFile else { return }
+        guard let interpreterInfo: Dictionary<String, String> = self.userDefaultInterpreters[Workflows.activeInterpreterName] else { return }
+
+        let executablePath: String = interpreterInfo["executable"]!
+        let executableArgs: String = interpreterInfo["arguments"]!
+
+        let (inputDir, outputDir, runPath) = self.prepareTempDirs(workspacePath: workspacePath)
+
+        self.copyDroppedFiles(inputDir: inputDir)
+
+        let statusDict:[String: String] = ["taskCurrent": "1",
+                                           "taskTotal": "1"]
+        NotificationCenter.default.post(name: Notification.Name("executionStatus"),
+                                        object: nil,
+                                        userInfo: statusDict)
+
+        let (out, err, exit) = executeCommand(command: executablePath,
+                                              args: [executableArgs,
+                                                     runPath,
+                                                     "-w" + workspacePath,
+                                                     "-j" + workflowFile,
+                                                     "-i" + inputDir,
+                                                     "-o" + outputDir])
+
+        // let (output, error, status) = executeCommand(command: "/bin/sleep", args: ["10"])
+
+        log.debug("o \(out)")
+        log.debug("e \(err)")
+        log.debug("s \(exit)")
+
     }
 }
-
-
-// TODO remove this previous version of passing all needed data to Python
-//func runScriptJson(path: String) {
-//
-//    // Check if the workflow's set interpreter is present in the settings object
-//    if userDefaults.dictionary(forKey: UserDefaultStruct.interpreters)![Workflows.activeInterpreterName] != nil {
-//        
-//        log.debug("Interpreter '\(Workflows.activeInterpreterName)' found")
-//        
-//        let interpreterInfo: Dictionary<String, String> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters)![Workflows.activeInterpreterName] as! Dictionary<String, String>
-//        
-//        // Get the needed arguments from the sessings object
-//        let executablePath: String = interpreterInfo["executable"]!
-//        let executableArgs: String = interpreterInfo["arguments"]!
-//        let runnerName: String = "run.py"
-//        let runnerDir = "\(userDefaults.string(forKey: UserDefaultStruct.workspacePath) ?? "no default")/Runners"
-//        let runnerPath: String = "\(runnerDir)/\(runnerName)"
-//        var runnerArgs: String = "--items=$(JSONFILE)"
-//        runnerArgs = runnerArgs.replacingOccurrences(of: "$(JSONFILE)", with: path)
-//        
-//        log.debug("  Executable: \(executablePath) \(executableArgs)")
-//        log.debug("  Runner: \(runnerPath) \(runnerArgs)")
-//        
-//        // Call Python executable with arguments
-//        _ = executeCommand(command: executablePath, args: [executableArgs, runnerPath, runnerArgs])
-//    }
-//    else {
-//        log.error("Interpreter '\(Workflows.activeInterpreterName)' not found in userDefaults!")
-//    }
-//}
