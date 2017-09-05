@@ -113,15 +113,26 @@ class PythonExecutor: NSObject {
             let jsonObj = JSON(data: data)
             if jsonObj != JSON.null {
                 let queue: Array = jsonObj["queue"].arrayValue
+                let queueCount = queue.count
                 for (taskNumber, queueItem) in queue.enumerated() {
-                    
-                    log.debug("\(taskNumber)")
-                    //log.debug(queueItem["name"])
-                    log.debug(inputPath)
-                    log.debug(outputPath)
-                    
+
+                    let queueDict: Dictionary<String, SwiftyJSON.JSON> = queueItem.dictionaryValue
+                    guard let queueItemName: String = queueDict["task"]?.stringValue else { return }
+
+                    log.info("--------------------------------------------")
+                    log.info("Executing Task \(taskNumber + 1)/\(queueCount): '\(queueItemName)'")
+
+                    if let queueItemParams: Dictionary<String, SwiftyJSON.JSON> = queueDict["kwargs"]?.dictionaryValue {
+                        log.info(" Parameters:   \(queueItemParams)")
+                    } else {
+                        log.info(" Parameters:   (none)")
+                    }
+
+                    log.info(" Input Files:  \(inputPath)")
+                    log.info(" Output Files: \(outputPath)")
+
                     let statusDict:[String: String] = ["taskCurrent": String(taskNumber),
-                                                       "taskTotal": String(queue.count)]
+                                                       "taskTotal": String(queueCount)]
 
                     NotificationCenter.default.post(name: Notification.Name("executionStatus"),
                                                     object: nil,
@@ -134,13 +145,28 @@ class PythonExecutor: NSObject {
                                                                  "-j" + workflowFile,
                                                                  "-i" + inputPath,
                                                                  "-o" + outputPath])
+
+                    log.info(" StdOut:       \(out)")
+                    if err.count > 0 {
+                        log.error(" StdErr:       \(err)")
+                    } else {
+                        log.info(" StdErr:       \(err)")
+                    }
+                    if exit > 0 {
+                        log.error(" Exit Code:     \(exit)")
+                    } else {
+                        log.info(" Exit Code:     \(exit)")
+                    }
                     
-                    log.debug("o \(out)")
-                    log.debug("e \(err)")
-                    log.debug("s \(exit)")
-                    
+                    // Check if a fatal error occurred.
+                    if exit > 0 {
+                        log.info("--------------------------------------------")
+                        log.error("Executing Tasks aborted")
+                        break
+                    }
+
                     // Prepare folders for next iteration.
-                    if taskNumber + 1 < queue.count {
+                    if taskNumber + 1 < queueCount {
                         inputPath = outputPath
                         outputPath = self.prepareNextTempDir(tempPath: tempPath, taskNumber: taskNumber + 2)
                     }

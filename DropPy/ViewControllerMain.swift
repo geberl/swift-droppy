@@ -98,12 +98,10 @@ class ViewControllerMain: NSViewController {
     }
 
     func setZoneDashed(notification: Notification) {
-        log.debug("Changing zone image to 'zone-dashed'.")
         zoneImage.image = NSImage(named: "zone-dashed")
     }
 
     func setZoneLine(notification: Notification) {
-        log.debug("Changing zone image to 'zone-line'.")
         zoneImage.image = NSImage(named: "zone-line")
     }
 

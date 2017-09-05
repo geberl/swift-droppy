@@ -257,8 +257,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let position = NSPoint(x: positionX, y: positionY)
         guard let window = NSApplication.shared().windows.first else { return }
         window.setFrameOrigin(position)
-        
-        log.debug(String(format: "setPosition: X: %.0f, Y: %.0f", window.frame.origin.x, window.frame.origin.y))
+        // log.debug(String(format: "setPosition: X: %.0f, Y: %.0f", window.frame.origin.x, window.frame.origin.y))
     }
     
     func getResolution() -> (Int, Int) {
@@ -266,7 +265,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let rect: NSRect = scrn.frame
         let height = rect.size.height
         let width = rect.size.width
-        log.debug(String(format: "getResolution: X: %.0f, Y: %.0f", height, width))
+        // log.debug(String(format: "getResolution: X: %.0f, Y: %.0f", height, width))
         return (Int(height), Int(width))
     }
     
