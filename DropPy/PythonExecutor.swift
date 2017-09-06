@@ -208,7 +208,7 @@ class PythonExecutor: NSObject {
     
     func sendNotification(taskNumber: Int, queueCount: Int) {
         
-        let statusDict:[String: String] = ["taskCurrent": String(taskNumber),
+        let statusDict:[String: String] = ["taskCurrent": String(taskNumber + 1),
                                            "taskTotal": String(queueCount)]
         
         NotificationCenter.default.post(name: Notification.Name("executionStatus"),

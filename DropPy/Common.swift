@@ -82,7 +82,7 @@ func executeCommand(command: String, args: [String]) -> (output: [String], error
         
         task.waitUntilExit()
         status = task.terminationStatus
-        
+
     } else {
         error.append("Command not found")
         error.append(command)
