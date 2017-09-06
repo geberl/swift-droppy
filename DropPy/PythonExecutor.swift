@@ -78,9 +78,8 @@ class PythonExecutor: NSObject {
         return outputPath
     }
     
-    func handleDroppedFiles(inputPath: String) {
+    func handleDroppedFiles(inputPath: String, tempPath: String) {
         // Copy the originally dropped files to the "0" directory.
-
         let fileManager = FileManager.default
         for srcPath in self.filePaths {
 
@@ -95,9 +94,18 @@ class PythonExecutor: NSObject {
                 log.error("Unable to copy file '\(srcPath)'.")
             }
         }
-        
+
         // Write files.json to temp path.
-        // TODO
+        let filesJsonPath = URL(fileURLWithPath: tempPath + "/" + "files.json")
+        do {
+            let jsonObject: JSON = ["files": self.filePaths]
+            let jsonString = jsonObject.description
+            try jsonString.write(to: filesJsonPath,
+                                 atomically: false,
+                                 encoding: String.Encoding.utf8)
+        } catch {
+            log.error(error.localizedDescription)
+        }
     }
 
     func taskLog(tempPath: String, text: String) {
@@ -220,7 +228,7 @@ class PythonExecutor: NSObject {
 
         var (tempPath, inputPath, outputPath, runPath) = self.prepareTempDir(workspacePath: workspacePath)
 
-        self.handleDroppedFiles(inputPath: inputPath)
+        self.handleDroppedFiles(inputPath: inputPath, tempPath: tempPath)
 
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: workflowPath),
