@@ -14,7 +14,7 @@ TASK_PYTHON_FILE_NO_EXT = "task"
 TASK_CLASS_NAME = "Task"
 
 
-class Executor(object):
+class Run(object):
     def __init__(self, workspace_path, workflow_name, input_path, output_path):
         workflow_dict = self.read_workflow_json(workspace_path, workflow_name)
 
@@ -22,7 +22,7 @@ class Executor(object):
 
         input_paths = self.get_input_files(input_path)
 
-        self.instanciate_and_execute(workspace_path, task_name,
+        self.instantiate_and_execute(workspace_path, task_name,
                                      input_paths, output_path, kwargs_dict)
 
     @staticmethod
@@ -96,8 +96,8 @@ class Executor(object):
         return input_paths
 
     @staticmethod
-    def instanciate_and_execute(workspace_path, task_name,
-                                input_paths, output_path, kwargs_dict):
+    def instantiate_and_execute(workspace_path, task_name, input_paths,
+                                output_path, kwargs_dict):
         try:
             task_dir = os.path.join(workspace_path,
                                     TASK_SUBFOLDER_IN_WORKSPACE,
@@ -114,11 +114,13 @@ class Executor(object):
 
 
 def parse_arguments():
-    # Ensured preconditions:
-    # - All directories are sure to exist.
-    # - Json has been validated against workflow jsopn format.
-    # - The input_path directory contains at least one file.
-    # - The output_path directory is empty.
+    """
+    Ensured preconditions:
+    - All passed directories and files exist.
+    - The Workflow json file includes all used parameters.
+    - The input_path directory contains at least one file.
+    - The output_path directory is empty.
+    """
 
     parser = argparse.ArgumentParser()
     required_named = parser.add_argument_group('required named arguments')
@@ -155,7 +157,7 @@ def parse_arguments():
 
 
 def print_version():
-    print('Version 1, 2017-08-31')
+    print('Version 2, 2017-09-06')
     sys.exit(0)
 
 
@@ -165,4 +167,4 @@ if __name__ == '__main__':
     if args.version:
         print_version()
     else:
-        e = Executor(args.workspace, args.json, args.input, args.output)
+        r = Run(args.workspace, args.json, args.input, args.output)

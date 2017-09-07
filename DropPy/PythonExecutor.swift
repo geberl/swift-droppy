@@ -108,26 +108,40 @@ class PythonExecutor: NSObject {
         }
     }
 
-    func taskLog(tempPath: String, text: String) {
-        // Write task.log to temp path.
-
+    func taskLog(tempPath: String, prefix: String, lines: [String]) {
         let taskLogPath = tempPath + "/" + "task.log"
-        let textNl = text + "\n"
-
+        var prefixedLine: String
         do {
             if let fileHandle = FileHandle(forWritingAtPath: taskLogPath) {
                 defer {
                     fileHandle.closeFile()
                 }
-                if let textData = textNl.data(using: String.Encoding.utf8) {
-                    fileHandle.seekToEndOfFile()
-                    fileHandle.write(textData)
+                for (n, line) in lines.enumerated() {
+                    if n == 0 {
+                        prefixedLine = prefix + line + "\n"
+                    } else {
+                        prefixedLine = String(repeating: " ", count: prefix.characters.count) + line + "\n"
+                    }
+
+                    if let lineData = prefixedLine.data(using: String.Encoding.utf8) {
+                        fileHandle.seekToEndOfFile()
+                        fileHandle.write(lineData)
+                    }
                 }
             }
             else {
-                try textNl.write(to: URL(fileURLWithPath: taskLogPath),
-                                 atomically: false,
-                                 encoding: String.Encoding.utf8)
+                for (n, line) in lines.enumerated() {
+                    if n == 0 {
+                        prefixedLine = prefix + line + "\n"
+                    } else {
+                        prefixedLine = String(repeating: " ", count: prefix.characters.count) + line + "\n"
+                    }
+
+                    try prefixedLine.write(to: URL(fileURLWithPath: taskLogPath),
+                                            atomically: false,
+                                            encoding: String.Encoding.utf8)
+
+                }
             }
         } catch let error {
             log.error(error.localizedDescription)
@@ -140,69 +154,35 @@ class PythonExecutor: NSObject {
         let queueDict: Dictionary<String, SwiftyJSON.JSON> = queueItem.dictionaryValue
         guard let queueItemName: String = queueDict["task"]?.stringValue else { return }
 
-        var logText: String = "------------------------------------"
-        self.taskLog(tempPath: tempPath,text: logText)
+        self.taskLog(tempPath: tempPath, prefix: "", lines: [String(repeating: "-", count: 80)])
+
+        let logText: String = "Executing Task \(taskNumber + 1)/\(queueCount): '\(queueItemName)'"
+        self.taskLog(tempPath: tempPath, prefix: "", lines: [logText])
         log.info(logText)
-        
-        logText = "Executing Task \(taskNumber + 1)/\(queueCount): '\(queueItemName)'"
-        self.taskLog(tempPath: tempPath,text: logText)
-        log.info(logText)
-        
+
         if let queueItemParams: Dictionary<String, SwiftyJSON.JSON> = queueDict["kwargs"]?.dictionaryValue {
-            logText = " Parameters:   \(queueItemParams)"
-            self.taskLog(tempPath: tempPath, text: logText)
-            log.info(logText)
+            self.taskLog(tempPath: tempPath, prefix: "  Parameters:   ", lines: ["\(queueItemParams)"])
         } else {
-            logText = " Parameters:   (none)"
-            self.taskLog(tempPath: tempPath, text: logText)
-            log.info(logText)
+            self.taskLog(tempPath: tempPath, prefix: "  Parameters:   ", lines: ["(none)"])
         }
-        
-        logText = " Input Files:  \(inputPath)"
-        self.taskLog(tempPath: tempPath, text: logText)
-        log.info(logText)
-        
-        logText = " Output Files: \(outputPath)"
-        self.taskLog(tempPath: tempPath, text: logText)
-        log.info(logText)
-        
+
+        self.taskLog(tempPath: tempPath, prefix: "  Input Path:   ", lines: [inputPath])
+        self.taskLog(tempPath: tempPath, prefix: "  Output Path:  ", lines: [outputPath])
     }
 
-    func writeOutputLog(tempPath: String, out: [String], err: [String],
-                        exit: Int32) {
+    func writeOutputLog(tempPath: String, out: [String], err: [String], exit: Int32) {
 
-        var logText = " StdOut:       \(out)"
-        self.taskLog(tempPath: tempPath, text: logText)
-        log.info(logText)
+        self.taskLog(tempPath: tempPath, prefix: "  StdOut:       ", lines: out)
+        self.taskLog(tempPath: tempPath, prefix: "  StdErr:       ", lines: err)
+        self.taskLog(tempPath: tempPath, prefix: "  Exit Code:    ", lines: ["\(exit)"])
 
-        if err.count > 0 {
-            logText = " StdErr:       \(err)"
-            self.taskLog(tempPath: tempPath,text: logText)
-            log.error(logText)
-        } else {
-            logText = " StdErr:       \(err)"
-            self.taskLog(tempPath: tempPath,text: logText)
-            log.info(logText)
-        }
-
+        let logText = " Exit Code: \(exit)"
         if exit > 0 {
-            logText = " Exit Code:     \(exit)"
-            self.taskLog(tempPath: tempPath,text: logText)
             log.error(logText)
+            self.taskLog(tempPath: tempPath, prefix: "", lines: [String(repeating: "-", count: 80)])
+            self.taskLog(tempPath: tempPath, prefix: "", lines: ["Executing Tasks aborted"])
         } else {
-            logText = " Exit Code:     \(exit)"
-            self.taskLog(tempPath: tempPath,text: logText)
             log.info(logText)
-        }
-
-        if exit > 0 {
-            logText = "------------------------------------"
-            self.taskLog(tempPath: tempPath,text: logText)
-            log.info(logText)
-        
-            logText = "Executing Tasks aborted"
-            self.taskLog(tempPath: tempPath,text: logText)
-            log.error(logText)
         }
     }
     
