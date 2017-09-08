@@ -6,6 +6,7 @@ import importlib
 import json
 import os
 import sys
+import traceback
 
 
 TASK_SUBFOLDER_IN_WORKSPACE = "Tasks"
@@ -110,6 +111,7 @@ class Run(object):
             sys.exit(0)
         except Exception as err:
             print(err)
+            traceback.print_exc()
             sys.exit(1)
 
 
@@ -157,7 +159,7 @@ def parse_arguments():
 
 
 def print_version():
-    print('Version 2, 2017-09-06')
+    print('Version 3, 2017-09-07')
     sys.exit(0)
 
 
