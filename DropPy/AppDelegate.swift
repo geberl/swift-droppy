@@ -95,22 +95,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if !executionInProgress {
             executionInProgress = true
 
+            var logFilePath: String = ""
+            var tempDirPath: String = ""
+            var exitCode: String = "0"
+
             DispatchQueue.global(qos: .background).async {
                 if let filePaths = notification.userInfo?["filePaths"] as? [String] {
                     let pythonExecutor = PythonExecutor(workflowFile: Workflows.activeJsonFile,
                                                         filePaths: filePaths)
                     pythonExecutor.run()
+                    (logFilePath, tempDirPath, exitCode) = pythonExecutor.evaluate()
                 }
                 DispatchQueue.main.async {
-                    self.endPythonExecutor()
+                    self.endPythonExecutor(logFilePath: logFilePath,
+                                           tempDirPath: tempDirPath,
+                                           exitCode: exitCode)
                 }
             }
         }
     }
 
-    func endPythonExecutor() {
+    func endPythonExecutor(logFilePath: String, tempDirPath: String,
+                           exitCode: String) {
         executionInProgress = false
-        NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
+
+        let pathDict:[String: String] = ["logFilePath": logFilePath,
+                                         "tempDirPath": tempDirPath,
+                                         "exitCode": exitCode]
+        NotificationCenter.default.post(name: Notification.Name("executionFinished"),
+                                        object: nil,
+                                        userInfo: pathDict)
     }
 
     func applicationWillTerminate(_ notification: Notification) {

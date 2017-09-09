@@ -38,11 +38,13 @@ class WindowControllerMain: NSWindowController {
     override func windowWillLoad() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.refreshToolbarDropdown(notification:)),
-                                               name: Notification.Name("workflowsChanged"), object: nil)
+                                               name: Notification.Name("workflowsChanged"),
+                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.actionOnEmptyWorkflow(notification:)),
-                                               name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
+                                               name: Notification.Name("actionOnEmptyWorkflow"),
+                                               object: nil)
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.disableToolbar(notification:)),
@@ -51,6 +53,11 @@ class WindowControllerMain: NSWindowController {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.enableToolbar(notification:)),
+                                               name: Notification.Name("executionFinished"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(WindowControllerMain.evaluateWorkflowResults(notification:)),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
     }
@@ -246,4 +253,32 @@ class WindowControllerMain: NSWindowController {
         alert.runModal()
     }
 
+    func evaluateWorkflowResults(notification: Notification) {
+        guard let logFilePath = notification.userInfo?["logFilePath"] as? String else { return }
+        guard let tempDirPath = notification.userInfo?["tempDirPath"] as? String else { return }
+        guard let exitCode = notification.userInfo?["exitCode"] as? String else { return }
+
+        let exitCodeInt: Int = Int(exitCode)!
+        if exitCodeInt > 0 {
+            self.executionErrorAlert(logFilePath: logFilePath,
+                                     tempDirPath: tempDirPath)
+        }
+    }
+
+    func executionErrorAlert(logFilePath: String, tempDirPath: String) {
+        log.debug(logFilePath)
+        log.debug(tempDirPath)
+
+        let errorAlert = NSAlert()
+        errorAlert.showsHelp = false
+        errorAlert.messageText = "Running one of your Tasks failed"
+        errorAlert.informativeText = "Take a look in the log file for details."
+        errorAlert.addButton(withTitle: "Ok")
+        errorAlert.addButton(withTitle: "Open temp dir")
+        errorAlert.addButton(withTitle: "Open log file")
+        errorAlert.layout()
+        errorAlert.alertStyle = NSAlertStyle.warning
+        errorAlert.icon = NSImage(named: "error")
+        errorAlert.runModal()
+    }
 }
