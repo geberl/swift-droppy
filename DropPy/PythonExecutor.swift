@@ -57,16 +57,10 @@ class PythonExecutor: NSObject {
         super.init()
     }
 
-    func prepareTempDir() -> (inputPath: String, outputPath: String) {
+    func prepareFirstTempDir() -> (inputPath: String, outputPath: String) {
         // Setup the directory structure here.
-        let inputPath: String = self.tempPath + "0"
-        let outputPath: String = self.tempPath + "1"
-        if !isDir(path: inputPath) {
-            makeDirs(path: inputPath)
-        }
-        if !isDir(path: outputPath) {
-            makeDirs(path: outputPath)
-        }
+        let inputPath = self.prepareNextTempDir(taskNumber: 0)
+        let outputPath = self.prepareNextTempDir(taskNumber: 1)
 
         // Copy run.py from assets to the temp directory.
         if let asset = NSDataAsset(name: "run", bundle: Bundle.main) {
@@ -225,9 +219,7 @@ class PythonExecutor: NSObject {
     }
 
     func run() {
-
-        var (inputPath, outputPath) = self.prepareTempDir()
-
+        var (inputPath, outputPath) = self.prepareFirstTempDir()
         self.handleDroppedFiles(inputPath: inputPath)
 
         do {
@@ -263,6 +255,7 @@ class PythonExecutor: NSObject {
 
                     if exit > 0 {
                         self.overallExitCode = 1
+                        // TODO only break THIS and parent queues, sister-queues might be unaffected by this failed Task
                         break
                     }
 
