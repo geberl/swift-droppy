@@ -282,8 +282,6 @@ class PythonExecutor: NSObject {
         } catch let error {
             log.error(error.localizedDescription)
         }
-        
-        self.cleanUp()
     }
 
     func cleanUp() {
@@ -300,6 +298,7 @@ class PythonExecutor: NSObject {
 
     func evaluate() -> (String, String, String) {
         self.writeWorkflowOutputLog()
+        self.cleanUp()
         return (self.logFilePath, self.tempPath, "\(self.overallExitCode)")
     }
 }
