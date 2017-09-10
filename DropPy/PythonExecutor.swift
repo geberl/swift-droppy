@@ -33,9 +33,9 @@ class PythonExecutor: NSObject {
         let userDefaults = UserDefaults.standard
 
         self.devModeEnabled = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
-        self.workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
+        self.workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/"
         self.workflowFile = workflowFile
-        self.workflowPath = workspacePath + "/" + "Workflows" + "/" + workflowFile
+        self.workflowPath = workspacePath + "Workflows" + "/" + workflowFile
 
         let userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
         let interpreterInfo: Dictionary<String, String> = userDefaultInterpreters[Workflows.activeInterpreterName]!
@@ -43,14 +43,14 @@ class PythonExecutor: NSObject {
         self.executableArgs = interpreterInfo["arguments"]!
 
         if self.devModeEnabled {
-            self.tempPath = self.workspacePath + "/" + "Temp/" + self.startDateTime.iso8601
+            self.tempPath = self.workspacePath + "Temp" + "/" + self.startDateTime.iso8601 + "/"
         } else {
-            self.tempPath = NSTemporaryDirectory()
+            self.tempPath = NSTemporaryDirectory() + self.startDateTime.iso8601 + "/"
         }
 
-        self.runnerPath = tempPath + "/" + "run.py"
-        self.filesJsonPath = tempPath + "/" + "files.json"
-        self.logFilePath = tempPath + "/" + "task.log"
+        self.runnerPath = tempPath + "run.py"
+        self.filesJsonPath = tempPath + "files.json"
+        self.logFilePath = tempPath + "task.log"
         self.filePaths = filePaths
         self.overallExitCode = 0
 
@@ -59,8 +59,8 @@ class PythonExecutor: NSObject {
 
     func prepareTempDir() -> (inputPath: String, outputPath: String) {
         // Setup the directory structure here.
-        let inputPath: String = self.tempPath + "/" + "0"
-        let outputPath: String = self.tempPath + "/" + "1"
+        let inputPath: String = self.tempPath + "0"
+        let outputPath: String = self.tempPath + "1"
         if !isDir(path: inputPath) {
             makeDirs(path: inputPath)
         }
@@ -84,7 +84,7 @@ class PythonExecutor: NSObject {
     }
 
     func prepareNextTempDir(taskNumber: Int) -> String {
-        let outputPath: String = self.tempPath + "/" + String(taskNumber)
+        let outputPath: String = self.tempPath + String(taskNumber)
         if !isDir(path: outputPath) {
             makeDirs(path: outputPath)
         }
