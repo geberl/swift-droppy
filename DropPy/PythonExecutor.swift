@@ -121,44 +121,38 @@ class PythonExecutor: NSObject {
     }
 
     func taskLog(prefix: String, lines: [String]) {
+        // File is sure to exist at that point, may have content or be empty.
         var prefixedLine: String
-        do {
-            if let fileHandle = FileHandle(forWritingAtPath: self.logFilePath) {
-                defer {
-                    fileHandle.closeFile()
+        if let fileHandle = FileHandle(forWritingAtPath: self.logFilePath) {
+            defer {
+                fileHandle.closeFile()
+            }
+            for (n, line) in lines.enumerated() {
+                if n == 0 {
+                    prefixedLine = prefix + line + "\n"
+                } else {
+                    prefixedLine = String(repeating: " ", count: prefix.characters.count) + line + "\n"
                 }
-                for (n, line) in lines.enumerated() {
-                    if n == 0 {
-                        prefixedLine = prefix + line + "\n"
-                    } else {
-                        prefixedLine = String(repeating: " ", count: prefix.characters.count) + line + "\n"
-                    }
-                    
-                    if let lineData = prefixedLine.data(using: String.Encoding.utf8) {
-                        fileHandle.seekToEndOfFile()
-                        fileHandle.write(lineData)
-                    }
+                
+                if let lineData = prefixedLine.data(using: String.Encoding.utf8) {
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.write(lineData)
                 }
             }
-            else {
-                for (n, line) in lines.enumerated() {
-                    if n == 0 {
-                        prefixedLine = prefix + line + "\n"
-                    } else {
-                        prefixedLine = String(repeating: " ", count: prefix.characters.count) + line + "\n"
-                    }
-                    
-                    try prefixedLine.write(to: URL(fileURLWithPath: self.logFilePath),
-                                           atomically: false,
-                                           encoding: String.Encoding.utf8)
-                }
-            }
-        } catch let error {
-            log.error(error.localizedDescription)
         }
     }
 
     func writeWorkflowInputLog() {
+        // Create an empty file at logFilePath.
+        do {
+            try "".write(to: URL(fileURLWithPath: self.logFilePath),
+                         atomically: false,
+                         encoding: String.Encoding.utf8)
+        } catch let error {
+            log.error(error.localizedDescription)
+            return
+        }
+
         self.taskLog(prefix: "", lines: ["Start Date & Time: \(self.startDateTime.readable)"])
         self.taskLog(prefix: "", lines: ["Dev Mode Enabled:  \(self.devModeEnabled)"])
         self.taskLog(prefix: "", lines: ["Workspace Path:    " + self.workspacePath])
