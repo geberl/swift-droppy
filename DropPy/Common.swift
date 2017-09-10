@@ -102,11 +102,22 @@ extension Formatter {
         formatter.dateFormat = "yyyyMMdd'T'HHmmss"
         return formatter
     }()
+    static let readable: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: TimeZone.current.identifier)
+        formatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter
+    }()
 }
 
 
 extension Date {
     var iso8601: String {
         return Formatter.iso8601.string(from: self)
+    }
+    var readable: String {
+        return Formatter.readable.string(from: self)
     }
 }
