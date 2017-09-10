@@ -266,9 +266,6 @@ class WindowControllerMain: NSWindowController {
     }
 
     func executionErrorAlert(logFilePath: String, tempDirPath: String) {
-        log.debug(logFilePath)
-        log.debug(tempDirPath)
-
         let errorAlert = NSAlert()
         errorAlert.showsHelp = false
         errorAlert.messageText = "Running one of your Tasks failed"
@@ -279,6 +276,16 @@ class WindowControllerMain: NSWindowController {
         errorAlert.layout()
         errorAlert.alertStyle = NSAlertStyle.warning
         errorAlert.icon = NSImage(named: "error")
-        errorAlert.runModal()
+        let response: NSModalResponse = errorAlert.runModal()
+
+        if response == NSAlertFirstButtonReturn {
+            // Do nothing when clicked ok.
+        } else if response == NSAlertSecondButtonReturn {
+            // Open temp dir in finder.
+            NSWorkspace.shared().selectFile(logFilePath, inFileViewerRootedAtPath: tempDirPath)
+        } else if response == NSAlertThirdButtonReturn {
+            // Open log file in user editor.
+            NSWorkspace.shared().openFile(logFilePath)
+        }
     }
 }
