@@ -45,7 +45,7 @@ class PythonExecutor: NSObject {
         if self.devModeEnabled {
             self.tempPath = self.workspacePath + "Temp" + "/" + self.startDateTime.iso8601 + "/"
         } else {
-            self.tempPath = NSTemporaryDirectory() + self.startDateTime.iso8601 + "/"
+            self.tempPath = NSTemporaryDirectory() + "DropPy" + "/" + self.startDateTime.iso8601 + "/"
         }
 
         self.runnerPath = tempPath + "run.py"
@@ -281,6 +281,20 @@ class PythonExecutor: NSObject {
             }
         } catch let error {
             log.error(error.localizedDescription)
+        }
+        
+        self.cleanUp()
+    }
+
+    func cleanUp() {
+        if !self.devModeEnabled && self.overallExitCode == 0 {
+            do {
+                let fileManager = FileManager.default
+                try fileManager.removeItem(atPath: self.tempPath)
+                log.debug("Removed temp dir at \(self.tempPath)")
+            } catch let error {
+                log.error(error.localizedDescription)
+            }
         }
     }
 
