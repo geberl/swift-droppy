@@ -75,7 +75,7 @@
 		A46393321E8FDA40000C7BDB /* ViewControllerMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerMain.swift; sourceTree = "<group>"; };
 		A46393341E8FDA40000C7BDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = DropPy/Assets.xcassets; sourceTree = "<group>"; };
 		A46393371E8FDA40000C7BDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A46393391E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A46393391E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = DropPy/Info.plist; sourceTree = "<group>"; };
 		A463933E1E8FDA40000C7BDB /* DropPyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DropPyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A46393421E8FDA40000C7BDB /* DropPyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropPyTests.swift; sourceTree = "<group>"; };
 		A46393441E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -157,14 +157,6 @@
 			name = "First Run";
 			sourceTree = "<group>";
 		};
-		A46022731EED37AD0060FA75 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				A46393391E8FDA40000C7BDB /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		A46022741EED37D10060FA75 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				A46393341E8FDA40000C7BDB /* Assets.xcassets */,
+				A46393391E8FDA40000C7BDB /* Info.plist */,
 				A463932F1E8FDA40000C7BDB /* DropPy */,
 				A46393411E8FDA40000C7BDB /* DropPyTests */,
 				A463934C1E8FDA40000C7BDB /* DropPyUITests */,
@@ -224,7 +217,6 @@
 				A48706361F567D1B005EF67C /* Registration */,
 				A46022741EED37D10060FA75 /* Preferences */,
 				A444507B1EF0EBF000EBB485 /* First Run */,
-				A46022731EED37AD0060FA75 /* Supporting Files */,
 			);
 			path = DropPy;
 			sourceTree = "<group>";

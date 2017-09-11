@@ -22,17 +22,22 @@
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Registration..." id="uKY-J6-ByB">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="showRegistrationWindow:" target="Voe-Tx-rLC" id="m1o-sz-OKd"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Check for Updates..." id="ShG-Oh-ten">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="checkForUpdates:" target="Voe-Tx-rLC" id="FhZ-Av-SSI"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
                                             <connections>
                                                 <action selector="showPreferencesWindow:" target="Voe-Tx-rLC" id="lDp-CB-lPF"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
-                                        <menuItem title="Registration..." id="uKY-J6-ByB">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="showRegistrationWindow:" target="Voe-Tx-rLC" id="k3I-kw-8F5"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="KzB-aT-1bY"/>

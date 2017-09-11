@@ -60,6 +60,11 @@ class WindowControllerMain: NSWindowController {
                                                selector: #selector(WindowControllerMain.evaluateWorkflowResults(notification:)),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(WindowControllerMain.checkUpdate(notification:)),
+                                               name: Notification.Name("checkUpdate"),
+                                               object: nil)
     }
     
     func disableToolbar(notification: Notification){
@@ -287,5 +292,51 @@ class WindowControllerMain: NSWindowController {
             // Open log file in user editor.
             NSWorkspace.shared().openFile(logFilePath)
         }
+    }
+    
+    func showSampleAlert() {
+        
+    }
+
+    func checkUpdate(notification: Notification) {
+        log.debug("checkUpdate in WindowController")
+        
+
+        
+//        guard let iconName = notification.userInfo?["iconName"] as? String else { return }
+//        guard let messageText = notification.userInfo?["messageText"] as? String else { return }
+//        guard let infoText = notification.userInfo?["infoText"] as? String else { return }
+//        guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }
+//        guard let downloadLink = notification.userInfo?["downloadLink"] as? String else { return }
+
+
+//        // If an error occurred show the "visit website" button, no "download".
+//        // Do the same thing if the user is already on the latest version.
+//        // If a later version is available show a "download" and a "what's new" button.
+//        if downloadLink == "https://droppyapp.com/" {
+//            errorAlert.addButton(withTitle: "Visit Website")
+//            errorAlert.addButton(withTitle: "Release notes")
+//        } else {
+//            errorAlert.addButton(withTitle: "Download")
+//            errorAlert.addButton(withTitle: "What's new?")
+//        }
+//        errorAlert.addButton(withTitle: "Cancel")
+//
+//        errorAlert.layout()
+//
+//        if iconName == "alert" {
+//            errorAlert.alertStyle = NSAlertStyle.warning
+//        }
+//        errorAlert.icon = NSImage(named: iconName)
+//
+//        let response: NSModalResponse = errorAlert.runModal()
+//
+//        if response == NSAlertFirstButtonReturn {
+//            log.debug("First") // "Visit Website" OR "Download"
+//        } else if response == NSAlertSecondButtonReturn {
+//            log.debug("Second") // always open release notes, just with different button texts
+//        } else if response == NSAlertThirdButtonReturn {
+//            // Cancel button clicked. Do nothing.
+//        }
     }
 }

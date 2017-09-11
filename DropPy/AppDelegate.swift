@@ -150,12 +150,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let wcSb = NSStoryboard(name: "Registration", bundle: Bundle.main)
         return wcSb.instantiateInitialController() as! WindowControllerRegistration
     }()
-    
+
     @IBAction func showRegistrationWindow(_ sender: NSMenuItem) {
         self.registrationWindowController.showWindow(self)
     }
-    
-    
+
+    @IBAction func checkForUpdates(_ sender: NSMenuItem) {
+        self.checkUpdate()
+    }
+
     lazy var firstRunWindowController: WindowControllerFirstRun  = {
         let wcSB = NSStoryboard(name: "FirstRun", bundle: Bundle.main)
         return wcSB.instantiateInitialController() as! WindowControllerFirstRun
@@ -375,8 +378,75 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return true
             }
         }
-        
+
         // No changes detected in all checks
         return false
+    }
+    
+    func checkUpdate() {
+//        var iconName: String = "AppIcon"
+//        var messageText: String = "Unable to check for updates"
+//        var infoText: String = "Can't connect to server. Are you online?"
+//        var releaseNotesLink: String = "https://droppyapp.com/articles/release-notes"
+//        var downloadLink: String = "https://droppyapp.com/"
+        
+        log.debug("check update in app delegate")
+        
+        NotificationCenter.default.post(name: Notification.Name("checkUpdate"), object: nil)
+
+        let jsonURL: NSURL = NSURL(string: "https://droppyapp.com/version.json")!
+
+        URLSession.shared.dataTask(with: jsonURL as URL, completionHandler: { (data, response, error) -> Void in
+            if error == nil && data != nil {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: AnyObject]
+
+                    // TODO different icon when new version is available and when not?
+                    let versionMajor = json["versionMajor"] as! Int
+                    let versionMinor = json["versionMinor"] as! Int
+                    let versionPatch = json["versionPatch"] as! Int
+                    let releaseNotesLink = json["releaseNotes"] as! String
+                    let downloadLink = json["download"] as! String
+
+                    log.debug(" ma " + "\(versionMajor)")
+                    log.debug(" mi " + "\(versionMinor)")
+                    log.debug(" pa " + "\(versionPatch)")
+                    
+                    log.debug(" rn " + releaseNotesLink)
+                    log.debug(" d " + downloadLink)
+                    
+                    let isLatest: Bool = self.isLatestVersion(webVersionMajor: versionMajor,
+                                                              webVersionMinor: versionMinor,
+                                                              webVersionPatch: versionPatch)
+                    log.debug("isLatest " + "\(isLatest)")
+
+                } catch let error {
+                    log.error("Problems fetching update info from the server. (1)")
+                    log.error(error.localizedDescription)
+                }
+            } else {
+                log.error("Problems fetching update info from the server. (2)")
+            }
+        }).resume()
+    }
+
+    func isLatestVersion(webVersionMajor: Int, webVersionMinor: Int, webVersionPatch: Int) -> Bool {
+        if let thisVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            let thisVersionList: [String] = thisVersion.components(separatedBy: ".")
+            let thisVersionMajor: Int = Int(thisVersionList[0])!
+            let thisVersionMinor: Int = Int(thisVersionList[1])!
+            let thisVersionPatch: Int = Int(thisVersionList[2])!
+
+            if webVersionMajor > thisVersionMajor {
+                return false
+            } else if webVersionMinor > thisVersionMinor {
+                return false
+            } else if webVersionPatch > thisVersionPatch {
+                return false
+            }
+        } else {
+            log.error("Can't get version string from plist.")
+        }
+        return true
     }
 }

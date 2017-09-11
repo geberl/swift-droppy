@@ -60,11 +60,11 @@
             <objects>
                 <viewController title="General" showSeguePresentationStyle="single" id="F1A-We-v2b" customClass="ViewControllerGeneral" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="c5X-MK-dK9">
-                        <rect key="frame" x="0.0" y="0.0" width="750" height="129"/>
+                        <rect key="frame" x="0.0" y="0.0" width="750" height="151"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qr4-7X-bh9">
-                                <rect key="frame" x="18" y="92" width="272" height="17"/>
+                                <rect key="frame" x="18" y="114" width="272" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Development mode:" id="giq-du-0Wi">
                                     <font key="font" metaFont="system"/>
@@ -72,8 +72,17 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wo1-68-uGx">
+                                <rect key="frame" x="18" y="40" width="272" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Check for Updates:" id="17e-JC-kSD">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g0k-bV-7OQ">
-                                <rect key="frame" x="294" y="91" width="438" height="18"/>
+                                <rect key="frame" x="294" y="113" width="438" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Enable" bezelStyle="regularSquare" imagePosition="left" inset="2" id="01Y-cW-ed5">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -84,7 +93,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gi9-Xq-9Ki">
-                                <rect key="frame" x="294" y="43" width="438" height="42"/>
+                                <rect key="frame" x="294" y="65" width="438" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Intermediary files will not be saved." id="AWk-Nw-gOI">
                                     <font key="font" metaFont="system"/>
@@ -92,6 +101,27 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V8Z-22-u68">
+                                <rect key="frame" x="294" y="34" width="245" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Automatically" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="QEs-vT-JGd" id="PBf-yE-Ig3">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" autoenablesItems="NO" id="cZp-1H-Y7X">
+                                        <items>
+                                            <menuItem title="Automatically" state="on" id="QEs-vT-JGd">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="Manually" id="bFf-QB-sRR">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="onWorkflowEditor:" target="b3V-Ji-Eo7" id="7P6-bR-qVp"/>
+                                </connections>
+                            </popUpButton>
                             <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oQs-x0-tyj">
                                 <rect key="frame" x="707" y="17" width="25" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -112,7 +142,7 @@
                 </viewController>
                 <customObject id="JDo-od-sS7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-506" y="986.5"/>
+            <point key="canvasLocation" x="-506" y="997.5"/>
         </scene>
         <!--Interpreter-->
         <scene sceneID="VZ1-6h-2Mf">
