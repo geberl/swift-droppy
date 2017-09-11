@@ -62,8 +62,17 @@ class WindowControllerMain: NSWindowController {
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.checkUpdate(notification:)),
-                                               name: Notification.Name("checkUpdate"),
+                                               selector: #selector(WindowControllerMain.updateErrorAlert(notification:)),
+                                               name: Notification.Name("updateError"),
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(WindowControllerMain.updateNotAvailableAlert(notification:)),
+                                               name: Notification.Name("updateNotAvailable"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(WindowControllerMain.updateAvailableAlert(notification:)),
+                                               name: Notification.Name("updateAvailable"),
                                                object: nil)
     }
     
@@ -293,50 +302,66 @@ class WindowControllerMain: NSWindowController {
             NSWorkspace.shared().openFile(logFilePath)
         }
     }
-    
-    func showSampleAlert() {
-        
+
+    func updateErrorAlert(notification: Notification) {
+        let errorAlert = NSAlert()
+        errorAlert.showsHelp = false
+        errorAlert.messageText = "Unable to check for updates"
+        errorAlert.informativeText = "Are you connected?"
+        errorAlert.addButton(withTitle: "Visit Website")
+        errorAlert.addButton(withTitle: "Cancel")
+        errorAlert.layout()
+        errorAlert.alertStyle = NSAlertStyle.warning
+        errorAlert.icon = NSImage(named: "error")
+
+        let response: NSModalResponse = errorAlert.runModal()
+
+        if response == NSAlertFirstButtonReturn {
+            guard let url = URL(string: "https://droppyapp.com/"), NSWorkspace.shared().open(url) else { return }
+        }
     }
 
-    func checkUpdate(notification: Notification) {
-        log.debug("checkUpdate in WindowController")
+    func updateNotAvailableAlert(notification: Notification) {
+        guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }
+        guard let thisVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
         
-
+        let errorAlert = NSAlert()
+        errorAlert.showsHelp = false
+        errorAlert.messageText = "No update available"
+        errorAlert.informativeText = "You're already using the latest version, v" + thisVersionString + "."
+        errorAlert.addButton(withTitle: "Ok")
+        errorAlert.addButton(withTitle: "Release Notes")
+        errorAlert.layout()
+        errorAlert.icon = NSImage(named: "AppIcon")
         
-//        guard let iconName = notification.userInfo?["iconName"] as? String else { return }
-//        guard let messageText = notification.userInfo?["messageText"] as? String else { return }
-//        guard let infoText = notification.userInfo?["infoText"] as? String else { return }
-//        guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }
-//        guard let downloadLink = notification.userInfo?["downloadLink"] as? String else { return }
+        let response: NSModalResponse = errorAlert.runModal()
+        
+        if response == NSAlertSecondButtonReturn {
+            guard let url = URL(string: releaseNotesLink), NSWorkspace.shared().open(url) else { return }
+        }
+    }
 
+    func updateAvailableAlert(notification: Notification) {
+        guard let thisVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
+        guard let newVersionString = notification.userInfo?["versionString"] as? String else { return }
+        guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }
+        guard let downloadLink = notification.userInfo?["downloadLink"] as? String else { return }
 
-//        // If an error occurred show the "visit website" button, no "download".
-//        // Do the same thing if the user is already on the latest version.
-//        // If a later version is available show a "download" and a "what's new" button.
-//        if downloadLink == "https://droppyapp.com/" {
-//            errorAlert.addButton(withTitle: "Visit Website")
-//            errorAlert.addButton(withTitle: "Release notes")
-//        } else {
-//            errorAlert.addButton(withTitle: "Download")
-//            errorAlert.addButton(withTitle: "What's new?")
-//        }
-//        errorAlert.addButton(withTitle: "Cancel")
-//
-//        errorAlert.layout()
-//
-//        if iconName == "alert" {
-//            errorAlert.alertStyle = NSAlertStyle.warning
-//        }
-//        errorAlert.icon = NSImage(named: iconName)
-//
-//        let response: NSModalResponse = errorAlert.runModal()
-//
-//        if response == NSAlertFirstButtonReturn {
-//            log.debug("First") // "Visit Website" OR "Download"
-//        } else if response == NSAlertSecondButtonReturn {
-//            log.debug("Second") // always open release notes, just with different button texts
-//        } else if response == NSAlertThirdButtonReturn {
-//            // Cancel button clicked. Do nothing.
-//        }
+        let errorAlert = NSAlert()
+        errorAlert.showsHelp = false
+        errorAlert.messageText = "New update available"
+        errorAlert.informativeText = "There's a new version of DropPy, v" + newVersionString + ".\nYou're currently using v" + thisVersionString + "."
+        errorAlert.addButton(withTitle: "Download")
+        errorAlert.addButton(withTitle: "What's new?")
+        errorAlert.addButton(withTitle: "Cancel")
+        errorAlert.layout()
+        errorAlert.icon = NSImage(named: "AppIcon")
+        let response: NSModalResponse = errorAlert.runModal()
+
+        if response == NSAlertFirstButtonReturn {
+            guard let url = URL(string: downloadLink), NSWorkspace.shared().open(url) else { return }
+        } else if response == NSAlertSecondButtonReturn {
+            guard let url = URL(string: releaseNotesLink), NSWorkspace.shared().open(url) else { return }
+        }
     }
 }

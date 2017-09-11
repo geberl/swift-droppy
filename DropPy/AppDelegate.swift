@@ -382,52 +382,51 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // No changes detected in all checks
         return false
     }
-    
+
     func checkUpdate() {
-//        var iconName: String = "AppIcon"
-//        var messageText: String = "Unable to check for updates"
-//        var infoText: String = "Can't connect to server. Are you online?"
-//        var releaseNotesLink: String = "https://droppyapp.com/articles/release-notes"
-//        var downloadLink: String = "https://droppyapp.com/"
-        
-        log.debug("check update in app delegate")
-        
-        NotificationCenter.default.post(name: Notification.Name("checkUpdate"), object: nil)
-
-        let jsonURL: NSURL = NSURL(string: "https://droppyapp.com/version.json")!
-
-        URLSession.shared.dataTask(with: jsonURL as URL, completionHandler: { (data, response, error) -> Void in
-            if error == nil && data != nil {
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: AnyObject]
-
-                    // TODO different icon when new version is available and when not?
-                    let versionMajor = json["versionMajor"] as! Int
-                    let versionMinor = json["versionMinor"] as! Int
-                    let versionPatch = json["versionPatch"] as! Int
-                    let releaseNotesLink = json["releaseNotes"] as! String
-                    let downloadLink = json["download"] as! String
-
-                    log.debug(" ma " + "\(versionMajor)")
-                    log.debug(" mi " + "\(versionMinor)")
-                    log.debug(" pa " + "\(versionPatch)")
-                    
-                    log.debug(" rn " + releaseNotesLink)
-                    log.debug(" d " + downloadLink)
-                    
-                    let isLatest: Bool = self.isLatestVersion(webVersionMajor: versionMajor,
-                                                              webVersionMinor: versionMinor,
-                                                              webVersionPatch: versionPatch)
-                    log.debug("isLatest " + "\(isLatest)")
-
-                } catch let error {
-                    log.error("Problems fetching update info from the server. (1)")
-                    log.error(error.localizedDescription)
+        let jsonURL = URL(string: "https://droppyapp.com/version.json")
+        let urlSession = URLSession(configuration: URLSessionConfiguration.default)
+        let task = urlSession.dataTask(with: jsonURL!) {data, response, error in
+            guard error == nil else {
+                log.error("Checking for updates: Server did not respond")
+                log.error((error?.localizedDescription)!)
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
                 }
-            } else {
-                log.error("Problems fetching update info from the server. (2)")
+                return
             }
-        }).resume()
+
+            guard let data = data else {
+                log.error("Checking for updates: Response of server is empty")
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
+                }
+                return
+            }
+
+            let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: AnyObject]
+            let versionMajor = json["versionMajor"] as! Int
+            let versionMinor = json["versionMinor"] as! Int
+            let versionPatch = json["versionPatch"] as! Int
+            let versionDict:[String: String] = ["versionString": String(versionMajor) + "." + String(versionMinor) + "." + String(versionPatch),
+                                                "releaseNotesLink": json["releaseNotes"] as! String,
+                                                "downloadLink": json["download"] as! String]
+
+            DispatchQueue.main.async {
+                if self.isLatestVersion(webVersionMajor: versionMajor,
+                                        webVersionMinor: versionMinor,
+                                        webVersionPatch: versionPatch) {
+                    NotificationCenter.default.post(name: Notification.Name("updateNotAvailable"),
+                                                    object: nil,
+                                                    userInfo: versionDict)
+                } else {
+                    NotificationCenter.default.post(name: Notification.Name("updateAvailable"),
+                                                    object: nil,
+                                                    userInfo: versionDict)
+                }
+            }
+        }
+        task.resume()
     }
 
     func isLatestVersion(webVersionMajor: Int, webVersionMinor: Int, webVersionPatch: Int) -> Bool {
