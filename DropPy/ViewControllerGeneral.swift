@@ -20,9 +20,17 @@ class ViewControllerGeneral: NSViewController {
     @IBOutlet weak var radioEnableDevMode: NSButton!
 
     @IBAction func onRadioEnableDevMode(_ sender: Any) {
-        self.userDefaults.set(Bool(self.radioEnableDevMode.state as NSNumber),
-                              forKey: UserDefaultStruct.devModeEnabled)
+        let devModeEnabled = Bool(self.radioEnableDevMode.state as NSNumber)
+        self.userDefaults.set(devModeEnabled, forKey: UserDefaultStruct.devModeEnabled)
+
         self.adjustIntermediaryFilesLabel()
+
+        if !devModeEnabled {
+            let tempPath = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/" + "Temp" + "/"
+            if isDir(path: tempPath) {
+                self.askDeleteTempAlert(tempPath: tempPath)
+            }
+        }
     }
 
     @IBOutlet weak var intermediaryFilesTextField: NSTextField!
@@ -78,5 +86,29 @@ class ViewControllerGeneral: NSViewController {
         } else {
             self.intermediaryFilesTextField.stringValue = "Intermediary files will not be saved."
         }
+    }
+
+    func askDeleteTempAlert(tempPath: String) {
+        let myAlert = NSAlert()
+        myAlert.showsHelp = false
+        myAlert.messageText = "Delete Temp dir"
+        myAlert.informativeText = "The directory at '" + tempPath + "' can usually be deleted now."
+        myAlert.addButton(withTitle: "Delete")
+        myAlert.addButton(withTitle: "Cancel")
+        myAlert.layout()
+        myAlert.alertStyle = NSAlertStyle.critical
+        myAlert.icon = NSImage(named: "alert")
+
+        myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSAlertFirstButtonReturn {
+                do {
+                    let fileManager = FileManager.default
+                    try fileManager.removeItem(atPath: tempPath)
+                    log.debug("Removed temp dir at \(tempPath)")
+                } catch let error {
+                    log.error(error.localizedDescription)
+                }
+            }
+        })
     }
 }
