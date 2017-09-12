@@ -73,11 +73,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillFinishLaunching(_ notification: Notification) {
         log.enabled = true
         self.loadUserDefaults()
+        self.autoUpdate()
     }
 
     func applicationWillBecomeActive(_ notification: Notification) {
-        self.autoUpdate()
-
         // Reload workflows from Workflow sub-directory to account for json files that could have been added/edited/deleted.
         let changesDetected: Bool = self.reloadWorkflows()
         if changesDetected {
