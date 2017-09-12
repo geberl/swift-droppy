@@ -403,11 +403,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if dateNow > updateNext {
             self.manualUpdate(silent: true)
         } else {
-            log.debug("Not checking for updates now, next check after " + updateNext.iso8601 + ".")
+            log.debug("Not checking for updates now, next check " + updateNext.iso8601 + ".")
         }
     }
 
     func manualUpdate(silent: Bool) {
+        userDefaults.set(Date(), forKey: UserDefaultStruct.updateLast)
+
         let jsonURL = URL(string: "https://droppyapp.com/version.json")
         let urlSession = URLSession(configuration: URLSessionConfiguration.default)
         let task = urlSession.dataTask(with: jsonURL!) {data, response, error in

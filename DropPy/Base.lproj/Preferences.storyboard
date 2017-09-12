@@ -126,7 +126,7 @@
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="onWorkflowEditor:" target="b3V-Ji-Eo7" id="7P6-bR-qVp"/>
+                                    <action selector="onUpdateDeltaPopUp:" target="F1A-We-v2b" id="SCT-CO-Ht7"/>
                                 </connections>
                             </popUpButton>
                             <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oQs-x0-tyj">
@@ -145,6 +145,7 @@
                     <connections>
                         <outlet property="intermediaryFilesTextField" destination="Gi9-Xq-9Ki" id="nif-Kb-oIV"/>
                         <outlet property="radioEnableDevMode" destination="g0k-bV-7OQ" id="xp6-cj-JSI"/>
+                        <outlet property="updateDeltaPopUp" destination="V8Z-22-u68" id="tVY-0c-2R2"/>
                     </connections>
                 </viewController>
                 <customObject id="JDo-od-sS7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
