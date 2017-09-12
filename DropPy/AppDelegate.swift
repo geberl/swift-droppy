@@ -408,6 +408,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func manualUpdate(silent: Bool) {
+        if !isConnectedToNetwork() {
+            log.debug("No network connection available, skipping update check.")
+            if !silent {
+                NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
+            }
+            return
+        }
+
         userDefaults.set(Date(), forKey: UserDefaultStruct.updateLast)
 
         let jsonURL = URL(string: "https://droppyapp.com/version.json")
