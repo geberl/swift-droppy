@@ -20,16 +20,16 @@ let log = Logger(configuration: configuration)
 struct UserDefaultStruct {
     // This struct ALWAYS needs to contain TWO static variables for each plist record.
     // One to set the KEY's name and one to set the default VALUE and its type.
-    
+
     static var workspacePath: String = "workspacePath"
     static var workspacePathDefault: String = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("DropPy").path
-    
+
     static var devModeEnabled: String = "devModeEnabled"
     static var devModeEnabledDefault: Bool = false
-    
+
     static var dropCounter: String = "dropCounter"
     static var dropCounterDefault: Int = 0
-    
+
     static var editorAppPath: String = "editorAppPath"
     static var editorAppPathDefault: String = ""
     static var editorIconPath: String = "editorIconPath"
@@ -38,20 +38,24 @@ struct UserDefaultStruct {
     static var editorForWorkflowsDefault: String = "Internal text editor" // TODO: Set "Internal Workflow editor" as default once done.
     static var editorForTasks: String = "editorForTasks"
     static var editorForTasksDefault: String = "Internal text editor"
-    
+
     static var interpreterStockName: String = "interpreterStockName"
     static var interpreterStockNameDefault: String = "macOS pre-installed"
-    
+
     static var interpreters: String = "interpreters"
-    static var interpretersDefault: Dictionary = ["macOS pre-installed": ["executable": "/usr/bin/python",
-                                                                          "arguments": "-B"]]
+    static var interpretersDefault: Dictionary = ["macOS pre-installed": ["executable": "/usr/bin/python", "arguments": "-B"]]
+
+    static var updateLast: String = "updateLast"
+    static var updateLastDefault: Date = Date()
+    static var updateDelta: String = "updateDelta"
+    static var updateDeltaDefault: Int = 60 * 60 * 24 * 7  // a week in seconds, maxint of UInt64 is much higher
 }
 
 
 // Workflows object
 struct Workflows {
     static var workflows = [String: Dictionary<String, Any>]()
-    
+
     static var activeName = "" as String
     static var activeInterpreterName = "" as String
     static var activeJsonFile = "" as String
@@ -63,16 +67,18 @@ struct Workflows {
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     let userDefaults = UserDefaults.standard
-    
+
     var executionInProgress: Bool = false
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         log.enabled = true
         self.loadUserDefaults()
     }
-    
+
     func applicationWillBecomeActive(_ notification: Notification) {
-        // Reload workflows from Workflow sub-directory now to account for json files that could have been added/edited/deleted
+        self.autoUpdate()
+
+        // Reload workflows from Workflow sub-directory to account for json files that could have been added/edited/deleted.
         let changesDetected: Bool = self.reloadWorkflows()
         if changesDetected {
             Workflows.activeName = ""
@@ -91,7 +97,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func startPythonExecutor(notification: Notification) {
         // Notification is sometimes sent (or received ?) twice.
-        // This workaround prevents multiple instantiation and execution of PythonExecutor.
+        // This workaround prevents multiple instantiation of PythonExecutor.
         if !executionInProgress {
             executionInProgress = true
 
@@ -156,7 +162,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction func checkForUpdates(_ sender: NSMenuItem) {
-        self.checkUpdate()
+        self.manualUpdate(silent: false)
     }
 
     lazy var firstRunWindowController: WindowControllerFirstRun  = {
@@ -169,11 +175,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func loadUserDefaults() {
-        // TODO: Create a button to reset everthing (but registration info and demo start datetime) to defaults in advanced tab of preferences instead (closes the app also)
-        // self.clearUserDefaults()
-        
         // User's DropPy Workspace directory
-        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.workspacePath) == false{
+        if !self.isKeyPresentInUserDefaults(key: UserDefaultStruct.workspacePath) {
             // Start out with default Settings
             // Don't open the Preferences Window, make it as simple and painless and little confusing as possible
             userDefaults.set(UserDefaultStruct.dropCounterDefault, forKey: UserDefaultStruct.dropCounter)
@@ -187,14 +190,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             // TODO: Check if the currently set Workspace directory actually still exists, if not open preferences and prompt to change
         }
-        
+
         // Dev mode.
-        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.devModeEnabled) == false {
+        if !self.isKeyPresentInUserDefaults(key: UserDefaultStruct.devModeEnabled) {
             userDefaults.set(UserDefaultStruct.devModeEnabledDefault, forKey: UserDefaultStruct.devModeEnabled)
         }
-        
+
         // User's external text editor.
-        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorAppPath) == false {
+        if !self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorAppPath) {
             userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
         } else {
             // The key exists, now check if the specified editor (app) also still exists on the system.
@@ -205,7 +208,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
             }
         }
-        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorIconPath) == false {
+        if !self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorIconPath) {
             userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
         } else {
             // The key exists, now check if the specified editor (icns) also still exists on the system.
@@ -216,36 +219,44 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
             }
         }
-        
+
         // User's preference for how to edit Workflows.
-        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorForWorkflows) == false {
+        if !self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorForWorkflows) {
             userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
         }
-        
+
         // User's preference for how to edit Tasks.
-        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorForTasks) == false {
+        if !self.isKeyPresentInUserDefaults(key: UserDefaultStruct.editorForTasks) {
             userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
         }
-        
+
         // User's Python interpreters and virtual envs.
-        if self.isKeyPresentInUserDefaults(key: UserDefaultStruct.interpreters) == false {
+        if !self.isKeyPresentInUserDefaults(key: UserDefaultStruct.interpreters) {
             userDefaults.set(UserDefaultStruct.interpretersDefault, forKey: UserDefaultStruct.interpreters)
         }
         userDefaults.set(UserDefaultStruct.interpreterStockNameDefault, forKey: UserDefaultStruct.interpreterStockName)
-        
+
+        // User's update preferences.
+        if !self.isKeyPresentInUserDefaults(key: UserDefaultStruct.updateLast) {
+            userDefaults.set(UserDefaultStruct.updateLastDefault, forKey: UserDefaultStruct.updateLast)
+        }
+        if !self.isKeyPresentInUserDefaults(key: UserDefaultStruct.updateDelta) {
+            userDefaults.set(UserDefaultStruct.updateDeltaDefault, forKey: UserDefaultStruct.updateDelta)
+        }
+
         // Get current screen size
         let resolutionX: Int
         let resolutionY: Int
         (resolutionX, resolutionY) = getResolution()
         let resolutionKeyName: String = String(format: "mainWindowPosAt%dx%d", resolutionX, resolutionY)
-        
+
         // User's main window position for this screen size
         if self.isKeyPresentInUserDefaults(key: resolutionKeyName) {
             let position: Array = self.userDefaults.array(forKey: resolutionKeyName)!
             self.setPosition(positionX: position[0] as! Int, positionY: position[1] as! Int)
         }
     }
-    
+
     func savePosition() {
         // Get current screen size
         let resolutionX: Int
@@ -382,24 +393,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // No changes detected in all checks
         return false
     }
+    
+    func autoUpdate() {
+        let updateDelta: Int = userDefaults.integer(forKey: UserDefaultStruct.updateDelta)
+        let updateLast: Date = userDefaults.object(forKey: UserDefaultStruct.updateLast) as! Date
+        let updateNext: Date = updateLast.addingTimeInterval(TimeInterval(updateDelta))
+        let dateNow: Date = Date()
 
-    func checkUpdate() {
+        if dateNow > updateNext {
+            self.manualUpdate(silent: true)
+        } else {
+            log.debug("Not checking for updates now, next check after " + updateNext.iso8601 + ".")
+        }
+    }
+
+    func manualUpdate(silent: Bool) {
         let jsonURL = URL(string: "https://droppyapp.com/version.json")
         let urlSession = URLSession(configuration: URLSessionConfiguration.default)
         let task = urlSession.dataTask(with: jsonURL!) {data, response, error in
             guard error == nil else {
-                log.error("Checking for updates: Server did not respond")
+                log.error("Checking for updates: Server did not respond.")
                 log.error((error?.localizedDescription)!)
                 DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
+                    if !silent {
+                        NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
+                    }
                 }
                 return
             }
 
             guard let data = data else {
-                log.error("Checking for updates: Response of server is empty")
+                log.error("Checking for updates: Response of server is empty.")
                 DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
+                    if !silent {
+                        NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
+                    }
                 }
                 return
             }
@@ -416,10 +444,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 if self.isLatestVersion(webVersionMajor: versionMajor,
                                         webVersionMinor: versionMinor,
                                         webVersionPatch: versionPatch) {
-                    NotificationCenter.default.post(name: Notification.Name("updateNotAvailable"),
-                                                    object: nil,
-                                                    userInfo: versionDict)
+                    log.debug("Checking for updates: No update available.")
+                    if !silent {
+                        NotificationCenter.default.post(name: Notification.Name("updateNotAvailable"),
+                                                        object: nil,
+                                                        userInfo: versionDict)
+                    }
                 } else {
+                    log.debug("Checking for updates: Update available.")
                     NotificationCenter.default.post(name: Notification.Name("updateAvailable"),
                                                     object: nil,
                                                     userInfo: versionDict)
