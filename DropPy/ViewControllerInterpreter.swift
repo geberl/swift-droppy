@@ -50,24 +50,32 @@ class ViewControllerInterpreter: NSViewController {
         else if !newExecutable.hasPrefix("/") {
             self.errorAlert(title: "Invalid executable", explanation: "The path to the executable has to start with \"/\". Relative paths are not supported.")
         }
-        // String must not contain spaces, that's what the argument textfield is for.
+        // String must not contain arguments.
         else if newExecutable.range(of:" ") != nil {
-            self.errorAlert(title: "Invalid executable", explanation: "The path to the executable must not contain spaces.\n\nYour input was adjusted. Please check the \"arguments\" textbox.")
+            // TODO this solution does not catch '/abc/def/python -B -c -R "/abc/def/ghi"', however the later checks fail for this.
 
-            var executableInvalidArray: Array = newExecutable.components(separatedBy: " ")
-            
-            newExecutable = executableInvalidArray[0]
-            self.executableTextField.stringValue = newExecutable
-            
-            executableInvalidArray.remove(at: 0)
-            var newArguments: String = executableInvalidArray.joined(separator: " ")
-            
-            let presentArguments = self.argumentsTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)  // silently trim when getting the value
-            if presentArguments.characters.count > 0 {
-                newArguments = presentArguments + " " + newArguments
+            // Example starting out with /Users/guenther/My Virtual Env/bin/python -B -c -R
+            var executablePathArray: Array = newExecutable.components(separatedBy: "/")  // [Users, guenther, My Virtual Env, bin, python -B -c -R]
+            let executableLastPart: String = executablePathArray[executablePathArray.count - 1]  // python -B -c -R
+            if executableLastPart.range(of:" ") != nil {
+                var executableAndArguments: Array = executableLastPart.components(separatedBy: " ")  // [python, -B, -c, -R]
+                executablePathArray.remove(at: executablePathArray.count - 1)  // [Users, guenther, My Virtual Env, bin]
+                executablePathArray.append(executableAndArguments[0])  // [Users, guenther, My Virtual Env, bin, python]
+                newExecutable = executablePathArray.joined(separator: "/")  // /Users/guenther/My Virtual Env/bin/python
+                executableAndArguments.remove(at: 0)  // [-B, -c, -R]
+                var newArguments: String = executableAndArguments.joined(separator: " ")  // -B -c -R
+
+                self.executableTextField.stringValue = newExecutable
+
+                let presentArguments = self.argumentsTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)  // silently trim when getting the value
+                if presentArguments.characters.count > 0 {
+                    newArguments = presentArguments + " " + newArguments
+                }
+                self.argumentsTextField.stringValue = newArguments
+                self.editArguments(interpreterName: selectedInterpreterName, newArguments: newArguments)
+                
+                self.errorAlert(title: "Invalid executable", explanation: "The path to the executable must not contain arguments.\n\nYour inputs were adjusted, please check.")
             }
-            self.argumentsTextField.stringValue = newArguments
-            self.editArguments(interpreterName: selectedInterpreterName, newArguments: newArguments)
         }
         // File must exist.
         else if !isFile(path: newExecutable) {
