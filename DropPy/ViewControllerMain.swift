@@ -13,6 +13,8 @@ class ViewControllerMain: NSViewController {
 
     let userDefaults = UserDefaults.standard
 
+    var logFilePath: String?
+
     @IBOutlet weak var logoImageView: NSImageView!
 
     @IBOutlet weak var zoneImageView: NSImageView!
@@ -22,6 +24,15 @@ class ViewControllerMain: NSViewController {
     @IBOutlet weak var zoneImage: NSImageCell!
 
     @IBOutlet weak var taskTextField: NSTextField!
+
+    @IBOutlet weak var logButton: NSButton!
+
+    @IBAction func onLogButton(_ sender: NSButton) {
+        if let logFilePath = self.logFilePath {
+            log.debug(logFilePath)
+            NSWorkspace.shared().openFile(logFilePath)
+        }
+    }
 
     override func viewWillAppear() {
         super.viewWillAppear()
@@ -57,6 +68,11 @@ class ViewControllerMain: NSViewController {
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setLogButtonInvisible(notification:)),
+                                               name: Notification.Name("workflowSelectionChanged"),
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setLogoSpinner(notification:)),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
@@ -75,6 +91,11 @@ class ViewControllerMain: NSViewController {
                                                selector: #selector(ViewControllerMain.setTextFieldHidden(notification:)),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setLogButtonVisible(notification:)),
+                                               name: Notification.Name("executionFinished"),
+                                               object: nil)
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setTextFieldStatus(notification:)),
@@ -85,6 +106,16 @@ class ViewControllerMain: NSViewController {
     func setTextFieldHidden(notification: Notification) {
         taskTextField.isHidden = true
         taskTextField.stringValue = "Task ?/?"
+    }
+
+    func setLogButtonInvisible(notification: Notification) {
+        self.logFilePath = nil
+        logButton.isHidden = true
+    }
+
+    func setLogButtonVisible(notification: Notification) {
+        self.logFilePath = notification.userInfo?["logFilePath"] as? String
+        logButton.isHidden = false
     }
 
     func setTextFieldStatus(notification: Notification) {

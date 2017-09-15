@@ -40,7 +40,7 @@ class WindowControllerMain: NSWindowController {
                                                selector: #selector(WindowControllerMain.refreshToolbarDropdown(notification:)),
                                                name: Notification.Name("workflowsChanged"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.actionOnEmptyWorkflow(notification:)),
                                                name: Notification.Name("actionOnEmptyWorkflow"),
@@ -50,17 +50,17 @@ class WindowControllerMain: NSWindowController {
                                                selector: #selector(WindowControllerMain.disableToolbar(notification:)),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.enableToolbar(notification:)),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.evaluateWorkflowResults(notification:)),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.updateErrorAlert(notification:)),
                                                name: Notification.Name("updateError"),
@@ -70,6 +70,7 @@ class WindowControllerMain: NSWindowController {
                                                selector: #selector(WindowControllerMain.updateNotAvailableAlert(notification:)),
                                                name: Notification.Name("updateNotAvailable"),
                                                object: nil)
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.updateAvailableAlert(notification:)),
                                                name: Notification.Name("updateAvailable"),

@@ -279,12 +279,16 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="smallSystemBold"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="onLogButton:" target="XfG-lQ-9wD" id="ZSn-Ll-PSy"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </view>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="logButton" destination="da6-BW-mk3" id="QID-br-DtE"/>
                         <outlet property="logoImage" destination="DVK-e3-Ngl" id="aTM-bX-3qy"/>
                         <outlet property="logoImageView" destination="GMI-Zz-XD4" id="JtM-go-XIs"/>
                         <outlet property="taskTextField" destination="lhT-H0-X1I" id="95K-Cc-nZT"/>
