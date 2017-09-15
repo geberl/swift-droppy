@@ -275,13 +275,26 @@ class PythonExecutor: NSObject {
 
     func cleanUp() {
         if !self.devModeEnabled && self.overallExitCode == 0 {
-            do {
-                let fileManager = FileManager.default
-                try fileManager.removeItem(atPath: self.tempPath)
-                log.debug("Removed temp dir at \(self.tempPath)")
-            } catch let error {
-                log.error(error.localizedDescription)
+            let fileManager = FileManager.default
+
+            guard let enumerator: FileManager.DirectoryEnumerator =
+                fileManager.enumerator(atPath: self.tempPath) else {
+                    print("Temp directory not found: \(self.tempPath)")
+                    return
             }
+
+            while let element = enumerator.nextObject() as? String {
+                let elementPath = "\(self.tempPath)\(element)"
+                if element != "task.log" {
+                    do {
+                        try fileManager.removeItem(atPath: elementPath)
+                    } catch let error {
+                        log.error(error.localizedDescription)
+                    }
+                }
+            }
+
+            log.debug("Removed intermediary files from \(self.tempPath)")
         }
     }
 
