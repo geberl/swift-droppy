@@ -179,9 +179,9 @@ class PythonExecutor: NSObject {
                            inputPath: String, outputPath: String) {
 
         let queueDict: Dictionary<String, SwiftyJSON.JSON> = queueItem.dictionaryValue
-        guard let queueItemName: String = queueDict["task"]?.stringValue else { return }
+        guard let taskName: String = queueDict["task"]?.stringValue else { return }
 
-        let logText: String = "Running Task \(taskNumber + 1)/\(queueCount): '\(queueItemName)'"
+        let logText: String = "Running Task \(taskNumber + 1)/\(queueCount): '\(taskName)'"
         self.taskLog(prefix: "", lines: [logText])
         log.info(logText)
 
@@ -193,6 +193,10 @@ class PythonExecutor: NSObject {
 
         self.taskLog(prefix: "  Input Path:     ", lines: [inputPath])
         self.taskLog(prefix: "  Output Path:    ", lines: [outputPath])
+        
+        self.sendStatusNotification(taskNumber: taskNumber,
+                                    taskName: taskName,
+                                    queueCount: queueCount)
     }
 
     func writeTaskOutputLog(out: [String], err: [String], exit: Int32) {
@@ -208,10 +212,11 @@ class PythonExecutor: NSObject {
         }
     }
 
-    func sendNotification(taskNumber: Int, queueCount: Int) {
+    func sendStatusNotification(taskNumber: Int, taskName: String, queueCount: Int) {
         
         let statusDict:[String: String] = ["taskCurrent": String(taskNumber + 1),
-                                           "taskTotal": String(queueCount)]
+                                           "taskTotal": String(queueCount),
+                                           "taskName": taskName]
         
         NotificationCenter.default.post(name: Notification.Name("executionStatus"),
                                         object: nil,
@@ -237,9 +242,6 @@ class PythonExecutor: NSObject {
                                            taskNumber: taskNumber,
                                            inputPath: inputPath,
                                            outputPath: outputPath)
-
-                    self.sendNotification(taskNumber: taskNumber,
-                                          queueCount: queueCount)
 
                     let (out, err, exit) = executeCommand(command: self.executablePath,
                                                           args: [self.executableArgs,

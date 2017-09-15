@@ -93,7 +93,8 @@ class ViewControllerMain: NSViewController {
             self.taskTextField.isHidden = false
             guard let taskCurrent = notification.userInfo?["taskCurrent"] as? String else { return }
             guard let taskTotal = notification.userInfo?["taskTotal"] as? String else { return }
-            self.taskTextField.stringValue = "Task " + taskCurrent + "/" + taskTotal
+            guard let taskName = notification.userInfo?["taskName"] as? String else { return }
+            self.taskTextField.stringValue = "Task " + taskCurrent + "/" + taskTotal + "\n" + taskName
         }
     }
 
