@@ -193,7 +193,7 @@ class PythonExecutor: NSObject {
 
         self.taskLog(prefix: "  Input Path:     ", lines: [inputPath])
         self.taskLog(prefix: "  Output Path:    ", lines: [outputPath])
-        
+
         self.sendStatusNotification(taskNumber: taskNumber,
                                     taskName: taskName,
                                     queueCount: queueCount)
@@ -261,9 +261,15 @@ class PythonExecutor: NSObject {
                         break
                     }
 
-                    if taskNumber < queueCount {
+                    if taskNumber + 1 < queueCount {
+                        // +1 because taskNumber starts counting at 0 BUT queueCount at 1.
+
+                        // Current Task's output is next Task's input.
                         inputPath = outputPath
+
+                        // +2 because taskNumber starts counting at 0 AND we're preparing for the follwoing Task.
                         outputPath = self.prepareNextTempDir(taskNumber: taskNumber + 2)
+
                         self.taskLog(prefix: "", lines: [String(repeating: "-", count: 80)])
                     }
                 }
