@@ -36,32 +36,32 @@ class ViewControllerMain: NSViewController {
 
     override func viewWillAppear() {
         super.viewWillAppear()
-    
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setZoneLine(notification:)),
                                                name: Notification.Name("draggingEnteredOk"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setZoneLogoError(notification:)),
                                                name: Notification.Name("draggingEnteredNoWorkflowSelected"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setZoneLogoError(notification:)),
                                                name: Notification.Name("draggingUpdatedNoWorkflowSelected"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setZoneDashed(notification:)),
                                                name: Notification.Name("draggingExited"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setLogo(notification:)),
                                                name: Notification.Name("draggingExited"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setLogo(notification:)),
                                                name: Notification.Name("workflowSelectionChanged"),
@@ -76,12 +76,17 @@ class ViewControllerMain: NSViewController {
                                                selector: #selector(ViewControllerMain.setLogoSpinner(notification:)),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
-        
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setLogButtonInvisible(notification:)),
+                                               name: Notification.Name("droppingOk"),
+                                               object: nil)
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setZoneDashed(notification:)),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setLogo(notification:)),
                                                name: Notification.Name("executionFinished"),
@@ -91,7 +96,7 @@ class ViewControllerMain: NSViewController {
                                                selector: #selector(ViewControllerMain.setTextFieldHidden(notification:)),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setLogButtonVisible(notification:)),
                                                name: Notification.Name("executionFinished"),
