@@ -234,6 +234,7 @@
                     <connections>
                         <outlet property="ToolbarDropdown" destination="38u-Uk-gZ8" id="vUB-wz-bZK"/>
                         <outlet property="actionButtons" destination="wrr-nz-pw1" id="aUt-d0-Wtl"/>
+                        <outlet property="workflowPopUp" destination="RIK-BI-TL9" id="NnZ-pl-h8H"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
                 </windowController>

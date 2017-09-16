@@ -15,7 +15,9 @@ class WindowControllerMain: NSWindowController {
     let userDefaults = UserDefaults.standard
     
     @IBOutlet weak var ToolbarDropdown: NSMenu!
-    
+
+    @IBOutlet weak var workflowPopUp: NSPopUpButton!
+
     @IBOutlet weak var actionButtons: NSSegmentedControl!
     
     @IBAction func ToolbarActions(_ sender: NSSegmentedControl) {
@@ -98,11 +100,11 @@ class WindowControllerMain: NSWindowController {
     func refreshToolbarDropdown(notification: Notification){
         self.refreshToolbarDropdown()
     }
-    
+
     func refreshToolbarDropdown() {
         // Start fresh with an empty dropdown.
         ToolbarDropdown.removeAllItems()
-        
+
         // Add the empty string placeholder item to the dropdown.
         let placeholderMenuItem = NSMenuItem()
         placeholderMenuItem.title = ""
@@ -110,13 +112,13 @@ class WindowControllerMain: NSWindowController {
         placeholderMenuItem.action = #selector(selectEmptyWorkflow)
         placeholderMenuItem.isEnabled = true
         ToolbarDropdown.addItem(placeholderMenuItem)
-        
+
         // Sort Workflow names alphabetically.
-        let allWorkflowNames:[String] = NSDictionary(dictionary: Workflows.workflows).allKeys as! [String]
+        let allWorkflowNames: [String] = NSDictionary(dictionary: Workflows.workflows).allKeys as! [String]
         let sortedWorkflowNames = allWorkflowNames.sorted(){ $0 < $1 }
-        
+
         // Add Workflows to the dropdown in that order.
-        for name:String in sortedWorkflowNames {
+        for name: String in sortedWorkflowNames {
             let newMenuItem = NSMenuItem()
             newMenuItem.title = name
             newMenuItem.target = self
@@ -124,8 +126,16 @@ class WindowControllerMain: NSWindowController {
             newMenuItem.isEnabled = true
             ToolbarDropdown.addItem(newMenuItem)
         }
+
+        // Select the Workflow that was last selected.
+        if let workflowSelected = userDefaults.string(forKey: UserDefaultStruct.workflowSelected) {
+            if allWorkflowNames.contains(workflowSelected) {
+                self.workflowPopUp.selectItem(withTitle: workflowSelected)
+                self.workflowSelectionChanged()
+            }
+        }
     }
-    
+
     func selectEmptyWorkflow() {
         Workflows.activeJsonFile = ""
         Workflows.activeInterpreterName = ""
@@ -140,7 +150,7 @@ class WindowControllerMain: NSWindowController {
 
         // Name from dropdown
         Workflows.activeName = self.getSelectedWorkflow()
-        
+
         // Rest from Workflows.workflows object
         for (name, _):(String, Dictionary<String, Any>) in Workflows.workflows {
             if name == Workflows.activeName {
@@ -161,20 +171,18 @@ class WindowControllerMain: NSWindowController {
                 break
             }
         }
-        
+
         // Send out a notification (to change the logo in ViewController)
         NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
     }
-    
+
     func getSelectedWorkflow() -> String {
-        if (ToolbarDropdown.highlightedItem != nil) {
-            // User has already clicked on a workflow in the dropdown
-            return ToolbarDropdown.highlightedItem!.title
+        if (self.workflowPopUp.selectedItem != nil) {
+            if let selectedItem = self.workflowPopUp.selectedItem {
+                return selectedItem.title
+            }
         }
-        else {
-            // User has not yet clicked on a workflow, the one that was first added is still showing (=the empty one)
-            return ToolbarDropdown.item(at: 0)!.title
-        }
+        return ""
     }
 
     func openFinder() {

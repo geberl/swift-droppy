@@ -23,6 +23,9 @@ struct UserDefaultStruct {
 
     static var workspacePath: String = "workspacePath"
     static var workspacePathDefault: String = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("DropPy").path
+    
+    static var workflowSelected: String = "workflowSelected"
+    static var workflowSelectedDefault: String? = nil
 
     static var devModeEnabled: String = "devModeEnabled"
     static var devModeEnabledDefault: Bool = false
@@ -134,6 +137,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         self.savePosition()
+        self.saveWorkflowSelected()
         log.enabled = false
     }
 
@@ -188,6 +192,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.firstRunWindowController.showWindow(self)
         } else {
             // TODO: Check if the currently set Workspace directory actually still exists, if not open preferences and prompt to change
+        }
+
+        // Last selected Workflow.
+        if !self.isKeyPresentInUserDefaults(key: UserDefaultStruct.workflowSelected) {
+            userDefaults.set(UserDefaultStruct.workflowSelectedDefault, forKey: UserDefaultStruct.workflowSelected)
         }
 
         // Dev mode.
@@ -271,7 +280,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Save the window position for this screen size
         userDefaults.set([positionX, positionY], forKey: resolutionKeyName)
     }
-    
+
+    func saveWorkflowSelected() {
+        if Workflows.activeName == "" {
+            userDefaults.set(nil, forKey: UserDefaultStruct.workflowSelected)
+        } else {
+            userDefaults.set(Workflows.activeName, forKey: UserDefaultStruct.workflowSelected)
+        }
+    }
+
     func getPosition() -> (Int, Int) {
         let window = NSApplication.shared().windows.first
         let positionX: Int =  Int(window!.frame.origin.x)
