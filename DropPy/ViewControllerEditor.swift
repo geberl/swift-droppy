@@ -22,24 +22,25 @@ class ViewControllerEditor: NSViewController {
     }
 
     @IBOutlet weak var pathLabel: NSTextField!
-    
+
     @IBOutlet var textView: NSTextView!
-    
+
     @IBAction func onCancelButton(_ sender: Any) {
         self.replaceEditorContent(with: "")
         NotificationCenter.default.post(name: Notification.Name("closeEditor"), object: nil)
     }
-    
+
     @IBAction func onSaveButton(_ sender: Any) {
         self.saveFile()
         self.replaceEditorContent(with: "")
+        NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
         NotificationCenter.default.post(name: Notification.Name("closeEditor"), object: nil)
     }
-    
+
     func setPathLabel(path: String) {
         self.pathLabel.stringValue = path
     }
-    
+
     func correctTextViewBehavior () {
 
         if self.textView.isAutomaticQuoteSubstitutionEnabled == true {

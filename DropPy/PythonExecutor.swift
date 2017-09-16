@@ -27,7 +27,7 @@ class PythonExecutor: NSObject {
     var filePaths: [String]
     var overallExitCode: Int
 
-    init(workflowFile: String, filePaths: [String]) {
+    init(workflowFile: String, filePaths: [String]) throws {
         // It's only save to store the settings as they were on drop and access them from here.
         // Since the app stays responsive during execution the user could change the settings while performing Tasks.
         let userDefaults = UserDefaults.standard
@@ -38,9 +38,17 @@ class PythonExecutor: NSObject {
         self.workflowPath = workspacePath + "Workflows" + "/" + workflowFile
 
         let userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
-        let interpreterInfo: Dictionary<String, String> = userDefaultInterpreters[Workflows.activeInterpreterName]!
-        self.executablePath = interpreterInfo["executable"]!
-        self.executableArgs = interpreterInfo["arguments"]!
+        if let activeInterpreterName: String = Workflows.activeInterpreterName {
+            guard let interpreterInfo: Dictionary<String, String> = userDefaultInterpreters[activeInterpreterName] else {
+                log.error("Specified interpreter '\(activeInterpreterName)' not found in preferences.")
+                throw InterpreterError.notFoundInPreferences
+            }
+            self.executablePath = interpreterInfo["executable"]!
+            self.executableArgs = interpreterInfo["arguments"]!
+        } else {
+            log.error("No interpreter set in Workflow.")
+            throw InterpreterError.notSetInWorkflow
+        }
 
         if self.devModeEnabled {
             self.tempPath = self.workspacePath + "Temp" + "/" + self.startDateTime.iso8601 + "/"

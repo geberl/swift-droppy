@@ -44,11 +44,6 @@ class WindowControllerMain: NSWindowController {
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.actionOnEmptyWorkflow(notification:)),
-                                               name: Notification.Name("actionOnEmptyWorkflow"),
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
                                                selector: #selector(WindowControllerMain.disableToolbar(notification:)),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
@@ -105,16 +100,8 @@ class WindowControllerMain: NSWindowController {
         // Start fresh with an empty dropdown.
         ToolbarDropdown.removeAllItems()
 
-        // Add the empty string placeholder item to the dropdown.
-        let placeholderMenuItem = NSMenuItem()
-        placeholderMenuItem.title = ""
-        placeholderMenuItem.target = self
-        placeholderMenuItem.action = #selector(selectEmptyWorkflow)
-        placeholderMenuItem.isEnabled = true
-        ToolbarDropdown.addItem(placeholderMenuItem)
-
         // Sort Workflow names alphabetically.
-        let allWorkflowNames: [String] = NSDictionary(dictionary: Workflows.workflows).allKeys as! [String]
+        let allWorkflowNames: [String] = NSDictionary(dictionary: Workflows.all).allKeys as! [String]
         let sortedWorkflowNames = allWorkflowNames.sorted(){ $0 < $1 }
 
         // Add Workflows to the dropdown in that order.
@@ -136,90 +123,60 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
-    func selectEmptyWorkflow() {
-        Workflows.activeJsonFile = ""
-        Workflows.activeInterpreterName = ""
-        Workflows.activeLogoFilePath = ""
-        Workflows.activeName = ""
-
-        NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
-    }
-    
     func workflowSelectionChanged() {
-        // User changed highlight in the Workflows dropdown, now update the global Workflows object (in AppDelegate)
+        if let workflowName: String = self.workflowPopUp.selectedItem?.title {
+            userDefaults.set(workflowName, forKey: UserDefaultStruct.workflowSelected)
+            Workflows.activeName = workflowName
+            Workflows.activeJsonFile = Workflows.all[workflowName]?["file"]
+            Workflows.activeInterpreterName = Workflows.all[workflowName]?["interpreterName"]
+            Workflows.activeLogoFile = Workflows.all[workflowName]?["image"]
 
-        // Name from dropdown
-        Workflows.activeName = self.getSelectedWorkflow()
-
-        // Rest from Workflows.workflows object
-        for (name, _):(String, Dictionary<String, Any>) in Workflows.workflows {
-            if name == Workflows.activeName {
-                let workflowJsonFile: String = Workflows.workflows[name]?["file"] as! String
-                log.debug("Workflow definition '\(workflowJsonFile)' is now active.")
-                Workflows.activeJsonFile = workflowJsonFile
-                
-                let workflowLogoFile: String = Workflows.workflows[name]?["image"] as! String
-                log.debug("Workflow logo '\(workflowLogoFile)' is now active.")
-                
-                let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
-                Workflows.activeLogoFilePath = "\(workspacePath)/Images/\(workflowLogoFile)"
-                
-                let workflowInterpreterName: String = Workflows.workflows[name]?["interpreterName"] as! String
-                log.debug("Workflow will use the interpreter named '\(workflowInterpreterName)'.")
-                Workflows.activeInterpreterName = workflowInterpreterName
-
-                break
-            }
+        } else {
+            userDefaults.set(nil, forKey: UserDefaultStruct.workflowSelected)
+            Workflows.activeName = nil
+            Workflows.activeJsonFile = nil
+            Workflows.activeInterpreterName = nil
+            Workflows.activeLogoFile = nil
         }
-
-        // Send out a notification (to change the logo in ViewController)
         NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
-    }
-
-    func getSelectedWorkflow() -> String {
-        if (self.workflowPopUp.selectedItem != nil) {
-            if let selectedItem = self.workflowPopUp.selectedItem {
-                return selectedItem.title
-            }
-        }
-        return ""
     }
 
     func openFinder() {
         log.debug("Toolbar Action: Open")
+        
+        guard let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
+        guard let jsonFile: String = Workflows.activeJsonFile else { return }
 
-        let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
-        NSWorkspace.shared().selectFile("\(workspacePath)/Workflows/\(Workflows.activeJsonFile)", inFileViewerRootedAtPath: "\(workspacePath)")
+        NSWorkspace.shared().selectFile(workspacePath + "/" + "Workflows" + "/" + jsonFile,
+                                        inFileViewerRootedAtPath: workspacePath)
     }
 
     func editWorkflow() {
         log.debug("Toolbar Action: Edit")
 
-        if Workflows.activeName == "" {
-            NotificationCenter.default.post(name: Notification.Name("actionOnEmptyWorkflow"), object: nil)
-        } else {
-            let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
-            let workflowFile: String = "\(workspacePath)/Workflows/\(Workflows.activeJsonFile)"
-            
-            if let editorForWorkflows: String = self.userDefaults.string(forKey: UserDefaultStruct.editorForWorkflows) {
-                
-                if editorForWorkflows == "Internal Workflow editor" {
-                    // TODO: Implement internal Workflow editor and have it open from here.
-                    log.debug("Open internal Workflow editor now")
-                    
-                } else if editorForWorkflows == "Internal text editor" {
-                    self.editorWindowController.showWindow(self)
-                    
-                    // Put path into dict inside Notification.
-                    let pathDict:[String: String] = ["path": workflowFile]
-                    NotificationCenter.default.post(name: Notification.Name("loadFileInEditor"), object: nil, userInfo: pathDict)
+        guard let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
+        guard let jsonFile: String = Workflows.activeJsonFile else { return }
+        
+        let jsonPath: String = workspacePath + "/" + "Workflows" + "/" + jsonFile
 
-                } else if editorForWorkflows == "External text editor" {
-                    // This way of launching an external program hopefully is ok with the app sandbox, Process() may not be.
-                    // However this is why passing custom parameters to the external editor is currently not possible.
-                    let editorApp: String = self.userDefaults.string(forKey: UserDefaultStruct.editorAppPath)!
-                    NSWorkspace.shared().openFile(workflowFile, withApplication: editorApp)
-                }
+        if let editorForWorkflows: String = self.userDefaults.string(forKey: UserDefaultStruct.editorForWorkflows) {
+            
+            if editorForWorkflows == "Internal Workflow editor" {
+                // TODO: Implement internal Workflow editor and have it open from here.
+                log.debug("TODO: Open internal Workflow editor now")
+
+            } else if editorForWorkflows == "Internal text editor" {
+                self.editorWindowController.showWindow(self)
+
+                // Put path into dict inside Notification.
+                let pathDict:[String: String] = ["path": jsonPath]
+                NotificationCenter.default.post(name: Notification.Name("loadFileInEditor"), object: nil, userInfo: pathDict)
+
+            } else if editorForWorkflows == "External text editor" {
+                // This way of launching an external program hopefully is ok with the app sandbox, Process() may not be.
+                // However this is why passing custom parameters to the external editor is currently not possible.
+                let editorApp: String = self.userDefaults.string(forKey: UserDefaultStruct.editorAppPath)!
+                NSWorkspace.shared().openFile(jsonPath, withApplication: editorApp)
             }
         }
     }
@@ -242,7 +199,7 @@ class WindowControllerMain: NSWindowController {
                                     "description": "A short description what this Workflow does. Currently not accessed by DropPy. For now just for your own documentation purposes.",
                                     "image": "",
                                     "interpreterName": workflowInterpreterName,
-                                    "tasks": []]
+                                    "queue": []]
         
             // Convert SwiftyJSON object to string.
             let jsonString = jsonObject.description
@@ -258,22 +215,13 @@ class WindowControllerMain: NSWindowController {
             Workflows.activeInterpreterName = workflowInterpreterName
             Workflows.activeJsonFile = workflowFileName
             Workflows.activeName = workflowName
-            Workflows.activeLogoFilePath = ""
+            Workflows.activeLogoFile = nil
 
             // Open new file in editor.
             self.editWorkflow()
         } catch {
             log.error(error.localizedDescription)
         }
-    }
-
-    func actionOnEmptyWorkflow(notification: Notification) {
-        let alert = NSAlert()
-        alert.showsHelp = false
-        alert.messageText = "No Workflow selected"
-        alert.informativeText = "You can't drop objects if no Workflow is selected.\nSelect a Workflow and try again."
-        alert.icon = NSImage(named: "error")
-        alert.runModal()
     }
 
     func evaluateWorkflowResults(notification: Notification) {

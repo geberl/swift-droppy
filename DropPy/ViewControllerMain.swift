@@ -146,15 +146,16 @@ class ViewControllerMain: NSViewController {
         logoImageView.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
         logoImageView.animates = false
 
-        if Workflows.activeLogoFilePath == "" {
-            logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
-        } else {
-            if let newLogo = NSImage(contentsOfFile: Workflows.activeLogoFilePath) {
+        if let logoFile: String = Workflows.activeLogoFile {
+            let logoPath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/" + "Images" + "/" + logoFile
+            if let newLogo = NSImage(contentsOfFile: logoPath) {
                 logoImage.image = self.resizeNSImage(image: newLogo, width:128, height:128)
             } else {
-                log.error("Can't load workflow logo from '\(Workflows.activeLogoFilePath).")
+                log.error("Can't load workflow logo from '\(logoPath)'.")
                 logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
             }
+        } else {
+            logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
         }
     }
 
@@ -167,11 +168,9 @@ class ViewControllerMain: NSViewController {
     }
 
     func setZoneLogoError(notification: Notification) {
-        if Workflows.activeLogoFilePath == "" {
-            logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!,
-                                                 width: 128, height: 128)
-            zoneImage.image = NSImage(named: "zone-error")
-        }
+        logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!,
+                                             width: 128, height: 128)
+        zoneImage.image = NSImage(named: "zone-error")
     }
 
     func resizeNSImage(image: NSImage, width: Int, height: Int) -> NSImage {

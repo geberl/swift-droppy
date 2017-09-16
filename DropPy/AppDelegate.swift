@@ -51,18 +51,24 @@ struct UserDefaultStruct {
     static var updateLast: String = "updateLast"
     static var updateLastDefault: Date = Date()
     static var updateDelta: String = "updateDelta"
-    static var updateDeltaDefault: Int = 60 * 60 * 24 * 7  // a week in seconds, maxint of UInt64 is much higher
+    static var updateDeltaDefault: Int = 60 * 60 * 24 * 7  // a week in seconds, maxint of UInt64 is much higher.
 }
 
 
 // Workflows object
 struct Workflows {
-    static var workflows = [String: Dictionary<String, Any>]()
+    static var all = [String: Dictionary<String, String>]()
 
-    static var activeName = "" as String
-    static var activeInterpreterName = "" as String
-    static var activeJsonFile = "" as String
-    static var activeLogoFilePath = "" as String
+    static var activeName: String?
+    static var activeInterpreterName: String?
+    static var activeJsonFile: String?
+    static var activeLogoFile: String?
+}
+
+
+enum InterpreterError: Error {
+    case notFoundInPreferences
+    case notSetInWorkflow
 }
 
 
@@ -77,19 +83,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.enabled = true
         self.loadUserDefaults()
         self.autoUpdate()
-    }
-
-    func applicationWillBecomeActive(_ notification: Notification) {
-        // Reload workflows from Workflow sub-directory to account for json files that could have been added/edited/deleted.
-        let changesDetected: Bool = self.reloadWorkflows()
-        if changesDetected {
-            Workflows.activeName = ""
-            Workflows.activeInterpreterName = ""
-            Workflows.activeJsonFile = ""
-            Workflows.activeLogoFilePath = ""
-            NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
-            NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
-        }
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(AppDelegate.startPythonExecutor(notification:)),
@@ -97,7 +90,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                object: nil)
     }
 
+    func applicationWillBecomeActive(_ notification: Notification) {
+        // Reload workflows from Workflow sub-directory to account for json files that could have been added/edited/deleted.
+        let changesDetected: Bool = self.reloadWorkflows()
+        if changesDetected {
+            Workflows.activeName = nil
+            Workflows.activeInterpreterName = nil
+            Workflows.activeJsonFile = nil
+            Workflows.activeLogoFile = nil
+            NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
+        }
+    }
+
     func startPythonExecutor(notification: Notification) {
+        guard let workflowFile: String = Workflows.activeJsonFile else { return }
+
         // Notification is sometimes sent (or received ?) twice.
         // This workaround prevents multiple instantiation of PythonExecutor.
         if !executionInProgress {
@@ -109,10 +117,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             DispatchQueue.global(qos: .background).async {
                 if let filePaths = notification.userInfo?["filePaths"] as? [String] {
-                    let pythonExecutor = PythonExecutor(workflowFile: Workflows.activeJsonFile,
-                                                        filePaths: filePaths)
-                    pythonExecutor.run()
-                    (logFilePath, tempDirPath, exitCode) = pythonExecutor.evaluate()
+                    do {
+                        let pythonExecutor = try PythonExecutor(workflowFile: workflowFile,
+                                                                filePaths: filePaths)
+                        pythonExecutor.run()
+                        (logFilePath, tempDirPath, exitCode) = pythonExecutor.evaluate()
+                    } catch is InterpreterError {
+                        log.error("Interpreter Error.")
+                    } catch {
+                        log.error("Other error.")
+                    }
                 }
                 DispatchQueue.main.async {
                     self.endPythonExecutor(logFilePath: logFilePath,
@@ -137,7 +151,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         self.savePosition()
-        self.saveWorkflowSelected()
         log.enabled = false
     }
 
@@ -281,14 +294,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         userDefaults.set([positionX, positionY], forKey: resolutionKeyName)
     }
 
-    func saveWorkflowSelected() {
-        if Workflows.activeName == "" {
-            userDefaults.set(nil, forKey: UserDefaultStruct.workflowSelected)
-        } else {
-            userDefaults.set(Workflows.activeName, forKey: UserDefaultStruct.workflowSelected)
-        }
-    }
-
     func getPosition() -> (Int, Int) {
         let window = NSApplication.shared().windows.first
         let positionX: Int =  Int(window!.frame.origin.x)
@@ -328,18 +333,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func reloadWorkflows() -> Bool {
-        let workflowDir = "\(userDefaults.string(forKey: UserDefaultStruct.workspacePath) ?? "no default")/Workflows"
-        //log.debug("Reloading Workflows from '\(workflowDir)'.")
+        guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
+            log.error("Workspace path not set. Unable to reload Workflows.")
+            return false
+        }
+        let workflowPath: String = workspacePath + "/" + "Workflows"
+        log.debug("Reloading Workflows from '\(workflowPath)'.")
 
         let fileManager = FileManager.default
-        let enumerator: FileManager.DirectoryEnumerator = fileManager.enumerator(atPath: workflowDir)!
+        let enumerator: FileManager.DirectoryEnumerator = fileManager.enumerator(atPath: workflowPath)!
 
-        var workflowsTemp = [String: Dictionary<String, Any>]()
+        var workflowsTemp = [String: Dictionary<String, String>]()
         
         while let element = enumerator.nextObject() as? String {
-            if element.hasSuffix("json") {
+            if element.lowercased().hasSuffix(".json") {
                 do {
-                    let data = try Data(contentsOf: URL(fileURLWithPath: "\(workflowDir)/\(element)"), options: .alwaysMapped)
+                    let data = try Data(contentsOf: URL(fileURLWithPath: workflowPath + "/" + element), options: .alwaysMapped)
                     let jsonObj = JSON(data: data)
                     if jsonObj != JSON.null {
                         workflowsTemp[jsonObj["name"].stringValue] = [String: String]()
@@ -352,55 +361,43 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         }
-        
-        if workflowsChanged(workflowsNew: workflowsTemp, workflowsOld: Workflows.workflows) {
-            Workflows.workflows = workflowsTemp
+
+        if workflowsChanged(workflowsNew: workflowsTemp, workflowsOld: Workflows.all) {
+            Workflows.all = workflowsTemp
             return true
         } else {
             return false
         }
     }
-    
-    func workflowsChanged(workflowsNew: [String: Dictionary<String, Any>],
-                          workflowsOld: [String: Dictionary<String, Any>]) -> Bool {
+
+    func workflowsChanged(workflowsNew: [String: Dictionary<String, String>],
+                          workflowsOld: [String: Dictionary<String, String>]) -> Bool {
         
-        // Check for added and edited workflows (the-one-way)
-        for (name, _):(String, Dictionary<String, Any>) in workflowsNew {
+        // Check for added and edited workflows (the-one-way).
+        for (name, _):(String, Dictionary<String, String>) in workflowsNew {
             if workflowsOld[name] != nil {
                 //log.debug("Workflow '\(name)' was present before.")
-                
-                if workflowsOld[name]?["file"] as! String != workflowsNew[name]?["file"] as! String {
+                if workflowsOld[name]?["file"] != workflowsNew[name]?["file"] {
                     //log.debug("Workflow '\(name)' file has changed, changes detected, reloading.")
                     return true
-                } else {
-                    //log.debug("Workflow '\(name)' file is identical.")
                 }
-                
-                if workflowsOld[name]?["image"] as! String != workflowsNew[name]?["image"] as! String {
+                if workflowsOld[name]?["image"] != workflowsNew[name]?["image"] {
                     //log.debug("Workflow '\(name)' image has changed, changes detected, reloading.")
                     return true
-                } else {
-                //log.debug("Workflow '\(name)' image is identical.")
                 }
-                
-                if workflowsOld[name]?["interpreterName"] as! String != workflowsNew[name]?["interpreterName"] as! String {
+                if workflowsOld[name]?["interpreterName"] != workflowsNew[name]?["interpreterName"] {
                     //log.debug("Workflow '\(name)' interpreterName has changed, changes detected, reloading.")
                     return true
-                } else {
-                    //log.debug("Workflow '\(name)' interpreterName is identical.")
                 }
-
             } else {
                 //log.debug("Workflow '\(name) was NOT present before, changes detected, reloading.")
                 return true
             }
         }
-        
-        // Check for removed workflows (the-other-way)
-        for (name, _):(String, Dictionary<String, Any>) in workflowsOld {
-            if workflowsNew[name] != nil {
-                //log.debug("Workflow '\(name)' is still present.")
-            } else {
+
+        // Check for removed workflows (the-other-way).
+        for (name, _):(String, Dictionary<String, String>) in workflowsOld {
+            if workflowsNew[name] == nil {
                 //log.debug("Workflow '\(name)' was removed, changes detected, reloading.")
                 return true
             }
@@ -409,7 +406,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // No changes detected in all checks
         return false
     }
-    
+
     func autoUpdate() {
         let updateDelta: Int = userDefaults.integer(forKey: UserDefaultStruct.updateDelta)
         let updateLast: Date = userDefaults.object(forKey: UserDefaultStruct.updateLast) as! Date
