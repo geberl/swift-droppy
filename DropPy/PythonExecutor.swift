@@ -27,28 +27,18 @@ class PythonExecutor: NSObject {
     var filePaths: [String]
     var overallExitCode: Int
 
-    init(workflowFile: String, filePaths: [String]) throws {
-        // It's only save to store the settings as they were on drop and access them from here.
-        // Since the app stays responsive during execution the user could change the settings while performing Tasks.
-        let userDefaults = UserDefaults.standard
+    init(filePaths: [String], workflowFile: String, workspacePath: String,
+         executablePath: String, executableArgs: String, devModeEnabled: Bool) {
+        // It's only save to access the settings that were passed on drop.
+        // Since the app stays responsive during execution the user could change the settings while Tasks are being performed.
 
-        self.devModeEnabled = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
-        self.workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/"
+        self.filePaths = filePaths
         self.workflowFile = workflowFile
         self.workflowPath = workspacePath + "Workflows" + "/" + workflowFile
-
-        let userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
-        if let activeInterpreterName: String = Workflows.activeInterpreterName {
-            guard let interpreterInfo: Dictionary<String, String> = userDefaultInterpreters[activeInterpreterName] else {
-                log.error("Specified interpreter '\(activeInterpreterName)' not found in preferences.")
-                throw InterpreterError.notFoundInPreferences
-            }
-            self.executablePath = interpreterInfo["executable"]!
-            self.executableArgs = interpreterInfo["arguments"]!
-        } else {
-            log.error("No interpreter set in Workflow.")
-            throw InterpreterError.notSetInWorkflow
-        }
+        self.workspacePath = workspacePath
+        self.executablePath = executablePath
+        self.executableArgs = executableArgs
+        self.devModeEnabled = devModeEnabled
 
         if self.devModeEnabled {
             self.tempPath = self.workspacePath + "Temp" + "/" + self.startDateTime.iso8601 + "/"
@@ -59,7 +49,7 @@ class PythonExecutor: NSObject {
         self.runnerPath = tempPath + "run.py"
         self.filesJsonPath = tempPath + "files.json"
         self.logFilePath = tempPath + "task.log"
-        self.filePaths = filePaths
+
         self.overallExitCode = 0
 
         super.init()

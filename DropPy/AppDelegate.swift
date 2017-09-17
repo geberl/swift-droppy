@@ -102,9 +102,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
         }
     }
+    
+    func checkInterpreterInfo() -> (String?, String?) {
+        let userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
+        if let activeInterpreterName: String = Workflows.activeInterpreterName {
+            if let interpreterInfo: Dictionary<String, String> = userDefaultInterpreters[activeInterpreterName] {
+                let executablePath = interpreterInfo["executable"]!
+                let executableArgs = interpreterInfo["arguments"]!
+                return (executablePath, executableArgs)
+
+            }
+        }
+        return (nil, nil)
+    }
 
     func startPythonExecutor(notification: Notification) {
         guard let workflowFile: String = Workflows.activeJsonFile else { return }
+        let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/"
+        let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
+
+        // TODO better checks for the three things above, errors to log, error messages to user
+        
+        let (executablePath, executableArgs) = self.checkInterpreterInfo()
+        if (executablePath == nil) || (executableArgs == nil) {
+            // TODO better error to log, error messages to user
+            log.debug("some error with the executabe, exiting execution")
+            return
+        }
 
         // Notification is sometimes sent (or received ?) twice.
         // This workaround prevents multiple instantiation of PythonExecutor.
@@ -117,16 +141,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             DispatchQueue.global(qos: .background).async {
                 if let filePaths = notification.userInfo?["filePaths"] as? [String] {
-                    do {
-                        let pythonExecutor = try PythonExecutor(workflowFile: workflowFile,
-                                                                filePaths: filePaths)
-                        pythonExecutor.run()
-                        (logFilePath, tempDirPath, exitCode) = pythonExecutor.evaluate()
-                    } catch is InterpreterError {
-                        log.error("Interpreter Error.")
-                    } catch {
-                        log.error("Other error.")
-                    }
+
+                    let pythonExecutor = PythonExecutor(filePaths: filePaths,
+                                                        workflowFile: workflowFile,
+                                                        workspacePath: workspacePath,
+                                                        executablePath: executablePath!,
+                                                        executableArgs: executableArgs!,
+                                                        devModeEnabled: devModeEnabled)
+                    pythonExecutor.run()
+                    (logFilePath, tempDirPath, exitCode) = pythonExecutor.evaluate()
                 }
                 DispatchQueue.main.async {
                     self.endPythonExecutor(logFilePath: logFilePath,
