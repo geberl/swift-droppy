@@ -33,7 +33,7 @@ class ViewControllerEditor: NSViewController {
     @IBAction func onSaveButton(_ sender: Any) {
         self.saveFile()
         self.replaceEditorContent(with: "")
-        NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name("reloadWorkflows"), object: nil)
         NotificationCenter.default.post(name: Notification.Name("closeEditor"), object: nil)
     }
 

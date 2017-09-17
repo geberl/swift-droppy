@@ -85,25 +85,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.autoUpdate()
 
         NotificationCenter.default.addObserver(self,
+                                               selector: #selector(AppDelegate.reloadWorkflows(notification:)),
+                                               name: Notification.Name("reloadWorkflows"),
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
                                                selector: #selector(AppDelegate.startPythonExecutor(notification:)),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
     }
 
     func applicationWillBecomeActive(_ notification: Notification) {
-        // Reload workflows from Workflow sub-directory to account for json files that could have been added/edited/deleted.
-        let changesDetected: Bool = self.reloadWorkflows()
-        if changesDetected {
-            Workflows.activeName = nil
-            Workflows.activeInterpreterName = nil
-            Workflows.activeJsonFile = nil
-            Workflows.activeLogoFile = nil
-            NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
-            NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
-        }
+        self.reloadWorkflows()
     }
-    
+
+    func reloadWorkflows(notification: Notification) {
+        self.reloadWorkflows()
+    }
+
     func checkInterpreterInfo() -> (String?, String?) {
+        // TODO also check if executablePath isfile
         let userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
         if let activeInterpreterName: String = Workflows.activeInterpreterName {
             if let interpreterInfo: Dictionary<String, String> = userDefaultInterpreters[activeInterpreterName] {
@@ -355,10 +356,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func reloadWorkflows() -> Bool {
+    func reloadWorkflows() {
         guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
             log.error("Workspace path not set. Unable to reload Workflows.")
-            return false
+            return
         }
         let workflowPath: String = workspacePath + "/" + "Workflows"
         log.debug("Reloading Workflows from '\(workflowPath)'.")
@@ -387,9 +388,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         if workflowsChanged(workflowsNew: workflowsTemp, workflowsOld: Workflows.all) {
             Workflows.all = workflowsTemp
-            return true
-        } else {
-            return false
+            NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
         }
     }
 
@@ -426,7 +425,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
 
-        // No changes detected in all checks
+        // No changes detected in all checks.
         return false
     }
 

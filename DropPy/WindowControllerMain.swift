@@ -114,12 +114,26 @@ class WindowControllerMain: NSWindowController {
             ToolbarDropdown.addItem(newMenuItem)
         }
 
-        // Select the Workflow that was last selected.
+        // Select the Workflow that was last selected (or the first one if that failed).
         if let workflowSelected = userDefaults.string(forKey: UserDefaultStruct.workflowSelected) {
             if allWorkflowNames.contains(workflowSelected) {
                 self.workflowPopUp.selectItem(withTitle: workflowSelected)
                 self.workflowSelectionChanged()
+            } else {
+                log.debug("Unable to select last selected Workflow, does not exist any more.")
+                Workflows.activeName = nil
+                Workflows.activeInterpreterName = nil
+                Workflows.activeJsonFile = nil
+                Workflows.activeLogoFile = nil
+                self.workflowSelectionChanged()
             }
+        } else {
+            log.debug("Unable to select last selected Workflow, no Workflow was saved.")
+            Workflows.activeName = nil
+            Workflows.activeInterpreterName = nil
+            Workflows.activeJsonFile = nil
+            Workflows.activeLogoFile = nil
+            self.workflowSelectionChanged()
         }
     }
 
