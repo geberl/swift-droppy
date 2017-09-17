@@ -126,11 +126,9 @@ class ViewControllerMain: NSViewController {
     func setTextFieldStatus(notification: Notification) {
         // Async execution is needed so the first file actually shows up when it is being processed and not when the second one is.
         DispatchQueue.main.async {
+            guard let text = notification.userInfo?["text"] as? String else { return }
             self.taskTextField.isHidden = false
-            guard let taskCurrent = notification.userInfo?["taskCurrent"] as? String else { return }
-            guard let taskTotal = notification.userInfo?["taskTotal"] as? String else { return }
-            guard let taskName = notification.userInfo?["taskName"] as? String else { return }
-            self.taskTextField.stringValue = "Task " + taskCurrent + "/" + taskTotal + "\n" + taskName
+            self.taskTextField.stringValue = text
         }
     }
 

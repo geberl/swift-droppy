@@ -84,6 +84,11 @@ class PythonExecutor: NSObject {
     }
 
     func handleDroppedFiles(inputPath: String) {
+        let statusDict:[String: String] = ["text": "Preparing"]
+        NotificationCenter.default.post(name: Notification.Name("executionStatus"),
+                                        object: nil,
+                                        userInfo: statusDict)
+
         // Copy the originally dropped files to the "0" directory.
         let fileManager = FileManager.default
         for srcPath in self.filePaths {
@@ -184,6 +189,8 @@ class PythonExecutor: NSObject {
         log.info(logText)
 
         if let queueItemParams: Dictionary<String, SwiftyJSON.JSON> = queueDict["kwargs"]?.dictionaryValue {
+            // TODO queueItemParams may contain newlines and trim doesn't work on its string representation; fix this
+            // Instead write one argument per line via lines parameter to taskLog
             self.taskLog(prefix: "  Parameters:     ", lines: ["\(queueItemParams)"])
         } else {
             self.taskLog(prefix: "  Parameters:     ", lines: ["(none)"])
@@ -192,9 +199,9 @@ class PythonExecutor: NSObject {
         self.taskLog(prefix: "  Input Path:     ", lines: [inputPath])
         self.taskLog(prefix: "  Output Path:    ", lines: [outputPath])
 
-        self.sendStatusNotification(taskNumber: taskNumber,
-                                    taskName: taskName,
-                                    queueCount: queueCount)
+        self.sendTaskStatusNotification(taskNumber: taskNumber,
+                                        taskName: taskName,
+                                        queueCount: queueCount)
     }
 
     func writeTaskOutputLog(out: [String], err: [String], exit: Int32) {
@@ -210,12 +217,9 @@ class PythonExecutor: NSObject {
         }
     }
 
-    func sendStatusNotification(taskNumber: Int, taskName: String, queueCount: Int) {
-        
-        let statusDict:[String: String] = ["taskCurrent": String(taskNumber + 1),
-                                           "taskTotal": String(queueCount),
-                                           "taskName": taskName]
-        
+    func sendTaskStatusNotification(taskNumber: Int, taskName: String, queueCount: Int) {
+        let statusText = "Task " + String(taskNumber + 1) + "/" + String(queueCount) + "\n" + taskName
+        let statusDict:[String: String] = ["text": statusText]
         NotificationCenter.default.post(name: Notification.Name("executionStatus"),
                                         object: nil,
                                         userInfo: statusDict)
@@ -278,6 +282,11 @@ class PythonExecutor: NSObject {
     }
 
     func cleanUp() {
+        let statusDict:[String: String] = ["text": "Cleaning up"]
+        NotificationCenter.default.post(name: Notification.Name("executionStatus"),
+                                        object: nil,
+                                        userInfo: statusDict)
+
         if !self.devModeEnabled && self.overallExitCode == 0 {
             let fileManager = FileManager.default
 
