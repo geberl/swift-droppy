@@ -188,10 +188,12 @@ class PythonExecutor: NSObject {
         self.taskLog(prefix: "", lines: [logText])
         log.info(logText)
 
-        if let queueItemParams: Dictionary<String, SwiftyJSON.JSON> = queueDict["kwargs"]?.dictionaryValue {
-            // TODO queueItemParams may contain newlines and trim doesn't work on its string representation; fix this
-            // Instead write one argument per line via lines parameter to taskLog
-            self.taskLog(prefix: "  Parameters:     ", lines: ["\(queueItemParams)"])
+        if let queueItemParams: String = queueDict["kwargs"]?.rawString() {
+            var queueItemParamsList = queueItemParams.components(separatedBy: .whitespacesAndNewlines)
+            queueItemParamsList = queueItemParamsList.filter { !$0.isEmpty }
+            let queueItemParamsOneLine = queueItemParamsList.joined(separator: " ")
+
+            self.taskLog(prefix: "  Parameters:     ", lines: [queueItemParamsOneLine])
         } else {
             self.taskLog(prefix: "  Parameters:     ", lines: ["(none)"])
         }
