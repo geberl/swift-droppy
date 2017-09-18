@@ -92,7 +92,6 @@ class PythonExecutor: NSObject {
         // Copy the originally dropped files to the "0" directory.
         let fileManager = FileManager.default
         for srcPath in self.filePaths {
-
             let srcURL: URL = URL(fileURLWithPath: srcPath)
 
             var dstURL: URL = URL(fileURLWithPath: inputPath)
@@ -102,6 +101,25 @@ class PythonExecutor: NSObject {
                 try fileManager.copyItem(at: srcURL, to: dstURL)
             } catch {
                 log.error("Unable to copy file '\(srcPath)'.")
+            }
+        }
+
+        // Delete all .DS_Store files.
+        guard let enumerator: FileManager.DirectoryEnumerator =
+            fileManager.enumerator(atPath: inputPath) else {
+                log.error("Directory not found: \(inputPath)!")
+                return
+        }
+
+        while let element = enumerator.nextObject() as? String {
+            let elementPath = inputPath + "/" + element
+            let elementURL: URL = URL(fileURLWithPath: elementPath)
+            if elementURL.lastPathComponent == ".DS_Store" {
+                do {
+                    try fileManager.removeItem(atPath: elementPath)
+                } catch let error {
+                    log.error(error.localizedDescription)
+                }
             }
         }
 
