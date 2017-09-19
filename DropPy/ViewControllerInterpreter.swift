@@ -349,17 +349,17 @@ class ViewControllerInterpreter: NSViewController {
     }
 
     func criticalAlert(title: String, explanation: String, confirmButtonText: String, confirmFunction: @escaping () -> Void) {
-        let myAlert = NSAlert()
-        myAlert.showsHelp = false
-        myAlert.messageText = title
-        myAlert.informativeText = explanation
-        myAlert.addButton(withTitle: confirmButtonText)
-        myAlert.addButton(withTitle: "Cancel")
-        myAlert.layout()
-        myAlert.alertStyle = NSAlertStyle.critical
-        myAlert.icon = NSImage(named: "alert")
+        let criticalAlert = NSAlert()
+        criticalAlert.showsHelp = false
+        criticalAlert.messageText = title
+        criticalAlert.informativeText = explanation
+        criticalAlert.addButton(withTitle: confirmButtonText)
+        criticalAlert.addButton(withTitle: "Cancel")
+        criticalAlert.layout()
+        criticalAlert.alertStyle = NSAlertStyle.critical
+        criticalAlert.icon = NSImage(named: "alert")
         
-        myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
+        criticalAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSAlertFirstButtonReturn {
                 confirmFunction()
             }
@@ -368,11 +368,11 @@ class ViewControllerInterpreter: NSViewController {
 }
 
 extension ViewControllerInterpreter: NSTableViewDataSource {
-
+    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return self.interpreterNames.count
     }
-
+    
 }
 
 extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {

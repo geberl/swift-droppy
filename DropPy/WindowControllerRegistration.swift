@@ -30,16 +30,16 @@ class WindowControllerRegistration: NSWindowController {
                                                object: nil)
     }
     
-    func closeWindow(notification: Notification) {
+    func closeWindow(notification: Notification?) {
         self.close()
     }
     
-    func openPurchaseSheet(notification: Notification) {
+    func openPurchaseSheet(notification: Notification?) {
         let purchaseAlert = NSAlert()
         purchaseAlert.showsHelp = false
         purchaseAlert.messageText = "Thank you for trying out DropPy"
         purchaseAlert.informativeText += "I hope you found it useful and consider licensing."
-        purchaseAlert.informativeText += "\n\nPlease click the 'Purchase' button to find out about pricing in your country."
+        purchaseAlert.informativeText += "\n\nClick the 'Purchase' button to find out about pricing in your country."
         purchaseAlert.addButton(withTitle: "Purchase")
         purchaseAlert.addButton(withTitle: "Cancel")
         purchaseAlert.layout()
@@ -47,12 +47,12 @@ class WindowControllerRegistration: NSWindowController {
         
         purchaseAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSAlertFirstButtonReturn {
-                NotificationCenter.default.post(name: Notification.Name("openPurchaseWebsite"), object: nil)
+                self.openPurchaseWebsite(notification: nil)
             }
         })
     }
     
-    func openPurchaseWebsite(notification: Notification) {
+    func openPurchaseWebsite(notification: Notification?) {
         if let url = URL(string: "https://droppyapp.com/"), NSWorkspace.shared().open(url) {
             log.debug("Main website opened.")
         }

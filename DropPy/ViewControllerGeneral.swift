@@ -101,17 +101,19 @@ class ViewControllerGeneral: NSViewController {
 
         myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSAlertFirstButtonReturn {
-                do {
-                    let fileManager = FileManager.default
-                    try fileManager.removeItem(atPath: tempPath)
-                    log.debug("Removed temp dir at \(tempPath)")
-
-                    // Hide an eventually present log button.
-                    NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
-                } catch let error {
-                    log.error(error.localizedDescription)
-                }
+                self.removeTempDir(tempPath: tempPath)
+                NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
             }
         })
+    }
+    
+    func removeTempDir(tempPath: String) {
+        do {
+            let fileManager = FileManager.default
+            try fileManager.removeItem(atPath: tempPath)
+            log.debug("Removed temp dir at \(tempPath)")
+        } catch let error {
+            log.error(error.localizedDescription)
+        }
     }
 }
