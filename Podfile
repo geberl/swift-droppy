@@ -8,15 +8,4 @@ target 'DropPy' do
   # Pods for DropPy
   pod 'SwiftyJSON'
   pod 'Willow'
-
-  target 'DropPyTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'DropPyUITests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
 end
