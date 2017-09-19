@@ -66,12 +66,6 @@ struct Workflows {
 }
 
 
-enum InterpreterError: Error {
-    case notFoundInPreferences
-    case notSetInWorkflow
-}
-
-
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
