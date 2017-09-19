@@ -125,7 +125,9 @@ func isInEvaluation() -> Bool {
 
 func isLicensed() -> Bool {
     // TODO implement
+    
     return false
+    
     //AppState.regEvalStatus = "Licensed ❤️"
     //return true
 }

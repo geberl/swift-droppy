@@ -35,8 +35,6 @@ class WindowControllerRegistration: NSWindowController {
     }
     
     func openPurchaseSheet(notification: Notification) {
-        log.debug("openPurchaseSheet")
-        
         let purchaseAlert = NSAlert()
         purchaseAlert.showsHelp = false
         purchaseAlert.messageText = "Thank you for trying out DropPy"
