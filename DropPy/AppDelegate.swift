@@ -11,21 +11,23 @@ import Willow
 import SwiftyJSON
 
 
-// Logger configuration
+// Logger configuration.
 let modifiers: [LogLevel: [LogMessageModifier]] = [.all: [TimestampModifier()]]
 let configuration = LoggerConfiguration(modifiers: modifiers)
 let log = Logger(configuration: configuration)
 
 
-
-// Workflows object
-struct Workflows {
-    static var all = [String: Dictionary<String, String>]()
+// Application state object.
+struct AppState {
+    static var allWorkflows = [String: Dictionary<String, String>]()
 
     static var activeName: String?
     static var activeInterpreterName: String?
     static var activeJsonFile: String?
     static var activeLogoFile: String?
+    
+    static var isLicensed: Bool = false
+    static var isInEvaluation: Bool = false
 }
 
 
@@ -70,7 +72,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func checkInterpreterInfo() -> (String?, String?) {
         // TODO also check if executablePath isfile
         let userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
-        if let activeInterpreterName: String = Workflows.activeInterpreterName {
+        if let activeInterpreterName: String = AppState.activeInterpreterName {
             if let interpreterInfo: Dictionary<String, String> = userDefaultInterpreters[activeInterpreterName] {
                 let executablePath = interpreterInfo["executable"]!
                 let executableArgs = interpreterInfo["arguments"]!
@@ -82,7 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func startPythonExecutor(notification: Notification) {
-        guard let workflowFile: String = Workflows.activeJsonFile else { return }
+        guard let workflowFile: String = AppState.activeJsonFile else { return }
         let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/"
         let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
 
@@ -207,8 +209,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
 
-        if workflowsChanged(workflowsNew: workflowsTemp, workflowsOld: Workflows.all) {
-            Workflows.all = workflowsTemp
+        if workflowsChanged(workflowsNew: workflowsTemp, workflowsOld: AppState.allWorkflows) {
+            AppState.allWorkflows = workflowsTemp
             NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
         }
     }

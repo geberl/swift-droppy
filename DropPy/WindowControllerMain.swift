@@ -101,7 +101,7 @@ class WindowControllerMain: NSWindowController {
         ToolbarDropdown.removeAllItems()
 
         // Sort Workflow names alphabetically.
-        let allWorkflowNames: [String] = NSDictionary(dictionary: Workflows.all).allKeys as! [String]
+        let allWorkflowNames: [String] = NSDictionary(dictionary: AppState.allWorkflows).allKeys as! [String]
         let sortedWorkflowNames = allWorkflowNames.sorted(){ $0 < $1 }
 
         // Add Workflows to the dropdown in that order.
@@ -120,17 +120,17 @@ class WindowControllerMain: NSWindowController {
                 self.workflowPopUp.selectItem(withTitle: workflowSelected)
             } else {
                 log.debug("Unable to select the previously selected Workflow, it doesn't exist any more.")
-                Workflows.activeName = nil
-                Workflows.activeInterpreterName = nil
-                Workflows.activeJsonFile = nil
-                Workflows.activeLogoFile = nil
+                AppState.activeName = nil
+                AppState.activeInterpreterName = nil
+                AppState.activeJsonFile = nil
+                AppState.activeLogoFile = nil
             }
         } else {
             log.debug("Unable to select the previously selected Workflow, no Workflow was saved.")
-            Workflows.activeName = nil
-            Workflows.activeInterpreterName = nil
-            Workflows.activeJsonFile = nil
-            Workflows.activeLogoFile = nil
+            AppState.activeName = nil
+            AppState.activeInterpreterName = nil
+            AppState.activeJsonFile = nil
+            AppState.activeLogoFile = nil
         }
         self.workflowSelectionChanged()
     }
@@ -138,17 +138,17 @@ class WindowControllerMain: NSWindowController {
     func workflowSelectionChanged() {
         if let workflowName: String = self.workflowPopUp.selectedItem?.title {
             userDefaults.set(workflowName, forKey: UserDefaultStruct.workflowSelected)
-            Workflows.activeName = workflowName
-            Workflows.activeJsonFile = Workflows.all[workflowName]?["file"]
-            Workflows.activeInterpreterName = Workflows.all[workflowName]?["interpreterName"]
-            Workflows.activeLogoFile = Workflows.all[workflowName]?["image"]
+            AppState.activeName = workflowName
+            AppState.activeJsonFile = AppState.allWorkflows[workflowName]?["file"]
+            AppState.activeInterpreterName = AppState.allWorkflows[workflowName]?["interpreterName"]
+            AppState.activeLogoFile = AppState.allWorkflows[workflowName]?["image"]
 
         } else {
             userDefaults.set(nil, forKey: UserDefaultStruct.workflowSelected)
-            Workflows.activeName = nil
-            Workflows.activeJsonFile = nil
-            Workflows.activeInterpreterName = nil
-            Workflows.activeLogoFile = nil
+            AppState.activeName = nil
+            AppState.activeJsonFile = nil
+            AppState.activeInterpreterName = nil
+            AppState.activeLogoFile = nil
         }
         NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
     }
@@ -157,7 +157,7 @@ class WindowControllerMain: NSWindowController {
         log.debug("Toolbar Action: Open")
         
         guard let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
-        guard let jsonFile: String = Workflows.activeJsonFile else { return }
+        guard let jsonFile: String = AppState.activeJsonFile else { return }
 
         NSWorkspace.shared().selectFile(workspacePath + "/" + "Workflows" + "/" + jsonFile,
                                         inFileViewerRootedAtPath: workspacePath)
@@ -167,7 +167,7 @@ class WindowControllerMain: NSWindowController {
         log.debug("Toolbar Action: Edit")
 
         guard let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
-        guard let jsonFile: String = Workflows.activeJsonFile else { return }
+        guard let jsonFile: String = AppState.activeJsonFile else { return }
         
         let jsonPath: String = workspacePath + "/" + "Workflows" + "/" + jsonFile
 
@@ -224,10 +224,10 @@ class WindowControllerMain: NSWindowController {
             try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
 
             // Update global Workflow object.
-            Workflows.activeInterpreterName = workflowInterpreterName
-            Workflows.activeJsonFile = workflowFileName
-            Workflows.activeName = workflowName
-            Workflows.activeLogoFile = nil
+            AppState.activeInterpreterName = workflowInterpreterName
+            AppState.activeJsonFile = workflowFileName
+            AppState.activeName = workflowName
+            AppState.activeLogoFile = nil
 
             // Open new file in editor.
             self.editWorkflow()

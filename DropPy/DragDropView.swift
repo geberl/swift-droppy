@@ -33,7 +33,7 @@ class DragDropView: NSView {
     }
 
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
-        if Workflows.activeName == "" {
+        if AppState.activeName == "" {
             workflowIsSelected = false
             NotificationCenter.default.post(name: Notification.Name("draggingEnteredNoWorkflowSelected"), object: nil)
             return .copy // allow drop (catch later, provide message -> better user experience)

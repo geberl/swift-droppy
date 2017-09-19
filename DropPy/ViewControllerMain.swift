@@ -144,7 +144,7 @@ class ViewControllerMain: NSViewController {
         logoImageView.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
         logoImageView.animates = false
 
-        if let logoFile: String = Workflows.activeLogoFile {
+        if let logoFile: String = AppState.activeLogoFile {
             let logoPath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/" + "Images" + "/" + logoFile
             if let newLogo = NSImage(contentsOfFile: logoPath) {
                 logoImage.image = self.resizeNSImage(image: newLogo, width:128, height:128)
