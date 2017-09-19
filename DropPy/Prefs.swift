@@ -10,6 +10,44 @@ import Foundation
 import Cocoa
 
 
+struct UserDefaultStruct {
+    // This struct ALWAYS needs to contain TWO static variables for each plist record.
+    // One to set the KEY's name and one to set the default VALUE and its type.
+    
+    static var workspacePath: String = "workspacePath"
+    static var workspacePathDefault: String = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("DropPy").path
+    
+    static var workflowSelected: String = "workflowSelected"
+    static var workflowSelectedDefault: String? = nil
+    
+    static var devModeEnabled: String = "devModeEnabled"
+    static var devModeEnabledDefault: Bool = false
+    
+    static var dropCounter: String = "dropCounter"
+    static var dropCounterDefault: Int = 0
+    
+    static var editorAppPath: String = "editorAppPath"
+    static var editorAppPathDefault: String = ""
+    static var editorIconPath: String = "editorIconPath"
+    static var editorIconPathDefault: String = ""
+    static var editorForWorkflows: String = "editorForWorkflows"
+    static var editorForWorkflowsDefault: String = "Internal text editor" // TODO: Set "Internal Workflow editor" as default once done.
+    static var editorForTasks: String = "editorForTasks"
+    static var editorForTasksDefault: String = "Internal text editor"
+    
+    static var interpreterStockName: String = "interpreterStockName"
+    static var interpreterStockNameDefault: String = "macOS pre-installed"
+    
+    static var interpreters: String = "interpreters"
+    static var interpretersDefault: Dictionary = ["macOS pre-installed": ["executable": "/usr/bin/python", "arguments": "-B"]]
+    
+    static var updateLast: String = "updateLast"
+    static var updateLastDefault: Date = Date()
+    static var updateDelta: String = "updateDelta"
+    static var updateDeltaDefault: Int = 60 * 60 * 24 * 7  // a week in seconds, maxint of UInt64 is much higher.
+}
+
+
 func checkFirstRun() -> Bool {
     // TODO actually detect if this is the first run.
     return false
