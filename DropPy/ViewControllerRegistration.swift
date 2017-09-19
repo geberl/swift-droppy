@@ -14,8 +14,6 @@ class ViewControllerRegistration: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        log.debug("123")
     }
     
 }

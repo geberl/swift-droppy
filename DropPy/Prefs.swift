@@ -11,8 +11,8 @@ import Cocoa
 
 
 struct UserDefaultStruct {
-    // This struct ALWAYS needs to contain TWO static variables for each plist record.
-    // One to set the KEY's name and one to set the default VALUE and its type.
+    // This struct needs to contain TWO static vars for each plist record.
+    // One to set the KEY's name (type always String) and one to set the default VALUE (type accordingly).
     
     static var workspacePath: String = "workspacePath"
     static var workspacePathDefault: String = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("DropPy").path
@@ -43,10 +43,15 @@ struct UserDefaultStruct {
     
     static var updateDelta: String = "updateDelta"
     static var updateDeltaDefault: Int = 60 * 60 * 24 * 7  // a week in seconds, maxint of UInt64 is much higher.
+    
+    static var evalStartDate: String = "evalStartDate"
+    
+    static var evalStartHash: String = "evalStartHash"
 }
 
 
 func isFirstRun() -> Bool {
+    // Check all keys independently. As soon as one is found it can't be the app's first run.
     if isKeyPresentInUserDefaults(key: "workspacePath") { return false }
     if isKeyPresentInUserDefaults(key: "workflowSelected") { return false }
     if isKeyPresentInUserDefaults(key: "devModeEnabled") { return false }
@@ -57,6 +62,8 @@ func isFirstRun() -> Bool {
     if isKeyPresentInUserDefaults(key: "interpreters") { return false }
     if isKeyPresentInUserDefaults(key: "updateLast") { return false }
     if isKeyPresentInUserDefaults(key: "updateDelta") { return false }
+    if isKeyPresentInUserDefaults(key: "evalStartDate") { return false }
+    if isKeyPresentInUserDefaults(key: "evalStartHash") { return false }
     return true
 }
 

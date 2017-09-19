@@ -28,6 +28,8 @@ struct AppState {
     
     static var interpreterStockName: String = "macOS pre-installed"
     
+    static var evalStartSalt: String = "nBL4QzmKbk8vhnfke9uvNHRDUtwkoPvJ"
+    
     static var isLicensed: Bool = false
     static var isInEvaluation: Bool = false
 }
@@ -52,20 +54,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                selector: #selector(AppDelegate.startPythonExecutor(notification:)),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
-        
+
         if isFirstRun() {
             beginEvaluation()
             validatePrefs()
             self.firstRunWindowController.showWindow(self)
         } else {
             validatePrefs()
+
+            AppState.isInEvaluation = isInEvaluation()
+            AppState.isLicensed = isLicensed()
+            if !AppState.isInEvaluation && !AppState.isLicensed {
+                self.registrationWindowController.showWindow(self)
+            }
+
             autoUpdate()
         }
     }
     
     func applicationWillBecomeActive(_ notification: Notification) {
         self.reloadWorkflows()
-        cryptoStuff()
     }
     
     func reloadWorkflows(notification: Notification) {
@@ -86,6 +94,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func startPythonExecutor(notification: Notification) {
+        // Refuse execution if evaluation period is over and no license present.
+        if !AppState.isInEvaluation && !AppState.isLicensed {
+            self.registrationWindowController.showWindow(self)
+            NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
+            return
+        }
+        
         guard let workflowFile: String = AppState.activeJsonFile else { return }
         let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/"
         let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
@@ -128,59 +144,59 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-
+    
     func endPythonExecutor(logFilePath: String, tempDirPath: String, exitCode: String) {
         executionInProgress = false
-
+        
         let pathDict:[String: String] = ["logFilePath": logFilePath,
                                          "tempDirPath": tempDirPath,
                                          "exitCode": exitCode]
-
+        
         NotificationCenter.default.post(name: Notification.Name("executionFinished"),
                                         object: nil,
                                         userInfo: pathDict)
     }
-
+    
     func applicationWillTerminate(_ notification: Notification) {
         saveWindowPosition()
         log.enabled = false
     }
-
+    
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
-
+    
     lazy var preferencesWindowController: WindowControllerPrefs  = {
         let wcSb = NSStoryboard(name: "Preferences", bundle: Bundle.main)
         return wcSb.instantiateInitialController() as! WindowControllerPrefs
     }()
-
+    
     @IBAction func showPreferencesWindow(_ sender: NSMenuItem) {
         self.preferencesWindowController.showWindow(self)
     }
-
+    
     lazy var registrationWindowController: WindowControllerRegistration  = {
         let wcSb = NSStoryboard(name: "Registration", bundle: Bundle.main)
         return wcSb.instantiateInitialController() as! WindowControllerRegistration
     }()
-
+    
     @IBAction func showRegistrationWindow(_ sender: NSMenuItem) {
         self.registrationWindowController.showWindow(self)
     }
-
+    
     @IBAction func checkForUpdates(_ sender: NSMenuItem) {
         manualUpdate(silent: false)
     }
-
+    
     lazy var firstRunWindowController: WindowControllerFirstRun  = {
         let wcSB = NSStoryboard(name: "FirstRun", bundle: Bundle.main)
         return wcSB.instantiateInitialController() as! WindowControllerFirstRun
     }()
-
+    
     @IBAction func showFirstRunWindow(_ sender: Any) {
         self.firstRunWindowController.showWindow(self)
     }
-
+    
     func reloadWorkflows() {
         guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
             log.error("Workspace path not set. Unable to reload Workflows.")
@@ -188,10 +204,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         let workflowPath: String = workspacePath + "/" + "Workflows"
         log.debug("Reloading Workflows from '\(workflowPath)'.")
-
+        
         let fileManager = FileManager.default
         let enumerator: FileManager.DirectoryEnumerator = fileManager.enumerator(atPath: workflowPath)!
-
+        
         var workflowsTemp = [String: Dictionary<String, String>]()
         
         while let element = enumerator.nextObject() as? String {
@@ -210,13 +226,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         }
-
+        
         if workflowsChanged(workflowsNew: workflowsTemp, workflowsOld: AppState.allWorkflows) {
             AppState.allWorkflows = workflowsTemp
             NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
         }
     }
-
+    
     func workflowsChanged(workflowsNew: [String: Dictionary<String, String>],
                           workflowsOld: [String: Dictionary<String, String>]) -> Bool {
         
@@ -241,7 +257,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return true
             }
         }
-
+        
         // Check for removed workflows (the-other-way).
         for (name, _):(String, Dictionary<String, String>) in workflowsOld {
             if workflowsNew[name] == nil {
@@ -249,7 +265,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return true
             }
         }
-
+        
         // No changes detected in all checks.
         return false
     }
