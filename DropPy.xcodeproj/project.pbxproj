@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		71B8BCA7F40CE38196922DF3 /* Pods_DropPy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8077B363D66782A696F40634 /* Pods_DropPy.framework */; };
-		80CA1BB5837067B42B265BBB /* Pods_DropPyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1965F5303BF80DC5E7FB52 /* Pods_DropPyUITests.framework */; };
-		9519A5BC9F474570AD0068EE /* Pods_DropPyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 497C418422CF2B2058F90C8E /* Pods_DropPyTests.framework */; };
 		A417ACE41EED7AFD00C08DED /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A417ACE21EED7AFD00C08DED /* Preferences.storyboard */; };
 		A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A417ACE51EED7D5300C08DED /* WindowControllerPrefs.swift */; };
 		A4180BBF1EED312B006A4B24 /* TabViewControllerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4180BBD1EED312B006A4B24 /* TabViewControllerPrefs.swift */; };
@@ -17,6 +15,9 @@
 		A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432EA711EED81BB00DCF128 /* ViewControllerEditorPrefs.swift */; };
 		A444507D1EF0EC5600EBB485 /* FirstRun.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */; };
 		A444507F1EF0EDD200EBB485 /* WindowControllerFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A444507E1EF0EDD200EBB485 /* WindowControllerFirstRun.swift */; };
+		A45EA3C21F7105E100EA4310 /* RegEval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45EA3C11F7105E100EA4310 /* RegEval.swift */; };
+		A45EA3D01F7108B900EA4310 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		A45EA3D11F7108B900EA4310 /* CommonCrypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393301E8FDA40000C7BDB /* AppDelegate.swift */; };
 		A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393321E8FDA40000C7BDB /* ViewControllerMain.swift */; };
 		A46393351E8FDA40000C7BDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A46393341E8FDA40000C7BDB /* Assets.xcassets */; };
@@ -38,6 +39,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A45EA3CE1F7108B900EA4310 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A46393251E8FDA40000C7BDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A45EA3C81F7108B900EA4310;
+			remoteInfo = CommonCrypto;
+		};
 		A463933F1E8FDA40000C7BDB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A46393251E8FDA40000C7BDB /* Project object */;
@@ -54,15 +62,26 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A45EA3D51F7108B900EA4310 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A45EA3D11F7108B900EA4310 /* CommonCrypto.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		05DB7FE7B50ABEFE9C44246E /* Pods-DropPyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyTests/Pods-DropPyTests.release.xcconfig"; sourceTree = "<group>"; };
-		0A749EECABA588E14A48E474 /* Pods-DropPyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		175281C69A362641429AC739 /* Pods-DropPy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPy.release.xcconfig"; path = "Pods/Target Support Files/Pods-DropPy/Pods-DropPy.release.xcconfig"; sourceTree = "<group>"; };
 		1D1965F5303BF80DC5E7FB52 /* Pods_DropPyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		497C418422CF2B2058F90C8E /* Pods_DropPyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68ED04C44A3C0DA13B567FE6 /* Pods-DropPy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPy/Pods-DropPy.debug.xcconfig"; sourceTree = "<group>"; };
 		8077B363D66782A696F40634 /* Pods_DropPy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		904F9E47AA41C35056094C52 /* Pods-DropPyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyTests/Pods-DropPyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A417ACE31EED7AFD00C08DED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Preferences.storyboard; sourceTree = "<group>"; };
 		A417ACE51EED7D5300C08DED /* WindowControllerPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerPrefs.swift; sourceTree = "<group>"; };
 		A4180BBD1EED312B006A4B24 /* TabViewControllerPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabViewControllerPrefs.swift; path = ../TabViewControllerPrefs.swift; sourceTree = "<group>"; };
@@ -70,6 +89,13 @@
 		A432EA711EED81BB00DCF128 /* ViewControllerEditorPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEditorPrefs.swift; sourceTree = "<group>"; };
 		A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FirstRun.storyboard; sourceTree = "<group>"; };
 		A444507E1EF0EDD200EBB485 /* WindowControllerFirstRun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerFirstRun.swift; sourceTree = "<group>"; };
+		A45EA3C11F7105E100EA4310 /* RegEval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegEval.swift; sourceTree = "<group>"; };
+		A45EA3C31F71082B00EA4310 /* CommonCrypto.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CommonCrypto.xcconfig; sourceTree = SOURCE_ROOT; };
+		A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A45EA3CC1F7108B900EA4310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A45EA3D61F71097C00EA4310 /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphoneos.modulemap; sourceTree = "<group>"; };
+		A45EA3D71F71099F00EA4310 /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphonesimulator.modulemap; sourceTree = "<group>"; };
+		A45EA3D81F7109B200EA4310 /* macosx.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = macosx.modulemap; sourceTree = "<group>"; };
 		A463932D1E8FDA40000C7BDB /* DropPy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropPy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A46393301E8FDA40000C7BDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A46393321E8FDA40000C7BDB /* ViewControllerMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerMain.swift; sourceTree = "<group>"; };
@@ -94,14 +120,21 @@
 		A4C61CF01F56982900759F57 /* PythonExecutor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PythonExecutor.swift; sourceTree = "<group>"; };
 		A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerMain.swift; sourceTree = "<group>"; };
 		A4E8DF931EDAA29100D12029 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
-		FAC7B670493565E826211E5E /* Pods-DropPyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A45EA3C51F7108B900EA4310 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A463932A1E8FDA40000C7BDB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A45EA3D01F7108B900EA4310 /* CommonCrypto.framework in Frameworks */,
 				71B8BCA7F40CE38196922DF3 /* Pods_DropPy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,7 +143,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9519A5BC9F474570AD0068EE /* Pods_DropPyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +150,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80CA1BB5837067B42B265BBB /* Pods_DropPyUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,10 +171,6 @@
 			children = (
 				68ED04C44A3C0DA13B567FE6 /* Pods-DropPy.debug.xcconfig */,
 				175281C69A362641429AC739 /* Pods-DropPy.release.xcconfig */,
-				904F9E47AA41C35056094C52 /* Pods-DropPyTests.debug.xcconfig */,
-				05DB7FE7B50ABEFE9C44246E /* Pods-DropPyTests.release.xcconfig */,
-				FAC7B670493565E826211E5E /* Pods-DropPyUITests.debug.xcconfig */,
-				0A749EECABA588E14A48E474 /* Pods-DropPyUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -155,6 +182,18 @@
 				A444507E1EF0EDD200EBB485 /* WindowControllerFirstRun.swift */,
 			);
 			name = "First Run";
+			sourceTree = "<group>";
+		};
+		A45EA3CA1F7108B900EA4310 /* CommonCrypto */ = {
+			isa = PBXGroup;
+			children = (
+				A45EA3C31F71082B00EA4310 /* CommonCrypto.xcconfig */,
+				A45EA3CC1F7108B900EA4310 /* Info.plist */,
+				A45EA3D61F71097C00EA4310 /* iphoneos.modulemap */,
+				A45EA3D71F71099F00EA4310 /* iphonesimulator.modulemap */,
+				A45EA3D81F7109B200EA4310 /* macosx.modulemap */,
+			);
+			path = CommonCrypto;
 			sourceTree = "<group>";
 		};
 		A46022741EED37D10060FA75 /* Preferences */ = {
@@ -189,6 +228,7 @@
 				A46393341E8FDA40000C7BDB /* Assets.xcassets */,
 				A46393391E8FDA40000C7BDB /* Info.plist */,
 				A463932F1E8FDA40000C7BDB /* DropPy */,
+				A45EA3CA1F7108B900EA4310 /* CommonCrypto */,
 				A46393411E8FDA40000C7BDB /* DropPyTests */,
 				A463934C1E8FDA40000C7BDB /* DropPyUITests */,
 				A463932E1E8FDA40000C7BDB /* Products */,
@@ -203,6 +243,7 @@
 				A463932D1E8FDA40000C7BDB /* DropPy.app */,
 				A463933E1E8FDA40000C7BDB /* DropPyTests.xctest */,
 				A46393491E8FDA40000C7BDB /* DropPyUITests.xctest */,
+				A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -211,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				A46393301E8FDA40000C7BDB /* AppDelegate.swift */,
+				A45EA3C11F7105E100EA4310 /* RegEval.swift */,
 				A41A701A1F57354100117E18 /* Common.swift */,
 				A46022751EED37F00060FA75 /* Main */,
 				A46CE6B61F459A0B000DEACB /* Editor */,
@@ -261,7 +303,35 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		A45EA3C61F7108B900EA4310 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		A45EA3C81F7108B900EA4310 /* CommonCrypto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A45EA3D21F7108B900EA4310 /* Build configuration list for PBXNativeTarget "CommonCrypto" */;
+			buildPhases = (
+				A45EA3C41F7108B900EA4310 /* Sources */,
+				A45EA3C51F7108B900EA4310 /* Frameworks */,
+				A45EA3C61F7108B900EA4310 /* Headers */,
+				A45EA3C71F7108B900EA4310 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CommonCrypto;
+			productName = CommonCrypto;
+			productReference = A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		A463932C1E8FDA40000C7BDB /* DropPy */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A46393521E8FDA40000C7BDB /* Build configuration list for PBXNativeTarget "DropPy" */;
@@ -272,10 +342,12 @@
 				A463932B1E8FDA40000C7BDB /* Resources */,
 				991879D10696BB52BC7E6867 /* [CP] Embed Pods Frameworks */,
 				357859C4F150DB71BB7ADC1E /* [CP] Copy Pods Resources */,
+				A45EA3D51F7108B900EA4310 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A45EA3CF1F7108B900EA4310 /* PBXTargetDependency */,
 			);
 			name = DropPy;
 			productName = DropPy;
@@ -286,12 +358,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A46393551E8FDA40000C7BDB /* Build configuration list for PBXNativeTarget "DropPyTests" */;
 			buildPhases = (
-				3A0DE38C1DE5C9BFEE3A26D9 /* [CP] Check Pods Manifest.lock */,
 				A463933A1E8FDA40000C7BDB /* Sources */,
 				A463933B1E8FDA40000C7BDB /* Frameworks */,
 				A463933C1E8FDA40000C7BDB /* Resources */,
-				9F16C888F582CD3D04C07354 /* [CP] Embed Pods Frameworks */,
-				B5A42EDBF39E6A10AE375405 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -307,12 +376,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A46393581E8FDA40000C7BDB /* Build configuration list for PBXNativeTarget "DropPyUITests" */;
 			buildPhases = (
-				8BDC1875C65AF33E2BF2A57D /* [CP] Check Pods Manifest.lock */,
 				A46393451E8FDA40000C7BDB /* Sources */,
 				A46393461E8FDA40000C7BDB /* Frameworks */,
 				A46393471E8FDA40000C7BDB /* Resources */,
-				2C9BC74BE01ACA82BA29FBE8 /* [CP] Embed Pods Frameworks */,
-				FBF2B95684C891EB34916D8F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -334,6 +400,11 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Günther Eberl";
 				TargetAttributes = {
+					A45EA3C81F7108B900EA4310 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = QEZ83PUW72;
+						ProvisioningStyle = Automatic;
+					};
 					A463932C1E8FDA40000C7BDB = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = QEZ83PUW72;
@@ -367,11 +438,19 @@
 				A463932C1E8FDA40000C7BDB /* DropPy */,
 				A463933D1E8FDA40000C7BDB /* DropPyTests */,
 				A46393481E8FDA40000C7BDB /* DropPyUITests */,
+				A45EA3C81F7108B900EA4310 /* CommonCrypto */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A45EA3C71F7108B900EA4310 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A463932B1E8FDA40000C7BDB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -402,21 +481,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2C9BC74BE01ACA82BA29FBE8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		357859C4F150DB71BB7ADC1E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -432,49 +496,22 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPy/Pods-DropPy-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3A0DE38C1DE5C9BFEE3A26D9 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		5E12F74360858505F2E1A0F9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DropPy-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		8BDC1875C65AF33E2BF2A57D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		991879D10696BB52BC7E6867 /* [CP] Embed Pods Frameworks */ = {
@@ -483,63 +520,30 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DropPy/Pods-DropPy-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Willow/Willow.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Willow.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPy/Pods-DropPy-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9F16C888F582CD3D04C07354 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPyTests/Pods-DropPyTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B5A42EDBF39E6A10AE375405 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPyTests/Pods-DropPyTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FBF2B95684C891EB34916D8F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropPyUITests/Pods-DropPyUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A45EA3C41F7108B900EA4310 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A46393291E8FDA40000C7BDB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -556,6 +560,7 @@
 				A487063C1F5680A2005EF67C /* WindowControllerRegistration.swift in Sources */,
 				A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,
+				A45EA3C21F7105E100EA4310 /* RegEval.swift in Sources */,
 				A4180BBF1EED312B006A4B24 /* TabViewControllerPrefs.swift in Sources */,
 				A487063A1F568065005EF67C /* ViewControllerRegistration.swift in Sources */,
 				A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */,
@@ -583,6 +588,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A45EA3CF1F7108B900EA4310 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A45EA3C81F7108B900EA4310 /* CommonCrypto */;
+			targetProxy = A45EA3CE1F7108B900EA4310 /* PBXContainerItemProxy */;
+		};
 		A46393401E8FDA40000C7BDB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A463932C1E8FDA40000C7BDB /* DropPy */;
@@ -615,6 +625,56 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A45EA3D31F7108B900EA4310 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A45EA3C31F71082B00EA4310 /* CommonCrypto.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = QEZ83PUW72;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = CommonCrypto/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.CommonCrypto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A45EA3D41F7108B900EA4310 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A45EA3C31F71082B00EA4310 /* CommonCrypto.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = QEZ83PUW72;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = CommonCrypto/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.CommonCrypto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		A46393501E8FDA40000C7BDB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -747,7 +807,6 @@
 		};
 		A46393561E8FDA40000C7BDB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 904F9E47AA41C35056094C52 /* Pods-DropPyTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -763,7 +822,6 @@
 		};
 		A46393571E8FDA40000C7BDB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05DB7FE7B50ABEFE9C44246E /* Pods-DropPyTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -779,7 +837,6 @@
 		};
 		A46393591E8FDA40000C7BDB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FAC7B670493565E826211E5E /* Pods-DropPyUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -794,7 +851,6 @@
 		};
 		A463935A1E8FDA40000C7BDB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A749EECABA588E14A48E474 /* Pods-DropPyUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -810,6 +866,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A45EA3D21F7108B900EA4310 /* Build configuration list for PBXNativeTarget "CommonCrypto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45EA3D31F7108B900EA4310 /* Debug */,
+				A45EA3D41F7108B900EA4310 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A46393281E8FDA40000C7BDB /* Build configuration list for PBXProject "DropPy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
