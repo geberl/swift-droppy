@@ -19,7 +19,7 @@ func autoUpdate() {
     if dateNow > updateNext {
         manualUpdate(silent: true)
     } else {
-        log.debug("Not checking for updates now, next check " + updateNext.iso8601 + ".")
+        log.info("Not checking for updates now, next check " + updateNext.readable + ".")
     }
 }
 
@@ -72,14 +72,14 @@ func manualUpdate(silent: Bool) {
             if isLatestVersion(webVersionMajor: versionMajor,
                                webVersionMinor: versionMinor,
                                webVersionPatch: versionPatch) {
-                log.debug("Checking for updates: No update available.")
+                log.info("Checking for updates: No update available.")
                 if !silent {
                     NotificationCenter.default.post(name: Notification.Name("updateNotAvailable"),
                                                     object: nil,
                                                     userInfo: versionDict)
                 }
             } else {
-                log.debug("Checking for updates: Update available.")
+                log.info("Checking for updates: Update available.")
                 NotificationCenter.default.post(name: Notification.Name("updateAvailable"),
                                                 object: nil,
                                                 userInfo: versionDict)
