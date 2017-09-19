@@ -115,7 +115,7 @@ class ViewControllerInterpreter: NSViewController {
     @IBAction func onMinusButton(_ sender: Any) {
         if (self.selectedRow > -1) {
             let selectedInterpreterName: String = self.interpreterNames[self.selectedRow]
-            if selectedInterpreterName == userDefaults.string(forKey: UserDefaultStruct.interpreterStockName) {
+            if selectedInterpreterName == AppState.interpreterStockName {
                 self.errorAlert(title: "Unable to remove", explanation: "The interpreter that comes with macOS cannot be removed.")
             } else {
                 self.criticalAlert(title: "Are you sure you want to remove this interpreter?",
@@ -181,7 +181,7 @@ class ViewControllerInterpreter: NSViewController {
                     }
                 }
                 
-                if selectedInterpreterName == userDefaults.string(forKey: UserDefaultStruct.interpreterStockName) {
+                if selectedInterpreterName == AppState.interpreterStockName {
                     self.argumentsTextField.isEditable = false
                     self.executableTextField.isEditable = false
                 } else {
@@ -307,8 +307,8 @@ class ViewControllerInterpreter: NSViewController {
     func addInterpreter() {
         let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
         
-        let defaultExecutable: String = oldInterpreterDict[userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)!]!["executable"]!
-        let defaultArguments: String = oldInterpreterDict[userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)!]!["arguments"]!
+        let defaultExecutable: String = oldInterpreterDict[userDefaults.string(forKey: AppState.interpreterStockName)!]!["executable"]!
+        let defaultArguments: String = oldInterpreterDict[userDefaults.string(forKey: AppState.interpreterStockName)!]!["arguments"]!
         
         var newInterpreterName: String = "New Interpreter"
         var nextSuffix: Int = 2  // on macOS the next item is called "New Interpreter 2", not "New Interpreter 1"
@@ -398,7 +398,7 @@ extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
         if let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
             cell.textField?.stringValue = text
             
-            if text == userDefaults.string(forKey: UserDefaultStruct.interpreterStockName)! {
+            if text == AppState.interpreterStockName {
                 cell.textField?.isEditable = false
             } else {
                 cell.textField?.isEditable = true

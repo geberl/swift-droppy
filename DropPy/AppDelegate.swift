@@ -20,11 +20,13 @@ let log = Logger(configuration: configuration)
 // Application state object.
 struct AppState {
     static var allWorkflows = [String: Dictionary<String, String>]()
-
+    
     static var activeName: String?
     static var activeInterpreterName: String?
     static var activeJsonFile: String?
     static var activeLogoFile: String?
+    
+    static var interpreterStockName: String = "macOS pre-installed"
     
     static var isLicensed: Bool = false
     static var isInEvaluation: Bool = false

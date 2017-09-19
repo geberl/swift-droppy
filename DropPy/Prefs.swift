@@ -35,9 +35,6 @@ struct UserDefaultStruct {
     static var editorForTasks: String = "editorForTasks"
     static var editorForTasksDefault: String = "Internal text editor"
     
-    static var interpreterStockName: String = "interpreterStockName"
-    static var interpreterStockNameDefault: String = "macOS pre-installed"
-    
     static var interpreters: String = "interpreters"
     static var interpretersDefault: Dictionary = ["macOS pre-installed": ["executable": "/usr/bin/python", "arguments": "-B"]]
     
