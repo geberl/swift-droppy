@@ -67,6 +67,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             AppState.isLicensed = isLicensed()
             if !AppState.isInEvaluation && !AppState.isLicensed {
                 self.registrationWindowController.showWindow(self)
+                NotificationCenter.default.post(name: Notification.Name("openPurchaseSheet"), object: nil)
             }
 
             autoUpdate()
