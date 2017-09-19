@@ -23,15 +23,15 @@ struct UserDefaultStruct {
     static var devModeEnabled: String = "devModeEnabled"
     static var devModeEnabledDefault: Bool = false
     
-    static var dropCounter: String = "dropCounter"
-    static var dropCounterDefault: Int = 0
-    
     static var editorAppPath: String = "editorAppPath"
     static var editorAppPathDefault: String = ""
+    
     static var editorIconPath: String = "editorIconPath"
     static var editorIconPathDefault: String = ""
+    
     static var editorForWorkflows: String = "editorForWorkflows"
     static var editorForWorkflowsDefault: String = "Internal text editor" // TODO: Set "Internal Workflow editor" as default once done.
+    
     static var editorForTasks: String = "editorForTasks"
     static var editorForTasksDefault: String = "Internal text editor"
     
@@ -40,14 +40,24 @@ struct UserDefaultStruct {
     
     static var updateLast: String = "updateLast"
     static var updateLastDefault: Date = Date()
+    
     static var updateDelta: String = "updateDelta"
     static var updateDeltaDefault: Int = 60 * 60 * 24 * 7  // a week in seconds, maxint of UInt64 is much higher.
 }
 
 
-func checkFirstRun() -> Bool {
-    // TODO actually detect if this is the first run.
-    return false
+func isFirstRun() -> Bool {
+    if isKeyPresentInUserDefaults(key: "workspacePath") { return false }
+    if isKeyPresentInUserDefaults(key: "workflowSelected") { return false }
+    if isKeyPresentInUserDefaults(key: "devModeEnabled") { return false }
+    if isKeyPresentInUserDefaults(key: "editorAppPath") { return false }
+    if isKeyPresentInUserDefaults(key: "editorIconPath") { return false }
+    if isKeyPresentInUserDefaults(key: "editorForWorkflows") { return false }
+    if isKeyPresentInUserDefaults(key: "editorForTasks") { return false }
+    if isKeyPresentInUserDefaults(key: "interpreters") { return false }
+    if isKeyPresentInUserDefaults(key: "updateLast") { return false }
+    if isKeyPresentInUserDefaults(key: "updateDelta") { return false }
+    return true
 }
 
 
@@ -67,7 +77,6 @@ func validatePrefs() {
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.workspacePath) {
         // Start out with default Settings
         // Don't open the Preferences Window, make it as simple and painless and little confusing as possible
-        userDefaults.set(UserDefaultStruct.dropCounterDefault, forKey: UserDefaultStruct.dropCounter)
         
         // TODO mine, until I can change this in Preferences to my Development folder
         // userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
@@ -86,7 +95,7 @@ func validatePrefs() {
         userDefaults.set(UserDefaultStruct.devModeEnabledDefault, forKey: UserDefaultStruct.devModeEnabled)
     }
     
-    // User's external text editor.
+    // External text editor.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.editorAppPath) {
         userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
     } else {
@@ -110,23 +119,23 @@ func validatePrefs() {
         }
     }
     
-    // User's preference for how to edit Workflows.
+    // Preference for how to edit Workflows.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.editorForWorkflows) {
         userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
     }
     
-    // User's preference for how to edit Tasks.
+    // Preference for how to edit Tasks.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.editorForTasks) {
         userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
     }
     
-    // User's Python interpreters and virtual envs.
+    // Python interpreters and virtual envs.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.interpreters) {
         userDefaults.set(UserDefaultStruct.interpretersDefault, forKey: UserDefaultStruct.interpreters)
     }
-    userDefaults.set(UserDefaultStruct.interpreterStockNameDefault, forKey: UserDefaultStruct.interpreterStockName)
+    // TODO make sure the stock interpreter is still in interpreters, add it if not.
     
-    // User's update preferences.
+    // Update preferences.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.updateLast) {
         userDefaults.set(UserDefaultStruct.updateLastDefault, forKey: UserDefaultStruct.updateLast)
     }

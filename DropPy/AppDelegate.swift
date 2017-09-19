@@ -43,10 +43,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillFinishLaunching(_ notification: Notification) {
         log.enabled = true
 
-        let firstRun: Bool = checkFirstRun()
-        validatePrefs()
-        autoUpdate()
-
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(AppDelegate.reloadWorkflows(notification:)),
                                                name: Notification.Name("reloadWorkflows"),
@@ -56,21 +52,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                selector: #selector(AppDelegate.startPythonExecutor(notification:)),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
-
-        if firstRun {
+        
+        if isFirstRun() {
+            beginEvaluation()
+            validatePrefs()
             self.firstRunWindowController.showWindow(self)
+        } else {
+            validatePrefs()
+            autoUpdate()
         }
     }
-
+    
     func applicationWillBecomeActive(_ notification: Notification) {
         self.reloadWorkflows()
         cryptoStuff()
     }
-
+    
     func reloadWorkflows(notification: Notification) {
         self.reloadWorkflows()
     }
-
+    
     func checkInterpreterInfo() -> (String?, String?) {
         // TODO also check if executablePath isfile
         let userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
@@ -79,12 +80,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let executablePath = interpreterInfo["executable"]!
                 let executableArgs = interpreterInfo["arguments"]!
                 return (executablePath, executableArgs)
-
             }
         }
         return (nil, nil)
     }
-
+    
     func startPythonExecutor(notification: Notification) {
         guard let workflowFile: String = AppState.activeJsonFile else { return }
         let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/"
