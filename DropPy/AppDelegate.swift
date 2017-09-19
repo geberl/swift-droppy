@@ -99,6 +99,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Refuse execution if evaluation period is over and no license present.
         if !AppState.isInEvaluation && !AppState.isLicensed {
             self.registrationWindowController.showWindow(self)
+            NotificationCenter.default.post(name: Notification.Name("openPurchaseSheet"), object: nil)
             NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
             NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
             return
