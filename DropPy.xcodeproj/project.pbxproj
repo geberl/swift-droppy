@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		71B8BCA7F40CE38196922DF3 /* Pods_DropPy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8077B363D66782A696F40634 /* Pods_DropPy.framework */; };
 		A401DBF41F71292400A12302 /* Prefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401DBF31F71292400A12302 /* Prefs.swift */; };
+		A401DBF61F712E3900A12302 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401DBF51F712E3900A12302 /* Update.swift */; };
 		A417ACE41EED7AFD00C08DED /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A417ACE21EED7AFD00C08DED /* Preferences.storyboard */; };
 		A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A417ACE51EED7D5300C08DED /* WindowControllerPrefs.swift */; };
 		A4180BBF1EED312B006A4B24 /* TabViewControllerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4180BBD1EED312B006A4B24 /* TabViewControllerPrefs.swift */; };
@@ -84,6 +85,7 @@
 		68ED04C44A3C0DA13B567FE6 /* Pods-DropPy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropPy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropPy/Pods-DropPy.debug.xcconfig"; sourceTree = "<group>"; };
 		8077B363D66782A696F40634 /* Pods_DropPy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A401DBF31F71292400A12302 /* Prefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prefs.swift; sourceTree = "<group>"; };
+		A401DBF51F712E3900A12302 /* Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		A417ACE31EED7AFD00C08DED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Preferences.storyboard; sourceTree = "<group>"; };
 		A417ACE51EED7D5300C08DED /* WindowControllerPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerPrefs.swift; sourceTree = "<group>"; };
 		A4180BBD1EED312B006A4B24 /* TabViewControllerPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabViewControllerPrefs.swift; path = ../TabViewControllerPrefs.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				A41A701A1F57354100117E18 /* Common.swift */,
 				A401DBF31F71292400A12302 /* Prefs.swift */,
 				A45EA3C11F7105E100EA4310 /* RegEval.swift */,
+				A401DBF51F712E3900A12302 /* Update.swift */,
 				A46022751EED37F00060FA75 /* Main */,
 				A46CE6B61F459A0B000DEACB /* Editor */,
 				A48706361F567D1B005EF67C /* Registration */,
@@ -553,6 +556,7 @@
 			files = (
 				A401DBF41F71292400A12302 /* Prefs.swift in Sources */,
 				A41A701B1F57354100117E18 /* Common.swift in Sources */,
+				A401DBF61F712E3900A12302 /* Update.swift in Sources */,
 				A4C61CF11F56982900759F57 /* PythonExecutor.swift in Sources */,
 				A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */,
 				A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */,
