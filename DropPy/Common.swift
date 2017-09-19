@@ -136,6 +136,14 @@ extension Formatter {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter
     }()
+    static let readableDate: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: TimeZone.current.identifier)
+        formatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
 }
 
 
@@ -145,5 +153,8 @@ extension Date {
     }
     var readable: String {
         return Formatter.readable.string(from: self)
+    }
+    var readableDate: String {
+        return Formatter.readableDate.string(from: self)
     }
 }

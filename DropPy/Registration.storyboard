@@ -52,7 +52,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GGB-hG-lK5">
-                                <rect key="frame" x="168" y="253" width="444" height="17"/>
+                                <rect key="frame" x="168" y="253" width="313" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Unlicensed (Evaluation) (ends on xx-yy-zzzz)" id="BPZ-sa-Ih7">
                                     <font key="font" metaFont="system"/>
@@ -142,27 +142,49 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rt7-l4-cZV">
-                                <rect key="frame" x="508" y="13" width="108" height="32"/>
+                                <rect key="frame" x="402" y="13" width="214" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bnt-UT-1n3">
+                                <buttonCell key="cell" type="push" title="Apply license information" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bnt-UT-1n3">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onApplyButton:" target="8Hx-mR-uTB" id="JNe-N4-Dyz"/>
+                                </connections>
                             </button>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="fc3-hs-7bd">
                                 <rect key="frame" x="20" y="230" width="590" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="czJ-cw-8ha">
-                                <rect key="frame" x="14" y="13" width="108" height="32"/>
+                                <rect key="frame" x="508" y="244" width="108" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Purchase ..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DgH-vA-JNz">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onPurchaseButton:" target="8Hx-mR-uTB" id="eIL-do-DSn"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W5c-Py-fvz">
+                                <rect key="frame" x="294" y="13" width="108" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RWK-3e-Ykk">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCloseButton:" target="8Hx-mR-uTB" id="klD-5v-2zQ"/>
+                                </connections>
                             </button>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="applyButton" destination="rt7-l4-cZV" id="tJW-pw-hw4"/>
+                        <outlet property="purchaseButton" destination="czJ-cw-8ha" id="Jnu-LA-4s1"/>
+                        <outlet property="regEvalStatusTextField" destination="GGB-hG-lK5" id="GjV-jT-ERj"/>
+                    </connections>
                 </viewController>
                 <customObject id="aeT-EO-iCT" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

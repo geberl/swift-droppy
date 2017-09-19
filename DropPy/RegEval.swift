@@ -81,6 +81,7 @@ func beginEvaluation() {
     let evalEndDate: Date = evalStartDate.addingTimeInterval(60 * 60 * 24 * 7 * 2)  // 14 days
     
     AppState.isInEvaluation = true
+    AppState.regEvalStatus = "Unlicensed (Evaluation ends on " + evalEndDate.readableDate + ")"
     log.info("Evaluation period started at " + evalStartDate.readable + " (ends at " + evalEndDate.readable + ").")
 }
 
@@ -97,23 +98,27 @@ func isInEvaluation() -> Bool {
     let evalStartStringNew: String = evalStartDate.iso8601 + "_" + AppState.evalStartSalt
     let evalStartHashNew: Data = evalStartStringNew.sha512()
     if evalStartHashSaved != evalStartHashNew {
+        AppState.regEvalStatus = "Unlicensed (Evaluation ended)"
         log.info("Evaluation period ended (evalStartHash invalid for evalStartDate).")
         return false
     }
     
     // Check if now is before the evaluation's start date.
     if nowDate < evalStartDate {
+        AppState.regEvalStatus = "Unlicensed (Evaluation ended)"
         log.info("Evaluation period ended (now is before evalStartDate).")
         return false
     }
     
     // Check if now is after the evaluation's end date.
     if nowDate > evalEndDate {
+        AppState.regEvalStatus = "Unlicensed (Evaluation ended on " + evalEndDate.readableDate + ")"
         log.info("Evaluation period ended at " + evalEndDate.readable + " (started at " + evalStartDate.readable + ").")
         return false
     }
     
     // Product is still in evaluation.
+    AppState.regEvalStatus = "Unlicensed (Evaluation ends on " + evalEndDate.readableDate + ")"
     log.info("Evaluation period active, will end at " + evalEndDate.readable + " (started at " + evalStartDate.readable + ").")
     return true
 }
@@ -121,4 +126,6 @@ func isInEvaluation() -> Bool {
 func isLicensed() -> Bool {
     // TODO implement
     return false
+    //AppState.regEvalStatus = "Licensed ❤️"
+    //return true
 }
