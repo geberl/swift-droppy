@@ -38,6 +38,11 @@
 		A4C61CF11F56982900759F57 /* PythonExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C61CF01F56982900759F57 /* PythonExecutor.swift */; };
 		A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */; };
 		A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E8DF931EDAA29100D12029 /* DragDropView.swift */; };
+		A4EE62BD1F72C9B800370F26 /* CFUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62BC1F72C9B800370F26 /* CFUtil.swift */; };
+		A4EE62BF1F72C9E000370F26 /* CocoaFobError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62BE1F72C9E000370F26 /* CocoaFobError.swift */; };
+		A4EE62C21F72C9EC00370F26 /* CocoaFobStringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62C01F72C9EC00370F26 /* CocoaFobStringExt.swift */; };
+		A4EE62C31F72C9EC00370F26 /* CocoaFobLicVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62C11F72C9EC00370F26 /* CocoaFobLicVerifier.swift */; };
+		A4EE62C51F72CAA500370F26 /* CocoaFobLicGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62C41F72CAA500370F26 /* CocoaFobLicGenerator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +129,11 @@
 		A4C61CF01F56982900759F57 /* PythonExecutor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PythonExecutor.swift; sourceTree = "<group>"; };
 		A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerMain.swift; sourceTree = "<group>"; };
 		A4E8DF931EDAA29100D12029 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
+		A4EE62BC1F72C9B800370F26 /* CFUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFUtil.swift; sourceTree = "<group>"; };
+		A4EE62BE1F72C9E000370F26 /* CocoaFobError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobError.swift; sourceTree = "<group>"; };
+		A4EE62C01F72C9EC00370F26 /* CocoaFobStringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobStringExt.swift; sourceTree = "<group>"; };
+		A4EE62C11F72C9EC00370F26 /* CocoaFobLicVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobLicVerifier.swift; sourceTree = "<group>"; };
+		A4EE62C41F72CAA500370F26 /* CocoaFobLicGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobLicGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +241,7 @@
 				A46393341E8FDA40000C7BDB /* Assets.xcassets */,
 				A46393391E8FDA40000C7BDB /* Info.plist */,
 				A463932F1E8FDA40000C7BDB /* DropPy */,
+				A4EE62BB1F72C97500370F26 /* CocoaFob */,
 				A45EA3CA1F7108B900EA4310 /* CommonCrypto */,
 				A46393411E8FDA40000C7BDB /* DropPyTests */,
 				A463934C1E8FDA40000C7BDB /* DropPyUITests */,
@@ -305,6 +316,18 @@
 				A48706391F568065005EF67C /* ViewControllerRegistration.swift */,
 			);
 			name = Registration;
+			sourceTree = "<group>";
+		};
+		A4EE62BB1F72C97500370F26 /* CocoaFob */ = {
+			isa = PBXGroup;
+			children = (
+				A4EE62BE1F72C9E000370F26 /* CocoaFobError.swift */,
+				A4EE62C41F72CAA500370F26 /* CocoaFobLicGenerator.swift */,
+				A4EE62C11F72C9EC00370F26 /* CocoaFobLicVerifier.swift */,
+				A4EE62C01F72C9EC00370F26 /* CocoaFobStringExt.swift */,
+				A4EE62BC1F72C9B800370F26 /* CFUtil.swift */,
+			);
+			path = CocoaFob;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -556,13 +579,17 @@
 			files = (
 				A401DBF41F71292400A12302 /* Prefs.swift in Sources */,
 				A41A701B1F57354100117E18 /* Common.swift in Sources */,
+				A4EE62BF1F72C9E000370F26 /* CocoaFobError.swift in Sources */,
+				A4EE62C21F72C9EC00370F26 /* CocoaFobStringExt.swift in Sources */,
 				A401DBF61F712E3900A12302 /* Update.swift in Sources */,
 				A4C61CF11F56982900759F57 /* PythonExecutor.swift in Sources */,
 				A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */,
 				A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */,
+				A4EE62BD1F72C9B800370F26 /* CFUtil.swift in Sources */,
 				A46CE6BA1F459BEE000DEACB /* WindowControllerEditor.swift in Sources */,
 				A444507F1EF0EDD200EBB485 /* WindowControllerFirstRun.swift in Sources */,
 				A46CE6BC1F459F87000DEACB /* ViewControllerEditor.swift in Sources */,
+				A4EE62C31F72C9EC00370F26 /* CocoaFobLicVerifier.swift in Sources */,
 				A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */,
 				A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */,
 				A487063C1F5680A2005EF67C /* WindowControllerRegistration.swift in Sources */,
@@ -572,6 +599,7 @@
 				A4180BBF1EED312B006A4B24 /* TabViewControllerPrefs.swift in Sources */,
 				A487063A1F568065005EF67C /* ViewControllerRegistration.swift in Sources */,
 				A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */,
+				A4EE62C51F72CAA500370F26 /* CocoaFobLicGenerator.swift in Sources */,
 				A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */,
 				A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */,
 			);
