@@ -74,7 +74,7 @@ func beginEvaluation() {
     let evalStartDate: Date = Date()
     userDefaults.set(evalStartDate, forKey: UserDefaultStruct.evalStartDate)
     
-    let evalStartString: String = evalStartDate.iso8601 + "_" + AppState.evalStartSalt
+    let evalStartString: String = "\(evalStartDate.timeIntervalSince1970)" + "_" + AppState.evalStartSalt
     let evalStartHash = evalStartString.sha512()
     userDefaults.set(evalStartHash, forKey: UserDefaultStruct.evalStartHash)
     
@@ -95,7 +95,7 @@ func isInEvaluation() -> Bool {
     let evalEndDate: Date = evalStartDate.addingTimeInterval(60 * 60 * 24 * 7 * 2)  // 14 days
     
     // Check if evalStartDate is still valid against evalStartHash.
-    let evalStartStringNew: String = evalStartDate.iso8601 + "_" + AppState.evalStartSalt
+    let evalStartStringNew: String = "\(evalStartDate.timeIntervalSince1970)" + "_" + AppState.evalStartSalt
     let evalStartHashNew: Data = evalStartStringNew.sha512()
     if evalStartHashSaved != evalStartHashNew {
         AppState.regEvalStatus = "Unlicensed (Evaluation ended)"

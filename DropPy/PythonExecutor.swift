@@ -312,7 +312,7 @@ class PythonExecutor: NSObject {
 
             guard let enumerator: FileManager.DirectoryEnumerator =
                 fileManager.enumerator(atPath: self.tempPath) else {
-                    print("Temp directory not found: \(self.tempPath)")
+                    log.error("Temp directory not found: \(self.tempPath)")
                     return
             }
 
