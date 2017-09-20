@@ -221,7 +221,6 @@
 				A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */,
 				A46393321E8FDA40000C7BDB /* ViewControllerMain.swift */,
 				A4E8DF931EDAA29100D12029 /* DragDropView.swift */,
-				A4C61CF01F56982900759F57 /* PythonExecutor.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -257,6 +256,7 @@
 			children = (
 				A46393301E8FDA40000C7BDB /* AppDelegate.swift */,
 				A41A701A1F57354100117E18 /* Common.swift */,
+				A4C61CF01F56982900759F57 /* PythonExecutor.swift */,
 				A401DBF31F71292400A12302 /* Prefs.swift */,
 				A45EA3C11F7105E100EA4310 /* RegEval.swift */,
 				A401DBF51F712E3900A12302 /* Update.swift */,

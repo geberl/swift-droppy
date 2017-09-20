@@ -17,7 +17,7 @@ class ViewControllerRegistration: NSViewController {
     @IBOutlet weak var purchaseButton: NSButton!
     
     @IBAction func onPurchaseButton(_ sender: NSButton) {
-        NotificationCenter.default.post(name: Notification.Name("openPurchaseWebsite"), object: nil)
+        self.openPurchaseWebsite()
     }
     
     @IBOutlet weak var applyButton: NSButton!
@@ -39,17 +39,57 @@ class ViewControllerRegistration: NSViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerRegistration.reopenPurchaseSheet(notification:)),
+                                               name: Notification.Name("reopenPurchaseSheet"),
+                                               object: nil)
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
         
         regEvalStatusTextField.stringValue = AppState.regEvalStatus
         
         if AppState.isLicensed {
             self.purchaseButton.isHidden = true
             self.applyButton.title = "Remove license information"
-
+            
             // TODO fill all those fields with the reg info and make them read only
+        }
+        
+        if !AppState.isLicensed && !AppState.isInEvaluation {
+            self.openPurchaseSheet()
         }
     }
     
+    func reopenPurchaseSheet(notification: Notification?) {
+        let parentWindow = self.view.window!
+        if parentWindow.sheets.count == 0 {
+            self.openPurchaseSheet()
+        }
+    }
+    
+    func openPurchaseSheet() {
+        let purchaseAlert = NSAlert()
+        purchaseAlert.showsHelp = false
+        purchaseAlert.messageText = "Thank you for trying out DropPy"
+        purchaseAlert.informativeText += "I hope you found it useful and consider licensing."
+        purchaseAlert.informativeText += "\n\nClick the 'Purchase' button to find out about pricing in your country."
+        purchaseAlert.addButton(withTitle: "Purchase")
+        purchaseAlert.addButton(withTitle: "Cancel")
+        purchaseAlert.layout()
+        purchaseAlert.icon = NSImage(named: "AppIcon")
 
+        purchaseAlert.beginSheetModal(for: self.view.window!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSAlertFirstButtonReturn {
+                self.openPurchaseWebsite()
+            }
+        })
+    }
+    
+    func openPurchaseWebsite() {
+        if let url = URL(string: "https://droppyapp.com/"), NSWorkspace.shared().open(url) {
+            log.debug("Main website opened.")
+        }
+    }
 }

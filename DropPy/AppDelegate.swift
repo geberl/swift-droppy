@@ -67,7 +67,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             AppState.isLicensed = isLicensed()
             if !AppState.isInEvaluation && !AppState.isLicensed {
                 self.registrationWindowController.showWindow(self)
-                NotificationCenter.default.post(name: Notification.Name("openPurchaseSheet"), object: nil)
             }
 
             autoUpdate()
@@ -96,13 +95,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func startPythonExecutor(notification: Notification) {
-        // Refuse execution if evaluation period is over and no license present.
+        // Show registration window with sheet to user on each drop.
+        // At this moment do not refuse executing. Maybe later in 2.0.
         if !AppState.isInEvaluation && !AppState.isLicensed {
             self.registrationWindowController.showWindow(self)
-            NotificationCenter.default.post(name: Notification.Name("openPurchaseSheet"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("reopenPurchaseSheet"), object: nil)
             NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
             NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
-            return
         }
         
         guard let workflowFile: String = AppState.activeJsonFile else { return }
