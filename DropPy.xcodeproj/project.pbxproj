@@ -42,7 +42,6 @@
 		A4EE62BF1F72C9E000370F26 /* CocoaFobError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62BE1F72C9E000370F26 /* CocoaFobError.swift */; };
 		A4EE62C21F72C9EC00370F26 /* CocoaFobStringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62C01F72C9EC00370F26 /* CocoaFobStringExt.swift */; };
 		A4EE62C31F72C9EC00370F26 /* CocoaFobLicVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62C11F72C9EC00370F26 /* CocoaFobLicVerifier.swift */; };
-		A4EE62C51F72CAA500370F26 /* CocoaFobLicGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62C41F72CAA500370F26 /* CocoaFobLicGenerator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,7 +132,6 @@
 		A4EE62BE1F72C9E000370F26 /* CocoaFobError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobError.swift; sourceTree = "<group>"; };
 		A4EE62C01F72C9EC00370F26 /* CocoaFobStringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobStringExt.swift; sourceTree = "<group>"; };
 		A4EE62C11F72C9EC00370F26 /* CocoaFobLicVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobLicVerifier.swift; sourceTree = "<group>"; };
-		A4EE62C41F72CAA500370F26 /* CocoaFobLicGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobLicGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,11 +319,10 @@
 		A4EE62BB1F72C97500370F26 /* CocoaFob */ = {
 			isa = PBXGroup;
 			children = (
+				A4EE62BC1F72C9B800370F26 /* CFUtil.swift */,
 				A4EE62BE1F72C9E000370F26 /* CocoaFobError.swift */,
-				A4EE62C41F72CAA500370F26 /* CocoaFobLicGenerator.swift */,
 				A4EE62C11F72C9EC00370F26 /* CocoaFobLicVerifier.swift */,
 				A4EE62C01F72C9EC00370F26 /* CocoaFobStringExt.swift */,
-				A4EE62BC1F72C9B800370F26 /* CFUtil.swift */,
 			);
 			path = CocoaFob;
 			sourceTree = "<group>";
@@ -599,7 +596,6 @@
 				A4180BBF1EED312B006A4B24 /* TabViewControllerPrefs.swift in Sources */,
 				A487063A1F568065005EF67C /* ViewControllerRegistration.swift in Sources */,
 				A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */,
-				A4EE62C51F72CAA500370F26 /* CocoaFobLicGenerator.swift in Sources */,
 				A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */,
 				A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */,
 			);
