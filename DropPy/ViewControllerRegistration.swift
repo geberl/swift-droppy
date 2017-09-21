@@ -31,6 +31,11 @@ class ViewControllerRegistration: NSViewController {
         } else {
             log.debug("Checking license info.")
             
+            if !self.validateInput() {
+                log.error("Input invalid")
+                return
+            }
+            
             let licenseCode = self.licenseCodeTextField.stringValue
             log.debug("Entered license code: " + licenseCode)
             
@@ -38,11 +43,12 @@ class ViewControllerRegistration: NSViewController {
             if validLicense {
                 log.info("Result: License code is valid.")
                 self.saveRegValues()
-                self.showValidSheet()
+                self.showConfirmationSheet()
                 self.setLicensedValues()
             } else {
                 log.error("Result: License code is invalid.")
-                self.showInvalidSheet()
+                self.showErrorSheet(messageText: "License code invalid",
+                                    informativeText: "The combination of name, company, email and license code you entered is invalid.\n\nMake sure to enter the information exactly as you did when purchasing.")
             }
         }
     }
@@ -168,7 +174,7 @@ class ViewControllerRegistration: NSViewController {
         return regName
     }
     
-    func showValidSheet() {
+    func showConfirmationSheet() {
         let validAlert = NSAlert()
         validAlert.showsHelp = false
         validAlert.messageText = "Thank you for purchasing DropPy"
@@ -179,12 +185,11 @@ class ViewControllerRegistration: NSViewController {
         validAlert.beginSheetModal(for: self.view.window!)
     }
     
-    func showInvalidSheet() {
+    func showErrorSheet(messageText: String, informativeText: String) {
         let invalidAlert = NSAlert()
         invalidAlert.showsHelp = false
-        invalidAlert.messageText = "License code invalid"
-        invalidAlert.informativeText = "The combination of name, company, email and license code you entered is invalid."
-        invalidAlert.informativeText += "\n\nMake sure to enter the information exactly as you did when purchasing."
+        invalidAlert.messageText = messageText
+        invalidAlert.informativeText = informativeText
         invalidAlert.addButton(withTitle: "Ok")
         invalidAlert.layout()
         invalidAlert.icon = NSImage(named: "error")
@@ -235,5 +240,30 @@ class ViewControllerRegistration: NSViewController {
         
         _ = isInEvaluation()  // this updates AppState.regEvalStatus.
         AppState.isLicensed = false
+    }
+    
+    func validateInput() -> Bool {
+        let name: String = self.nameTextField.stringValue
+        if name.characters.count == 0 {
+            self.showErrorSheet(messageText: "Input invalid",
+                                informativeText: "Name cannot be empty.")
+            return false
+        }
+        
+        let email: String = self.emailTextField.stringValue
+        if email.characters.count == 0 {
+            self.showErrorSheet(messageText: "Input invalid",
+                                informativeText: "Email cannot be empty.")
+            return false
+        }
+        
+        let licenseCode = self.licenseCodeTextField.stringValue
+        if licenseCode.characters.count == 0 {
+            self.showErrorSheet(messageText: "Input invalid",
+                                informativeText: "License code cannot be empty.")
+            return false
+        }
+        
+        return true
     }
 }
