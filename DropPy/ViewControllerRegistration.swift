@@ -97,7 +97,7 @@ class ViewControllerRegistration: NSViewController {
         self.emailTextField.textColor = dimmedTextColor
         self.licenseCodeTextField.textColor = dimmedTextColor
         
-        self.applyButton.title = "Remove license information"
+        self.applyButton.title = "Remove License"
     }
     
     func setUnlicensedValues() {
@@ -125,7 +125,7 @@ class ViewControllerRegistration: NSViewController {
         self.emailTextField.textColor = undimmedTextColor
         self.licenseCodeTextField.textColor = undimmedTextColor
         
-        self.applyButton.title = "Check license information"
+        self.applyButton.title = "Check License"
     }
     
     func reopenPurchaseSheet(notification: Notification?) {
@@ -192,9 +192,22 @@ class ViewControllerRegistration: NSViewController {
     }
     
     func showRemoveSheet() {
-        // TODO slide open a page to confirm (yes/no buttons)
-        self.clearRegValues()
-        self.setUnlicensedValues()
+        let removeAlert = NSAlert()
+        removeAlert.showsHelp = false
+        removeAlert.messageText = "Remove License"
+        removeAlert.informativeText = "Are you sure you want to remove the entered license information from this machine?"
+        removeAlert.addButton(withTitle: "Remove")
+        removeAlert.addButton(withTitle: "Cancel")
+        removeAlert.layout()
+        removeAlert.alertStyle = NSAlertStyle.critical
+        removeAlert.icon = NSImage(named: "alert")
+        
+        removeAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSAlertFirstButtonReturn {
+                self.clearRegValues()
+                self.setUnlicensedValues()
+            }
+        })
     }
     
     func saveRegValues() {
