@@ -125,7 +125,6 @@ func reapplyPrefs() {
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.interpreters) {
         userDefaults.set(UserDefaultStruct.interpretersDefault, forKey: UserDefaultStruct.interpreters)
     }
-    // TODO make sure the stock interpreter is still in interpreters, add it if not.
     
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.updateLast) {
         userDefaults.set(UserDefaultStruct.updateLastDefault, forKey: UserDefaultStruct.updateLast)
