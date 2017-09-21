@@ -45,8 +45,18 @@ struct UserDefaultStruct {
     static var updateDeltaDefault: Int = 60 * 60 * 24 * 7  // a week in seconds, maxint of UInt64 is much higher.
     
     static var evalStartDate: String = "evalStartDate"
+    static var evalStartDateDefault: Date = Date()
     
     static var evalStartHash: String = "evalStartHash"
+    static var evalStartHashDefault: String = ""  // wrong on purpose to invalidate on tampering.
+    
+    // The following values have no defaults and are not guaranteed to be present.
+    // They are only set on valid registering.
+    
+    static var regName: String = "regName"
+    static var regCompany: String = "regCompany"
+    static var regEmail: String = "regEmail"
+    static var regLicenseCode: String = "regLicenseCode"
 }
 
 

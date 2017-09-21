@@ -62,9 +62,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.firstRunWindowController.showWindow(self)
         } else {
             validatePrefs()
-
-            AppState.isInEvaluation = isInEvaluation()
+            
             AppState.isLicensed = isLicensed()
+            if !AppState.isLicensed {
+                log.debug("No license information found.")
+                AppState.isInEvaluation = isInEvaluation()
+            }
+            
             if !AppState.isInEvaluation && !AppState.isLicensed {
                 self.registrationWindowController.showWindow(self)
             }

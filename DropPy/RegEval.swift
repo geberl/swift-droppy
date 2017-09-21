@@ -123,11 +123,54 @@ func isInEvaluation() -> Bool {
     return true
 }
 
+func generateRegName(name: String, company: String, email: String) -> String {
+    let product: String = "DropPy"  // needed so a user doesn't get a license code that works on all your product when he buys one.
+    let regName = product + "|" + name + "|" + email + "|" + company
+    return regName
+}
+
 func isLicensed() -> Bool {
-    // TODO implement
-    
-    return false
-    
-    //AppState.regEvalStatus = "Licensed ❤️"
-    //return true
+    let userDefaults = UserDefaults.standard
+    guard let name: String = userDefaults.string(forKey: UserDefaultStruct.regName) else { return false }
+    guard let company: String = userDefaults.string(forKey: UserDefaultStruct.regCompany) else { return false }
+    guard let email: String = userDefaults.string(forKey: UserDefaultStruct.regEmail) else { return false }
+    guard let licenseCode = userDefaults.string(forKey: UserDefaultStruct.regLicenseCode) else { return false }
+
+    let regName = generateRegName(name: name, company: company, email: email)
+    let validLicense: Bool = checkValidLicense(licenseCode: licenseCode, regName: regName)
+    if validLicense {
+        log.info("Valid license found.")
+        AppState.regEvalStatus = "Licensed ❤️"
+        return true
+    } else {
+        log.error("No valid license found.")
+        return false
+    }
+}
+
+fileprivate func publicKey() -> String {
+    var parts = [String]()
+    parts.append("-----BEGIN PUBLIC KEY-----\n")
+    parts.append("MIHwMIGoBgcqhkjOOAQBMIGcAkEA0na+2HrZFpHgSuPt3URJHdi1ZdYV")
+    parts.append("LmynsU6hlJCc6ls1SEMAfvreHI2wjPLYsp/uGdry80fAfzJzc6sbAWAS")
+    parts.append("WwIVAM8C9fTNlz2UG0s7cxBhwvZ/YQ2TAkAEq2QWgNT3PmjOBni47BF9")
+    parts.append("z1BvfDihZgXapbTS/VoX2IRGPAqJD5z3n63DcP2/HR85OpAnh5EoJ2+A")
+    parts.append("1KP+7PmPA0MAAkB6EewxQwgHzP57HuC2h1we7VxcsqoyiXofL9ADxSPf")
+    parts.append("9CMfYDJVFgjiWGMEIui9a4GaPYl1EHPxilgYfDHJ0HtT")
+    parts.append("-----END PUBLIC KEY-----\n")
+    return parts.joined(separator: "")
+}
+
+fileprivate func verifierWithPublicKey(_ publicKey: String) -> LicenseVerifier? {
+    return LicenseVerifier(publicKeyPEM: publicKey)
+}
+
+func checkValidLicense(licenseCode: String, regName: String) -> Bool {
+    var validLicense: Bool = false
+    if let verifier = verifierWithPublicKey(publicKey()) {
+        validLicense = verifier.verify(licenseCode, forName: regName)
+    } else {
+        log.error("LicenseVerifier could not be constructed.")
+    }
+    return validLicense
 }
