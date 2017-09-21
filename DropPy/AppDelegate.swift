@@ -58,10 +58,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         if isFirstRun() {
             beginEvaluation()
-            validatePrefs()
+            reapplyPrefs()
             self.firstRunWindowController.showWindow(self)
         } else {
-            validatePrefs()
+            reapplyPrefs()
+            loadWindowPosition()
             
             AppState.isLicensed = isLicensed()
             if !AppState.isLicensed {

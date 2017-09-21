@@ -14,8 +14,10 @@ struct UserDefaultStruct {
     // This struct needs to contain TWO static vars for each plist record.
     // One to set the KEY's name (type always String) and one to set the default VALUE (type accordingly).
     
+    // The following variables are validated on app start and can afterwards safely be force unwrapped.
+    
     static var workspacePath: String = "workspacePath"
-    static var workspacePathDefault: String = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("DropPy").path
+    static var workspacePathDefault: String = ""
     
     static var workflowSelected: String = "workflowSelected"
     static var workflowSelectedDefault: String? = nil
@@ -50,7 +52,7 @@ struct UserDefaultStruct {
     static var evalStartHash: String = "evalStartHash"
     static var evalStartHashDefault: String = ""  // wrong on purpose to invalidate on tampering.
     
-    // The following values have no defaults and are not guaranteed to be present.
+    // The following values have no defaults and are not guaranteed to be present. No force unwrapping here!
     // They are only set on valid registering.
     
     static var regName: String = "regName"
@@ -87,72 +89,44 @@ func isKeyPresentInUserDefaults(key: String) -> Bool {
 }
 
 
-func validatePrefs() {
+func reapplyPrefs() {
+    // No check if directory/files actually exists here, this has to be checked before each usage.
+    
     let userDefaults = UserDefaults.standard
     
-    // User's DropPy Workspace directory
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.workspacePath) {
-        // Start out with default Settings
-        // Don't open the Preferences Window, make it as simple and painless and little confusing as possible
-        
-        // TODO mine, until I can change this in Preferences to my Development folder
-        // userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
-        userDefaults.set("/Users/guenther/Development/droppy-workspace", forKey: UserDefaultStruct.workspacePath)
-    } else {
-        // TODO: Check if the currently set Workspace directory actually still exists, if not open preferences and prompt to change
+        userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
     }
     
-    // Last selected Workflow.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.workflowSelected) {
         userDefaults.set(UserDefaultStruct.workflowSelectedDefault, forKey: UserDefaultStruct.workflowSelected)
     }
     
-    // Dev mode.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.devModeEnabled) {
         userDefaults.set(UserDefaultStruct.devModeEnabledDefault, forKey: UserDefaultStruct.devModeEnabled)
     }
     
-    // External text editor.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.editorAppPath) {
         userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
-    } else {
-        // The key exists, now check if the specified editor (app) also still exists on the system.
-        if !isDir(path: userDefaults.string(forKey: UserDefaultStruct.editorAppPath)!) {
-            userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
-            userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
-            userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
-            userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
-        }
-    }
-    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.editorIconPath) {
-        userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
-    } else {
-        // The key exists, now check if the specified editor (icns) also still exists on the system.
-        if !isFile(path: userDefaults.string(forKey: UserDefaultStruct.editorIconPath)!) {
-            userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
-            userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
-            userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
-            userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
-        }
     }
     
-    // Preference for how to edit Workflows.
+    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.editorIconPath) {
+        userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
+    }
+    
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.editorForWorkflows) {
         userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
     }
     
-    // Preference for how to edit Tasks.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.editorForTasks) {
         userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
     }
     
-    // Python interpreters and virtual envs.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.interpreters) {
         userDefaults.set(UserDefaultStruct.interpretersDefault, forKey: UserDefaultStruct.interpreters)
     }
     // TODO make sure the stock interpreter is still in interpreters, add it if not.
     
-    // Update preferences.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.updateLast) {
         userDefaults.set(UserDefaultStruct.updateLastDefault, forKey: UserDefaultStruct.updateLast)
     }
@@ -160,13 +134,24 @@ func validatePrefs() {
         userDefaults.set(UserDefaultStruct.updateDeltaDefault, forKey: UserDefaultStruct.updateDelta)
     }
     
+    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.evalStartDate) {
+        userDefaults.set(UserDefaultStruct.evalStartDateDefault, forKey: UserDefaultStruct.evalStartDate)
+    }
+    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.evalStartHash) {
+        userDefaults.set(UserDefaultStruct.evalStartHashDefault, forKey: UserDefaultStruct.evalStartHash)
+    }
+}
+
+func loadWindowPosition() {
+    let userDefaults = UserDefaults.standard
+    
     // Get the current screen size.
     let resolutionX: Int
     let resolutionY: Int
     (resolutionX, resolutionY) = getScreenResolution()
     let resolutionKeyName: String = String(format: "mainWindowPosAt%dx%d", resolutionX, resolutionY)
 
-    // Apply the window position for this screen size.
+    // Apply the window position for this screen size, if present.
     if isKeyPresentInUserDefaults(key: resolutionKeyName) {
         let position: Array = userDefaults.array(forKey: resolutionKeyName)!
         setWindowPosition(positionX: position[0] as! Int, positionY: position[1] as! Int)
