@@ -143,9 +143,14 @@ class ViewControllerMain: NSViewController {
     func setLogo(notification: Notification) {
         logoImageView.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
         logoImageView.animates = false
-
+        
+        guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
+            logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
+            return
+        }
+        
         if let logoFile: String = AppState.activeLogoFile {
-            let logoPath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/" + "Images" + "/" + logoFile
+            let logoPath: String = workspacePath + "/" + "Images" + "/" + logoFile
             if let newLogo = NSImage(contentsOfFile: logoPath) {
                 logoImage.image = self.resizeNSImage(image: newLogo, width:128, height:128)
             } else {

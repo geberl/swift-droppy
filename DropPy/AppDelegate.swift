@@ -55,6 +55,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                selector: #selector(AppDelegate.startPythonExecutor(notification:)),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(AppDelegate.setNewEditor(notification:)),
+                                               name: Notification.Name("editorNotFound"),
+                                               object: nil)
 
         if isFirstRun() {
             beginEvaluation()
@@ -98,7 +103,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         return (nil, nil)
     }
-    
+
     func startPythonExecutor(notification: Notification) {
         // Show registration window with sheet to user on each drop.
         // At this moment do not refuse executing. Maybe later in 2.0.
@@ -110,7 +115,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         guard let workflowFile: String = AppState.activeJsonFile else { return }
-        let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath)! + "/"
+        guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
         let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
 
         // TODO better checks for the three things above, errors to log, error messages to user
@@ -136,7 +141,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
                     let pythonExecutor = PythonExecutor(filePaths: filePaths,
                                                         workflowFile: workflowFile,
-                                                        workspacePath: workspacePath,
+                                                        workspacePath: workspacePath + "/",
                                                         executablePath: executablePath!,
                                                         executableArgs: executableArgs!,
                                                         devModeEnabled: devModeEnabled)
@@ -182,6 +187,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.preferencesWindowController.showWindow(self)
     }
     
+    func setNewEditor(notification: Notification) {
+        self.preferencesWindowController.showWindow(self)
+
+        var informativeText: String = "Your previously selected external text editor can't be found any more."
+        informativeText += "\n\nPlease select a new editor."
+        self.preferencesWindowController.switchToPrefTab(index: 2,
+                                                         messageText: "Editor not found",
+                                                         informativeText: informativeText)
+    }
+    
     lazy var registrationWindowController: WindowControllerRegistration  = {
         let wcSb = NSStoryboard(name: "Registration", bundle: Bundle.main)
         return wcSb.instantiateInitialController() as! WindowControllerRegistration
@@ -205,10 +220,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func reloadWorkflows() {
-        guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
-            log.error("Workspace path not set. Unable to reload Workflows.")
-            return
-        }
+        guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
         let workflowPath: String = workspacePath + "/" + "Workflows"
         log.debug("Reloading Workflows from '\(workflowPath)'.")
         

@@ -10,6 +10,13 @@ import Cocoa
 
 class TabViewControllerPrefs: NSTabViewController {
     
+    override func viewDidAppear() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(TabViewControllerPrefs.switchToPrefTab(notification:)),
+                                               name: Notification.Name("switchToPrefTab"),
+                                               object: nil)
+    }
+    
     lazy var originalSizes = [String : NSSize]()
 
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
@@ -38,6 +45,28 @@ class TabViewControllerPrefs: NSTabViewController {
             frame.size.width = contentFrame.size.width;
             window?.setFrame(frame, display: false, animate: true)
         }
-
+    }
+    
+    func switchToPrefTab(notification: Notification) {
+        let index: Int = notification.userInfo?["index"] as! Int
+        tabView.selectTabViewItem(at: index)
+        
+        let parentWindow = self.view.window!
+        if parentWindow.sheets.count == 0 {
+            let messageText: String = notification.userInfo?["messageText"] as! String
+            let informativeText: String = notification.userInfo?["informativeText"] as! String
+            self.showErrorSheet(messageText: messageText, informativeText: informativeText)
+        }
+    }
+    
+    func showErrorSheet(messageText: String, informativeText: String) {
+        let invalidAlert = NSAlert()
+        invalidAlert.showsHelp = false
+        invalidAlert.messageText = messageText
+        invalidAlert.informativeText = informativeText
+        invalidAlert.addButton(withTitle: "Ok")
+        invalidAlert.layout()
+        invalidAlert.icon = NSImage(named: "error")
+        invalidAlert.beginSheetModal(for: self.view.window!)
     }
 }

@@ -185,10 +185,13 @@ class WindowControllerMain: NSWindowController {
                 NotificationCenter.default.post(name: Notification.Name("loadFileInEditor"), object: nil, userInfo: pathDict)
 
             } else if editorForWorkflows == "External text editor" {
-                // This way of launching an external program hopefully is ok with the app sandbox, Process() may not be.
-                // However this is why passing custom parameters to the external editor is currently not possible.
-                let editorApp: String = self.userDefaults.string(forKey: UserDefaultStruct.editorAppPath)!
-                NSWorkspace.shared().openFile(jsonPath, withApplication: editorApp)
+                guard let editorAppPath: String = self.userDefaults.string(forKey: UserDefaultStruct.editorAppPath) else { return }
+                if isDir(path: editorAppPath) {
+                    // Passing custom parameters to the external editor is currently not possible.
+                    NSWorkspace.shared().openFile(jsonPath, withApplication: editorAppPath)
+                } else {
+                    NotificationCenter.default.post(name: Notification.Name("editorNotFound"), object: nil)
+                }
             }
         }
     }

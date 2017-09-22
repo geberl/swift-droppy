@@ -14,5 +14,12 @@ class WindowControllerPrefs: NSWindowController {
         super.windowDidLoad()
         self.window?.center()
     }
+    
+    func switchToPrefTab(index: Int, messageText: String, informativeText: String) {
+        let userInfo:[String: Any] = ["index": index,
+                                      "messageText": messageText,
+                                      "informativeText": informativeText]
+        NotificationCenter.default.post(name: Notification.Name("switchToPrefTab"), object: nil, userInfo: userInfo)
+    }
 
 }

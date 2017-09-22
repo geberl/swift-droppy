@@ -49,28 +49,23 @@ class ViewControllerEditorPrefs: NSViewController {
     }
     
     @IBAction func onButtonClearEditor(_ sender: Any) {
+        clearEditor()
+    }
+    
+    func clearEditor() {
         self.editorIcon.appPath = ""
         self.editorIcon.iconPath = ""
         self.editorIcon.image = nil
         
-        self.userDefaults.set(self.editorIcon.appPath, forKey: UserDefaultStruct.editorAppPath)
-        self.userDefaults.set(self.editorIcon.iconPath, forKey: UserDefaultStruct.editorIconPath)
+        self.userDefaults.set(UserDefaultStruct.editorAppPathDefault, forKey: UserDefaultStruct.editorAppPath)
+        self.userDefaults.set(UserDefaultStruct.editorIconPathDefault, forKey: UserDefaultStruct.editorIconPath)
         
-        if (self.workflowEditor.selectedItem != nil) {
-            if self.workflowEditor.selectedItem!.title == "External text editor" {
-                self.workflowEditor.selectItem(withTitle: UserDefaultStruct.editorForWorkflowsDefault)
-                self.userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
-            }
-        }
+        self.workflowEditor.selectItem(withTitle: UserDefaultStruct.editorForWorkflowsDefault)
+        self.userDefaults.set(UserDefaultStruct.editorForWorkflowsDefault, forKey: UserDefaultStruct.editorForWorkflows)
         self.workflowEditorExternalTextEditor.isEnabled = false
-
         
-        if (self.taskEditor.selectedItem != nil) {
-            if self.taskEditor.selectedItem!.title == "External text editor" {
-                self.taskEditor.selectItem(withTitle: UserDefaultStruct.editorForTasksDefault)
-                self.userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
-            }
-        }
+        self.taskEditor.selectItem(withTitle: UserDefaultStruct.editorForTasksDefault)
+        self.userDefaults.set(UserDefaultStruct.editorForTasksDefault, forKey: UserDefaultStruct.editorForTasks)
         self.taskEditorExternalTextEditor.isEnabled = false
     }
     
@@ -83,31 +78,47 @@ class ViewControllerEditorPrefs: NSViewController {
     func onEditorDropped(notification: Notification) {
         self.workflowEditorExternalTextEditor.isEnabled = true
         self.taskEditorExternalTextEditor.isEnabled = true
+        
+        self.taskEditor.selectItem(withTitle: "External text editor")
+        self.userDefaults.set(self.taskEditor.selectedItem!.title, forKey: UserDefaultStruct.editorForTasks)
+        
+        self.workflowEditor.selectItem(withTitle: "External text editor")
+        self.userDefaults.set(self.workflowEditor.selectedItem!.title, forKey: UserDefaultStruct.editorForWorkflows)
     }
 
     func loadSettings() {
-        if let appPathString:String = userDefaults.string(forKey: UserDefaultStruct.editorAppPath) {
-            self.editorIcon.appPath = appPathString
-            if appPathString == "" {
-                self.workflowEditorExternalTextEditor.isEnabled = false
-                self.taskEditorExternalTextEditor.isEnabled = false
+        if let editorAppPath: String = userDefaults.string(forKey: UserDefaultStruct.editorAppPath) {
+            if isDir(path: editorAppPath) {
+                self.editorIcon.appPath = editorAppPath
+                if editorAppPath == "" {
+                    self.workflowEditorExternalTextEditor.isEnabled = false
+                    self.taskEditorExternalTextEditor.isEnabled = false
+                } else {
+                    self.workflowEditorExternalTextEditor.isEnabled = true
+                    self.taskEditorExternalTextEditor.isEnabled = true
+                }
             } else {
-                self.workflowEditorExternalTextEditor.isEnabled = true
-                self.taskEditorExternalTextEditor.isEnabled = true
+                self.clearEditor()
+                return
             }
         }
         
-        if let editorIconPathString:String = userDefaults.string(forKey: UserDefaultStruct.editorIconPath) {
-            self.editorIcon.iconPath = editorIconPathString
-            self.editorIcon.setAppIcnsFile()
+        if let editorIconPath: String = userDefaults.string(forKey: UserDefaultStruct.editorIconPath) {
+            if isFile(path: editorIconPath) {
+                self.editorIcon.iconPath = editorIconPath
+                self.editorIcon.setAppIcnsFile()
+            } else {
+                self.clearEditor()
+                return
+            }
         }
 
-        if let workflowEditorString:String = self.userDefaults.string(forKey: UserDefaultStruct.editorForWorkflows) {
-            self.workflowEditor.selectItem(withTitle: workflowEditorString)
+        if let workflowEditor: String = self.userDefaults.string(forKey: UserDefaultStruct.editorForWorkflows) {
+            self.workflowEditor.selectItem(withTitle: workflowEditor)
         }
 
-        if let taskEditorString:String = self.userDefaults.string(forKey: UserDefaultStruct.editorForTasks) {
-            self.taskEditor.selectItem(withTitle: taskEditorString)
+        if let taskEditor: String = self.userDefaults.string(forKey: UserDefaultStruct.editorForTasks) {
+            self.taskEditor.selectItem(withTitle: taskEditor)
         }
     }
 }
