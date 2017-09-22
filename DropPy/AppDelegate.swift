@@ -50,10 +50,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                selector: #selector(AppDelegate.reloadWorkflows(notification:)),
                                                name: Notification.Name("reloadWorkflows"),
                                                object: nil)
-
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(AppDelegate.startPythonExecutor(notification:)),
                                                name: Notification.Name("droppingOk"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(AppDelegate.setNewInterpreter(notification:)),
+                                               name: Notification.Name("interpreterNotFound"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
@@ -62,8 +67,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.setNewInterpreter(notification:)),
-                                               name: Notification.Name("interpreterNotFound"),
+                                               selector: #selector(AppDelegate.setNewWorkspace(notification:)),
+                                               name: Notification.Name("workspaceNotFound"),
                                                object: nil)
 
         if isFirstRun() {
@@ -96,6 +101,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.reloadWorkflows()
     }
     
+    func checkWorkspaceInfo() -> String? {
+        guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
+            userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
+            NotificationCenter.default.post(name: Notification.Name("workspaceNotFound"), object: nil)
+            return nil
+        }
+        
+        if isDir(path: workspacePath) {
+            if !isDir(path: workspacePath + "/" + "Images") {
+                makeDirs(path: workspacePath + "/" + "Images")
+            }
+            if !isDir(path: workspacePath + "/" + "Tasks") {
+                makeDirs(path: workspacePath + "/" + "Tasks")
+            }
+            if !isDir(path: workspacePath + "/" + "Workflows") {
+                makeDirs(path: workspacePath + "/" + "Workflows")
+            }
+            return workspacePath + "/"
+        }
+        
+        NotificationCenter.default.post(name: Notification.Name("workspaceNotFound"), object: nil)
+        return nil
+    }
+    
     func checkInterpreterInfo() -> (String?, String?) {
         let userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
         if let activeInterpreterName: String = AppState.activeInterpreterName {
@@ -110,7 +139,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.post(name: Notification.Name("interpreterNotFound"), object: nil)
         return (nil, nil)
     }
-
+    
     func startPythonExecutor(notification: Notification) {
         // Show registration window with sheet to user on each drop.
         // At this moment do not refuse executing. Maybe later in 2.0.
@@ -120,11 +149,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         guard let workflowFile: String = AppState.activeJsonFile else { return }
-        guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
-        let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
         
+        let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
+        let workspacePath = self.checkWorkspaceInfo()
         let (executablePath, executableArgs) = self.checkInterpreterInfo()
-        if (executablePath == nil) || (executableArgs == nil) {
+        if (workspacePath == nil) || (executablePath == nil) || (executableArgs == nil) {
             NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
             NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
             return
@@ -144,7 +173,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
                     let pythonExecutor = PythonExecutor(filePaths: filePaths,
                                                         workflowFile: workflowFile,
-                                                        workspacePath: workspacePath + "/",
+                                                        workspacePath: workspacePath!,
                                                         executablePath: executablePath!,
                                                         executableArgs: executableArgs!,
                                                         devModeEnabled: devModeEnabled)
@@ -190,16 +219,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.preferencesWindowController.showWindow(self)
     }
     
-    func setNewEditor(notification: Notification) {
-        self.preferencesWindowController.showWindow(self)
-
-        var informativeText: String = "Your previously selected external text editor can't be found any more."
-        informativeText += "\n\nPlease select a new editor."
-        self.preferencesWindowController.switchToPrefTab(index: 2,
-                                                         messageText: "Editor not found",
-                                                         informativeText: informativeText)
-    }
-    
     func setNewInterpreter(notification: Notification) {
         self.preferencesWindowController.showWindow(self)
         
@@ -212,6 +231,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         informativeText += "or set a different interpreterName in the Workflow."
         self.preferencesWindowController.switchToPrefTab(index: 1,
                                                          messageText: "Interpreter not found",
+                                                         informativeText: informativeText)
+    }
+    
+    func setNewEditor(notification: Notification) {
+        self.preferencesWindowController.showWindow(self)
+
+        var informativeText: String = "Your previously selected external text editor can't be found any more."
+        informativeText += "\n\nPlease select a new editor here."
+        self.preferencesWindowController.switchToPrefTab(index: 2,
+                                                         messageText: "Editor not found",
+                                                         informativeText: informativeText)
+    }
+    
+    func setNewWorkspace(notification: Notification) {
+        self.preferencesWindowController.showWindow(self)
+        
+        var informativeText: String = "The Workspace directory can't be found."
+        informativeText += "\n\nPlease (re-) create it here."
+        self.preferencesWindowController.switchToPrefTab(index: 3,
+                                                         messageText: "Workspace not found",
                                                          informativeText: informativeText)
     }
     
