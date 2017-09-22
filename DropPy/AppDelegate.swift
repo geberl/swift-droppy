@@ -27,6 +27,7 @@ struct AppState {
     static var activeLogoFile: String?
     
     static var interpreterStockName: String = "macOS pre-installed"
+    static var bundledWorkspaceVersion: String = "5374e25 (2017-09-15)"
     
     static var evalStartSalt: String = "nBL4QzmKbk8vhnfke9uvNHRDUtwkoPvJ"
     
@@ -277,8 +278,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func reloadWorkflows() {
-        guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
-        let workflowPath: String = workspacePath + "/" + "Workflows"
+        guard let workspacePath = self.checkWorkspaceInfo() else { return }
+        let workflowPath: String = workspacePath + "Workflows"
         log.debug("Reloading Workflows from '\(workflowPath)'.")
         
         let fileManager = FileManager.default
