@@ -59,7 +59,7 @@ class ViewControllerGeneral: NSViewController {
     }
 
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://droppyapp.com/settings/general"), NSWorkspace.shared().open(url) {
+        if let url = URL(string: "https://droppyapp.com/preferences/general"), NSWorkspace.shared().open(url) {
             log.debug("Documentation site for General openened.")
         }
     }

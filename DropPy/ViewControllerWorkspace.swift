@@ -18,7 +18,7 @@ class ViewControllerWorkspace: NSViewController {
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://droppyapp.com/settings/workspace"), NSWorkspace.shared().open(url) {
+        if let url = URL(string: "https://droppyapp.com/preferences/workspace"), NSWorkspace.shared().open(url) {
             log.debug("Documentation site for Workspace openened.")
         }
     }
