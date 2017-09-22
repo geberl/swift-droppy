@@ -307,11 +307,15 @@ class ViewControllerInterpreter: NSViewController {
     func addInterpreter() {
         let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
         
-        let defaultExecutable: String = oldInterpreterDict[userDefaults.string(forKey: AppState.interpreterStockName)!]!["executable"]!
-        let defaultArguments: String = oldInterpreterDict[userDefaults.string(forKey: AppState.interpreterStockName)!]!["arguments"]!
+        var defaultExecutable: String = ""
+        var defaultArguments: String = ""
+        if oldInterpreterDict[AppState.interpreterStockName] != nil {
+            defaultExecutable = oldInterpreterDict[AppState.interpreterStockName]!["executable"]!
+            defaultArguments = oldInterpreterDict[AppState.interpreterStockName]!["arguments"]!
+        }
         
         var newInterpreterName: String = "New Interpreter"
-        var nextSuffix: Int = 2  // on macOS the next item is called "New Interpreter 2", not "New Interpreter 1"
+        var nextSuffix: Int = 2  // on macOS the next item is called "New Interpreter 2", not "New Interpreter 1".
         while self.interpreterNames.contains(newInterpreterName) {
             newInterpreterName = "New Interpreter \(nextSuffix)"
             nextSuffix += 1

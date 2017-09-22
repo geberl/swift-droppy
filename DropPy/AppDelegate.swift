@@ -60,6 +60,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                selector: #selector(AppDelegate.setNewEditor(notification:)),
                                                name: Notification.Name("editorNotFound"),
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(AppDelegate.setNewInterpreter(notification:)),
+                                               name: Notification.Name("interpreterNotFound"),
+                                               object: nil)
 
         if isFirstRun() {
             beginEvaluation()
@@ -92,15 +97,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func checkInterpreterInfo() -> (String?, String?) {
-        // TODO also check if executablePath isfile
         let userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
         if let activeInterpreterName: String = AppState.activeInterpreterName {
             if let interpreterInfo: Dictionary<String, String> = userDefaultInterpreters[activeInterpreterName] {
                 let executablePath = interpreterInfo["executable"]!
                 let executableArgs = interpreterInfo["arguments"]!
-                return (executablePath, executableArgs)
+                if isFile(path: executablePath) {
+                    return (executablePath, executableArgs)
+                }
             }
         }
+        NotificationCenter.default.post(name: Notification.Name("interpreterNotFound"), object: nil)
         return (nil, nil)
     }
 
@@ -110,20 +117,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if !AppState.isInEvaluation && !AppState.isLicensed {
             self.registrationWindowController.showWindow(self)
             NotificationCenter.default.post(name: Notification.Name("reopenPurchaseSheet"), object: nil)
-            NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
-            NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
         }
         
         guard let workflowFile: String = AppState.activeJsonFile else { return }
         guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
         let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
-
-        // TODO better checks for the three things above, errors to log, error messages to user
         
         let (executablePath, executableArgs) = self.checkInterpreterInfo()
         if (executablePath == nil) || (executableArgs == nil) {
-            // TODO better error to log, error messages to user
-            log.debug("some error with the executabe, exiting execution")
+            NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
             return
         }
 
@@ -194,6 +197,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         informativeText += "\n\nPlease select a new editor."
         self.preferencesWindowController.switchToPrefTab(index: 2,
                                                          messageText: "Editor not found",
+                                                         informativeText: informativeText)
+    }
+    
+    func setNewInterpreter(notification: Notification) {
+        self.preferencesWindowController.showWindow(self)
+        
+        var informativeText: String = "The interpreter "
+        if let activeInterpreterName = AppState.activeInterpreterName {
+            informativeText += "'" + activeInterpreterName + "' "
+        }
+        informativeText += "can't be found."
+        informativeText += "\n\nPlease (re-) create it here "
+        informativeText += "or set a different interpreterName in the Workflow."
+        self.preferencesWindowController.switchToPrefTab(index: 1,
+                                                         messageText: "Interpreter not found",
                                                          informativeText: informativeText)
     }
     
