@@ -64,16 +64,14 @@ class ViewControllerWorkspace: NSViewController {
         if isFile(path: zipPath) {
             do {
                 try fileManager.removeItem(atPath: zipPath)
-                log.debug("Removed file '\(zipPath)'.")
             } catch let error {
                 log.error(error.localizedDescription)
             }
         }
-        let unzipPath: String = tempPath + "droppy-workspace-master"
+        let unzipPath: String = tempPath + "droppy-workspace-master" + "/"
         if isDir(path: unzipPath) {
             do {
                 try fileManager.removeItem(atPath: unzipPath)
-                log.debug("Removed directory '\(unzipPath)'.")
             } catch let error {
                 log.error(error.localizedDescription)
             }
@@ -90,24 +88,61 @@ class ViewControllerWorkspace: NSViewController {
         }
         
         // Unzip to a subfolder of the temp directory.
-        SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath)
-        log.debug("Unzipped '\(zipPath)' to '\(unzipPath)'.")
+        SSZipArchive.unzipFile(atPath: zipPath, toDestination: tempPath)
+        log.debug("Unzipped '\(zipPath)' to '\(tempPath)'.")
         
-        // TODO: Copy to Workspace.
+        // Copy to Workspace.
+        guard let enumerator: FileManager.DirectoryEnumerator =
+            fileManager.enumerator(atPath: unzipPath) else {
+                log.error("Directory not found: \(unzipPath)!")
+                return
+        }
+
+        while let element = enumerator.nextObject() as? String {
+            var srcURL: URL = URL(fileURLWithPath: unzipPath)
+            srcURL.appendPathComponent(element)
+            var dstURL: URL = URL(fileURLWithPath: workspacePath)
+            dstURL.appendPathComponent(element)
+            
+            // Create directories.
+            if isDir(path: srcURL.path) {
+                if !isDir(path: dstURL.path) {
+                    makeDirs(path: dstURL.path)
+                }
+            }
+            
+            // Copy files (after removing their previous version).
+            if isFile(path: srcURL.path){
+                if isFile(path: srcURL.path){
+                    do {
+                        try fileManager.removeItem(at: dstURL)
+                    } catch let error {
+                        log.error(error.localizedDescription)
+                    }
+                }
+                do {
+                    try fileManager.copyItem(at: srcURL, to: dstURL)
+                } catch let error {
+                    log.error(error.localizedDescription)
+                }
+            }
+        }
         
         // Clean up.
         do {
             try fileManager.removeItem(atPath: zipPath)
-            log.debug("Removed file '\(zipPath)'.")
         } catch let error {
             log.error(error.localizedDescription)
         }
         do {
             try fileManager.removeItem(atPath: unzipPath)
-            log.debug("Removed directory '\(unzipPath)'.")
         } catch let error {
             log.error(error.localizedDescription)
         }
+        
+        // Reload workflows.
+        NotificationCenter.default.post(name: Notification.Name("reloadWorkflows"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
     }
     
     @IBAction func onOpenGitHubButton(_ sender: NSButton) {
