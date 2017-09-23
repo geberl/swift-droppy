@@ -239,7 +239,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.preferencesWindowController.showWindow(self)
 
         var informativeText: String = "Your previously selected external text editor can't be found any more."
-        informativeText += "\n\nPlease select a new editor here."
+        informativeText += "\n\nPlease adjust your settings."
         self.preferencesWindowController.switchToPrefTab(index: 2,
                                                          messageText: "Editor not found",
                                                          informativeText: informativeText)
@@ -249,7 +249,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.preferencesWindowController.showWindow(self)
         
         var informativeText: String = "The Workspace directory can't be found."
-        informativeText += "\n\nPlease (re-) create it here."
+        informativeText += "\n\nPlease adjust your settings."
         self.preferencesWindowController.switchToPrefTab(index: 3,
                                                          messageText: "Workspace not found",
                                                          informativeText: informativeText)
