@@ -205,10 +205,10 @@
                                                 <segment toolTip="Edit Workflow" image="button-edit" width="32">
                                                     <nil key="label"/>
                                                 </segment>
-                                                <segment toolTip="Open Workflow Directory" image="button-folder" width="32" tag="1">
+                                                <segment toolTip="Open Workflow directory" image="button-folder" width="32" tag="1">
                                                     <nil key="label"/>
                                                 </segment>
-                                                <segment toolTip="Add Workflow" image="button-add" width="32">
+                                                <segment toolTip="Create new Workflow" image="button-add" width="32">
                                                     <nil key="label"/>
                                                 </segment>
                                             </segments>
@@ -303,7 +303,7 @@
         <image name="button-add" width="19" height="19"/>
         <image name="button-edit" width="19" height="19"/>
         <image name="button-folder" width="19" height="19"/>
-        <image name="logo-default" width="128" height="128"/>
+        <image name="logo-default" width="256" height="256"/>
         <image name="zone-dashed" width="256" height="256"/>
     </resources>
 </document>
