@@ -515,7 +515,7 @@
             <objects>
                 <viewController title="Workspace" showSeguePresentationStyle="single" id="Rku-20-kef" customClass="ViewControllerWorkspace" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="mPk-kS-pPH">
-                        <rect key="frame" x="0.0" y="0.0" width="750" height="256"/>
+                        <rect key="frame" x="0.0" y="0.0" width="750" height="266"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XHh-gM-tYq">
@@ -530,7 +530,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ryl-Qj-DCy">
-                                <rect key="frame" x="631" y="209" width="105" height="32"/>
+                                <rect key="frame" x="631" y="219" width="105" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Tdv-H2-uD1">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -541,7 +541,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DIv-HV-Aul">
-                                <rect key="frame" x="290" y="170" width="293" height="32"/>
+                                <rect key="frame" x="290" y="180" width="293" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Restore Images/Tasks/Workflows" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QZE-sC-wGl">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -563,7 +563,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gzh-PI-jv1">
-                                <rect key="frame" x="18" y="219" width="272" height="17"/>
+                                <rect key="frame" x="18" y="229" width="272" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Workspace directory:" id="8kh-HH-NvX">
                                     <font key="font" metaFont="system"/>
@@ -572,7 +572,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iLl-Rp-5IV">
-                                <rect key="frame" x="18" y="180" width="272" height="17"/>
+                                <rect key="frame" x="18" y="190" width="272" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Default Workspace content:" id="EbH-5X-Tac">
                                     <font key="font" metaFont="system"/>
@@ -610,25 +610,25 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="quy-xe-bYs">
                                 <rect key="frame" x="294" y="42" width="438" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="DropPy's default Workspace is open source. A later version than the bundled one might be available." id="Gmb-Hf-xEU">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="DropPy's default Workspace content is open source. A later version than the bundled one might be available." id="Gmb-Hf-xEU">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cwS-dg-eBU">
-                                <rect key="frame" x="294" y="153" width="438" height="17"/>
+                                <rect key="frame" x="294" y="152" width="438" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="This copies the bundled *.png/*.py/*.json files into your (new) Workspace directory." id="uBI-ai-cx8">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="This copies the bundled *.png/*.py/*.json files into your (new) Workspace directory. Existing files will be overwritten." id="uBI-ai-cx8">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NeK-2j-Uy6">
-                                <rect key="frame" x="295" y="216" width="325" height="22"/>
+                                <rect key="frame" x="295" y="226" width="325" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="SBR-5V-Rn7">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="SBR-5V-Rn7">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -643,7 +643,7 @@
                 </viewController>
                 <customObject id="L72-c6-iBf" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1820" y="1054"/>
+            <point key="canvasLocation" x="1820" y="1059"/>
         </scene>
     </scenes>
     <resources>

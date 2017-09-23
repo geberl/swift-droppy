@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -185,16 +185,10 @@
                                     <popUpButton key="view" verticalHuggingPriority="750" id="RIK-BI-TL9">
                                         <rect key="frame" x="0.0" y="14" width="120" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="roundTextured" title="Item 1" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="7y1-tf-Tks" id="WFo-KC-yyW">
+                                        <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="WFo-KC-yyW">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
-                                            <menu key="menu" autoenablesItems="NO" id="38u-Uk-gZ8">
-                                                <items>
-                                                    <menuItem title="Item 1" state="on" id="7y1-tf-Tks"/>
-                                                    <menuItem title="Item 2" id="1gj-R0-RyO"/>
-                                                    <menuItem title="Item 3" id="wvh-lB-qir"/>
-                                                </items>
-                                            </menu>
+                                            <menu key="menu" autoenablesItems="NO" id="38u-Uk-gZ8"/>
                                         </popUpButtonCell>
                                     </popUpButton>
                                 </toolbarItem>
@@ -230,6 +224,9 @@
                                 <toolbarItem reference="nGL-hq-ps5"/>
                             </defaultToolbarItems>
                         </toolbar>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="huI-Ds-WKW"/>
+                        </connections>
                     </window>
                     <connections>
                         <outlet property="ToolbarDropdown" destination="38u-Uk-gZ8" id="vUB-wz-bZK"/>
@@ -264,7 +261,7 @@
                                 <rect key="frame" x="11" y="11" width="234" height="234"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhT-H0-X1I">
+                                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lhT-H0-X1I">
                                         <rect key="frame" x="3" y="6" width="227" height="49"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Task ?/?" id="M4X-9W-nfp">

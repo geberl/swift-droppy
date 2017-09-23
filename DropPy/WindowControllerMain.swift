@@ -119,14 +119,13 @@ class WindowControllerMain: NSWindowController {
             if allWorkflowNames.contains(workflowSelected) {
                 self.workflowPopUp.selectItem(withTitle: workflowSelected)
             } else {
-                log.debug("Unable to select the previously selected Workflow, it doesn't exist any more.")
+                log.debug("Unable to select Workflow '" + workflowSelected + "' (doesn't exist any more).")
                 AppState.activeName = nil
                 AppState.activeInterpreterName = nil
                 AppState.activeJsonFile = nil
                 AppState.activeLogoFile = nil
             }
         } else {
-            log.debug("Unable to select the previously selected Workflow, no Workflow was saved.")
             AppState.activeName = nil
             AppState.activeInterpreterName = nil
             AppState.activeJsonFile = nil

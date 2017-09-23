@@ -44,6 +44,9 @@ class ViewControllerWorkspace: NSViewController {
                 if !isDir(path: selectedPath + "/" + "Workflows") {
                     makeDirs(path: selectedPath + "/" + "Workflows")
                 }
+                
+                NotificationCenter.default.post(name: Notification.Name("reloadWorkflows"), object: nil)
+                NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
             }
         }
     }
