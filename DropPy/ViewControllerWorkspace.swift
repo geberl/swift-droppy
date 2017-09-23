@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import SSZipArchive
+
 
 class ViewControllerWorkspace: NSViewController {
     
@@ -52,7 +54,60 @@ class ViewControllerWorkspace: NSViewController {
     }
     
     @IBAction func onWorkspaceRestoreButton(_ sender: NSButton) {
-        log.debug("restore")
+        guard let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
+        let fileManager = FileManager.default
+        
+        // Set temp directory and files, remove them if they already exist.
+        let tempPath: String = NSTemporaryDirectory() + "DropPy" + "/"
+        makeDirs(path: tempPath)
+        let zipPath: String = tempPath + "droppy-workspace-master.zip"
+        if isFile(path: zipPath) {
+            do {
+                try fileManager.removeItem(atPath: zipPath)
+                log.debug("Removed file '\(zipPath)'.")
+            } catch let error {
+                log.error(error.localizedDescription)
+            }
+        }
+        let unzipPath: String = tempPath + "droppy-workspace-master"
+        if isDir(path: unzipPath) {
+            do {
+                try fileManager.removeItem(atPath: unzipPath)
+                log.debug("Removed directory '\(unzipPath)'.")
+            } catch let error {
+                log.error(error.localizedDescription)
+            }
+        }
+        
+        // Copy bundled-workspace from assets to the temp directory.
+        if let asset = NSDataAsset(name: "bundled-workspace", bundle: Bundle.main) {
+            do {
+                try asset.data.write(to: URL(fileURLWithPath: zipPath))
+                log.debug("Copied bundled asset to '\(zipPath)'.")
+            } catch let error {
+                log.error(error.localizedDescription)
+            }
+        }
+        
+        // Unzip to a subfolder of the temp directory.
+        SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath)
+        log.debug("Unzipped '\(zipPath)' to '\(unzipPath)'.")
+        
+        // TODO: Copy to Workspace.
+        
+        // Clean up.
+        do {
+            try fileManager.removeItem(atPath: zipPath)
+            log.debug("Removed file '\(zipPath)'.")
+        } catch let error {
+            log.error(error.localizedDescription)
+        }
+        do {
+            try fileManager.removeItem(atPath: unzipPath)
+            log.debug("Removed directory '\(unzipPath)'.")
+        } catch let error {
+            log.error(error.localizedDescription)
+        }
     }
     
     @IBAction func onOpenGitHubButton(_ sender: NSButton) {

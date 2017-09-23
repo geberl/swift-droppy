@@ -8,4 +8,5 @@ target 'DropPy' do
   # Pods for DropPy
   pod 'SwiftyJSON'
   pod 'Willow'
+  pod 'SSZipArchive'
 end
