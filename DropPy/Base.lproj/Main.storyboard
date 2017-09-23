@@ -192,7 +192,7 @@
                                         </popUpButtonCell>
                                     </popUpButton>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="069E188E-41E8-46E5-80F5-3AF66CAF6EBD" label="Actions" paletteLabel="Actions" id="nGL-hq-ps5">
+                                <toolbarItem implicitItemIdentifier="069E188E-41E8-46E5-80F5-3AF66CAF6EBD" label="Actions" paletteLabel="Actions" image="button-add" id="nGL-hq-ps5">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="100" height="28"/>
                                     <size key="maxSize" width="100" height="28"/>
@@ -202,13 +202,13 @@
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="WLV-8x-Cma">
                                             <font key="font" metaFont="system"/>
                                             <segments>
-                                                <segment toolTip="Edit Workflow" image="ButtonEdit" width="32">
+                                                <segment toolTip="Edit Workflow" image="button-edit" width="32">
                                                     <nil key="label"/>
                                                 </segment>
-                                                <segment toolTip="Open Workflow Directory" image="ButtonFolder" width="32" tag="1">
+                                                <segment toolTip="Open Workflow Directory" image="button-folder" width="32" tag="1">
                                                     <nil key="label"/>
                                                 </segment>
-                                                <segment toolTip="Add Workflow" image="ButtonAdd" width="32">
+                                                <segment toolTip="Add Workflow" image="button-add" width="32">
                                                     <nil key="label"/>
                                                 </segment>
                                             </segments>
@@ -300,9 +300,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ButtonAdd" width="19" height="19"/>
-        <image name="ButtonEdit" width="19" height="19"/>
-        <image name="ButtonFolder" width="19" height="19"/>
+        <image name="button-add" width="19" height="19"/>
+        <image name="button-edit" width="19" height="19"/>
+        <image name="button-folder" width="19" height="19"/>
         <image name="logo-default" width="128" height="128"/>
         <image name="zone-dashed" width="256" height="256"/>
     </resources>
