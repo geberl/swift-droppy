@@ -208,9 +208,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        // TODO make the main window open again when no window is visible any more and the user clicks on the icon in the dock
-        // It's way better to be always available and not quit right away for presence on the users system
-        // Then set this to false (default macos behavior anyways)
+        return false
+    }
+    
+    func applicationShouldHandleReopen(_ application: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if !flag {
+            for window: AnyObject in application.windows {
+                window.makeKeyAndOrderFront(self)
+            }
+        }
         return true
     }
     
