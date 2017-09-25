@@ -22,7 +22,6 @@ class PythonExecutor: NSObject {
     var executableArgs: String
     var tempPath: String
     var runnerPath: String
-    var filesJsonPath: String
     var logFilePath: String
     var filePaths: [String]
     var overallExitCode: Int
@@ -47,7 +46,6 @@ class PythonExecutor: NSObject {
         }
 
         self.runnerPath = tempPath + "run.py"
-        self.filesJsonPath = tempPath + "files.json"
         self.logFilePath = tempPath + "task.log"
 
         self.overallExitCode = 0
@@ -85,22 +83,19 @@ class PythonExecutor: NSObject {
 
     func handleDroppedFiles(inputPath: String) {
         let statusDict:[String: String] = ["text": "Preparing"]
-        NotificationCenter.default.post(name: Notification.Name("executionStatus"),
-                                        object: nil,
-                                        userInfo: statusDict)
+        NotificationCenter.default.post(name: Notification.Name("executionStatus"), object: nil, userInfo: statusDict)
 
-        // Copy the originally dropped files to the "0" directory.
+        // Symlink the originally dropped files to the "0" directory.
         let fileManager = FileManager.default
         for srcPath in self.filePaths {
             let srcURL: URL = URL(fileURLWithPath: srcPath)
-
             var dstURL: URL = URL(fileURLWithPath: inputPath)
             dstURL.appendPathComponent(srcURL.lastPathComponent)
-
+            
             do {
-                try fileManager.copyItem(at: srcURL, to: dstURL)
+                try fileManager.createSymbolicLink(at: dstURL, withDestinationURL: srcURL)
             } catch {
-                log.error("Unable to copy file '\(srcPath)'.")
+                log.error("Unable to symlink file '\(srcPath)'.")
             }
         }
 
@@ -121,17 +116,6 @@ class PythonExecutor: NSObject {
                     log.error(error.localizedDescription)
                 }
             }
-        }
-
-        // Write files.json to temp path.
-        do {
-            let jsonObject: JSON = ["files": self.filePaths]
-            let jsonString = jsonObject.description
-            try jsonString.write(to: URL(fileURLWithPath: self.filesJsonPath),
-                                 atomically: false,
-                                 encoding: String.Encoding.utf8)
-        } catch {
-            log.error(error.localizedDescription)
         }
     }
 
@@ -176,7 +160,6 @@ class PythonExecutor: NSObject {
         self.taskLog(prefix: "", lines: ["Interpreter Args:  " + self.executableArgs])
         self.taskLog(prefix: "", lines: ["Temp Path:         " + self.tempPath])
         self.taskLog(prefix: "", lines: ["Runner Path:       " + self.runnerPath])
-        self.taskLog(prefix: "", lines: ["Files Json Path:   " + self.filesJsonPath])
         self.taskLog(prefix: "", lines: ["Logfile Path:      " + self.logFilePath])
         self.taskLog(prefix: "", lines: [String(repeating: "=", count: 80)])
     }
@@ -273,9 +256,7 @@ class PythonExecutor: NSObject {
                                                                  "-i" + inputPath,
                                                                  "-o" + outputPath])
 
-                    self.writeTaskOutputLog(out: out,
-                                            err: err,
-                                            exit: exit)
+                    self.writeTaskOutputLog(out: out, err: err, exit: exit)
 
                     if exit > 0 {
                         self.overallExitCode = 1
@@ -303,10 +284,8 @@ class PythonExecutor: NSObject {
 
     func cleanUp() {
         let statusDict:[String: String] = ["text": "Cleaning up"]
-        NotificationCenter.default.post(name: Notification.Name("executionStatus"),
-                                        object: nil,
-                                        userInfo: statusDict)
-
+        NotificationCenter.default.post(name: Notification.Name("executionStatus"), object: nil, userInfo: statusDict)
+        
         if !self.devModeEnabled && self.overallExitCode == 0 {
             let fileManager = FileManager.default
 
