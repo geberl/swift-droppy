@@ -156,7 +156,7 @@ class WindowControllerMain: NSWindowController {
         guard let workspacePath = checkWorkspaceInfo() else { return }
         guard let jsonFile: String = AppState.activeJsonFile else { return }
 
-        NSWorkspace.shared().selectFile(workspacePath + "/" + "Workflows" + "/" + jsonFile,
+        NSWorkspace.shared().selectFile(workspacePath + "Workflows" + "/" + jsonFile,
                                         inFileViewerRootedAtPath: workspacePath)
     }
 
@@ -164,7 +164,7 @@ class WindowControllerMain: NSWindowController {
         guard let workspacePath = checkWorkspaceInfo() else { return }
         guard let jsonFile: String = AppState.activeJsonFile else { return }
         
-        let jsonPath: String = workspacePath + "/" + "Workflows" + "/" + jsonFile
+        let jsonPath: String = workspacePath + "Workflows" + "/" + jsonFile
 
         if let editorForWorkflows: String = self.userDefaults.string(forKey: UserDefaultStruct.editorForWorkflows) {
             
@@ -201,27 +201,26 @@ class WindowControllerMain: NSWindowController {
             // Determine Workflow name (for inside the JSON file) and the JSON file's filename.
             let workflowName: String = "New Workflow \(stringFromDate)"
             let workflowFileName: String = "new_workflow_\(stringFromDate).json"
-            let workflowInterpreterName: String = "default"
         
             // Create SwiftyJSON object
             let jsonObject: JSON = ["name": workflowName,
                                     "author": "Your name here",
                                     "description": "A short description what this Workflow does. Currently not accessed by DropPy. For now just for your own documentation purposes.",
                                     "image": "",
-                                    "interpreterName": workflowInterpreterName,
+                                    "interpreterName": AppState.interpreterStockName,
                                     "queue": []]
         
             // Convert SwiftyJSON object to string.
             let jsonString = jsonObject.description
         
             // Setup objects needed for directory and file access.
-            let filePath: URL = NSURL.fileURL(withPath: "\(workspacePath)/Workflows/\(workflowFileName)")
+            let filePath: URL = NSURL.fileURL(withPath: workspacePath + "Workflows" + "/" + workflowFileName)
         
             // Write json string to file, this overwrites a preexisting file here.
             try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
 
             // Update global Workflow object.
-            AppState.activeInterpreterName = workflowInterpreterName
+            AppState.activeInterpreterName = AppState.interpreterStockName
             AppState.activeJsonFile = workflowFileName
             AppState.activeName = workflowName
             AppState.activeLogoFile = nil

@@ -150,7 +150,7 @@ class ViewControllerMain: NSViewController {
         }
         
         if let logoFile: String = AppState.activeLogoFile {
-            let logoPath: String = workspacePath + "/" + "Images" + "/" + logoFile
+            let logoPath: String = workspacePath + "Images" + "/" + logoFile
             if let newLogo = NSImage(contentsOfFile: logoPath) {
                 logoImage.image = self.resizeNSImage(image: newLogo, width:128, height:128)
             } else {
