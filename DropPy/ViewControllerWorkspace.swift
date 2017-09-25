@@ -54,7 +54,7 @@ class ViewControllerWorkspace: NSViewController {
     }
     
     @IBAction func onWorkspaceRestoreButton(_ sender: NSButton) {
-        guard let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
+        guard let workspacePath = checkWorkspaceInfo() else { return }
         let fileManager = FileManager.default
         
         // Set temp directory and files, remove them if they already exist.

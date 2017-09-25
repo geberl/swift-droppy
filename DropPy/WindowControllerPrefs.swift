@@ -19,6 +19,7 @@ class WindowControllerPrefs: NSWindowController {
         let userInfo:[String: Any] = ["index": index,
                                       "messageText": messageText,
                                       "informativeText": informativeText]
+        
         NotificationCenter.default.post(name: Notification.Name("switchToPrefTab"), object: nil, userInfo: userInfo)
     }
 

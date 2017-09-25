@@ -144,7 +144,7 @@ class ViewControllerMain: NSViewController {
         logoImageView.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
         logoImageView.animates = false
         
-        guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
+        guard let workspacePath = checkWorkspaceInfo() else {
             logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
             return
         }

@@ -101,31 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func reloadWorkflows(notification: Notification) {
         self.reloadWorkflows()
     }
-    
-    func checkWorkspaceInfo() -> String? {
-        guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
-            userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
-            NotificationCenter.default.post(name: Notification.Name("workspaceNotFound"), object: nil)
-            return nil
-        }
-        
-        if isDir(path: workspacePath) {
-            if !isDir(path: workspacePath + "/" + "Images") {
-                makeDirs(path: workspacePath + "/" + "Images")
-            }
-            if !isDir(path: workspacePath + "/" + "Tasks") {
-                makeDirs(path: workspacePath + "/" + "Tasks")
-            }
-            if !isDir(path: workspacePath + "/" + "Workflows") {
-                makeDirs(path: workspacePath + "/" + "Workflows")
-            }
-            return workspacePath + "/"
-        }
-        
-        NotificationCenter.default.post(name: Notification.Name("workspaceNotFound"), object: nil)
-        return nil
-    }
-    
+
     func checkInterpreterInfo() -> (String?, String?) {
         let userDefaultInterpreters = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
         if let activeInterpreterName: String = AppState.activeInterpreterName {
@@ -152,7 +128,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let workflowFile: String = AppState.activeJsonFile else { return }
         
         let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
-        let workspacePath = self.checkWorkspaceInfo()
+        let workspacePath = checkWorkspaceInfo()
         let (executablePath, executableArgs) = self.checkInterpreterInfo()
         if (workspacePath == nil) || (executablePath == nil) || (executableArgs == nil) {
             NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
@@ -287,7 +263,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func reloadWorkflows() {
-        guard let workspacePath = self.checkWorkspaceInfo() else { return }
+        guard let workspacePath = checkWorkspaceInfo() else { return }
         let workflowPath: String = workspacePath + "Workflows"
         log.debug("Reloading Workflows from '\(workflowPath)'.")
         

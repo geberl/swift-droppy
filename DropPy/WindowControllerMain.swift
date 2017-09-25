@@ -153,9 +153,7 @@ class WindowControllerMain: NSWindowController {
     }
 
     func openFinder() {
-        log.debug("Toolbar Action: Open")
-        
-        guard let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
+        guard let workspacePath = checkWorkspaceInfo() else { return }
         guard let jsonFile: String = AppState.activeJsonFile else { return }
 
         NSWorkspace.shared().selectFile(workspacePath + "/" + "Workflows" + "/" + jsonFile,
@@ -163,9 +161,7 @@ class WindowControllerMain: NSWindowController {
     }
 
     func editWorkflow() {
-        log.debug("Toolbar Action: Edit")
-
-        guard let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath) else { return }
+        guard let workspacePath = checkWorkspaceInfo() else { return }
         guard let jsonFile: String = AppState.activeJsonFile else { return }
         
         let jsonPath: String = workspacePath + "/" + "Workflows" + "/" + jsonFile
@@ -196,7 +192,7 @@ class WindowControllerMain: NSWindowController {
     }
     
     func addWorkflow() {
-        log.debug("Toolbar Action: Add")
+       guard let workspacePath = checkWorkspaceInfo() else { return }
         
        do {
             // Get the current datetime as a string
@@ -219,7 +215,6 @@ class WindowControllerMain: NSWindowController {
             let jsonString = jsonObject.description
         
             // Setup objects needed for directory and file access.
-            let workspacePath: String = self.userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
             let filePath: URL = NSURL.fileURL(withPath: "\(workspacePath)/Workflows/\(workflowFileName)")
         
             // Write json string to file, this overwrites a preexisting file here.

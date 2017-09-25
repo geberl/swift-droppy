@@ -200,3 +200,30 @@ func saveWindowPosition() {
     // Save the window position for this screen size.
     UserDefaults.standard.set([positionX, positionY], forKey: resolutionKeyName)
 }
+
+
+func checkWorkspaceInfo() -> String? {
+    let userDefaults = UserDefaults.standard
+    
+    guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
+        userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
+        NotificationCenter.default.post(name: Notification.Name("workspaceNotFound"), object: nil)
+        return nil
+    }
+    
+    if isDir(path: workspacePath) {
+        if !isDir(path: workspacePath + "/" + "Images") {
+            makeDirs(path: workspacePath + "/" + "Images")
+        }
+        if !isDir(path: workspacePath + "/" + "Tasks") {
+            makeDirs(path: workspacePath + "/" + "Tasks")
+        }
+        if !isDir(path: workspacePath + "/" + "Workflows") {
+            makeDirs(path: workspacePath + "/" + "Workflows")
+        }
+        return workspacePath + "/"
+    }
+    
+    NotificationCenter.default.post(name: Notification.Name("workspaceNotFound"), object: nil)
+    return nil
+}
