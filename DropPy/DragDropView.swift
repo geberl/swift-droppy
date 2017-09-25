@@ -67,21 +67,19 @@ class DragDropView: NSView {
         if !workflowIsSelected {
             NotificationCenter.default.post(name: Notification.Name("draggingExited"), object: nil)
         } else {
-            // TODO: Probably do something more/else for other pboardtypes here (url, plaintext, ...).
             if let plist = sender?.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
-                log.debug("NSFilenamesPboardType")
                 // Put filePaths into dict inside Notification.
                 let pathDict:[String: NSArray] = ["filePaths": plist]
                 NotificationCenter.default.post(name: Notification.Name("droppingOk"), object: nil, userInfo: pathDict)
                 
+                log.debug("NSFilenamesPboardType")
                 log.debug(" \(plist)")
-                
-                // file from finder: file path
-                // folder from finder: file path
-                // file from tower: file path
-                // file from xcode: file path
-                // album from itunes: all the paths of the contained songs, eg ~/Music/iTunes/iTunes Media/Music/Artist/Album/Song.mp3.
-                // song from itunes: path to the song, eg "/Users/guenther/Music/iTunes/iTunes Media/Music/Jack Johnson/All The Light Above It Too/1-02 You Can't Control It.mp3"
+            }
+            
+            if let plist = sender?.draggingPasteboard().propertyList(forType: "public.file-url") {
+                log.debug("public.file-url")
+                log.debug(" \(plist)")  // file:///.file/id=6571367.11780549
+                // TODO: can the filemanager resolve this?
             }
 
             // Specify the interesting sub-types here, and associate them with a file extension.
@@ -100,6 +98,7 @@ class DragDropView: NSView {
                                                          "com.apple.colorsync-profile": "icc",
                                                          "com.apple.coreaudio-​format": "caf",
                                                          "com.apple.dashboard-​widget": "wdgt",
+                                                         "com.apple.finder.node": "txt",
                                                          "com.apple.font-suitcase": "suit",
                                                          "com.apple.framework": "framework",
                                                          "com.apple.icns": "icns",
@@ -108,7 +107,11 @@ class DragDropView: NSView {
                                                          "com.apple.keynote.kth": "kth",
                                                          "com.apple.macbinary-​archive": "bin",
                                                          "com.apple.macpaint-image": "pntg",
+                                                         "com.apple.mail.PasteboardTypeMessageTransfer": "txt",
+                                                         "com.apple.mail.PasteboardTypeAutomator": "xml",
                                                          "com.apple.metadata-​importer": "mdimporter",
+                                                         "com.apple.pasteboard.promised-file-url": "txt",
+                                                         "com.apple.pasteboard.promised-file-content-type": "txt",
                                                          "com.apple.pict": "pict",
                                                          "com.apple.plugin": "plugin",
                                                          "com.apple.protected-​mpeg-4-audio": "m4p",
@@ -223,55 +226,8 @@ class DragDropView: NSView {
                 }
             }
 
+            log.debug("\(sender!.draggingPasteboard().types ?? ["nil"])")
             
-            // Promises
-            
-            //log.debug("\(sender?.draggingPasteboard().propertyList(forType: "NSPromiseContentsPboardType"))")
-            // email from mail: nil
-            
-            //log.debug("\(sender?.draggingPasteboard().propertyList(forType: "com.apple.pasteboard.promised-file-url"))")
-            // appointment from calendar: nil
-            
-            // Mail
-            
-            //log.debug("\(sender?.draggingPasteboard().propertyList(forType: "com.apple.mail.PasteboardTypeMessageTransfer"))")
-            // email from mail: nil
-            
-            // Cal
-
-            //log.debug("\(sender?.draggingPasteboard().propertyList(forType: "com.apple.iCal.pasteboard.event"))")
-            // appointment from calendar: some weird identifier number (5A3ED2FB-76D9-44AB-BF13-40B171808AE4)
-            
-            //log.debug("\(sender?.draggingPasteboard().propertyList(forType: "com.apple.iCal.pasteboard.dragOriginDate"))")
-            // appointment from calendar: a bit of json, containing the NS.time as an integer
-            
-            //log.debug("\(sender?.draggingPasteboard().propertyList(forType: "com.apple.cocoa.pasteboard.color"))")
-            // appointment from calendar: a lot of data, but nothing useable
-            
-            // iTunes
-            
-            //log.debug("\(sender?.draggingPasteboard().propertyList(forType: "com.apple.itunes.metadata"))")
-            // album from itunes: dictionary containing album and song metadata (useful!)
-            // song from itunes: dictionary containing song metadata (useful!)
-            
-            // These two work for text from xcode!
-            //log.debug("\(sender?.draggingPasteboard().string(forType: "public.utf8-plain-text"))")
-            //log.debug("\(sender?.draggingPasteboard().data(forType: "public.utf8-plain-text"))")
-            
-            log.debug("\(sender!.draggingPasteboard().types)")
-            
-            // "NSTIFFPboardType"
-//                "NSURLPboardType"
-//                "NSFileContentsPboardType"
-//                "NSCreateFileContentsPboardType"
-//                "NSTIFFPboardType" // tiff, gif, jpg, and others
-//                "NSPDFPboardType" // pdf
-//                "NSPostscriptPboardType" // eps
-//                "NSPICTPboardType" // pict
-//                "NSFontPboardType" // font
-//                "NSRulerPboardType" // ruler
-            
-
         }
     }
 
