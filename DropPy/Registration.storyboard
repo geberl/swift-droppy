@@ -33,7 +33,7 @@
             <objects>
                 <viewController id="8Hx-mR-uTB" customClass="ViewControllerRegistration" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Hxn-Ih-oZp">
-                        <rect key="frame" x="0.0" y="0.0" width="630" height="290"/>
+                        <rect key="frame" x="0.0" y="0.0" width="630" height="306"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HID-Io-0cG">
@@ -46,7 +46,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RAd-ga-pB4">
-                                <rect key="frame" x="18" y="253" width="110" height="17"/>
+                                <rect key="frame" x="18" y="269" width="110" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Status" id="n9e-pN-t8q">
                                     <font key="font" metaFont="system"/>
@@ -55,7 +55,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GGB-hG-lK5">
-                                <rect key="frame" x="168" y="253" width="313" height="17"/>
+                                <rect key="frame" x="168" y="269" width="313" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Unlicensed (Evaluation) (ends on xx-yy-zzzz)" id="BPZ-sa-Ih7">
                                     <font key="font" metaFont="system"/>
@@ -129,11 +129,11 @@
                                 </connections>
                             </button>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="fc3-hs-7bd">
-                                <rect key="frame" x="20" y="230" width="590" height="5"/>
+                                <rect key="frame" x="20" y="246" width="590" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="czJ-cw-8ha">
-                                <rect key="frame" x="487" y="244" width="129" height="32"/>
+                                <rect key="frame" x="487" y="260" width="129" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Purchase" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DgH-vA-JNz">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -153,7 +153,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V7a-Ws-UBp">
-                                <rect key="frame" x="168" y="201" width="444" height="17"/>
+                                <rect key="frame" x="168" y="217" width="444" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Enter your license information exactly as you entered it when purchasing DropPy." id="gW6-UO-mpE">
                                     <font key="font" metaFont="miniSystem"/>
@@ -172,6 +172,15 @@
                                     <action selector="onCloseButton:" target="8Hx-mR-uTB" id="klD-5v-2zQ"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ABL-rm-u8g">
+                                <rect key="frame" x="168" y="201" width="444" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="A copy of this information was also sent to your email." id="HRa-re-TRa">
+                                    <font key="font" metaFont="miniSystem"/>
+                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
@@ -186,7 +195,7 @@
                 </viewController>
                 <customObject id="aeT-EO-iCT" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="61" y="387"/>
+            <point key="canvasLocation" x="61" y="395"/>
         </scene>
     </scenes>
 </document>
