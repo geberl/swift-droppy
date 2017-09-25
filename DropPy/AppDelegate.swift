@@ -158,9 +158,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     (logFilePath, tempDirPath, exitCode) = pythonExecutor.evaluate()
                 }
                 DispatchQueue.main.async {
-                    self.endPythonExecutor(logFilePath: logFilePath,
-                                           tempDirPath: tempDirPath,
-                                           exitCode: exitCode)
+                    self.endPythonExecutor(logFilePath: logFilePath, tempDirPath: tempDirPath, exitCode: exitCode)
                 }
             }
         }
@@ -173,9 +171,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                          "tempDirPath": tempDirPath,
                                          "exitCode": exitCode]
         
-        NotificationCenter.default.post(name: Notification.Name("executionFinished"),
-                                        object: nil,
-                                        userInfo: pathDict)
+        NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil, userInfo: pathDict)
     }
     
     func applicationWillTerminate(_ notification: Notification) {
@@ -212,9 +208,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let activeInterpreterName = AppState.activeInterpreterName {
             informativeText += "'" + activeInterpreterName + "' "
         }
-        informativeText += "can't be found."
-        informativeText += "\n\nPlease (re-) create it here "
-        informativeText += "or set a different interpreterName in the Workflow."
+        informativeText += "can't be found.\n\n"
+        informativeText += "Please (re-) create it here or set a different interpreterName in the Workflow."
         self.preferencesWindowController.switchToPrefTab(index: 1,
                                                          messageText: "Interpreter not found",
                                                          informativeText: informativeText)
@@ -223,8 +218,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func setNewEditor(notification: Notification) {
         self.preferencesWindowController.showWindow(self)
 
-        var informativeText: String = "Your previously selected external text editor can't be found any more."
-        informativeText += "\n\nPlease adjust your settings."
+        var informativeText: String = "Your previously selected external text editor can't be found any more.\n\n"
+        informativeText += "Please adjust your settings."
         self.preferencesWindowController.switchToPrefTab(index: 2,
                                                          messageText: "Editor not found",
                                                          informativeText: informativeText)
@@ -233,8 +228,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func setNewWorkspace(notification: Notification) {
         self.preferencesWindowController.showWindow(self)
         
-        var informativeText: String = "The Workspace directory can't be found."
-        informativeText += "\n\nPlease adjust your settings."
+        var informativeText: String = "The Workspace directory can't be found.\n\n"
+        informativeText += "Please adjust your settings."
         self.preferencesWindowController.switchToPrefTab(index: 3,
                                                          messageText: "Workspace not found",
                                                          informativeText: informativeText)
@@ -275,7 +270,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         while let element = enumerator.nextObject() as? String {
             if element.lowercased().hasSuffix(".json") {
                 do {
-                    let data = try Data(contentsOf: URL(fileURLWithPath: workflowPath + "/" + element), options: .alwaysMapped)
+                    let data = try Data(contentsOf: URL(fileURLWithPath: workflowPath + "/" + element),
+                                        options: .alwaysMapped)
                     let jsonObj = JSON(data: data)
                     if jsonObj != JSON.null {
                         workflowsTemp[jsonObj["name"].stringValue] = [String: String]()
