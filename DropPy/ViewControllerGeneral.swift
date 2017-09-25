@@ -27,7 +27,7 @@ class ViewControllerGeneral: NSViewController {
 
         if !devModeEnabled {
             guard let workspacePath = checkWorkspaceInfo() else { return }
-            let tempPath = workspacePath + "/" + "Temp" + "/"
+            let tempPath = workspacePath + "Temp" + "/"
             if isDir(path: tempPath) {
                 self.askDeleteTempAlert(tempPath: tempPath)
             }
@@ -83,7 +83,7 @@ class ViewControllerGeneral: NSViewController {
     func adjustIntermediaryFilesLabel() {
         if self.radioEnableDevMode.state == 1 {
             guard let workspacePath = checkWorkspaceInfo() else { return }
-            let intermediaryFilesDir: String = workspacePath + "/Temp/"
+            let intermediaryFilesDir: String = workspacePath + "Temp" + "/"
             self.intermediaryFilesTextField.stringValue = "Intermediary files will be saved to:\n\"\(intermediaryFilesDir)\""
         } else {
             self.intermediaryFilesTextField.stringValue = "Intermediary files will not be saved."
