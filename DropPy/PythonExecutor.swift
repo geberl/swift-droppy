@@ -12,65 +12,36 @@ import SwiftyJSON
 
 class PythonExecutor: NSObject {
 
-    var startTime = DispatchTime.now()
-    let startDateTime = Date()
-    var devModeEnabled: Bool = false
-    var workspacePath: String
     var workflowFile: String
-    var workflowPath: String
+    var workspacePath: String
     var executablePath: String
     var executableArgs: String
+    var devModeEnabled: Bool = false
     var tempPath: String
-    var runnerPath: String
     var logFilePath: String
-    var filePaths: [String]
+    
+    var startTime = DispatchTime.now()
+    var workflowPath: String
+    var runnerPath: String
     var overallExitCode: Int
 
-    init(filePaths: [String], workflowFile: String, workspacePath: String,
-         executablePath: String, executableArgs: String, devModeEnabled: Bool) {
-        // It's only save to access the settings that were passed on drop.
-        // Since the app stays responsive during execution the user could change the settings while Tasks are being performed.
-
-        self.filePaths = filePaths
+    init(workflowFile: String, workspacePath: String, executablePath: String, executableArgs: String,
+         devModeEnabled: Bool, tempPath: String, logFilePath: String) {
+        log.debug("Executing workflow.")
+        
         self.workflowFile = workflowFile
-        self.workflowPath = workspacePath + "Workflows" + "/" + workflowFile
         self.workspacePath = workspacePath
         self.executablePath = executablePath
         self.executableArgs = executableArgs
         self.devModeEnabled = devModeEnabled
+        self.tempPath = tempPath
+        self.logFilePath = logFilePath
 
-        if self.devModeEnabled {
-            self.tempPath = self.workspacePath + "Temp" + "/" + self.startDateTime.iso8601 + "/"
-        } else {
-            self.tempPath = NSTemporaryDirectory() + "DropPy" + "/" + self.startDateTime.iso8601 + "/"
-        }
-
+        self.workflowPath = workspacePath + "Workflows" + "/" + workflowFile
         self.runnerPath = tempPath + "run.py"
-        self.logFilePath = tempPath + "task.log"
-
         self.overallExitCode = 0
 
         super.init()
-    }
-
-    func prepareFirstTempDir() -> (inputPath: String, outputPath: String) {
-        // Setup the directory structure here.
-        let inputPath = self.prepareNextTempDir(taskNumber: 0)
-        let outputPath = self.prepareNextTempDir(taskNumber: 1)
-
-        // Copy run.py from assets to the temp directory.
-        if let asset = NSDataAsset(name: "run", bundle: Bundle.main) {
-            do {
-                try asset.data.write(to: URL(fileURLWithPath: self.runnerPath))
-            } catch {
-                log.error("Unable to copy run.py from assets")
-            }
-        }
-
-        // Setup the log file.
-        self.writeWorkflowInputLog()
-
-        return (inputPath, outputPath)
     }
 
     func prepareNextTempDir(taskNumber: Int) -> String {
@@ -81,45 +52,7 @@ class PythonExecutor: NSObject {
         return outputPath
     }
 
-    func handleDroppedFiles(inputPath: String) {
-        let statusDict:[String: String] = ["text": "Preparing"]
-        NotificationCenter.default.post(name: Notification.Name("executionStatus"), object: nil, userInfo: statusDict)
-
-        // Symlink the originally dropped files to the "0" directory.
-        let fileManager = FileManager.default
-        for srcPath in self.filePaths {
-            let srcURL: URL = URL(fileURLWithPath: srcPath)
-            var dstURL: URL = URL(fileURLWithPath: inputPath)
-            dstURL.appendPathComponent(srcURL.lastPathComponent)
-            
-            do {
-                try fileManager.createSymbolicLink(at: dstURL, withDestinationURL: srcURL)
-            } catch {
-                log.error("Unable to symlink file '\(srcPath)'.")
-            }
-        }
-
-        // Delete all .DS_Store files.
-        guard let enumerator: FileManager.DirectoryEnumerator =
-            fileManager.enumerator(atPath: inputPath) else {
-                log.error("Directory not found: \(inputPath)!")
-                return
-        }
-
-        while let element = enumerator.nextObject() as? String {
-            let elementPath = inputPath + "/" + element
-            let elementURL: URL = URL(fileURLWithPath: elementPath)
-            if elementURL.lastPathComponent == ".DS_Store" {
-                do {
-                    try fileManager.removeItem(atPath: elementPath)
-                } catch let error {
-                    log.error(error.localizedDescription)
-                }
-            }
-        }
-    }
-
-    func taskLog(prefix: String, lines: [String]) {
+    func writeLog(prefix: String, lines: [String]) {
         // File is sure to exist at that point, may have content or be empty.
         var prefixedLine: String
         if let fileHandle = FileHandle(forWritingAtPath: self.logFilePath) {
@@ -142,41 +75,26 @@ class PythonExecutor: NSObject {
     }
 
     func writeWorkflowInputLog() {
-        // Create an empty file at logFilePath.
-        do {
-            try "".write(to: URL(fileURLWithPath: self.logFilePath),
-                         atomically: false,
-                         encoding: String.Encoding.utf8)
-        } catch let error {
-            log.error(error.localizedDescription)
-            return
-        }
-
-        self.taskLog(prefix: "", lines: ["Start Date & Time: \(self.startDateTime.readable)"])
-        self.taskLog(prefix: "", lines: ["Dev Mode Enabled:  \(self.devModeEnabled)"])
-        self.taskLog(prefix: "", lines: ["Workspace Path:    " + self.workspacePath])
-        self.taskLog(prefix: "", lines: ["Workflow Path:     " + self.workflowPath])
-        self.taskLog(prefix: "", lines: ["Interpreter Path:  " + self.executablePath])
-        self.taskLog(prefix: "", lines: ["Interpreter Args:  " + self.executableArgs])
-        self.taskLog(prefix: "", lines: ["Temp Path:         " + self.tempPath])
-        self.taskLog(prefix: "", lines: ["Runner Path:       " + self.runnerPath])
-        self.taskLog(prefix: "", lines: ["Logfile Path:      " + self.logFilePath])
-        self.taskLog(prefix: "", lines: [String(repeating: "=", count: 80)])
+        self.writeLog(prefix: "Workflow Path:            ", lines: [self.workflowPath])
+        self.writeLog(prefix: "Runner Path:              ", lines: [self.runnerPath])
+        self.writeLog(prefix: "Interpreter Path:         ", lines: [self.executablePath])
+        self.writeLog(prefix: "Interpreter Args:         ", lines: [self.executableArgs])
+        self.writeLog(prefix: "", lines: [String(repeating: "=", count: 120)])
     }
 
     func writeWorkflowOutputLog () {
-        self.taskLog(prefix: "", lines: [String(repeating: "=", count: 80)])
+        self.writeLog(prefix: "", lines: [String(repeating: "=", count: 120)])
 
         if self.overallExitCode > 0 {
-            self.taskLog(prefix: "", lines: ["Result:           Error occurred, running Tasks aborted"])
+            self.writeLog(prefix: "Result:                   ", lines: ["Error occurred, running Tasks aborted"])
         } else {
-            self.taskLog(prefix: "", lines: ["Result:           Success"])
+            self.writeLog(prefix: "Result:                   ", lines: ["Success"])
         }
 
         let endTime = DispatchTime.now()
         let nanoTime = endTime.uptimeNanoseconds - self.startTime.uptimeNanoseconds
         let timeInterval = Double(nanoTime) / 1_000_000_000
-        self.taskLog(prefix: "", lines: ["Run time:         " + String(format: "%.2f", timeInterval) + "s"])
+        self.writeLog(prefix: "Run time:                 ", lines: [String(format: "%.2f", timeInterval) + "s"])
     }
 
     func writeTaskInputLog(queueItem: JSON, queueCount: Int, taskNumber: Int,
@@ -186,7 +104,7 @@ class PythonExecutor: NSObject {
         guard let taskName: String = queueDict["task"]?.stringValue else { return }
 
         let logText: String = "Running Task \(taskNumber + 1)/\(queueCount): '\(taskName)'"
-        self.taskLog(prefix: "", lines: [logText])
+        self.writeLog(prefix: "", lines: [logText])
         log.info(logText)
 
         if let queueItemParams: String = queueDict["kwargs"]?.rawString() {
@@ -194,13 +112,13 @@ class PythonExecutor: NSObject {
             queueItemParamsList = queueItemParamsList.filter { !$0.isEmpty }
             let queueItemParamsOneLine = queueItemParamsList.joined(separator: " ")
 
-            self.taskLog(prefix: "  Parameters:     ", lines: [queueItemParamsOneLine])
+            self.writeLog(prefix: "  Parameters:             ", lines: [queueItemParamsOneLine])
         } else {
-            self.taskLog(prefix: "  Parameters:     ", lines: ["(none)"])
+            self.writeLog(prefix: "  Parameters:             ", lines: ["(none)"])
         }
 
-        self.taskLog(prefix: "  Input Path:     ", lines: [inputPath])
-        self.taskLog(prefix: "  Output Path:    ", lines: [outputPath])
+        self.writeLog(prefix: "  Input Path:             ", lines: [inputPath])
+        self.writeLog(prefix: "  Output Path:            ", lines: [outputPath])
 
         self.sendTaskStatusNotification(taskNumber: taskNumber,
                                         taskName: taskName,
@@ -208,11 +126,11 @@ class PythonExecutor: NSObject {
     }
 
     func writeTaskOutputLog(out: [String], err: [String], exit: Int32) {
-        self.taskLog(prefix: "  StdOut:         ", lines: out)
-        self.taskLog(prefix: "  StdErr:         ", lines: err)
-        self.taskLog(prefix: "  Exit Code:      ", lines: ["\(exit)"])
+        self.writeLog(prefix: "  StdOut:                 ", lines: out)
+        self.writeLog(prefix: "  StdErr:                 ", lines: err)
+        self.writeLog(prefix: "  Exit Code:              ", lines: ["\(exit)"])
 
-        let logText = " Exit Code:   \(exit)"
+        let logText = " Exit Code: \(exit)"
         if exit > 0 {
             log.error(logText)
         } else {
@@ -229,8 +147,23 @@ class PythonExecutor: NSObject {
     }
 
     func run() {
-        var (inputPath, outputPath) = self.prepareFirstTempDir()
-        self.handleDroppedFiles(inputPath: inputPath)
+        // Copy run.py from assets to the temp directory.
+        if let asset = NSDataAsset(name: "run", bundle: Bundle.main) {
+            do {
+                try asset.data.write(to: URL(fileURLWithPath: self.runnerPath))
+            } catch {
+                log.error("Unable to copy run.py from assets")
+            }
+        }
+
+        // Setup the log file.
+        self.writeWorkflowInputLog()
+
+        // Set dir "0".
+        var inputPath = self.tempPath + "0"
+        
+        // Prepare dir "1".
+        var outputPath = self.prepareNextTempDir(taskNumber: 1)
 
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: workflowPath),
@@ -273,7 +206,7 @@ class PythonExecutor: NSObject {
                         // +2 because taskNumber starts counting at 0 AND we're preparing for the follwoing Task.
                         outputPath = self.prepareNextTempDir(taskNumber: taskNumber + 2)
 
-                        self.taskLog(prefix: "", lines: [String(repeating: "-", count: 80)])
+                        self.writeLog(prefix: "", lines: [String(repeating: "-", count: 120)])
                     }
                 }
             }
@@ -297,7 +230,7 @@ class PythonExecutor: NSObject {
 
             while let element = enumerator.nextObject() as? String {
                 let elementPath = "\(self.tempPath)\(element)"
-                if element != "task.log" {
+                if element != "droppy.log" {
                     do {
                         try fileManager.removeItem(atPath: elementPath)
                     } catch let error {
@@ -310,9 +243,9 @@ class PythonExecutor: NSObject {
         }
     }
 
-    func evaluate() -> (String, String, String) {
+    func evaluate() -> Int {
         self.writeWorkflowOutputLog()
         self.cleanUp()
-        return (self.logFilePath, self.tempPath, "\(self.overallExitCode)")
+        return self.overallExitCode
     }
 }

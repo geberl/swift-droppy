@@ -138,42 +138,61 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Notification is sometimes sent (or received?) twice.
         // This workaround prevents multiple instantiation of PythonExecutor.
-        if !executionInProgress {
-            executionInProgress = true
-
+        if !self.executionInProgress {
+            self.executionInProgress = true
+            
+            let statusDict: [String: String] = ["text": "Preparing"]
+            NotificationCenter.default.post(name: Notification.Name("executionStatus"),
+                                            object: nil, userInfo: statusDict)
+            
             var logFilePath: String = ""
-            var tempDirPath: String = ""
-            var exitCode: String = "0"
+            var tempPath: String = ""
+            var dropExitCode: Int = 0
+            var execExitCode: Int = 0
 
             DispatchQueue.global(qos: .background).async {
-                if let filePaths = notification.userInfo?["filePaths"] as? [String] {
-
-                    let pythonExecutor = PythonExecutor(filePaths: filePaths,
-                                                        workflowFile: workflowFile,
+                if let draggingPasteboard = notification.userInfo?["draggingPasteboard"] as? NSPasteboard {
+                    let dropHandler = DropHandler(draggingPasteboard: draggingPasteboard,
+                                                  workspacePath: workspacePath!,
+                                                  devModeEnabled: devModeEnabled)
+                    dropHandler.run()
+                    (logFilePath, tempPath, dropExitCode) = dropHandler.evaluate()
+                }
+                
+                if dropExitCode == 0 {
+                    let pythonExecutor = PythonExecutor(workflowFile: workflowFile,
                                                         workspacePath: workspacePath!,
                                                         executablePath: executablePath!,
                                                         executableArgs: executableArgs!,
-                                                        devModeEnabled: devModeEnabled)
+                                                        devModeEnabled: devModeEnabled,
+                                                        tempPath: tempPath,
+                                                        logFilePath: logFilePath)
                     pythonExecutor.run()
-                    (logFilePath, tempDirPath, exitCode) = pythonExecutor.evaluate()
+                    execExitCode = pythonExecutor.evaluate()
+                } else {
+                    log.error("Skipping Workflow execution. Error before.")
                 }
+
                 DispatchQueue.main.async {
-                    self.endPythonExecutor(logFilePath: logFilePath, tempDirPath: tempDirPath, exitCode: exitCode)
+                    self.endPythonExecutor(logFilePath: logFilePath, tempPath: tempPath,
+                                           dropExitCode: dropExitCode, execExitCode: execExitCode)
                 }
             }
         }
     }
     
-    func endPythonExecutor(logFilePath: String, tempDirPath: String, exitCode: String) {
-        executionInProgress = false
-        
+    func endPythonExecutor(logFilePath: String, tempPath: String, dropExitCode: Int, execExitCode: Int) {
+        self.executionInProgress = false
+
         let pathDict:[String: String] = ["logFilePath": logFilePath,
-                                         "tempDirPath": tempDirPath,
-                                         "exitCode": exitCode]
-        
+                                         "tempPath": tempPath,
+                                         "dropExitCode": String(dropExitCode),
+                                         "execExitCode": String(execExitCode)]
+
         NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil, userInfo: pathDict)
+        log.debug("Execution finished.")
     }
-    
+
     func applicationWillTerminate(_ notification: Notification) {
         saveWindowPosition()
         log.enabled = false

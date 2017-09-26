@@ -234,17 +234,19 @@ class WindowControllerMain: NSWindowController {
 
     func evaluateWorkflowResults(notification: Notification) {
         guard let logFilePath = notification.userInfo?["logFilePath"] as? String else { return }
-        guard let tempDirPath = notification.userInfo?["tempDirPath"] as? String else { return }
-        guard let exitCode = notification.userInfo?["exitCode"] as? String else { return }
+        guard let tempPath = notification.userInfo?["tempPath"] as? String else { return }
+        guard let dropExitCode = notification.userInfo?["dropExitCode"] as? String else { return }
+        guard let execExitCode = notification.userInfo?["execExitCode"] as? String else { return }
 
-        let exitCodeInt: Int = Int(exitCode)!
-        if exitCodeInt > 0 {
-            self.executionErrorAlert(logFilePath: logFilePath,
-                                     tempDirPath: tempDirPath)
+        let dropExitCodeInt: Int = Int(dropExitCode)!
+        let execExitCodeInt: Int = Int(execExitCode)!
+        
+        if (dropExitCodeInt > 0) || (execExitCodeInt > 0) {
+            self.executionErrorAlert(logFilePath: logFilePath, tempPath: tempPath)
         }
     }
 
-    func executionErrorAlert(logFilePath: String, tempDirPath: String) {
+    func executionErrorAlert(logFilePath: String, tempPath: String) {
         let errorAlert = NSAlert()
         errorAlert.showsHelp = false
         errorAlert.messageText = "Running one of your Tasks failed"
@@ -261,7 +263,7 @@ class WindowControllerMain: NSWindowController {
             // Do nothing when clicked ok.
         } else if response == NSAlertSecondButtonReturn {
             // Open temp dir in finder.
-            NSWorkspace.shared().selectFile(logFilePath, inFileViewerRootedAtPath: tempDirPath)
+            NSWorkspace.shared().selectFile(logFilePath, inFileViewerRootedAtPath: tempPath)
         } else if response == NSAlertThirdButtonReturn {
             // Open log file in user editor.
             NSWorkspace.shared().openFile(logFilePath)

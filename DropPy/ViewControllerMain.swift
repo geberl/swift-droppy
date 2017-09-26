@@ -29,7 +29,6 @@ class ViewControllerMain: NSViewController {
 
     @IBAction func onLogButton(_ sender: NSButton) {
         if let logFilePath = self.logFilePath {
-            log.debug(logFilePath)
             NSWorkspace.shared().openFile(logFilePath)
         }
     }
