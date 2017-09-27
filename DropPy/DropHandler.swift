@@ -159,7 +159,24 @@ class DropHandler: NSObject {
         }
         
         // Write some basic info into it.
-        self.writeLog(prefix: "Start Date & Time:        ", lines: [self.startDateTime.readable])
+        if let thisVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            self.writeLog(prefix: "DropPy version:           ", lines: [thisVersion])
+        } else {
+            self.writeLog(prefix: "DropPy version:           ", lines: ["???"])
+        }
+        if AppState.isLicensed {
+            self.writeLog(prefix: "Registration Status:      ", lines: ["Licensed"])
+        } else {
+            if AppState.isInEvaluation {
+                self.writeLog(prefix: "Registration Status:      ", lines: ["Unlicensed (Evaluation)"])
+            } else {
+                self.writeLog(prefix: "Registration Status:      ", lines: ["Unlicensed (Evaluation over)"])
+            }
+        }
+        self.writeLog(prefix: "Bundled droppy-workspace: ", lines: [AppState.bundledWorkspaceVersion])
+        self.writeLog(prefix: "Bundled droppy-run:       ", lines: [AppState.bundledRunVersion])
+        self.writeLog(prefix: "", lines: [String(repeating: "=", count: 120)])
+        self.writeLog(prefix: "Drop Date/Time:           ", lines: [self.startDateTime.readable])
         self.writeLog(prefix: "Dev Mode Enabled:         ", lines: ["\(self.devModeEnabled)"])
         self.writeLog(prefix: "Dropped Object Datatypes: ", lines: self.utiTypes)
         self.writeLog(prefix: "Workspace Path:           ", lines: [self.workspacePath])
