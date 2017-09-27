@@ -12,6 +12,7 @@ class WindowControllerPrefs: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
+        self.window?.setFrame(NSMakeRect(0.0, 0.0, 750, 230), display: true)
         self.window?.center()
     }
     

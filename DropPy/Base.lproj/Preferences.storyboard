@@ -13,7 +13,7 @@
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="kFP-FX-so0">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
-                        <rect key="contentRect" x="694" y="443" width="350" height="100"/>
+                        <rect key="contentRect" x="694" y="443" width="750" height="151"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
                         <connections>
                             <outlet property="delegate" destination="niN-ne-by4" id="2fY-xY-Mwv"/>
@@ -30,7 +30,7 @@
         <!--Tab View Controller Prefs-->
         <scene sceneID="adP-dS-MaB">
             <objects>
-                <tabViewController showSeguePresentationStyle="single" selectedTabViewItemIndex="0" tabStyle="toolbar" id="hLe-dA-CaL" customClass="TabViewControllerPrefs" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController showSeguePresentationStyle="single" selectedTabViewItemIndex="0" tabStyle="toolbar" canPropagateSelectedChildViewControllerTitle="NO" id="hLe-dA-CaL" customClass="TabViewControllerPrefs" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="General" identifier="" image="NSPreferencesGeneral" id="So6-r5-lNJ"/>
                         <tabViewItem label="Interpreter" identifier="" image="NSAdvanced" id="II6-UH-hj9"/>
@@ -41,7 +41,7 @@
                     <tabView key="tabView" misplaced="YES" type="noTabsNoBorder" id="aWf-He-5X5">
                         <rect key="frame" x="0.0" y="0.0" width="401" height="167"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <font key="font" metaFont="message"/>
+                        <font key="font" metaFont="system"/>
                         <tabViewItems/>
                         <connections>
                             <outlet property="delegate" destination="hLe-dA-CaL" id="pSl-YM-lUv"/>
@@ -64,11 +64,11 @@
             <objects>
                 <viewController title="General" showSeguePresentationStyle="single" id="F1A-We-v2b" customClass="ViewControllerGeneral" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="c5X-MK-dK9">
-                        <rect key="frame" x="0.0" y="0.0" width="750" height="151"/>
+                        <rect key="frame" x="0.0" y="0.0" width="750" height="150"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qr4-7X-bh9">
-                                <rect key="frame" x="18" y="114" width="272" height="17"/>
+                                <rect key="frame" x="18" y="113" width="272" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Development mode:" id="giq-du-0Wi">
                                     <font key="font" metaFont="system"/>
@@ -77,7 +77,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wo1-68-uGx">
-                                <rect key="frame" x="18" y="40" width="272" height="17"/>
+                                <rect key="frame" x="18" y="39" width="272" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Automatically check for updates:" id="17e-JC-kSD">
                                     <font key="font" metaFont="system"/>
@@ -86,7 +86,7 @@
                                 </textFieldCell>
                             </textField>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g0k-bV-7OQ">
-                                <rect key="frame" x="294" y="113" width="438" height="18"/>
+                                <rect key="frame" x="294" y="112" width="438" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Enable" bezelStyle="regularSquare" imagePosition="left" inset="2" id="01Y-cW-ed5">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -97,7 +97,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gi9-Xq-9Ki">
-                                <rect key="frame" x="294" y="65" width="438" height="42"/>
+                                <rect key="frame" x="294" y="64" width="438" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Intermediary files will not be saved." id="AWk-Nw-gOI">
                                     <font key="font" metaFont="smallSystem"/>
@@ -106,7 +106,7 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V8Z-22-u68">
-                                <rect key="frame" x="294" y="34" width="245" height="26"/>
+                                <rect key="frame" x="294" y="33" width="245" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Never" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="QEs-vT-JGd" id="PBf-yE-Ig3">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -134,7 +134,7 @@
                                 </connections>
                             </popUpButton>
                             <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oQs-x0-tyj">
-                                <rect key="frame" x="707" y="17" width="25" height="25"/>
+                                <rect key="frame" x="707" y="16" width="25" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EVq-q3-Dsh">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -305,7 +305,7 @@
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="174" minWidth="40" maxWidth="1000" id="tNA-Nw-iBm">
+                                                <tableColumn identifier="" width="174" minWidth="40" maxWidth="1000" id="tNA-Nw-iBm">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Name">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -343,7 +343,7 @@
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="aDM-5R-21K">
-                                    <rect key="frame" x="1" y="-15" width="0.0" height="15"/>
+                                    <rect key="frame" x="1" y="8" width="0.0" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="3pX-R2-4Oa">

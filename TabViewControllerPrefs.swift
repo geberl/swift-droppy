@@ -41,14 +41,14 @@ class TabViewControllerPrefs: NSTabViewController {
             let contentFrame = (window?.frameRect(forContentRect: NSMakeRect(0.0, 0.0, size.width, size.height)))!
             var frame = (window?.frame)!
             frame.origin.y = frame.origin.y + (frame.size.height - contentFrame.size.height)
-            frame.size.height = contentFrame.size.height;
-            frame.size.width = contentFrame.size.width;
+            frame.size.height = contentFrame.size.height
+            frame.size.width = contentFrame.size.width
             window?.setFrame(frame, display: false, animate: true)
         }
     }
     
     func switchToPrefTab(notification: Notification) {
-        let index: Int = notification.userInfo?["index"] as! Int
+        guard let index: Int = notification.userInfo?["index"] as? Int else { return }
         tabView.selectTabViewItem(at: index)
         
         let parentWindow = self.view.window!
