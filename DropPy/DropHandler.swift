@@ -52,15 +52,15 @@ class DropHandler: NSObject {
     }
     
     func prepareTempDir() {
-        // Create the {temp}/0/filenames directory, this automatically creates all parent directories.
-        let dirZeroFilesPath: String = self.dirZeroUrl.path + "/" + "filenames" + "/"
+        // Create the {temp}/0/files directory, this automatically creates all parent directories.
+        let dirZeroFilesPath: String = self.dirZeroUrl.path + "/" + "files" + "/"
         if !isDir(path: dirZeroFilesPath) {
             makeDirs(path: dirZeroFilesPath)
         }
     }
     
     func symlinkFiles() {
-        let dirZeroFilesPath: String = self.dirZeroUrl.path + "/" + "filenames" + "/"
+        let dirZeroFilesPath: String = self.dirZeroUrl.path + "/" + "files" + "/"
         
         // Symlink the originally dropped files.
         let fileManager = FileManager.default
