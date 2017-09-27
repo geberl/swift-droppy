@@ -8,6 +8,7 @@
 
 import Cocoa
 
+
 class ViewControllerEditorPrefs: NSViewController {
     
     let userDefaults = UserDefaults.standard
