@@ -118,8 +118,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func startPythonExecutor(notification: Notification) {
-        // Show registration window with sheet to user on each drop.
-        // At this moment do not refuse executing. Maybe later in 2.0.
+        // Show registration window with open pruchase sheet to user on each drop.
+        // At this moment do not refuse executing, maybe later in 2.0.
         if !AppState.isInEvaluation && !AppState.isLicensed {
             self.registrationWindowController.showWindow(self)
             NotificationCenter.default.post(name: Notification.Name("reopenPurchaseSheet"), object: nil)
@@ -132,15 +132,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let (executablePath, executableArgs) = self.checkInterpreterInfo()
         if (workspacePath == nil) || (executablePath == nil) || (executableArgs == nil) {
             NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
-            NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
             return
         }
 
-        // Notification is sometimes sent (or received?) twice.
-        // This workaround prevents multiple instantiation of PythonExecutor.
+        // The notification that starts this function is sometimes sent (or received?) twice.
+        // Using a boolean class variable as a workaround prevents multiple instantiation of DropHandler/PythonExecutor.
         if !self.executionInProgress {
             self.executionInProgress = true
             
+            // Usually doesn't appear on screen, because the steps until the first Task is executed happen so fast.
             let statusDict: [String: String] = ["text": "Preparing"]
             NotificationCenter.default.post(name: Notification.Name("executionStatus"),
                                             object: nil, userInfo: statusDict)
@@ -157,6 +157,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                   devModeEnabled: devModeEnabled)
                     dropHandler.run()
                     (logFilePath, tempPath, dropExitCode) = dropHandler.evaluate()
+                } else {
+                    log.error("Unable to access draggingPasteboard (nil). Skipping DropHandler.")
+                    dropExitCode = 1
                 }
                 
                 if dropExitCode == 0 {
@@ -170,7 +173,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     pythonExecutor.run()
                     execExitCode = pythonExecutor.evaluate()
                 } else {
-                    log.error("Skipping Workflow execution. Error before.")
+                    log.error("Skipping Workflow execution. DropHandler reported error.")
                 }
 
                 DispatchQueue.main.async {

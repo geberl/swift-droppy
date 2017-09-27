@@ -104,6 +104,7 @@ class ViewControllerGeneral: NSViewController {
         myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSAlertFirstButtonReturn {
                 self.removeTempDir(tempPath: tempPath)
+                // Call workflowSelectionChanged to make sure the log button is not visible any more.
                 NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
             }
         })

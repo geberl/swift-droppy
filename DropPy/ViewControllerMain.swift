@@ -116,10 +116,13 @@ class ViewControllerMain: NSViewController {
         self.logFilePath = nil
         logButton.isHidden = true
     }
-
+    
     func setLogButtonVisible(notification: Notification) {
-        self.logFilePath = notification.userInfo?["logFilePath"] as? String
-        logButton.isHidden = false
+        guard let logFilePath = notification.userInfo?["logFilePath"] as? String else { return }
+        if logFilePath != "" {
+            self.logFilePath = logFilePath
+            logButton.isHidden = false
+        }
     }
 
     func setTextFieldStatus(notification: Notification) {

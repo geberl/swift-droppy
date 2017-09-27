@@ -141,7 +141,6 @@ class WindowControllerMain: NSWindowController {
             AppState.activeJsonFile = AppState.allWorkflows[workflowName]?["file"]
             AppState.activeInterpreterName = AppState.allWorkflows[workflowName]?["interpreterName"]
             AppState.activeLogoFile = AppState.allWorkflows[workflowName]?["image"]
-
         } else {
             userDefaults.set(nil, forKey: UserDefaultStruct.workflowSelected)
             AppState.activeName = nil
@@ -170,6 +169,7 @@ class WindowControllerMain: NSWindowController {
             
             if editorForWorkflows == "Internal Workflow editor" {
                 // TODO: Implement internal Workflow editor and have it open from here.
+                // Should currently not be possible to land here, deactivated, entry not displaed in preferences.
                 log.debug("TODO: Open internal Workflow editor now")
 
             } else if editorForWorkflows == "Internal text editor" {
@@ -237,11 +237,8 @@ class WindowControllerMain: NSWindowController {
         guard let tempPath = notification.userInfo?["tempPath"] as? String else { return }
         guard let dropExitCode = notification.userInfo?["dropExitCode"] as? String else { return }
         guard let execExitCode = notification.userInfo?["execExitCode"] as? String else { return }
-
-        let dropExitCodeInt: Int = Int(dropExitCode)!
-        let execExitCodeInt: Int = Int(execExitCode)!
         
-        if (dropExitCodeInt > 0) || (execExitCodeInt > 0) {
+        if (Int(dropExitCode)! > 0) || (Int(execExitCode)! > 0) {
             self.executionErrorAlert(logFilePath: logFilePath, tempPath: tempPath)
         }
     }
