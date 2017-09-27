@@ -32,6 +32,17 @@ class ViewControllerMain: NSViewController {
             NSWorkspace.shared().openFile(logFilePath)
         }
     }
+    
+    @IBOutlet weak var cancelButton: NSButton!
+    
+    @IBAction func onCancelButton(_ sender: NSButton) {
+        self.cancelButton.isEnabled = false
+        
+        let statusDict: [String: String] = ["text": "Stopping ..."]
+        NotificationCenter.default.post(name: Notification.Name("executionStatus"), object: nil, userInfo: statusDict)
+        // TODO implement
+
+    }
 
     override func viewWillAppear() {
         super.viewWillAppear()
@@ -80,6 +91,11 @@ class ViewControllerMain: NSViewController {
                                                selector: #selector(ViewControllerMain.setLogButtonInvisible(notification:)),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setCancelButtonVisible(notification:)),
+                                               name: Notification.Name("droppingOk"),
+                                               object: nil)
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setZoneDashed(notification:)),
@@ -100,31 +116,45 @@ class ViewControllerMain: NSViewController {
                                                selector: #selector(ViewControllerMain.setLogButtonVisible(notification:)),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ViewControllerMain.setCancelButtonInvisible(notification:)),
+                                               name: Notification.Name("executionFinished"),
+                                               object: nil)
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerMain.setTextFieldStatus(notification:)),
                                                name: Notification.Name("executionStatus"),
                                                object: nil)
     }
-
+    
     func setTextFieldHidden(notification: Notification) {
         taskTextField.isHidden = true
         taskTextField.stringValue = "Task ?/?"
     }
-
+    
     func setLogButtonInvisible(notification: Notification) {
         self.logFilePath = nil
-        logButton.isHidden = true
+        self.logButton.isHidden = true
     }
     
     func setLogButtonVisible(notification: Notification) {
         guard let logFilePath = notification.userInfo?["logFilePath"] as? String else { return }
         if logFilePath != "" {
             self.logFilePath = logFilePath
-            logButton.isHidden = false
+            self.logButton.isHidden = false
         }
     }
-
+    
+    func setCancelButtonInvisible(notification: Notification) {
+        self.cancelButton.isHidden = true
+    }
+    
+    func setCancelButtonVisible(notification: Notification) {
+        self.cancelButton.isEnabled = true
+        self.cancelButton.isHidden = false
+    }
+    
     func setTextFieldStatus(notification: Notification) {
         // Async execution is needed so the first file actually shows up when it is being processed and not when the second one is.
         DispatchQueue.main.async {
@@ -133,15 +163,15 @@ class ViewControllerMain: NSViewController {
             self.taskTextField.stringValue = text
         }
     }
-
+    
     func setZoneDashed(notification: Notification) {
         zoneImage.image = NSImage(named: "zone-dashed")
     }
-
+    
     func setZoneLine(notification: Notification) {
         zoneImage.image = NSImage(named: "zone-line")
     }
-
+    
     func setLogo(notification: Notification) {
         logoImageView.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
         logoImageView.animates = false
@@ -163,7 +193,7 @@ class ViewControllerMain: NSViewController {
             logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
         }
     }
-
+    
     func setLogoSpinner(notification: Notification) {
         if let asset = NSDataAsset(name: "logo-spinner", bundle: Bundle.main) {
             logoImageView.imageScaling = NSImageScaling.scaleNone
@@ -171,13 +201,13 @@ class ViewControllerMain: NSViewController {
             logoImage.image = NSImage(data: asset.data)
         }
     }
-
+    
     func setZoneLogoError(notification: Notification) {
         logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!,
                                              width: 128, height: 128)
         zoneImage.image = NSImage(named: "zone-error")
     }
-
+    
     func resizeNSImage(image: NSImage, width: Int, height: Int) -> NSImage {
         let destSize = NSMakeSize(CGFloat(width), CGFloat(height))
         let newImage = NSImage(size: destSize)
@@ -189,5 +219,4 @@ class ViewControllerMain: NSViewController {
         newImage.size = destSize
         return NSImage(data: newImage.tiffRepresentation!)!
     }
-
 }
