@@ -23,6 +23,7 @@ class PythonExecutor: NSObject {
     var startTime = DispatchTime.now()
     var workflowPath: String
     var runnerPath: String
+    var executionCancel: Bool
     var overallExitCode: Int
 
     init(workflowFile: String, workspacePath: String, executablePath: String, executableArgs: String,
@@ -39,11 +40,21 @@ class PythonExecutor: NSObject {
 
         self.workflowPath = workspacePath + "Workflows" + "/" + workflowFile
         self.runnerPath = tempPath + "run.py"
+        self.executionCancel = false
         self.overallExitCode = 0
 
         super.init()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(PythonExecutor.cancelExecution(notification:)),
+                                               name: Notification.Name("executionCancel"),
+                                               object: nil)
     }
-
+    
+    func cancelExecution(notification: Notification) {
+        self.executionCancel = true
+    }
+    
     func prepareNextTempDir(taskNumber: Int) -> String {
         let outputPath: String = self.tempPath + String(taskNumber)
         if !isDir(path: outputPath) {
@@ -84,11 +95,15 @@ class PythonExecutor: NSObject {
 
     func writeWorkflowOutputLog () {
         self.writeLog(prefix: "", lines: [String(repeating: "=", count: 120)])
-
-        if self.overallExitCode > 0 {
-            self.writeLog(prefix: "Result:                   ", lines: ["Error occurred, running Tasks aborted"])
+        
+        if self.executionCancel {
+            self.writeLog(prefix: "Result:                   ", lines: ["Cancelled by user"])
         } else {
-            self.writeLog(prefix: "Result:                   ", lines: ["Success"])
+            if self.overallExitCode > 0 {
+                self.writeLog(prefix: "Result:                   ", lines: ["Error occurred, running Tasks aborted"])
+            } else {
+                self.writeLog(prefix: "Result:                   ", lines: ["Success"])
+            }
         }
 
         let endTime = DispatchTime.now()
@@ -174,6 +189,10 @@ class PythonExecutor: NSObject {
                 let queue: Array = jsonObj["queue"].arrayValue
                 let queueCount = queue.count
                 for (taskNumber, queueItem) in queue.enumerated() {
+                    // Check if user clicked cancel in the meantime, abort before beginning work on the next Task.
+                    if self.executionCancel {
+                        break
+                    }
 
                     self.writeTaskInputLog(queueItem: queueItem,
                                            queueCount: queueCount,
@@ -197,13 +216,13 @@ class PythonExecutor: NSObject {
                         break
                     }
 
-                    if taskNumber + 1 < queueCount {
-                        // +1 because taskNumber starts counting at 0 BUT queueCount at 1.
+                    if (taskNumber + 1 < queueCount) && !self.executionCancel {
+                        // taskNumber +1 because taskNumber starts counting at 0 BUT queueCount at 1.
 
-                        // Current Task's output is next Task's input.
+                        // Current Task's output directory is next Task's input directory.
                         inputPath = outputPath
 
-                        // +2 because taskNumber starts counting at 0 AND we're preparing for the follwoing Task.
+                        // +2 because taskNumber starts counting at 0 AND we're preparing for the following Task.
                         outputPath = self.prepareNextTempDir(taskNumber: taskNumber + 2)
 
                         self.writeLog(prefix: "", lines: [String(repeating: "-", count: 120)])
@@ -216,7 +235,7 @@ class PythonExecutor: NSObject {
     }
 
     func cleanUp() {
-        let statusDict:[String: String] = ["text": "Cleaning up"]
+        let statusDict:[String: String] = ["text": "Cleaning up\nPlease wait a moment"]
         NotificationCenter.default.post(name: Notification.Name("executionStatus"), object: nil, userInfo: statusDict)
         
         if !self.devModeEnabled && self.overallExitCode == 0 {

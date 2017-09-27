@@ -36,12 +36,14 @@ class ViewControllerMain: NSViewController {
     @IBOutlet weak var cancelButton: NSButton!
     
     @IBAction func onCancelButton(_ sender: NSButton) {
+        log.info("User clicked cancel button during execution.")
+        
         self.cancelButton.isEnabled = false
         
-        let statusDict: [String: String] = ["text": "Stopping ..."]
+        let statusDict: [String: String] = ["text": "Stopping\nPlease wait a moment"]
         NotificationCenter.default.post(name: Notification.Name("executionStatus"), object: nil, userInfo: statusDict)
-        // TODO implement
 
+        NotificationCenter.default.post(name: Notification.Name("executionCancel"), object: nil, userInfo: statusDict)
     }
 
     override func viewWillAppear() {
