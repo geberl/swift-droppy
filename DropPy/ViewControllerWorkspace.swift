@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import os.log
 import SSZipArchive
 
 
@@ -65,7 +66,7 @@ class ViewControllerWorkspace: NSViewController {
             do {
                 try fileManager.removeItem(atPath: zipPath)
             } catch let error {
-                log.error(error.localizedDescription)
+                os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
             }
         }
         let unzipPath: String = tempPath + "droppy-workspace-master" + "/"
@@ -73,7 +74,7 @@ class ViewControllerWorkspace: NSViewController {
             do {
                 try fileManager.removeItem(atPath: unzipPath)
             } catch let error {
-                log.error(error.localizedDescription)
+                os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
             }
         }
         
@@ -81,20 +82,20 @@ class ViewControllerWorkspace: NSViewController {
         if let asset = NSDataAsset(name: "bundled-workspace", bundle: Bundle.main) {
             do {
                 try asset.data.write(to: URL(fileURLWithPath: zipPath))
-                log.debug("Copied bundled asset to '\(zipPath)'.")
+                os_log("Copied bundled asset to '%@'.", log: logFileSystem, type: .error, zipPath)
             } catch let error {
-                log.error(error.localizedDescription)
+                os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
             }
         }
         
         // Unzip to a subfolder of the temp directory.
         SSZipArchive.unzipFile(atPath: zipPath, toDestination: tempPath)
-        log.debug("Unzipped '\(zipPath)' to '\(tempPath)'.")
+        os_log("Unzipped '%@' to '%@'.", log: logFileSystem, type: .error, zipPath, tempPath)
         
         // Copy to Workspace.
         guard let enumerator: FileManager.DirectoryEnumerator =
             fileManager.enumerator(atPath: unzipPath) else {
-                log.error("Directory not found: \(unzipPath)!")
+                os_log("Directory not found at '%@'.", log: logFileSystem, type: .error, unzipPath)
                 return
         }
 
@@ -117,13 +118,13 @@ class ViewControllerWorkspace: NSViewController {
                     do {
                         try fileManager.removeItem(at: dstURL)
                     } catch let error {
-                        log.error(error.localizedDescription)
+                        os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
                     }
                 }
                 do {
                     try fileManager.copyItem(at: srcURL, to: dstURL)
                 } catch let error {
-                    log.error(error.localizedDescription)
+                    os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
                 }
             }
         }
@@ -132,12 +133,12 @@ class ViewControllerWorkspace: NSViewController {
         do {
             try fileManager.removeItem(atPath: zipPath)
         } catch let error {
-            log.error(error.localizedDescription)
+            os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
         }
         do {
             try fileManager.removeItem(atPath: unzipPath)
         } catch let error {
-            log.error(error.localizedDescription)
+            os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
         }
         
         // Reload workflows.
@@ -147,13 +148,13 @@ class ViewControllerWorkspace: NSViewController {
     
     @IBAction func onOpenGitHubButton(_ sender: NSButton) {
         if let url = URL(string: "https://github.com/geberl/droppy-workspace"), NSWorkspace.shared().open(url) {
-            log.debug("GitHub site for droppy-workspace openened.")
+            os_log("GitHub site for droppy-workspace openened.", log: logUi, type: .debug)
         }
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
         if let url = URL(string: "https://droppyapp.com/preferences/workspace"), NSWorkspace.shared().open(url) {
-            log.debug("Documentation site for Workspace openened.")
+            os_log("Documentation site for Workspace openened.", log: logUi, type: .debug)
         }
     }
 

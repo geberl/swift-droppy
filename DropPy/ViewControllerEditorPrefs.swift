@@ -225,7 +225,7 @@ class EditorAppImageView: NSImageView {
             
             // Extract the needed value from the dictionary.
             if let iconFileName = plistData["CFBundleIconFile"] as? String {
-                log.debug("Icon file is '\(iconFileName)' in '\(plistPath)'.")
+                os_log("Icon file is '%@' according to '%@'.", log: logUi, type: .debug, iconFileName, plistPath)
                 var iconPath = appPath + "/Contents/Resources/" + iconFileName
                 
                 // Sometimes the icon name includes the ".icns" extension and sometimes not. Make sure to always include it when returning it.
