@@ -13,7 +13,7 @@ class TabViewControllerPrefs: NSTabViewController {
     
     override func viewDidAppear() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(TabViewControllerPrefs.switchToPrefTab(notification:)),
+                                               selector: #selector(TabViewControllerPrefs.switchToPrefTab),
                                                name: Notification.Name("switchToPrefTab"),
                                                object: nil)
     }
@@ -48,7 +48,7 @@ class TabViewControllerPrefs: NSTabViewController {
         }
     }
     
-    func switchToPrefTab(notification: Notification) {
+    func switchToPrefTab(_ notification: Notification) {
         guard let index: Int = notification.userInfo?["index"] as? Int else { return }
         tabView.selectTabViewItem(at: index)
         

@@ -40,42 +40,42 @@ class WindowControllerMain: NSWindowController {
 
     override func windowWillLoad() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.refreshToolbarDropdown(notification:)),
+                                               selector: #selector(WindowControllerMain.refreshToolbarDropdown),
                                                name: Notification.Name("workflowsChanged"),
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.disableToolbar(notification:)),
+                                               selector: #selector(WindowControllerMain.disableToolbar),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.enableToolbar(notification:)),
+                                               selector: #selector(WindowControllerMain.enableToolbar),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.evaluateWorkflowResults(notification:)),
+                                               selector: #selector(WindowControllerMain.evaluateWorkflowResults),
                                                name: Notification.Name("executionFinished"),
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.updateErrorAlert(notification:)),
+                                               selector: #selector(WindowControllerMain.updateErrorAlert),
                                                name: Notification.Name("updateError"),
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.updateNotAvailableAlert(notification:)),
+                                               selector: #selector(WindowControllerMain.updateNotAvailableAlert),
                                                name: Notification.Name("updateNotAvailable"),
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.updateAvailableAlert(notification:)),
+                                               selector: #selector(WindowControllerMain.updateAvailableAlert),
                                                name: Notification.Name("updateAvailable"),
                                                object: nil)
     }
     
-    func disableToolbar(notification: Notification){
+    func disableToolbar(_ notification: Notification){
         for menuItem in ToolbarDropdown.items {
             menuItem.isEnabled = false
         }
@@ -84,7 +84,7 @@ class WindowControllerMain: NSWindowController {
         actionButtons.setEnabled(false, forSegment: 2)
     }
     
-    func enableToolbar(notification: Notification){
+    func enableToolbar(_ notification: Notification){
         for menuItem in ToolbarDropdown.items {
             menuItem.isEnabled = true
         }
@@ -93,11 +93,11 @@ class WindowControllerMain: NSWindowController {
         actionButtons.setEnabled(true, forSegment: 2)
     }
 
-    func refreshToolbarDropdown(notification: Notification){
-        self.refreshToolbarDropdown()
+    func refreshToolbarDropdown(_ notification: Notification){
+        self.refreshToolbar()
     }
 
-    func refreshToolbarDropdown() {
+    func refreshToolbar() {
         // Start fresh with an empty dropdown.
         ToolbarDropdown.removeAllItems()
 
@@ -234,7 +234,7 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
-    func evaluateWorkflowResults(notification: Notification) {
+    func evaluateWorkflowResults(_ notification: Notification) {
         guard let logFilePath = notification.userInfo?["logFilePath"] as? String else { return }
         guard let tempPath = notification.userInfo?["tempPath"] as? String else { return }
         guard let dropExitCode = notification.userInfo?["dropExitCode"] as? String else { return }
@@ -269,7 +269,7 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
-    func updateErrorAlert(notification: Notification) {
+    func updateErrorAlert(_ notification: Notification) {
         let errorAlert = NSAlert()
         errorAlert.showsHelp = false
         errorAlert.messageText = "Unable to check for updates"
@@ -287,7 +287,7 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
-    func updateNotAvailableAlert(notification: Notification) {
+    func updateNotAvailableAlert(_ notification: Notification) {
         guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }
         guard let thisVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
         
@@ -307,7 +307,7 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
-    func updateAvailableAlert(notification: Notification) {
+    func updateAvailableAlert(_ notification: Notification) {
         guard let thisVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
         guard let newVersionString = notification.userInfo?["versionString"] as? String else { return }
         guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }

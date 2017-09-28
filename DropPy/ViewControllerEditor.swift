@@ -19,8 +19,9 @@ class ViewControllerEditor: NSViewController {
         self.correctTextViewBehavior()
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerEditor.loadFile(notification:)),
-                                               name: Notification.Name("loadFileInEditor"), object: nil)
+                                               selector: #selector(ViewControllerEditor.loadFile),
+                                               name: Notification.Name("loadFileInEditor"),
+                                               object: nil)
     }
 
     @IBOutlet weak var pathLabel: NSTextField!
@@ -58,7 +59,7 @@ class ViewControllerEditor: NSViewController {
         }
     }
     
-    func loadFile(notification: Notification) {
+    func loadFile(_ notification: Notification) {
         // Extract path String from Notification.
         if let path = notification.userInfo?["path"] as? String {
             self.jsonPath = path

@@ -15,12 +15,12 @@ class WindowControllerRegistration: NSWindowController {
         self.window?.center()
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerRegistration.closeWindow(notification:)),
+                                               selector: #selector(WindowControllerRegistration.closeWindow),
                                                name: Notification.Name("closeRegistration"),
                                                object: nil)
     }
     
-    func closeWindow(notification: Notification?) {
+    func closeWindow(_ notification: Notification?) {
         self.close()
     }
 }

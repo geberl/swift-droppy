@@ -45,7 +45,7 @@ class ViewControllerEditorPrefs: NSViewController {
         self.loadSettings()
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerEditorPrefs.onEditorDropped(notification:)),
+                                               selector: #selector(ViewControllerEditorPrefs.onEditorDropped),
                                                name: Notification.Name("editorDropped"),
                                                object: nil)
     }
@@ -77,7 +77,7 @@ class ViewControllerEditorPrefs: NSViewController {
         }
     }
     
-    func onEditorDropped(notification: Notification) {
+    func onEditorDropped(_ notification: Notification) {
         self.workflowEditorExternalTextEditor.isEnabled = true
         self.taskEditorExternalTextEditor.isEnabled = true
         

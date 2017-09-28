@@ -15,12 +15,12 @@ class WindowControllerEditor: NSWindowController {
         self.window?.center()
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerEditor.closeWindow(notification:)),
+                                               selector: #selector(WindowControllerEditor.closeWindow),
                                                name: Notification.Name("closeEditor"),
                                                object: nil)
     }
     
-    func closeWindow(notification: Notification) {
+    func closeWindow(_ notification: Notification) {
         self.close()
     }
 

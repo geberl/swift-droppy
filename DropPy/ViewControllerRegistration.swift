@@ -61,7 +61,7 @@ class ViewControllerRegistration: NSViewController {
     
     override func viewDidLoad() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerRegistration.reopenPurchaseSheet(notification:)),
+                                               selector: #selector(ViewControllerRegistration.reopenPurchaseSheet),
                                                name: Notification.Name("reopenPurchaseSheet"),
                                                object: nil)
     }
@@ -136,7 +136,7 @@ class ViewControllerRegistration: NSViewController {
         self.applyButton.title = "Check License"
     }
     
-    func reopenPurchaseSheet(notification: Notification?) {
+    func reopenPurchaseSheet(_ notification: Notification?) {
         let parentWindow = self.view.window!
         if parentWindow.sheets.count == 0 {
             self.showPurchaseSheet()

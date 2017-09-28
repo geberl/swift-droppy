@@ -33,6 +33,7 @@
 		A48706381F567D5B005EF67C /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A48706371F567D5B005EF67C /* Registration.storyboard */; };
 		A487063A1F568065005EF67C /* ViewControllerRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48706391F568065005EF67C /* ViewControllerRegistration.swift */; };
 		A487063C1F5680A2005EF67C /* WindowControllerRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A487063B1F5680A2005EF67C /* WindowControllerRegistration.swift */; };
+		A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B73C3F1F7D0E6200087A10 /* Notifications.swift */; };
 		A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */; };
 		A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */; };
 		A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */; };
@@ -124,6 +125,7 @@
 		A48706371F567D5B005EF67C /* Registration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
 		A48706391F568065005EF67C /* ViewControllerRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerRegistration.swift; sourceTree = "<group>"; };
 		A487063B1F5680A2005EF67C /* WindowControllerRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerRegistration.swift; sourceTree = "<group>"; };
+		A4B73C3F1F7D0E6200087A10 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerGeneral.swift; sourceTree = "<group>"; };
 		A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerInterpreter.swift; sourceTree = "<group>"; };
 		A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWorkspace.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 			children = (
 				A46393301E8FDA40000C7BDB /* AppDelegate.swift */,
 				A41A701A1F57354100117E18 /* Common.swift */,
+				A4B73C3F1F7D0E6200087A10 /* Notifications.swift */,
 				A482D9E81F7A776E000B02A4 /* DropHandler.swift */,
 				A4C61CF01F56982900759F57 /* PythonExecutor.swift */,
 				A401DBF31F71292400A12302 /* Prefs.swift */,
@@ -595,6 +598,7 @@
 				A482D9E91F7A776E000B02A4 /* DropHandler.swift in Sources */,
 				A487063C1F5680A2005EF67C /* WindowControllerRegistration.swift in Sources */,
 				A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */,
+				A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,
 				A45EA3C21F7105E100EA4310 /* RegEval.swift in Sources */,
 				A4180BBF1EED312B006A4B24 /* TabViewControllerPrefs.swift in Sources */,

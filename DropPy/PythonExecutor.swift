@@ -47,12 +47,12 @@ class PythonExecutor: NSObject {
         super.init()
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(PythonExecutor.cancelExecution(notification:)),
+                                               selector: #selector(PythonExecutor.cancelExecution),
                                                name: Notification.Name("executionCancel"),
                                                object: nil)
     }
     
-    func cancelExecution(notification: Notification) {
+    func cancelExecution(_ notification: Notification) {
         self.executionCancel = true
     }
     

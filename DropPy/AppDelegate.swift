@@ -51,27 +51,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.reloadWorkflows(notification:)),
+                                               selector: #selector(AppDelegate.reloadWorkflows),
                                                name: Notification.Name("reloadWorkflows"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.startPythonExecutor(notification:)),
+                                               selector: #selector(AppDelegate.startPythonExecutor),
                                                name: Notification.Name("droppingOk"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.setNewInterpreter(notification:)),
+                                               selector: #selector(AppDelegate.setNewInterpreter),
                                                name: Notification.Name("interpreterNotFound"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.setNewEditor(notification:)),
+                                               selector: #selector(AppDelegate.setNewEditor),
                                                name: Notification.Name("editorNotFound"),
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.setNewWorkspace(notification:)),
+                                               selector: #selector(AppDelegate.setNewWorkspace),
                                                name: Notification.Name("workspaceNotFound"),
                                                object: nil)
 
@@ -98,11 +98,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationWillBecomeActive(_ notification: Notification) {
-        self.reloadWorkflows()
+        self.reloadWorkflowsFromDir()
     }
     
-    func reloadWorkflows(notification: Notification) {
-        self.reloadWorkflows()
+    func reloadWorkflows(_ notification: Notification) {
+        self.reloadWorkflowsFromDir()
     }
 
     func checkInterpreterInfo() -> (String?, String?) {
@@ -120,7 +120,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return (nil, nil)
     }
     
-    func startPythonExecutor(notification: Notification) {
+    func startPythonExecutor(_ notification: Notification) {
         // Show registration window with open pruchase sheet to user on each drop.
         // At this moment do not refuse executing, maybe later in 2.0.
         if !AppState.isInEvaluation && !AppState.isLicensed {
@@ -225,7 +225,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.preferencesWindowController.showWindow(self)
     }
     
-    func setNewInterpreter(notification: Notification) {
+    func setNewInterpreter(_ notification: Notification) {
         self.preferencesWindowController.showWindow(self)
         
         var informativeText: String = "The interpreter "
@@ -239,7 +239,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                          informativeText: informativeText)
     }
     
-    func setNewEditor(notification: Notification) {
+    func setNewEditor(_ notification: Notification) {
         self.preferencesWindowController.showWindow(self)
 
         var informativeText: String = "Your previously selected external text editor can't be found any more.\n\n"
@@ -249,7 +249,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                          informativeText: informativeText)
     }
     
-    func setNewWorkspace(notification: Notification) {
+    func setNewWorkspace(_ notification: Notification) {
         self.preferencesWindowController.showWindow(self)
         
         var informativeText: String = "The Workspace directory can't be found.\n\n"
@@ -281,7 +281,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.firstRunWindowController.showWindow(self)
     }
     
-    func reloadWorkflows() {
+    func reloadWorkflowsFromDir() {
         guard let workspacePath = checkWorkspaceInfo() else { return }
         let workflowPath: String = workspacePath + "Workflows"
         os_log("Reloading Workflows from '%@'.", log: logGeneral, type: .debug, workflowPath)
