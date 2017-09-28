@@ -32,7 +32,7 @@ class ViewControllerWorkspace: NSViewController {
         panel.allowsMultipleSelection = false
         
         panel.beginSheetModal(for: window) { (result) in
-            if result == NSFileHandlingPanelOKButton {
+            if result.rawValue == NSFileHandlingPanelOKButton {
                 let selectedFolder: URL = panel.urls[0]
                 let selectedPath: String = selectedFolder.path
                 self.workspaceDirectoryTextField.stringValue = selectedPath
@@ -79,7 +79,7 @@ class ViewControllerWorkspace: NSViewController {
         }
         
         // Copy bundled-workspace from assets to the temp directory.
-        if let asset = NSDataAsset(name: "bundled-workspace", bundle: Bundle.main) {
+        if let asset = NSDataAsset(name: NSDataAsset.Name(rawValue: "bundled-workspace"), bundle: Bundle.main) {
             do {
                 try asset.data.write(to: URL(fileURLWithPath: zipPath))
                 os_log("Copied bundled asset to '%@'.", log: logFileSystem, type: .error, zipPath)
@@ -147,13 +147,13 @@ class ViewControllerWorkspace: NSViewController {
     }
     
     @IBAction func onOpenGitHubButton(_ sender: NSButton) {
-        if let url = URL(string: "https://github.com/geberl/droppy-workspace"), NSWorkspace.shared().open(url) {
+        if let url = URL(string: "https://github.com/geberl/droppy-workspace"), NSWorkspace.shared.open(url) {
             os_log("GitHub site for droppy-workspace openened.", log: logUi, type: .debug)
         }
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://droppyapp.com/preferences/workspace"), NSWorkspace.shared().open(url) {
+        if let url = URL(string: "https://droppyapp.com/preferences/workspace"), NSWorkspace.shared.open(url) {
             os_log("Documentation site for Workspace openened.", log: logUi, type: .debug)
         }
     }

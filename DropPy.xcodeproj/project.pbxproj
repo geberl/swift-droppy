@@ -440,6 +440,7 @@
 					A463932C1E8FDA40000C7BDB = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = QEZ83PUW72;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					A463933D1E8FDA40000C7BDB = {
@@ -834,8 +835,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.droppy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -854,8 +855,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.eberl.droppy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

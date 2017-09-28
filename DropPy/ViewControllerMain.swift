@@ -30,7 +30,7 @@ class ViewControllerMain: NSViewController {
 
     @IBAction func onLogButton(_ sender: NSButton) {
         if let logFilePath = self.logFilePath {
-            NSWorkspace.shared().openFile(logFilePath)
+            NSWorkspace.shared.openFile(logFilePath)
         }
     }
     
@@ -168,11 +168,11 @@ class ViewControllerMain: NSViewController {
     }
     
     @objc func setZoneDashed(_ notification: Notification) {
-        zoneImage.image = NSImage(named: "zone-dashed")
+        zoneImage.image = NSImage(named: NSImage.Name(rawValue: "zone-dashed"))
     }
     
     @objc func setZoneLine(_ notification: Notification) {
-        zoneImage.image = NSImage(named: "zone-line")
+        zoneImage.image = NSImage(named: NSImage.Name(rawValue: "zone-line"))
     }
     
     @objc func setLogo(_ notification: Notification) {
@@ -180,7 +180,7 @@ class ViewControllerMain: NSViewController {
         logoImageView.animates = false
         
         guard let workspacePath = checkWorkspaceInfo() else {
-            logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
+            logoImage.image = self.resizeNSImage(image: NSImage(named: NSImage.Name(rawValue: "logo-default"))!, width: 128, height: 128)
             return
         }
         
@@ -190,15 +190,15 @@ class ViewControllerMain: NSViewController {
                 logoImage.image = self.resizeNSImage(image: newLogo, width:128, height:128)
             } else {
                 os_log("Can't load workflow logo from '%@'.", log: logUi, type: .error, logoPath)
-                logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
+                logoImage.image = self.resizeNSImage(image: NSImage(named: NSImage.Name(rawValue: "logo-default"))!, width: 128, height: 128)
             }
         } else {
-            logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
+            logoImage.image = self.resizeNSImage(image: NSImage(named: NSImage.Name(rawValue: "logo-default"))!, width: 128, height: 128)
         }
     }
     
     @objc func setLogoSpinner(_ notification: Notification) {
-        if let asset = NSDataAsset(name: "logo-spinner", bundle: Bundle.main) {
+        if let asset = NSDataAsset(name: NSDataAsset.Name(rawValue: "logo-spinner"), bundle: Bundle.main) {
             logoImageView.imageScaling = NSImageScaling.scaleNone
             logoImageView.animates = true
             logoImage.image = NSImage(data: asset.data)
@@ -206,9 +206,9 @@ class ViewControllerMain: NSViewController {
     }
     
     @objc func setZoneLogoError(_ notification: Notification) {
-        logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!,
+        logoImage.image = self.resizeNSImage(image: NSImage(named: NSImage.Name(rawValue: "error"))!,
                                              width: 128, height: 128)
-        zoneImage.image = NSImage(named: "zone-error")
+        zoneImage.image = NSImage(named: NSImage.Name(rawValue: "zone-error"))
     }
     
     func resizeNSImage(image: NSImage, width: Int, height: Int) -> NSImage {

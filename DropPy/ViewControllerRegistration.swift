@@ -152,17 +152,17 @@ class ViewControllerRegistration: NSViewController {
         purchaseAlert.addButton(withTitle: "Purchase")
         purchaseAlert.addButton(withTitle: "Cancel")
         purchaseAlert.layout()
-        purchaseAlert.icon = NSImage(named: "AppIcon")
+        purchaseAlert.icon = NSImage(named: NSImage.Name(rawValue: "AppIcon"))
 
         purchaseAlert.beginSheetModal(for: self.view.window!, completionHandler: { [unowned self] (returnCode) -> Void in
-            if returnCode == NSAlertFirstButtonReturn {
+            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
                 self.openPurchaseWebsite()
             }
         })
     }
     
     func openPurchaseWebsite() {
-        if let url = URL(string: "https://droppyapp.com/"), NSWorkspace.shared().open(url) {
+        if let url = URL(string: "https://droppyapp.com/"), NSWorkspace.shared.open(url) {
             os_log("Main website opened.", log: logUi, type: .debug)
         }
     }
@@ -183,7 +183,7 @@ class ViewControllerRegistration: NSViewController {
         validAlert.informativeText = "You are now registered."
         validAlert.addButton(withTitle: "Ok")
         validAlert.layout()
-        validAlert.icon = NSImage(named: "confirmation")
+        validAlert.icon = NSImage(named: NSImage.Name(rawValue: "confirmation"))
         validAlert.beginSheetModal(for: self.view.window!)
     }
     
@@ -194,7 +194,7 @@ class ViewControllerRegistration: NSViewController {
         invalidAlert.informativeText = informativeText
         invalidAlert.addButton(withTitle: "Ok")
         invalidAlert.layout()
-        invalidAlert.icon = NSImage(named: "error")
+        invalidAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
         invalidAlert.beginSheetModal(for: self.view.window!)
     }
     
@@ -206,11 +206,11 @@ class ViewControllerRegistration: NSViewController {
         removeAlert.addButton(withTitle: "Remove")
         removeAlert.addButton(withTitle: "Cancel")
         removeAlert.layout()
-        removeAlert.alertStyle = NSAlertStyle.critical
-        removeAlert.icon = NSImage(named: "alert")
+        removeAlert.alertStyle = NSAlert.Style.critical
+        removeAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
         
-        removeAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
-            if returnCode == NSAlertFirstButtonReturn {
+        removeAlert.beginSheetModal(for: NSApplication.shared.mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
                 self.clearRegValues()
                 self.setUnlicensedValues()
             }

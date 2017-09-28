@@ -72,7 +72,7 @@ class ViewControllerEditorPrefs: NSViewController {
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://droppyapp.com/preferences/editor"), NSWorkspace.shared().open(url) {
+        if let url = URL(string: "https://droppyapp.com/preferences/editor"), NSWorkspace.shared.open(url) {
             os_log("Documentation site for Editor openened.", log: logUi, type: .debug)
         }
     }
@@ -134,7 +134,7 @@ class EditorAppImageView: NSImageView {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        register(forDraggedTypes: [NSFilenamesPboardType])
+        registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: "public.executable")])
     }
 
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
@@ -154,7 +154,7 @@ class EditorAppImageView: NSImageView {
     func containsPasteboardType(sender: NSDraggingInfo, pasteboardType: String) -> Bool {
         let pasteboard = sender.draggingPasteboard()
         
-        if pasteboard.types?.contains(pasteboardType) == true {
+        if pasteboard.types?.contains(NSPasteboard.PasteboardType(rawValue: pasteboardType)) == true {
             return true
         } else {
             os_log("Type doesn't contain '%@'.", log: logUi, type: .debug, pasteboardType)
@@ -163,7 +163,7 @@ class EditorAppImageView: NSImageView {
     }
     
     func countNumberOfItems(sender: NSDraggingInfo, pasteboardType: String) -> Int {
-        if let board = sender.draggingPasteboard().propertyList(forType: pasteboardType) as? NSArray {
+        if let board = sender.draggingPasteboard().propertyList(forType: NSPasteboard.PasteboardType(rawValue: pasteboardType)) as? NSArray {
             let itemsCount = board.count
             return itemsCount
         } else {
@@ -173,7 +173,7 @@ class EditorAppImageView: NSImageView {
     }
     
     func getFileExtension(sender: NSDraggingInfo) -> String {
-        if let board = sender.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
+        if let board = sender.draggingPasteboard().propertyList(forType: NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")) as? NSArray {
             if board.count == 1 {
                 let fileExtension = (board[0] as! NSString).pathExtension
                 return fileExtension
@@ -188,7 +188,7 @@ class EditorAppImageView: NSImageView {
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        if let board = sender.draggingPasteboard().propertyList(forType: "NSFilenamesPboardType") as? NSArray {
+        if let board = sender.draggingPasteboard().propertyList(forType: NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")) as? NSArray {
             if board.count == 1 {
                 self.appPath = board[0] as! String
                 self.iconPath = getAppIconPath(appPath: appPath)

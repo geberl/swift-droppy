@@ -34,7 +34,7 @@ class WindowControllerMain: NSWindowController {
     }
 
     lazy var editorWindowController: WindowControllerEditor  = {
-        let wcSB = NSStoryboard(name: "Editor", bundle: Bundle.main)
+        let wcSB = NSStoryboard(name: NSStoryboard.Name(rawValue: "Editor"), bundle: Bundle.main)
         return wcSB.instantiateInitialController() as! WindowControllerEditor
     }()
 
@@ -157,7 +157,7 @@ class WindowControllerMain: NSWindowController {
         guard let workspacePath = checkWorkspaceInfo() else { return }
         guard let jsonFile: String = AppState.activeJsonFile else { return }
 
-        NSWorkspace.shared().selectFile(workspacePath + "Workflows" + "/" + jsonFile,
+        NSWorkspace.shared.selectFile(workspacePath + "Workflows" + "/" + jsonFile,
                                         inFileViewerRootedAtPath: workspacePath)
     }
 
@@ -185,7 +185,7 @@ class WindowControllerMain: NSWindowController {
                 guard let editorAppPath: String = self.userDefaults.string(forKey: UserDefaultStruct.editorAppPath) else { return }
                 if isDir(path: editorAppPath) {
                     // Passing custom parameters to the external editor is currently not possible.
-                    NSWorkspace.shared().openFile(jsonPath, withApplication: editorAppPath)
+                    NSWorkspace.shared.openFile(jsonPath, withApplication: editorAppPath)
                 } else {
                     NotificationCenter.default.post(name: Notification.Name("editorNotFound"), object: nil)
                 }
@@ -254,18 +254,18 @@ class WindowControllerMain: NSWindowController {
         errorAlert.addButton(withTitle: "Open temp dir")
         errorAlert.addButton(withTitle: "Open log file")
         errorAlert.layout()
-        errorAlert.alertStyle = NSAlertStyle.warning
-        errorAlert.icon = NSImage(named: "error")
-        let response: NSModalResponse = errorAlert.runModal()
+        errorAlert.alertStyle = NSAlert.Style.warning
+        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
+        let response: NSApplication.ModalResponse = errorAlert.runModal()
 
-        if response == NSAlertFirstButtonReturn {
+        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
             // Do nothing when clicked ok.
-        } else if response == NSAlertSecondButtonReturn {
+        } else if response == NSApplication.ModalResponse.alertSecondButtonReturn {
             // Open temp dir in finder.
-            NSWorkspace.shared().selectFile(logFilePath, inFileViewerRootedAtPath: tempPath)
-        } else if response == NSAlertThirdButtonReturn {
+            NSWorkspace.shared.selectFile(logFilePath, inFileViewerRootedAtPath: tempPath)
+        } else if response == NSApplication.ModalResponse.alertThirdButtonReturn {
             // Open log file in user editor.
-            NSWorkspace.shared().openFile(logFilePath)
+            NSWorkspace.shared.openFile(logFilePath)
         }
     }
 
@@ -277,13 +277,13 @@ class WindowControllerMain: NSWindowController {
         errorAlert.addButton(withTitle: "Visit Website")
         errorAlert.addButton(withTitle: "Cancel")
         errorAlert.layout()
-        errorAlert.alertStyle = NSAlertStyle.warning
-        errorAlert.icon = NSImage(named: "error")
+        errorAlert.alertStyle = NSAlert.Style.warning
+        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
 
-        let response: NSModalResponse = errorAlert.runModal()
+        let response: NSApplication.ModalResponse = errorAlert.runModal()
 
-        if response == NSAlertFirstButtonReturn {
-            guard let url = URL(string: "https://droppyapp.com/"), NSWorkspace.shared().open(url) else { return }
+        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
+            guard let url = URL(string: "https://droppyapp.com/"), NSWorkspace.shared.open(url) else { return }
         }
     }
 
@@ -298,12 +298,12 @@ class WindowControllerMain: NSWindowController {
         errorAlert.addButton(withTitle: "Ok")
         errorAlert.addButton(withTitle: "Release Notes")
         errorAlert.layout()
-        errorAlert.icon = NSImage(named: "AppIcon")
+        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "AppIcon"))
         
-        let response: NSModalResponse = errorAlert.runModal()
+        let response: NSApplication.ModalResponse = errorAlert.runModal()
         
-        if response == NSAlertSecondButtonReturn {
-            guard let url = URL(string: releaseNotesLink), NSWorkspace.shared().open(url) else { return }
+        if response == NSApplication.ModalResponse.alertSecondButtonReturn {
+            guard let url = URL(string: releaseNotesLink), NSWorkspace.shared.open(url) else { return }
         }
     }
 
@@ -321,13 +321,13 @@ class WindowControllerMain: NSWindowController {
         errorAlert.addButton(withTitle: "What's new?")
         errorAlert.addButton(withTitle: "Cancel")
         errorAlert.layout()
-        errorAlert.icon = NSImage(named: "AppIcon")
-        let response: NSModalResponse = errorAlert.runModal()
+        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "AppIcon"))
+        let response: NSApplication.ModalResponse = errorAlert.runModal()
 
-        if response == NSAlertFirstButtonReturn {
-            guard let url = URL(string: downloadLink), NSWorkspace.shared().open(url) else { return }
-        } else if response == NSAlertSecondButtonReturn {
-            guard let url = URL(string: releaseNotesLink), NSWorkspace.shared().open(url) else { return }
+        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
+            guard let url = URL(string: downloadLink), NSWorkspace.shared.open(url) else { return }
+        } else if response == NSApplication.ModalResponse.alertSecondButtonReturn {
+            guard let url = URL(string: releaseNotesLink), NSWorkspace.shared.open(url) else { return }
         }
     }
 }

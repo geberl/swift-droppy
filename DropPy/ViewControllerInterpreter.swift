@@ -129,7 +129,7 @@ class ViewControllerInterpreter: NSViewController {
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://droppyapp.com/preferences/interpreter"), NSWorkspace.shared().open(url) {
+        if let url = URL(string: "https://droppyapp.com/preferences/interpreter"), NSWorkspace.shared.open(url) {
             os_log("Documentation site for Interpreter openened.", log: logUi, type: .debug)
         }
     }
@@ -142,7 +142,7 @@ class ViewControllerInterpreter: NSViewController {
     
     func updateProperties() {
         if let selectedInterpreterIndex = tableView.selectedRowIndexes.first {
-            // There is an item selected in the tableView.
+            os_log("Selected interpreter item %d.", log: logUi, type: .debug, selectedInterpreterIndex)
             
             if let allInterpreterDict: Dictionary = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) {
                 let selectedInterpreterName:String = self.interpreterNames[selectedInterpreterIndex]
@@ -192,13 +192,16 @@ class ViewControllerInterpreter: NSViewController {
                 }
             }
         } else {
-            
-            // No item is selected in the tableView.
+            os_log("No interpreter is selected.", log: logUi, type: .debug)
+
             self.executableTextField.stringValue = ""
             self.argumentsTextField.stringValue = ""
             
-            self.executableTextField.isEnabled = true
-            self.argumentsTextField.isEnabled = true
+            self.executableTextField.isEditable = false
+            self.argumentsTextField.isEditable = false
+            
+            self.executableTextField.isSelectable = false
+            self.argumentsTextField.isSelectable = false
             
             self.infoVersionTextField.stringValue = ""
             self.infoVersionTextField.isEnabled = false
@@ -349,9 +352,9 @@ class ViewControllerInterpreter: NSViewController {
         myAlert.informativeText = explanation
         myAlert.addButton(withTitle: "Ok")
         myAlert.layout()
-        myAlert.alertStyle = NSAlertStyle.warning
-        myAlert.icon = NSImage(named: "error")
-        myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!)
+        myAlert.alertStyle = NSAlert.Style.warning
+        myAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
+        myAlert.beginSheetModal(for: NSApplication.shared.mainWindow!)
     }
 
     func criticalAlert(title: String, explanation: String, confirmButtonText: String, confirmFunction: @escaping () -> Void) {
@@ -362,11 +365,11 @@ class ViewControllerInterpreter: NSViewController {
         criticalAlert.addButton(withTitle: confirmButtonText)
         criticalAlert.addButton(withTitle: "Cancel")
         criticalAlert.layout()
-        criticalAlert.alertStyle = NSAlertStyle.critical
-        criticalAlert.icon = NSImage(named: "alert")
+        criticalAlert.alertStyle = NSAlert.Style.critical
+        criticalAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
         
-        criticalAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
-            if returnCode == NSAlertFirstButtonReturn {
+        criticalAlert.beginSheetModal(for: NSApplication.shared.mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
                 confirmFunction()
             }
         })
@@ -401,7 +404,7 @@ extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
         }
         
         // Gets a cell view, creates or reuse cell with identifier, then fills it with the information provided in the previous step and return it.
-        if let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
+        if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier), owner: nil) as? NSTableCellView {
             cell.textField?.stringValue = text
             
             if text == AppState.interpreterStockName {
@@ -422,13 +425,14 @@ extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
         
         // A change of selection can also be the first step of an editing session. Watch out for this.
         self.selectedRow = self.tableView.selectedRow
-        
+        os_log("Table selection did change. Selected row now: %d.", log: logUi, type: .debug, self.selectedRow)
+
         // When no row is selected, the index is -1.
         if (self.selectedRow > -1) {
-            let selectedCell = self.tableView.view(atColumn: self.tableView.column(withIdentifier: CellIdentifiers.NameCell),
+            let selectedCell = self.tableView.view(atColumn: 0,
                                                    row: self.selectedRow,
                                                    makeIfNecessary: true) as! NSTableCellView
-            
+
             // Get the textField to detect and add it the delegate.
             let textField = selectedCell.textField
             textField?.delegate = self

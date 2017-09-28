@@ -25,17 +25,17 @@ class DragDropView: NSView {
 
         // Register all base types here to automatically allow all child types.
         // So basicall everything that has '-' in its "conforms to" column in the documentation.
-        register(forDraggedTypes: [
-            "public.item",              // Base type for the physical hierarchy.
-            "public.content",           // Base type for all document content.
-            "public.database",          // Base functional type for databases.
-            "public.calendar-event",    // Base functional type for scheduled events.
-            "public.message",           // Base type for messages (email, IM, and so on).
-            "public.contact",           // Base type for contact information.
-            "public.archive",           // Base type for an archive of files and directories.
-            "public.url-name",          // URL name.
-            "public.executable",        // Base type for executable data.
-            "com.apple.resolvable"      // Items that the Alias Manager can resolve.
+        registerForDraggedTypes([
+            NSPasteboard.PasteboardType(rawValue: "public.item"),              // Base type for the physical hierarchy.
+            NSPasteboard.PasteboardType(rawValue: "public.content"),           // Base type for all document content.
+            NSPasteboard.PasteboardType(rawValue: "public.database"),          // Base functional type for databases.
+            NSPasteboard.PasteboardType(rawValue: "public.calendar-event"),    // Base functional type for scheduled events.
+            NSPasteboard.PasteboardType(rawValue: "public.message"),           // Base type for messages (email, IM, and so on).
+            NSPasteboard.PasteboardType(rawValue: "public.contact"),           // Base type for contact information.
+            NSPasteboard.PasteboardType(rawValue: "public.archive"),           // Base type for an archive of files and directories.
+            NSPasteboard.PasteboardType(rawValue: "public.url-name"),          // URL name.
+            NSPasteboard.PasteboardType(rawValue: "public.executable"),        // Base type for executable data.
+            NSPasteboard.PasteboardType(rawValue: "com.apple.resolvable")      // Items that the Alias Manager can resolve.
             ])
     }
 

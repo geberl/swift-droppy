@@ -159,7 +159,7 @@ func loadWindowPosition() {
 
 
 func getWindowPosition() -> (Int, Int) {
-    let window = NSApplication.shared().windows.first
+    let window = NSApplication.shared.windows.first
     let positionX: Int =  Int(window!.frame.origin.x)
     let positionY: Int = Int(window!.frame.origin.y)
     // log.debug("getWindowPosition: X: \(positionX), Y: \(positionY)")
@@ -169,14 +169,14 @@ func getWindowPosition() -> (Int, Int) {
 
 func setWindowPosition(positionX: Int, positionY: Int) {
     let position = NSPoint(x: positionX, y: positionY)
-    guard let window = NSApplication.shared().windows.first else { return }
+    guard let window = NSApplication.shared.windows.first else { return }
     window.setFrameOrigin(position)
     // log.debug(String(format: "setWindowPosition: X: %.0f, Y: %.0f", window.frame.origin.x, window.frame.origin.y))
 }
 
 
 func getScreenResolution() -> (Int, Int) {
-    let scrn: NSScreen = NSScreen.main()!
+    let scrn: NSScreen = NSScreen.main!
     let rect: NSRect = scrn.frame
     let height = rect.size.height
     let width = rect.size.width

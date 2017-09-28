@@ -22,7 +22,7 @@ class ViewControllerGeneral: NSViewController {
     @IBOutlet weak var radioEnableDevMode: NSButton!
 
     @IBAction func onRadioEnableDevMode(_ sender: Any) {
-        let devModeEnabled = Bool(self.radioEnableDevMode.state as NSNumber)
+        let devModeEnabled = Bool(truncating: self.radioEnableDevMode.state as NSNumber)
         self.userDefaults.set(devModeEnabled, forKey: UserDefaultStruct.devModeEnabled)
 
         self.adjustIntermediaryFilesLabel()
@@ -61,13 +61,13 @@ class ViewControllerGeneral: NSViewController {
     }
 
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://droppyapp.com/preferences/general"), NSWorkspace.shared().open(url) {
+        if let url = URL(string: "https://droppyapp.com/preferences/general"), NSWorkspace.shared.open(url) {
             os_log("Documentation site for General openened.", log: logUi, type: .debug)
         }
     }
 
     func loadSettings() {
-        self.radioEnableDevMode.state = Int(userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled) as NSNumber)
+        self.radioEnableDevMode.state = NSControl.StateValue(rawValue: Int(truncating: userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled) as NSNumber))
         self.adjustIntermediaryFilesLabel()
 
         let updateDelta: Int = userDefaults.integer(forKey: UserDefaultStruct.updateDelta)
@@ -83,7 +83,7 @@ class ViewControllerGeneral: NSViewController {
     }
 
     func adjustIntermediaryFilesLabel() {
-        if self.radioEnableDevMode.state == 1 {
+        if self.radioEnableDevMode.state.rawValue == 1 {
             guard let workspacePath = checkWorkspaceInfo() else { return }
             let intermediaryFilesDir: String = workspacePath + "Temp" + "/"
             self.intermediaryFilesTextField.stringValue = "Intermediary files will be saved to:\n\"\(intermediaryFilesDir)\""
@@ -100,11 +100,11 @@ class ViewControllerGeneral: NSViewController {
         myAlert.addButton(withTitle: "Delete")
         myAlert.addButton(withTitle: "Cancel")
         myAlert.layout()
-        myAlert.alertStyle = NSAlertStyle.critical
-        myAlert.icon = NSImage(named: "alert")
+        myAlert.alertStyle = NSAlert.Style.critical
+        myAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
 
-        myAlert.beginSheetModal(for: NSApplication.shared().mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
-            if returnCode == NSAlertFirstButtonReturn {
+        myAlert.beginSheetModal(for: NSApplication.shared.mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
                 self.removeTempDir(tempPath: tempPath)
                 // Call workflowSelectionChanged to make sure the log button is not visible any more.
                 NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)

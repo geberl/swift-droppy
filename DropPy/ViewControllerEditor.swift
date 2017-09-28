@@ -81,7 +81,7 @@ class ViewControllerEditor: NSViewController {
         let newCompleteRange = NSRange(location: 0, length: with.characters.count)
         let newContent = NSMutableAttributedString(string: with)
         if let monoFont = NSFont(name: "Menlo", size: 12) {
-            newContent.setAttributes([NSFontAttributeName: monoFont], range: newCompleteRange)
+            newContent.setAttributes([NSAttributedStringKey.font: monoFont], range: newCompleteRange)
         }
         
         self.textView.insertText(newContent, replacementRange: previousCompleteRange)

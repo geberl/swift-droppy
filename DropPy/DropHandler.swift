@@ -102,7 +102,7 @@ class DropHandler: NSObject {
         // No luck getting this to work with "public.file-url" instead of "NSFilenamesPboardType"
         // https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/AccessingFilesandDirectories/AccessingFilesandDirectories.html
 
-        if let filePathsArray = self.draggingPasteboard.propertyList(forType: "NSFilenamesPboardType") as? NSArray {
+        if let filePathsArray = self.draggingPasteboard.propertyList(forType: NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")) as? NSArray {
             if let filePaths = filePathsArray as? [String] {
                 return filePaths
             }
@@ -113,8 +113,8 @@ class DropHandler: NSObject {
     func getUtiTypes() {
         if let types = self.draggingPasteboard.types {
             for type in types {
-                if self.isUtiType(typeName: type) {
-                    self.utiTypes.append(type)
+                if self.isUtiType(typeName: type.rawValue) {
+                    self.utiTypes.append(type.rawValue)
                 }
             }
         } else {
@@ -337,7 +337,7 @@ class DropHandler: NSObject {
                                                      ]
 
         for dataType in self.utiTypes {
-            if let data = self.draggingPasteboard.data(forType: dataType) {
+            if let data = self.draggingPasteboard.data(forType: NSPasteboard.PasteboardType(rawValue: dataType)) {
                 do {
                     var fileExtension: String = "txt"
                     if knownUtiDataTypes[dataType] != nil {

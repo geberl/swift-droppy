@@ -164,7 +164,7 @@ class PythonExecutor: NSObject {
 
     func run() {
         // Copy run.py from assets to the temp directory.
-        if let asset = NSDataAsset(name: "run", bundle: Bundle.main) {
+        if let asset = NSDataAsset(name: NSDataAsset.Name(rawValue: "run"), bundle: Bundle.main) {
             do {
                 try asset.data.write(to: URL(fileURLWithPath: self.runnerPath))
             } catch {
