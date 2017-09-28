@@ -46,10 +46,8 @@ class PythonExecutor: NSObject {
 
         super.init()
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(PythonExecutor.cancelExecution),
-                                               name: Notification.Name("executionCancel"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PythonExecutor.cancelExecution),
+                                               name: .executionCancel, object: nil)
     }
     
     @objc func cancelExecution(_ notification: Notification) {
@@ -136,9 +134,7 @@ class PythonExecutor: NSObject {
         self.writeLog(prefix: "  Input Path:             ", lines: [inputPath])
         self.writeLog(prefix: "  Output Path:            ", lines: [outputPath])
 
-        self.sendTaskStatusNotification(taskNumber: taskNumber,
-                                        taskName: taskName,
-                                        queueCount: queueCount)
+        self.sendTaskStatusNotification(taskNumber: taskNumber, taskName: taskName, queueCount: queueCount)
     }
 
     func writeTaskOutputLog(out: [String], err: [String], exit: Int32) {
@@ -157,9 +153,7 @@ class PythonExecutor: NSObject {
     func sendTaskStatusNotification(taskNumber: Int, taskName: String, queueCount: Int) {
         let statusText = "Task " + String(taskNumber + 1) + "/" + String(queueCount) + "\n" + taskName
         let statusDict:[String: String] = ["text": statusText]
-        NotificationCenter.default.post(name: Notification.Name("executionStatus"),
-                                        object: nil,
-                                        userInfo: statusDict)
+        NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
     }
 
     func run() {
@@ -237,7 +231,7 @@ class PythonExecutor: NSObject {
 
     func cleanUp() {
         let statusDict:[String: String] = ["text": "Cleaning up\nPlease wait a moment"]
-        NotificationCenter.default.post(name: Notification.Name("executionStatus"), object: nil, userInfo: statusDict)
+        NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
         
         if !self.devModeEnabled && self.overallExitCode == 0 {
             let fileManager = FileManager.default

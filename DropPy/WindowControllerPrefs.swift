@@ -10,7 +10,7 @@ import Cocoa
 
 
 class WindowControllerPrefs: NSWindowController {
-
+    
     override func windowDidLoad() {
         super.windowDidLoad()
         self.window?.setFrame(NSMakeRect(0.0, 0.0, 750, 230), display: true)
@@ -21,8 +21,6 @@ class WindowControllerPrefs: NSWindowController {
         let userInfo:[String: Any] = ["index": index,
                                       "messageText": messageText,
                                       "informativeText": informativeText]
-        
-        NotificationCenter.default.post(name: Notification.Name("switchToPrefTab"), object: nil, userInfo: userInfo)
+        NotificationCenter.default.post(name: .switchToPrefTab, object: nil, userInfo: userInfo)
     }
-
 }

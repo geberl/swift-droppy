@@ -12,10 +12,8 @@ import Cocoa
 class TabViewControllerPrefs: NSTabViewController {
     
     override func viewDidAppear() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(TabViewControllerPrefs.switchToPrefTab),
-                                               name: Notification.Name("switchToPrefTab"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabViewControllerPrefs.switchToPrefTab),
+                                               name: .switchToPrefTab, object: nil)
     }
     
     lazy var originalSizes = [String : NSSize]()

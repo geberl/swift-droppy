@@ -18,10 +18,8 @@ class ViewControllerEditor: NSViewController {
         super.viewWillAppear()
         self.correctTextViewBehavior()
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerEditor.loadFile),
-                                               name: Notification.Name("loadFileInEditor"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerEditor.loadFile),
+                                               name: .loadFileInEditor, object: nil)
     }
 
     @IBOutlet weak var pathLabel: NSTextField!
@@ -30,14 +28,14 @@ class ViewControllerEditor: NSViewController {
 
     @IBAction func onCancelButton(_ sender: Any) {
         self.replaceEditorContent(with: "")
-        NotificationCenter.default.post(name: Notification.Name("closeEditor"), object: nil)
+        NotificationCenter.default.post(name: .closeEditor, object: nil)
     }
 
     @IBAction func onSaveButton(_ sender: Any) {
         self.saveFile()
         self.replaceEditorContent(with: "")
-        NotificationCenter.default.post(name: Notification.Name("reloadWorkflows"), object: nil)
-        NotificationCenter.default.post(name: Notification.Name("closeEditor"), object: nil)
+        NotificationCenter.default.post(name: .reloadWorkflows, object: nil)
+        NotificationCenter.default.post(name: .closeEditor, object: nil)
     }
 
     func setPathLabel(path: String) {

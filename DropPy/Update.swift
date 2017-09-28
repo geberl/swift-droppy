@@ -29,7 +29,7 @@ func manualUpdate(silent: Bool) {
     if !isConnectedToNetwork() {
         os_log("No network connection available, skipping update check.", log: logUpdate, type: .info)
         if !silent {
-            NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
+            NotificationCenter.default.post(name: .updateError, object: nil)
         }
         return
     }
@@ -45,7 +45,7 @@ func manualUpdate(silent: Bool) {
             os_log("Checking for updates: Server did not respond.", log: logUpdate, type: .info)
             DispatchQueue.main.async {
                 if !silent {
-                    NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
+                    NotificationCenter.default.post(name: .updateError, object: nil)
                 }
             }
             return
@@ -55,7 +55,7 @@ func manualUpdate(silent: Bool) {
             os_log("Checking for updates: Response of server is empty.", log: logUpdate, type: .error)
             DispatchQueue.main.async {
                 if !silent {
-                    NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
+                    NotificationCenter.default.post(name: .updateError, object: nil)
                 }
             }
             return
@@ -75,15 +75,11 @@ func manualUpdate(silent: Bool) {
                                webVersionPatch: versionPatch) {
                 os_log("Checking for updates: No update available.", log: logUpdate, type: .info)
                 if !silent {
-                    NotificationCenter.default.post(name: Notification.Name("updateNotAvailable"),
-                                                    object: nil,
-                                                    userInfo: versionDict)
+                    NotificationCenter.default.post(name: .updateNotAvailable, object: nil, userInfo: versionDict)
                 }
             } else {
                 os_log("Checking for updates: Update available.", log: logUpdate, type: .info)
-                NotificationCenter.default.post(name: Notification.Name("updateAvailable"),
-                                                object: nil,
-                                                userInfo: versionDict)
+                NotificationCenter.default.post(name: .updateAvailable, object: nil, userInfo: versionDict)
             }
         }
     }

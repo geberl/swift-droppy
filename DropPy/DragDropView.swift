@@ -42,18 +42,18 @@ class DragDropView: NSView {
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         if AppState.activeName == "" {
             workflowIsSelected = false
-            NotificationCenter.default.post(name: Notification.Name("draggingEnteredNoWorkflowSelected"), object: nil)
+            NotificationCenter.default.post(name: .draggingEnteredNoWorkflowSelected, object: nil)
             return .copy // allow drop (catch later, provide message -> better user experience)
             // return [] // don't even allow drop
         } else {
             workflowIsSelected = true
-            NotificationCenter.default.post(name: Notification.Name("draggingEnteredOk"), object: nil)
+            NotificationCenter.default.post(name: .draggingEnteredOk, object: nil)
             return .copy
         }
     }
 
     override func draggingExited(_ sender: NSDraggingInfo?) {
-        NotificationCenter.default.post(name: Notification.Name("draggingExited"), object: nil)
+        NotificationCenter.default.post(name: .draggingExited, object: nil)
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
@@ -65,13 +65,11 @@ class DragDropView: NSView {
         // Otherwise the mouse cursor still contains a green circle with a white plus symbol while clicking the 'Ok' button.
 
         if !workflowIsSelected {
-            NotificationCenter.default.post(name: Notification.Name("draggingExited"), object: nil)
+            NotificationCenter.default.post(name: .draggingExited, object: nil)
         } else {
-            if let pasteboard = sender?.draggingPasteboard() {
-                let pasteboardDict:[String: NSPasteboard] = ["draggingPasteboard": pasteboard]
-                NotificationCenter.default.post(name: Notification.Name("droppingOk"),
-                                                object: nil,
-                                                userInfo: pasteboardDict)
+            if let pasteb = sender?.draggingPasteboard() {
+                let pastebDict:[String: NSPasteboard] = ["draggingPasteboard": pasteb]
+                NotificationCenter.default.post(name: .droppingOk, object: nil, userInfo: pastebDict)
             }
         }
     }

@@ -14,10 +14,8 @@ class WindowControllerRegistration: NSWindowController {
         super.windowDidLoad()
         self.window?.center()
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerRegistration.closeWindow),
-                                               name: Notification.Name("closeRegistration"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerRegistration.closeWindow),
+                                               name: .closeRegistration, object: nil)
     }
     
     @objc func closeWindow(_ notification: Notification?) {

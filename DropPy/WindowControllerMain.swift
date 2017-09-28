@@ -39,40 +39,26 @@ class WindowControllerMain: NSWindowController {
     }()
 
     override func windowWillLoad() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.refreshToolbarDropdown),
-                                               name: Notification.Name("workflowsChanged"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.refreshToolbarDropdown),
+                                               name: .workflowsChanged, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.disableToolbar),
-                                               name: Notification.Name("droppingOk"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.disableToolbar),
+                                               name: .droppingOk, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.enableToolbar),
-                                               name: Notification.Name("executionFinished"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.enableToolbar),
+                                               name: .executionFinished, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.evaluateWorkflowResults),
-                                               name: Notification.Name("executionFinished"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.evaluateWorkflowResults),
+                                               name: .executionFinished, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.updateErrorAlert),
-                                               name: Notification.Name("updateError"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.updateErrorAlert),
+                                               name: .updateError, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.updateNotAvailableAlert),
-                                               name: Notification.Name("updateNotAvailable"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.updateNotAvailableAlert),
+                                               name: .updateNotAvailable, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(WindowControllerMain.updateAvailableAlert),
-                                               name: Notification.Name("updateAvailable"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.updateAvailableAlert),
+                                               name: .updateAvailable, object: nil)
     }
     
     @objc func disableToolbar(_ notification: Notification){
@@ -150,7 +136,7 @@ class WindowControllerMain: NSWindowController {
             AppState.activeInterpreterName = nil
             AppState.activeLogoFile = nil
         }
-        NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
+        NotificationCenter.default.post(name: .workflowSelectionChanged, object: nil)
     }
 
     func openFinder() {
@@ -158,7 +144,7 @@ class WindowControllerMain: NSWindowController {
         guard let jsonFile: String = AppState.activeJsonFile else { return }
 
         NSWorkspace.shared.selectFile(workspacePath + "Workflows" + "/" + jsonFile,
-                                        inFileViewerRootedAtPath: workspacePath)
+                                      inFileViewerRootedAtPath: workspacePath)
     }
 
     func editWorkflow() {
@@ -179,7 +165,7 @@ class WindowControllerMain: NSWindowController {
 
                 // Put path into dict inside Notification.
                 let pathDict:[String: String] = ["path": jsonPath]
-                NotificationCenter.default.post(name: Notification.Name("loadFileInEditor"), object: nil, userInfo: pathDict)
+                NotificationCenter.default.post(name: .loadFileInEditor, object: nil, userInfo: pathDict)
 
             } else if editorForWorkflows == "External text editor" {
                 guard let editorAppPath: String = self.userDefaults.string(forKey: UserDefaultStruct.editorAppPath) else { return }
@@ -187,7 +173,7 @@ class WindowControllerMain: NSWindowController {
                     // Passing custom parameters to the external editor is currently not possible.
                     NSWorkspace.shared.openFile(jsonPath, withApplication: editorAppPath)
                 } else {
-                    NotificationCenter.default.post(name: Notification.Name("editorNotFound"), object: nil)
+                    NotificationCenter.default.post(name: .editorNotFound, object: nil)
                 }
             }
         }

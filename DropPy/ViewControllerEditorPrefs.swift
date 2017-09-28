@@ -44,10 +44,8 @@ class ViewControllerEditorPrefs: NSViewController {
         super.viewWillAppear()
         self.loadSettings()
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerEditorPrefs.onEditorDropped),
-                                               name: Notification.Name("editorDropped"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerEditorPrefs.onEditorDropped),
+                                               name: .editorDropped, object: nil)
     }
     
     @IBAction func onButtonClearEditor(_ sender: Any) {
@@ -197,7 +195,7 @@ class EditorAppImageView: NSImageView {
                 self.userDefaults.set(self.appPath, forKey: UserDefaultStruct.editorAppPath)
                 self.userDefaults.set(self.iconPath, forKey: UserDefaultStruct.editorIconPath)
                 
-                NotificationCenter.default.post(name: Notification.Name("editorDropped"), object: nil)
+                NotificationCenter.default.post(name: .editorDropped, object: nil)
                 
                 return true
             } else {

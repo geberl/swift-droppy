@@ -42,93 +42,58 @@ class ViewControllerMain: NSViewController {
         self.cancelButton.isEnabled = false
         
         let statusDict: [String: String] = ["text": "Stopping\nPlease wait a moment"]
-        NotificationCenter.default.post(name: Notification.Name("executionStatus"), object: nil, userInfo: statusDict)
-
-        NotificationCenter.default.post(name: Notification.Name("executionCancel"), object: nil, userInfo: statusDict)
+        NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
+        
+        NotificationCenter.default.post(name: .executionCancel, object: nil)
     }
 
     override func viewWillAppear() {
         super.viewWillAppear()
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setZoneLine),
-                                               name: Notification.Name("draggingEnteredOk"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setZoneLine),
+                                               name: .draggingEnteredOk, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setZoneLogoError),
-                                               name: Notification.Name("draggingEnteredNoWorkflowSelected"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setZoneLogoError),
+                                               name: .draggingEnteredNoWorkflowSelected, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setZoneLogoError),
-                                               name: Notification.Name("draggingUpdatedNoWorkflowSelected"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setZoneDashed),
+                                               name: .draggingExited, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setZoneDashed),
-                                               name: Notification.Name("draggingExited"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogo),
+                                               name: .draggingExited, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogo),
-                                               name: Notification.Name("draggingExited"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogo),
+                                               name: .workflowSelectionChanged, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogo),
-                                               name: Notification.Name("workflowSelectionChanged"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogButtonInvisible),
+                                               name: .workflowSelectionChanged, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogButtonInvisible),
-                                               name: Notification.Name("workflowSelectionChanged"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogoSpinner),
+                                               name: .droppingOk, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogoSpinner),
-                                               name: Notification.Name("droppingOk"),
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogButtonInvisible),
-                                               name: Notification.Name("droppingOk"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogButtonInvisible),
+                                               name: .droppingOk, object: nil)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setCancelButtonVisible),
-                                               name: Notification.Name("droppingOk"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setCancelButtonVisible),
+                                               name: .droppingOk, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setZoneDashed),
-                                               name: Notification.Name("executionFinished"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setZoneDashed),
+                                               name: .executionFinished, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogo),
-                                               name: Notification.Name("executionFinished"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogo),
+                                               name: .executionFinished, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setTextFieldHidden),
-                                               name: Notification.Name("executionFinished"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setTextFieldHidden),
+                                               name: .executionFinished, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setLogButtonVisible),
-                                               name: Notification.Name("executionFinished"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogButtonVisible),
+                                               name: .executionFinished, object: nil)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setCancelButtonInvisible),
-                                               name: Notification.Name("executionFinished"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setCancelButtonInvisible),
+                                               name: .executionFinished, object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(ViewControllerMain.setTextFieldStatus),
-                                               name: Notification.Name("executionStatus"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setTextFieldStatus),
+                                               name: .executionStatus, object: nil)
     }
     
     @objc func setTextFieldHidden(_ notification: Notification) {

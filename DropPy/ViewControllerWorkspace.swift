@@ -48,8 +48,8 @@ class ViewControllerWorkspace: NSViewController {
                     makeDirs(path: selectedPath + "/" + "Workflows")
                 }
                 
-                NotificationCenter.default.post(name: Notification.Name("reloadWorkflows"), object: nil)
-                NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
+                NotificationCenter.default.post(name: .reloadWorkflows, object: nil)
+                NotificationCenter.default.post(name: .workflowSelectionChanged, object: nil)
             }
         }
     }
@@ -142,8 +142,8 @@ class ViewControllerWorkspace: NSViewController {
         }
         
         // Reload workflows.
-        NotificationCenter.default.post(name: Notification.Name("reloadWorkflows"), object: nil)
-        NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
+        NotificationCenter.default.post(name: .reloadWorkflows, object: nil)
+        NotificationCenter.default.post(name: .workflowSelectionChanged, object: nil)
     }
     
     @IBAction func onOpenGitHubButton(_ sender: NSButton) {

@@ -50,30 +50,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var executionInProgress: Bool = false
 
     func applicationWillFinishLaunching(_ notification: Notification) {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.reloadWorkflows),
-                                               name: Notification.Name("reloadWorkflows"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.reloadWorkflows),
+                                               name: .reloadWorkflows, object: nil)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.startPythonExecutor),
-                                               name: Notification.Name("droppingOk"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.startPythonExecutor),
+                                               name: .droppingOk, object: nil)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.setNewInterpreter),
-                                               name: Notification.Name("interpreterNotFound"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.setNewInterpreter),
+                                               name: .interpreterNotFound, object: nil)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.setNewEditor),
-                                               name: Notification.Name("editorNotFound"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.setNewEditor),
+                                               name: .editorNotFound, object: nil)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppDelegate.setNewWorkspace),
-                                               name: Notification.Name("workspaceNotFound"),
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.setNewWorkspace),
+                                               name: .workspaceNotFound, object: nil)
 
         if isFirstRun() {
             beginEvaluation()
@@ -116,7 +106,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         }
-        NotificationCenter.default.post(name: Notification.Name("interpreterNotFound"), object: nil)
+        NotificationCenter.default.post(name: .interpreterNotFound, object: nil)
         return (nil, nil)
     }
     
@@ -125,7 +115,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // At this moment do not refuse executing, maybe later in 2.0.
         if !AppState.isInEvaluation && !AppState.isLicensed {
             self.registrationWindowController.showWindow(self)
-            NotificationCenter.default.post(name: Notification.Name("reopenPurchaseSheet"), object: nil)
+            NotificationCenter.default.post(name: .reopenPurchaseSheet, object: nil)
         }
         
         guard let workflowFile: String = AppState.activeJsonFile else { return }
@@ -134,7 +124,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let workspacePath = checkWorkspaceInfo()
         let (executablePath, executableArgs) = self.checkInterpreterInfo()
         if (workspacePath == nil) || (executablePath == nil) || (executableArgs == nil) {
-            NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil)
+            NotificationCenter.default.post(name: .executionFinished, object: nil)
             return
         }
 
@@ -145,8 +135,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             // Usually doesn't appear on screen, because the steps until the first Task is executed happen so fast.
             let statusDict: [String: String] = ["text": "Preparing"]
-            NotificationCenter.default.post(name: Notification.Name("executionStatus"),
-                                            object: nil, userInfo: statusDict)
+            NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
             
             var logFilePath: String = ""
             var tempPath: String = ""
@@ -195,7 +184,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                          "dropExitCode": String(dropExitCode),
                                          "execExitCode": String(execExitCode)]
 
-        NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil, userInfo: pathDict)
+        NotificationCenter.default.post(name: .executionFinished, object: nil, userInfo: pathDict)
         os_log("Execution finished.", log: logExecution, type: .debug)
     }
 
@@ -311,7 +300,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if workflowsChanged(workflowsNew: workflowsTemp, workflowsOld: AppState.allWorkflows) {
             AppState.allWorkflows = workflowsTemp
-            NotificationCenter.default.post(name: Notification.Name("workflowsChanged"), object: nil)
+            NotificationCenter.default.post(name: .workflowsChanged, object: nil)
         }
     }
     

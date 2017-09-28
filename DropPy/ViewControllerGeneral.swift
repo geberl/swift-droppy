@@ -107,7 +107,7 @@ class ViewControllerGeneral: NSViewController {
             if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
                 self.removeTempDir(tempPath: tempPath)
                 // Call workflowSelectionChanged to make sure the log button is not visible any more.
-                NotificationCenter.default.post(name: Notification.Name("workflowSelectionChanged"), object: nil)
+                NotificationCenter.default.post(name: .workflowSelectionChanged, object: nil)
             }
         })
     }

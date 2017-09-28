@@ -14,5 +14,4 @@ class WindowControllerFirstRun: NSWindowController {
         super.windowDidLoad()
         self.window?.center()
     }
-    
 }

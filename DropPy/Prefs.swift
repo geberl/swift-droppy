@@ -207,7 +207,7 @@ func checkWorkspaceInfo() -> String? {
     
     guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
         userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
-        NotificationCenter.default.post(name: Notification.Name("workspaceNotFound"), object: nil)
+        NotificationCenter.default.post(name: .workspaceNotFound, object: nil)
         return nil
     }
     
@@ -224,6 +224,6 @@ func checkWorkspaceInfo() -> String? {
         return workspacePath + "/"
     }
     
-    NotificationCenter.default.post(name: Notification.Name("workspaceNotFound"), object: nil)
+    NotificationCenter.default.post(name: .workspaceNotFound, object: nil)
     return nil
 }

@@ -56,14 +56,13 @@ class ViewControllerRegistration: NSViewController {
     }
     
     @IBAction func onCloseButton(_ sender: NSButton) {
-        NotificationCenter.default.post(name: Notification.Name("closeRegistration"), object: nil)
+        NotificationCenter.default.post(name: .closeRegistration, object: nil)
     }
     
     override func viewDidLoad() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ViewControllerRegistration.reopenPurchaseSheet),
-                                               name: Notification.Name("reopenPurchaseSheet"),
-                                               object: nil)
+                                               name: .reopenPurchaseSheet, object: nil)
     }
     
     override func viewWillAppear() {
