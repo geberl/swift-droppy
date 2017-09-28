@@ -17,7 +17,7 @@ class TabViewControllerPrefs: NSTabViewController {
     }
     
     lazy var originalSizes = [String : NSSize]()
-
+    
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
         super.tabView(tabView, willSelect: tabViewItem)
         
@@ -69,3 +69,4 @@ class TabViewControllerPrefs: NSTabViewController {
         invalidAlert.beginSheetModal(for: self.view.window!)
     }
 }
+
