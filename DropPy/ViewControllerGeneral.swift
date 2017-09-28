@@ -118,7 +118,7 @@ class ViewControllerGeneral: NSViewController {
             try fileManager.removeItem(atPath: tempPath)
             os_log("Removed temp dir at '%@'.", log: logFileSystem, type: .debug, tempPath)
         } catch let error {
-            os_log("%{errno}d", log: logFileSystem, type: .error, error.localizedDescription)
+            os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
         }
     }
 }

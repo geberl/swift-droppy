@@ -239,7 +239,7 @@ class EditorAppImageView: NSImageView {
                 os_log("No icon file found in '%@'.", log: logUi, type: .error, plistPath)
             }
         } catch let error {
-            os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
+            os_log("%@", log: logUi, type: .error, error.localizedDescription)
         }
         
         return ""

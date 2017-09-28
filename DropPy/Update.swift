@@ -41,7 +41,7 @@ func manualUpdate(silent: Bool) {
     let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     let task = urlSession.dataTask(with: jsonURL!) {data, response, error in
         guard error == nil else {
-            os_log("%{errno}d", log: logDrop, type: .error, (error?.localizedDescription)!)
+            os_log("%@", log: logDrop, type: .error, (error?.localizedDescription)!)
             os_log("Checking for updates: Server did not respond.", log: logUpdate, type: .info)
             DispatchQueue.main.async {
                 if !silent {

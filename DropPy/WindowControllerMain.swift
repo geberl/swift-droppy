@@ -230,7 +230,7 @@ class WindowControllerMain: NSWindowController {
             // Open new file in editor.
             self.editWorkflow()
         } catch {
-            os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
+            os_log("%@", log: logUi, type: .error, error.localizedDescription)
         }
     }
 

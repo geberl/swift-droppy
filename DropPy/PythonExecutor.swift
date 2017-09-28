@@ -231,7 +231,7 @@ class PythonExecutor: NSObject {
                 }
             }
         } catch let error {
-            os_log("%{errno}d", log: logExecution, type: .error, error.localizedDescription)
+            os_log("%@", log: logExecution, type: .error, error.localizedDescription)
         }
     }
 
@@ -254,7 +254,7 @@ class PythonExecutor: NSObject {
                     do {
                         try fileManager.removeItem(atPath: elementPath)
                     } catch let error {
-                        os_log("%{errno}d", log: logExecution, type: .error, error.localizedDescription)
+                        os_log("%@", log: logExecution, type: .error, error.localizedDescription)
                     }
                 }
             }

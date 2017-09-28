@@ -304,7 +304,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         workflowsTemp[jsonObj["name"].stringValue]?["interpreterName"] = jsonObj["interpreterName"].stringValue
                     }
                 } catch let error {
-                    os_log("%{errno}d", log: logGeneral, type: .error, error.localizedDescription)
+                    os_log("%@", log: logGeneral, type: .error, error.localizedDescription)
                 }
             }
         }

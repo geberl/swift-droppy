@@ -95,7 +95,7 @@ class ViewControllerEditor: NSViewController {
             let currentContent: String = self.getContent()
             try currentContent.write(toFile: self.jsonPath, atomically: true, encoding: String.Encoding.utf8)
         } catch let error {
-            os_log("%{errno}d", log: logGeneral, type: .error, error.localizedDescription)
+            os_log("%@", log: logGeneral, type: .error, error.localizedDescription)
             os_log("Error writing to file at '%@.", log: logGeneral, type: .info, self.jsonPath)
         }
     }

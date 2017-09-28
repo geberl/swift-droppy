@@ -66,7 +66,7 @@ class ViewControllerWorkspace: NSViewController {
             do {
                 try fileManager.removeItem(atPath: zipPath)
             } catch let error {
-                os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
+                os_log("%@", log: logUi, type: .error, error.localizedDescription)
             }
         }
         let unzipPath: String = tempPath + "droppy-workspace-master" + "/"
@@ -74,7 +74,7 @@ class ViewControllerWorkspace: NSViewController {
             do {
                 try fileManager.removeItem(atPath: unzipPath)
             } catch let error {
-                os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
+                os_log("%@", log: logUi, type: .error, error.localizedDescription)
             }
         }
         
@@ -84,7 +84,7 @@ class ViewControllerWorkspace: NSViewController {
                 try asset.data.write(to: URL(fileURLWithPath: zipPath))
                 os_log("Copied bundled asset to '%@'.", log: logFileSystem, type: .error, zipPath)
             } catch let error {
-                os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
+                os_log("%@", log: logUi, type: .error, error.localizedDescription)
             }
         }
         
@@ -118,13 +118,13 @@ class ViewControllerWorkspace: NSViewController {
                     do {
                         try fileManager.removeItem(at: dstURL)
                     } catch let error {
-                        os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
+                        os_log("%@", log: logUi, type: .error, error.localizedDescription)
                     }
                 }
                 do {
                     try fileManager.copyItem(at: srcURL, to: dstURL)
                 } catch let error {
-                    os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
+                    os_log("%@", log: logUi, type: .error, error.localizedDescription)
                 }
             }
         }
@@ -133,12 +133,12 @@ class ViewControllerWorkspace: NSViewController {
         do {
             try fileManager.removeItem(atPath: zipPath)
         } catch let error {
-            os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
+            os_log("%@", log: logUi, type: .error, error.localizedDescription)
         }
         do {
             try fileManager.removeItem(atPath: unzipPath)
         } catch let error {
-            os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
+            os_log("%@", log: logUi, type: .error, error.localizedDescription)
         }
         
         // Reload workflows.

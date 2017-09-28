@@ -44,7 +44,7 @@ func makeDirs(path: String) {
                                     withIntermediateDirectories: true,
                                     attributes: nil)
     } catch let error {
-        os_log("%{errno}d", log: logFileSystem, type: .error, error.localizedDescription)
+        os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
     }
 }
 

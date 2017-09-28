@@ -92,7 +92,7 @@ class DropHandler: NSObject {
                 do {
                     try fileManager.removeItem(atPath: elementPath)
                 } catch let error {
-                    os_log("%{errno}d", log: logDrop, type: .error, error.localizedDescription)
+                    os_log("%@", log: logDrop, type: .error, error.localizedDescription)
                 }
             }
         }
@@ -154,7 +154,7 @@ class DropHandler: NSObject {
                          atomically: false,
                          encoding: String.Encoding.utf8)
         } catch let error {
-            os_log("%{errno}d", log: logDrop, type: .error, error.localizedDescription)
+            os_log("%@", log: logDrop, type: .error, error.localizedDescription)
             self.overallExitCode = 1
             return
         }
@@ -346,7 +346,7 @@ class DropHandler: NSObject {
                     let dataURL: URL = URL(fileURLWithPath: self.dirZeroUrl.path + "/" + dataType + "." + fileExtension)
                     try data.write(to: dataURL)
                 } catch let error {
-                    os_log("%{errno}d", log: logDrop, type: .error, error.localizedDescription)
+                    os_log("%@", log: logDrop, type: .error, error.localizedDescription)
                     os_log("Unable to write '%@' data to file.", log: logDrop, type: .info, dataType)
                 }
             }
