@@ -40,7 +40,9 @@ public struct LicenseVerifier {
     var keyFormat = SecExternalFormat.formatPEMSequence
     var keyType = SecExternalItemType.itemTypePublicKey
     if let keyData = publicKeyPEM.data(using: String.Encoding.utf8) {
-      let keyBytes = unsafeBitCast((keyData as NSData).bytes, to: UnsafePointer<UInt8>.self)
+      // I fixed the following line using Xcode's recommendation:
+      // Original: let keyBytes = unsafeBitCast((keyData as NSData).bytes, to: UnsafePointer<UInt8>.self)
+      let keyBytes = (keyData as NSData).bytes.assumingMemoryBound(to: UInt8.self)
       let keyDataCF = CFDataCreate(nil, keyBytes, keyData.count)!
       var importArray: CFArray? = nil
       let osStatus = withUnsafeMutablePointer(to: &keyFormat) {pKeyFormat in

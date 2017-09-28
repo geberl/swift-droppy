@@ -172,7 +172,7 @@ class ViewControllerRegistration: NSViewController {
         let company: String = self.companyTextField.stringValue
         let email: String = self.emailTextField.stringValue
         let regName = generateRegName(name: name, company: company, email: email)
-        os_log("Entered registration name: %@.", log: logUi, type: .info, regName)
+        os_log("Registered for: %@.", log: logLicense, type: .info, regName)
         return regName
     }
     
