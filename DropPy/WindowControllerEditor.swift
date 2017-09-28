@@ -20,7 +20,7 @@ class WindowControllerEditor: NSWindowController {
                                                object: nil)
     }
     
-    func closeWindow(_ notification: Notification) {
+    @objc func closeWindow(_ notification: Notification) {
         self.close()
     }
 

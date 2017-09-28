@@ -131,17 +131,17 @@ class ViewControllerMain: NSViewController {
                                                object: nil)
     }
     
-    func setTextFieldHidden(_ notification: Notification) {
+    @objc func setTextFieldHidden(_ notification: Notification) {
         taskTextField.isHidden = true
         taskTextField.stringValue = "Task ?/?"
     }
     
-    func setLogButtonInvisible(_ notification: Notification) {
+    @objc func setLogButtonInvisible(_ notification: Notification) {
         self.logFilePath = nil
         self.logButton.isHidden = true
     }
     
-    func setLogButtonVisible(_ notification: Notification) {
+    @objc func setLogButtonVisible(_ notification: Notification) {
         guard let logFilePath = notification.userInfo?["logFilePath"] as? String else { return }
         if logFilePath != "" {
             self.logFilePath = logFilePath
@@ -149,16 +149,16 @@ class ViewControllerMain: NSViewController {
         }
     }
     
-    func setCancelButtonInvisible(_ notification: Notification) {
+    @objc func setCancelButtonInvisible(_ notification: Notification) {
         self.cancelButton.isHidden = true
     }
     
-    func setCancelButtonVisible(_ notification: Notification) {
+    @objc func setCancelButtonVisible(_ notification: Notification) {
         self.cancelButton.isEnabled = true
         self.cancelButton.isHidden = false
     }
     
-    func setTextFieldStatus(_ notification: Notification) {
+    @objc func setTextFieldStatus(_ notification: Notification) {
         // Async execution is needed so the first file actually shows up when it is being processed and not when the second one is.
         DispatchQueue.main.async {
             guard let text = notification.userInfo?["text"] as? String else { return }
@@ -167,15 +167,15 @@ class ViewControllerMain: NSViewController {
         }
     }
     
-    func setZoneDashed(_ notification: Notification) {
+    @objc func setZoneDashed(_ notification: Notification) {
         zoneImage.image = NSImage(named: "zone-dashed")
     }
     
-    func setZoneLine(_ notification: Notification) {
+    @objc func setZoneLine(_ notification: Notification) {
         zoneImage.image = NSImage(named: "zone-line")
     }
     
-    func setLogo(_ notification: Notification) {
+    @objc func setLogo(_ notification: Notification) {
         logoImageView.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
         logoImageView.animates = false
         
@@ -197,7 +197,7 @@ class ViewControllerMain: NSViewController {
         }
     }
     
-    func setLogoSpinner(_ notification: Notification) {
+    @objc func setLogoSpinner(_ notification: Notification) {
         if let asset = NSDataAsset(name: "logo-spinner", bundle: Bundle.main) {
             logoImageView.imageScaling = NSImageScaling.scaleNone
             logoImageView.animates = true
@@ -205,7 +205,7 @@ class ViewControllerMain: NSViewController {
         }
     }
     
-    func setZoneLogoError(_ notification: Notification) {
+    @objc func setZoneLogoError(_ notification: Notification) {
         logoImage.image = self.resizeNSImage(image: NSImage(named: "error")!,
                                              width: 128, height: 128)
         zoneImage.image = NSImage(named: "zone-error")

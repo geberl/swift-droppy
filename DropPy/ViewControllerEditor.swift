@@ -59,7 +59,7 @@ class ViewControllerEditor: NSViewController {
         }
     }
     
-    func loadFile(_ notification: Notification) {
+    @objc func loadFile(_ notification: Notification) {
         // Extract path String from Notification.
         if let path = notification.userInfo?["path"] as? String {
             self.jsonPath = path

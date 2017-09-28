@@ -75,7 +75,7 @@ class WindowControllerMain: NSWindowController {
                                                object: nil)
     }
     
-    func disableToolbar(_ notification: Notification){
+    @objc func disableToolbar(_ notification: Notification){
         for menuItem in ToolbarDropdown.items {
             menuItem.isEnabled = false
         }
@@ -84,7 +84,7 @@ class WindowControllerMain: NSWindowController {
         actionButtons.setEnabled(false, forSegment: 2)
     }
     
-    func enableToolbar(_ notification: Notification){
+    @objc func enableToolbar(_ notification: Notification){
         for menuItem in ToolbarDropdown.items {
             menuItem.isEnabled = true
         }
@@ -93,7 +93,7 @@ class WindowControllerMain: NSWindowController {
         actionButtons.setEnabled(true, forSegment: 2)
     }
 
-    func refreshToolbarDropdown(_ notification: Notification){
+    @objc func refreshToolbarDropdown(_ notification: Notification){
         self.refreshToolbar()
     }
 
@@ -136,7 +136,7 @@ class WindowControllerMain: NSWindowController {
         self.workflowSelectionChanged()
     }
 
-    func workflowSelectionChanged() {
+    @objc func workflowSelectionChanged() {
         if let workflowName: String = self.workflowPopUp.selectedItem?.title {
             userDefaults.set(workflowName, forKey: UserDefaultStruct.workflowSelected)
             AppState.activeName = workflowName
@@ -234,7 +234,7 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
-    func evaluateWorkflowResults(_ notification: Notification) {
+    @objc func evaluateWorkflowResults(_ notification: Notification) {
         guard let logFilePath = notification.userInfo?["logFilePath"] as? String else { return }
         guard let tempPath = notification.userInfo?["tempPath"] as? String else { return }
         guard let dropExitCode = notification.userInfo?["dropExitCode"] as? String else { return }
@@ -269,7 +269,7 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
-    func updateErrorAlert(_ notification: Notification) {
+    @objc func updateErrorAlert(_ notification: Notification) {
         let errorAlert = NSAlert()
         errorAlert.showsHelp = false
         errorAlert.messageText = "Unable to check for updates"
@@ -287,7 +287,7 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
-    func updateNotAvailableAlert(_ notification: Notification) {
+    @objc func updateNotAvailableAlert(_ notification: Notification) {
         guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }
         guard let thisVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
         
@@ -307,7 +307,7 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
-    func updateAvailableAlert(_ notification: Notification) {
+    @objc func updateAvailableAlert(_ notification: Notification) {
         guard let thisVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
         guard let newVersionString = notification.userInfo?["versionString"] as? String else { return }
         guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }

@@ -101,7 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.reloadWorkflowsFromDir()
     }
     
-    func reloadWorkflows(_ notification: Notification) {
+    @objc func reloadWorkflows(_ notification: Notification) {
         self.reloadWorkflowsFromDir()
     }
 
@@ -120,7 +120,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return (nil, nil)
     }
     
-    func startPythonExecutor(_ notification: Notification) {
+    @objc func startPythonExecutor(_ notification: Notification) {
         // Show registration window with open pruchase sheet to user on each drop.
         // At this moment do not refuse executing, maybe later in 2.0.
         if !AppState.isInEvaluation && !AppState.isLicensed {
@@ -225,7 +225,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.preferencesWindowController.showWindow(self)
     }
     
-    func setNewInterpreter(_ notification: Notification) {
+    @objc func setNewInterpreter(_ notification: Notification) {
         self.preferencesWindowController.showWindow(self)
         
         var informativeText: String = "The interpreter "
@@ -239,7 +239,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                          informativeText: informativeText)
     }
     
-    func setNewEditor(_ notification: Notification) {
+    @objc func setNewEditor(_ notification: Notification) {
         self.preferencesWindowController.showWindow(self)
 
         var informativeText: String = "Your previously selected external text editor can't be found any more.\n\n"
@@ -249,7 +249,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                          informativeText: informativeText)
     }
     
-    func setNewWorkspace(_ notification: Notification) {
+    @objc func setNewWorkspace(_ notification: Notification) {
         self.preferencesWindowController.showWindow(self)
         
         var informativeText: String = "The Workspace directory can't be found.\n\n"

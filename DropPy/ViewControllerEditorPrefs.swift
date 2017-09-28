@@ -77,7 +77,7 @@ class ViewControllerEditorPrefs: NSViewController {
         }
     }
     
-    func onEditorDropped(_ notification: Notification) {
+    @objc func onEditorDropped(_ notification: Notification) {
         self.workflowEditorExternalTextEditor.isEnabled = true
         self.taskEditorExternalTextEditor.isEnabled = true
         

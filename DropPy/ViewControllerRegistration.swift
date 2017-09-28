@@ -136,7 +136,7 @@ class ViewControllerRegistration: NSViewController {
         self.applyButton.title = "Check License"
     }
     
-    func reopenPurchaseSheet(_ notification: Notification?) {
+    @objc func reopenPurchaseSheet(_ notification: Notification?) {
         let parentWindow = self.view.window!
         if parentWindow.sheets.count == 0 {
             self.showPurchaseSheet()

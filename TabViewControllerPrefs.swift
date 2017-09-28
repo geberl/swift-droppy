@@ -48,7 +48,7 @@ class TabViewControllerPrefs: NSTabViewController {
         }
     }
     
-    func switchToPrefTab(_ notification: Notification) {
+    @objc func switchToPrefTab(_ notification: Notification) {
         guard let index: Int = notification.userInfo?["index"] as? Int else { return }
         tabView.selectTabViewItem(at: index)
         

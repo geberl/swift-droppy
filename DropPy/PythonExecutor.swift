@@ -52,7 +52,7 @@ class PythonExecutor: NSObject {
                                                object: nil)
     }
     
-    func cancelExecution(_ notification: Notification) {
+    @objc func cancelExecution(_ notification: Notification) {
         self.executionCancel = true
     }
     
