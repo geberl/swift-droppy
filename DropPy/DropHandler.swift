@@ -166,7 +166,12 @@ class DropHandler: NSObject {
             self.writeLog(prefix: "DropPy version:           ", lines: ["???"])
         }
         if AppState.isLicensed {
-            self.writeLog(prefix: "Registration Status:      ", lines: ["Licensed"])
+            let userDefaults = UserDefaults.standard
+            let regLicenseCode: String = userDefaults.string(forKey: UserDefaultStruct.regLicenseCode)!
+            let cutStartIndex = regLicenseCode.index(regLicenseCode.startIndex, offsetBy: 0)
+            let cutEndIndex = regLicenseCode.index(regLicenseCode.endIndex, offsetBy: -30)
+            let regLicenseCodeCut: String = String(regLicenseCode[cutStartIndex...cutEndIndex])
+            self.writeLog(prefix: "Registration Status:      ", lines: ["Licensed (\(regLicenseCodeCut)...)"])
         } else {
             if AppState.isInEvaluation {
                 self.writeLog(prefix: "Registration Status:      ", lines: ["Unlicensed (Evaluation)"])
