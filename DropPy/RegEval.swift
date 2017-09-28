@@ -8,6 +8,7 @@
 
 import Foundation
 import CommonCrypto
+import os.log
 
 // Prerequisites for importing CommonCrypto:
 // In your project setup Apple's CommonCrypto C library like described at https://stackoverflow.com/a/29189873/8137043
@@ -82,7 +83,8 @@ func beginEvaluation() {
     
     AppState.isInEvaluation = true
     AppState.regEvalStatus = "Unlicensed (Evaluation ends on " + evalEndDate.readableDate + ")"
-    log.info("Evaluation period started at " + evalStartDate.readable + " (ends at " + evalEndDate.readable + ").")
+    os_log("Evaluation period started at %@ (ends at %@).", log: logLicense, type: .info,
+           evalStartDate.readable, evalEndDate.readable)
 }
 
 
@@ -99,27 +101,29 @@ func isInEvaluation() -> Bool {
     let evalStartHashNew: Data = evalStartStringNew.sha512()
     if evalStartHashSaved != evalStartHashNew {
         AppState.regEvalStatus = "Unlicensed (Evaluation ended)"
-        log.info("Evaluation period ended (evalStartHash invalid for evalStartDate).")
+        os_log("Evaluation period ended (evalStartHash invalid for evalStartDate).", log: logLicense, type: .error)
         return false
     }
     
     // Check if now is before the evaluation's start date.
     if nowDate < evalStartDate {
         AppState.regEvalStatus = "Unlicensed (Evaluation ended)"
-        log.info("Evaluation period ended (now is before evalStartDate).")
+        os_log("Evaluation period ended (now is before evalStartDate).", log: logLicense, type: .error)
         return false
     }
     
     // Check if now is after the evaluation's end date.
     if nowDate > evalEndDate {
         AppState.regEvalStatus = "Unlicensed (Evaluation ended on " + evalEndDate.readableDate + ")"
-        log.info("Evaluation period ended at " + evalEndDate.readable + " (started at " + evalStartDate.readable + ").")
+        os_log("Evaluation period over (ended at %@, started at %@).", log: logLicense, type: .info,
+               evalEndDate.readable, evalStartDate.readable)
         return false
     }
     
     // Product is still in evaluation.
     AppState.regEvalStatus = "Unlicensed (Evaluation ends on " + evalEndDate.readableDate + ")"
-    log.info("Evaluation period active, will end at " + evalEndDate.readable + " (started at " + evalStartDate.readable + ").")
+    os_log("Evaluation period active (will end at %@, started at %@).", log: logLicense, type: .info,
+           evalEndDate.readable, evalStartDate.readable)
     return true
 }
 
@@ -139,11 +143,11 @@ func isLicensed() -> Bool {
     let regName = generateRegName(name: name, company: company, email: email)
     let validLicense: Bool = checkValidLicense(licenseCode: licenseCode, regName: regName)
     if validLicense {
-        log.info("Valid license found.")
+        os_log("Valid license found.", log: logLicense, type: .info)
         AppState.regEvalStatus = "Licensed ❤️"
         return true
     } else {
-        log.error("No valid license found.")
+        os_log("No valid license found.", log: logLicense, type: .error)
         return false
     }
 }
@@ -170,7 +174,7 @@ func checkValidLicense(licenseCode: String, regName: String) -> Bool {
     if let verifier = verifierWithPublicKey(publicKey()) {
         validLicense = verifier.verify(licenseCode, forName: regName)
     } else {
-        log.error("LicenseVerifier could not be constructed.")
+        os_log("LicenseVerifier could not be constructed.", log: logLicense, type: .error)
     }
     return validLicense
 }

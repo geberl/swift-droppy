@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import os.log
+
 
 class ViewControllerEditor: NSViewController {
     
@@ -67,7 +69,7 @@ class ViewControllerEditor: NSViewController {
                 let jsonContent = try String(contentsOf: jsonUrl, encoding: String.Encoding.utf8)
                 self.replaceEditorContent(with: jsonContent)
             } catch {
-                log.error("Unable to read file at '\(self.jsonPath)!")
+                os_log("Unable to read file at '%@.", log: logGeneral, type: .error, self.jsonPath)
             }
         }
     }
@@ -92,8 +94,9 @@ class ViewControllerEditor: NSViewController {
         do {
             let currentContent: String = self.getContent()
             try currentContent.write(toFile: self.jsonPath, atomically: true, encoding: String.Encoding.utf8)
-        } catch let error as NSError {
-            log.error("Error writing to file at '\(self.jsonPath) (Error code \(error.code))!")
+        } catch let error {
+            os_log("%{errno}d", log: logGeneral, type: .error, error.localizedDescription)
+            os_log("Error writing to file at '%@.", log: logGeneral, type: .info, self.jsonPath)
         }
     }
 }

@@ -8,6 +8,7 @@
 
 import Cocoa
 import SwiftyJSON
+import os.log
 
 
 class WindowControllerMain: NSWindowController {
@@ -119,7 +120,8 @@ class WindowControllerMain: NSWindowController {
             if allWorkflowNames.contains(workflowSelected) {
                 self.workflowPopUp.selectItem(withTitle: workflowSelected)
             } else {
-                log.debug("Unable to select Workflow '" + workflowSelected + "' (doesn't exist any more).")
+                os_log("Unable to select Workflow '%@' (doesn't exist any more).", log: logUi, type: .info,
+                       workflowSelected)
                 AppState.activeName = nil
                 AppState.activeInterpreterName = nil
                 AppState.activeJsonFile = nil
@@ -170,7 +172,7 @@ class WindowControllerMain: NSWindowController {
             if editorForWorkflows == "Internal Workflow editor" {
                 // TODO: Implement internal Workflow editor and have it open from here.
                 // Should currently not be possible to land here, deactivated, entry not displaed in preferences.
-                log.debug("TODO: Open internal Workflow editor now")
+                os_log("TODO: Open internal Workflow editor now", log: logUi, type: .debug)
 
             } else if editorForWorkflows == "Internal text editor" {
                 self.editorWindowController.showWindow(self)
@@ -228,7 +230,7 @@ class WindowControllerMain: NSWindowController {
             // Open new file in editor.
             self.editWorkflow()
         } catch {
-            log.error(error.localizedDescription)
+            os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
         }
     }
 

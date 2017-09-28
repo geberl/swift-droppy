@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import os.log
 
 
 class ViewControllerEditorPrefs: NSViewController {
@@ -72,7 +73,7 @@ class ViewControllerEditorPrefs: NSViewController {
     
     @IBAction func onHelpButton(_ sender: NSButton) {
         if let url = URL(string: "https://droppyapp.com/preferences/editor"), NSWorkspace.shared().open(url) {
-            log.debug("Documentation site for Editor openened.")
+            os_log("Documentation site for Editor openened.", log: logUi, type: .debug)
         }
     }
     
@@ -156,7 +157,7 @@ class EditorAppImageView: NSImageView {
         if pasteboard.types?.contains(pasteboardType) == true {
             return true
         } else {
-            log.debug("Type doesn't contain '\(pasteboardType)'.")
+            os_log("Type doesn't contain '%@'.", log: logUi, type: .debug, pasteboardType)
             return false
         }
     }
@@ -166,7 +167,7 @@ class EditorAppImageView: NSImageView {
             let itemsCount = board.count
             return itemsCount
         } else {
-            log.debug("Error opening pasteboard.")
+            os_log("Error opening pasteboard.", log: logUi, type: .error)
             return -1
         }
     }
@@ -177,11 +178,11 @@ class EditorAppImageView: NSImageView {
                 let fileExtension = (board[0] as! NSString).pathExtension
                 return fileExtension
             } else {
-                log.debug("More than one item in pasteboard.")
+                os_log("More than one item in pasteboard.", log: logUi, type: .debug)
                 return ""
             }
         } else {
-            log.debug("Error opening pasteboard.")
+            os_log("Error opening pasteboard.", log: logUi, type: .error)
             return ""
         }
     }
@@ -200,11 +201,11 @@ class EditorAppImageView: NSImageView {
                 
                 return true
             } else {
-                log.debug("More than one item in pasteboard.")
+                os_log("More than one item in pasteboard.", log: logUi, type: .debug)
                 return false
             }
         } else {
-            log.debug("Error opening pasteboard.")
+            os_log("Error opening pasteboard.", log: logUi, type: .error)
             return false
         }
     }
@@ -232,13 +233,13 @@ class EditorAppImageView: NSImageView {
                     iconPath = iconPath + ".icns"
                 }
                 
-                log.debug("Icon file path is '\(iconPath)'.")
+                os_log("Icon file path is '%@'.", log: logUi, type: .debug, iconPath)
                 return iconPath
             } else {
-                log.debug("No icon file found in '\(plistPath)'.")
+                os_log("No icon file found in '%@'.", log: logUi, type: .error, plistPath)
             }
-        } catch {
-            log.debug("Error reading plist: \(error), format: \(propertyListFormat)")
+        } catch let error {
+            os_log("%{errno}d", log: logUi, type: .error, error.localizedDescription)
         }
         
         return ""

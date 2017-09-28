@@ -8,6 +8,7 @@
 
 import Cocoa
 import SwiftyJSON
+import os.log
 
 
 class PythonExecutor: NSObject {
@@ -28,7 +29,7 @@ class PythonExecutor: NSObject {
 
     init(workflowFile: String, workspacePath: String, executablePath: String, executableArgs: String,
          devModeEnabled: Bool, tempPath: String, logFilePath: String) {
-        log.debug("Executing workflow.")
+        os_log("Executing workflow.", log: logExecution, type: .debug)
         
         self.workflowFile = workflowFile
         self.workspacePath = workspacePath
@@ -120,7 +121,7 @@ class PythonExecutor: NSObject {
 
         let logText: String = "Running Task \(taskNumber + 1)/\(queueCount): '\(taskName)'"
         self.writeLog(prefix: "", lines: [logText])
-        log.info(logText)
+        os_log("%@", log: logExecution, type: .info, logText)
 
         if let queueItemParams: String = queueDict["kwargs"]?.rawString() {
             var queueItemParamsList = queueItemParams.components(separatedBy: .whitespacesAndNewlines)
@@ -147,9 +148,9 @@ class PythonExecutor: NSObject {
 
         let logText = " Exit Code: \(exit)"
         if exit > 0 {
-            log.error(logText)
+            os_log("%@", log: logExecution, type: .error, logText)
         } else {
-            log.info(logText)
+            os_log("%@", log: logExecution, type: .info, logText)
         }
     }
 
@@ -167,7 +168,7 @@ class PythonExecutor: NSObject {
             do {
                 try asset.data.write(to: URL(fileURLWithPath: self.runnerPath))
             } catch {
-                log.error("Unable to copy run.py from assets")
+                os_log("Unable to copy run.py asset.", log: logExecution, type: .error, error.localizedDescription)
             }
         }
 
@@ -230,7 +231,7 @@ class PythonExecutor: NSObject {
                 }
             }
         } catch let error {
-            log.error(error.localizedDescription)
+            os_log("%{errno}d", log: logExecution, type: .error, error.localizedDescription)
         }
     }
 
@@ -243,7 +244,7 @@ class PythonExecutor: NSObject {
 
             guard let enumerator: FileManager.DirectoryEnumerator =
                 fileManager.enumerator(atPath: self.tempPath) else {
-                    log.error("Temp directory not found: \(self.tempPath)")
+                    os_log("Temp directory not found at '%@'.", log: logExecution, type: .error, self.tempPath)
                     return
             }
 
@@ -253,12 +254,11 @@ class PythonExecutor: NSObject {
                     do {
                         try fileManager.removeItem(atPath: elementPath)
                     } catch let error {
-                        log.error(error.localizedDescription)
+                        os_log("%{errno}d", log: logExecution, type: .error, error.localizedDescription)
                     }
                 }
             }
-
-            log.debug("Removed intermediary files from \(self.tempPath)")
+            os_log("Removed intermediary files from '%@'.", log: logExecution, type: .debug, self.tempPath)
         }
     }
 

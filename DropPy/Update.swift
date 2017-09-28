@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os.log
 
 
 func autoUpdate() {
@@ -19,14 +20,14 @@ func autoUpdate() {
     if dateNow > updateNext {
         manualUpdate(silent: true)
     } else {
-        log.info("Not checking for updates now, next check " + updateNext.readable + ".")
+        os_log("Not checking for updates now, next check %@.", log: logUpdate, type: .info, updateNext.readable)
     }
 }
 
 
 func manualUpdate(silent: Bool) {
     if !isConnectedToNetwork() {
-        log.debug("No network connection available, skipping update check.")
+        os_log("No network connection available, skipping update check.", log: logUpdate, type: .info)
         if !silent {
             NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
         }
@@ -40,8 +41,8 @@ func manualUpdate(silent: Bool) {
     let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     let task = urlSession.dataTask(with: jsonURL!) {data, response, error in
         guard error == nil else {
-            log.error("Checking for updates: Server did not respond.")
-            log.error((error?.localizedDescription)!)
+            os_log("%{errno}d", log: logDrop, type: .error, (error?.localizedDescription)!)
+            os_log("Checking for updates: Server did not respond.", log: logUpdate, type: .info)
             DispatchQueue.main.async {
                 if !silent {
                     NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
@@ -51,7 +52,7 @@ func manualUpdate(silent: Bool) {
         }
         
         guard let data = data else {
-            log.error("Checking for updates: Response of server is empty.")
+            os_log("Checking for updates: Response of server is empty.", log: logUpdate, type: .error)
             DispatchQueue.main.async {
                 if !silent {
                     NotificationCenter.default.post(name: Notification.Name("updateError"), object: nil)
@@ -72,14 +73,14 @@ func manualUpdate(silent: Bool) {
             if isLatestVersion(webVersionMajor: versionMajor,
                                webVersionMinor: versionMinor,
                                webVersionPatch: versionPatch) {
-                log.info("Checking for updates: No update available.")
+                os_log("Checking for updates: No update available.", log: logUpdate, type: .info)
                 if !silent {
                     NotificationCenter.default.post(name: Notification.Name("updateNotAvailable"),
                                                     object: nil,
                                                     userInfo: versionDict)
                 }
             } else {
-                log.info("Checking for updates: Update available.")
+                os_log("Checking for updates: Update available.", log: logUpdate, type: .info)
                 NotificationCenter.default.post(name: Notification.Name("updateAvailable"),
                                                 object: nil,
                                                 userInfo: versionDict)
@@ -105,7 +106,7 @@ func isLatestVersion(webVersionMajor: Int, webVersionMinor: Int, webVersionPatch
             return false
         }
     } else {
-        log.error("Can't get version string from plist.")
+        os_log("Can't get version string from plist.", log: logUpdate, type: .error)
     }
     return true
 }

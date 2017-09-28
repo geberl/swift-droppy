@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import os.log
+
 
 class ViewControllerRegistration: NSViewController {
     
@@ -26,27 +28,27 @@ class ViewControllerRegistration: NSViewController {
     
     @IBAction func onApplyButton(_ sender: NSButton) {
         if AppState.isLicensed {
-            log.debug("Removing license info.")
+            os_log("Removing license info.", log: logLicense, type: .info)
             self.showRemoveSheet()
         } else {
-            log.debug("Checking license info.")
+            os_log("Checking license info.", log: logLicense, type: .info)
             
             if !self.validateInput() {
-                log.error("Input invalid")
+                os_log("Input invalid.", log: logLicense, type: .error)
                 return
             }
             
             let licenseCode = self.licenseCodeTextField.stringValue
-            log.debug("Entered license code: " + licenseCode)
+            os_log("Entered license code: %@.", log: logLicense, type: .info, licenseCode)
             
             let validLicense: Bool = checkValidLicense(licenseCode: licenseCode, regName: self.getRegName())
             if validLicense {
-                log.info("Result: License code is valid.")
+                os_log("Result: License code is valid.", log: logLicense, type: .info)
                 self.saveRegValues()
                 self.showConfirmationSheet()
                 self.setLicensedValues()
             } else {
-                log.error("Result: License code is invalid.")
+                os_log("Result: License code is invalid.", log: logLicense, type: .error)
                 self.showErrorSheet(messageText: "License code invalid",
                                     informativeText: "The combination of name, company, email and license code you entered is invalid.\n\nMake sure to enter the information exactly as you did when purchasing.")
             }
@@ -161,7 +163,7 @@ class ViewControllerRegistration: NSViewController {
     
     func openPurchaseWebsite() {
         if let url = URL(string: "https://droppyapp.com/"), NSWorkspace.shared().open(url) {
-            log.debug("Main website opened.")
+            os_log("Main website opened.", log: logUi, type: .debug)
         }
     }
     
@@ -170,7 +172,7 @@ class ViewControllerRegistration: NSViewController {
         let company: String = self.companyTextField.stringValue
         let email: String = self.emailTextField.stringValue
         let regName = generateRegName(name: name, company: company, email: email)
-        log.debug("Entered registration name: " + regName)
+        os_log("Entered registration name: %@.", log: logUi, type: .info, regName)
         return regName
     }
     

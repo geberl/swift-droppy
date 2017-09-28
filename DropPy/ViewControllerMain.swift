@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import os.log
 
 
 class ViewControllerMain: NSViewController {
@@ -36,7 +37,7 @@ class ViewControllerMain: NSViewController {
     @IBOutlet weak var cancelButton: NSButton!
     
     @IBAction func onCancelButton(_ sender: NSButton) {
-        log.info("User clicked cancel button during execution.")
+        os_log("User clicked cancel button during execution.", log: logUi, type: .debug)
         
         self.cancelButton.isEnabled = false
         
@@ -188,7 +189,7 @@ class ViewControllerMain: NSViewController {
             if let newLogo = NSImage(contentsOfFile: logoPath) {
                 logoImage.image = self.resizeNSImage(image: newLogo, width:128, height:128)
             } else {
-                log.error("Can't load workflow logo from '\(logoPath)'.")
+                os_log("Can't load workflow logo from '%@'.", log: logUi, type: .error, logoPath)
                 logoImage.image = self.resizeNSImage(image: NSImage(named: "logo-default")!, width: 128, height: 128)
             }
         } else {

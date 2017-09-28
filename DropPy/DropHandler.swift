@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import os.log
 
 
 class DropHandler: NSObject {
@@ -24,7 +25,7 @@ class DropHandler: NSObject {
     var overallExitCode: Int
 
     init(draggingPasteboard: NSPasteboard, workspacePath: String, devModeEnabled: Bool) {
-        log.debug("Handling dropped objects.")
+        os_log("Handling dropped objects.", log: logDrop, type: .debug)
         
         self.draggingPasteboard = draggingPasteboard
         self.workspacePath = workspacePath
@@ -73,14 +74,14 @@ class DropHandler: NSObject {
             do {
                 try fileManager.createSymbolicLink(at: dstURL, withDestinationURL: srcURL)
             } catch {
-                log.error("Unable to symlink file '\(srcPath)'.")
+                os_log("Unable to symlink file '%@'.", log: logDrop, type: .error, srcPath)
             }
         }
         
         // Delete all .DS_Store files.
         guard let enumerator: FileManager.DirectoryEnumerator =
             fileManager.enumerator(atPath: dirZeroFilesPath) else {
-                log.error("Directory not found: \(dirZeroFilesPath)!")
+                os_log("Directory not found '%@'.", log: logDrop, type: .error, dirZeroFilesPath)
                 return
         }
         
@@ -91,7 +92,7 @@ class DropHandler: NSObject {
                 do {
                     try fileManager.removeItem(atPath: elementPath)
                 } catch let error {
-                    log.error(error.localizedDescription)
+                    os_log("%{errno}d", log: logDrop, type: .error, error.localizedDescription)
                 }
             }
         }
@@ -117,12 +118,12 @@ class DropHandler: NSObject {
                 }
             }
         } else {
-            log.error("Something is wrong with the passed NSPasteboard (types is nil).")
+            os_log("Something is wrong with the passed NSPasteboard (types is nil).", log: logDrop, type: .error)
             self.overallExitCode = 1
         }
         
         if self.utiTypes.count == 0 {
-            log.error("No UTI types contained in NSPasteboard.")
+            os_log("No UTI types contained in NSPasteboard.", log: logDrop, type: .error)
             self.overallExitCode = 1
         }
         
@@ -153,7 +154,7 @@ class DropHandler: NSObject {
                          atomically: false,
                          encoding: String.Encoding.utf8)
         } catch let error {
-            log.error(error.localizedDescription)
+            os_log("%{errno}d", log: logDrop, type: .error, error.localizedDescription)
             self.overallExitCode = 1
             return
         }
@@ -345,8 +346,8 @@ class DropHandler: NSObject {
                     let dataURL: URL = URL(fileURLWithPath: self.dirZeroUrl.path + "/" + dataType + "." + fileExtension)
                     try data.write(to: dataURL)
                 } catch let error {
-                    log.error("Unable to write '" + dataType + "' data to file.")
-                    log.error(error.localizedDescription)
+                    os_log("%{errno}d", log: logDrop, type: .error, error.localizedDescription)
+                    os_log("Unable to write '%@' data to file.", log: logDrop, type: .info, dataType)
                 }
             }
         }

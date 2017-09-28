@@ -8,6 +8,7 @@
 
 import Cocoa
 
+
 class WindowControllerPrefs: NSWindowController {
 
     override func windowDidLoad() {

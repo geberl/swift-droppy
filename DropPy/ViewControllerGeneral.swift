@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import os.log
+
 
 class ViewControllerGeneral: NSViewController {
 
@@ -60,7 +62,7 @@ class ViewControllerGeneral: NSViewController {
 
     @IBAction func onHelpButton(_ sender: NSButton) {
         if let url = URL(string: "https://droppyapp.com/preferences/general"), NSWorkspace.shared().open(url) {
-            log.debug("Documentation site for General openened.")
+            os_log("Documentation site for General openened.", log: logUi, type: .debug)
         }
     }
 
@@ -114,9 +116,9 @@ class ViewControllerGeneral: NSViewController {
         do {
             let fileManager = FileManager.default
             try fileManager.removeItem(atPath: tempPath)
-            log.debug("Removed temp dir at \(tempPath)")
+            os_log("Removed temp dir at '%@'.", log: logFileSystem, type: .debug, tempPath)
         } catch let error {
-            log.error(error.localizedDescription)
+            os_log("%{errno}d", log: logFileSystem, type: .error, error.localizedDescription)
         }
     }
 }

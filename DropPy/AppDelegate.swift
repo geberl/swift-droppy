@@ -7,17 +7,21 @@
 //
 
 import Cocoa
-import Willow
 import SwiftyJSON
+import os.log
 
 
 // Logger configuration.
-let modifiers: [LogLevel: [LogMessageModifier]] = [.all: [TimestampModifier()]]
-let configuration = LoggerConfiguration(modifiers: modifiers)
-let log = Logger(configuration: configuration)
+let logGeneral = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "general")
+let logUpdate = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "update")
+let logLicense = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "license")
+let logFileSystem = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "filesystem")
+let logDrop = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "drop")
+let logExecution = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "execution")
+let logUi = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "ui")
 
 
-// Application state object.
+// Global application state object.
 struct AppState {
     static var allWorkflows = [String: Dictionary<String, String>]()
     
@@ -46,8 +50,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var executionInProgress: Bool = false
 
     func applicationWillFinishLaunching(_ notification: Notification) {
-        log.enabled = true
-
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(AppDelegate.reloadWorkflows(notification:)),
                                                name: Notification.Name("reloadWorkflows"),
@@ -83,7 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             AppState.isLicensed = isLicensed()
             if !AppState.isLicensed {
-                log.debug("No license information found.")
+                os_log("No license information found.", log: logLicense, type: .info)
                 AppState.isInEvaluation = isInEvaluation()
             }
             
@@ -159,7 +161,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     dropHandler.run()
                     (logFilePath, tempPath, dropExitCode) = dropHandler.evaluate()
                 } else {
-                    log.error("Unable to access draggingPasteboard (nil). Skipping DropHandler.")
+                    os_log("Unable to access draggingPasteboard. Skipping DropHandler.", log: logDrop, type: .error)
                     dropExitCode = 1
                 }
                 
@@ -174,7 +176,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     pythonExecutor.run()
                     execExitCode = pythonExecutor.evaluate()
                 } else {
-                    log.error("Skipping Workflow execution. DropHandler reported error.")
+                    os_log("Skipping Workflow execution. DropHandler reported error.", log: logExecution, type: .error)
                 }
 
                 DispatchQueue.main.async {
@@ -194,12 +196,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                          "execExitCode": String(execExitCode)]
 
         NotificationCenter.default.post(name: Notification.Name("executionFinished"), object: nil, userInfo: pathDict)
-        log.debug("Execution finished.")
+        os_log("Execution finished.", log: logExecution, type: .debug)
     }
 
     func applicationWillTerminate(_ notification: Notification) {
         saveWindowPosition()
-        log.enabled = false
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -283,7 +284,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func reloadWorkflows() {
         guard let workspacePath = checkWorkspaceInfo() else { return }
         let workflowPath: String = workspacePath + "Workflows"
-        log.debug("Reloading Workflows from '\(workflowPath)'.")
+        os_log("Reloading Workflows from '%@'.", log: logGeneral, type: .debug, workflowPath)
         
         let fileManager = FileManager.default
         let enumerator: FileManager.DirectoryEnumerator = fileManager.enumerator(atPath: workflowPath)!
@@ -303,7 +304,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         workflowsTemp[jsonObj["name"].stringValue]?["interpreterName"] = jsonObj["interpreterName"].stringValue
                     }
                 } catch let error {
-                    log.error(error.localizedDescription)
+                    os_log("%{errno}d", log: logGeneral, type: .error, error.localizedDescription)
                 }
             }
         }

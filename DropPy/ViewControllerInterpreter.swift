@@ -17,6 +17,7 @@
 // - view-based (NSView), more powerful     (used here)
 
 import Cocoa
+import os.log
 
 
 class ViewControllerInterpreter: NSViewController {
@@ -129,7 +130,7 @@ class ViewControllerInterpreter: NSViewController {
     
     @IBAction func onHelpButton(_ sender: NSButton) {
         if let url = URL(string: "https://droppyapp.com/preferences/interpreter"), NSWorkspace.shared().open(url) {
-            log.debug("Documentation site for Interpreter openened.")
+            os_log("Documentation site for Interpreter openened.", log: logUi, type: .debug)
         }
     }
     

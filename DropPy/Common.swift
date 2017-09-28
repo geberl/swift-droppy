@@ -8,6 +8,7 @@
 
 import Cocoa
 import SystemConfiguration
+import os.log
 
 
 func isDir(path: String) -> Bool {
@@ -42,8 +43,8 @@ func makeDirs(path: String) {
         try filemgr.createDirectory(atPath: path,
                                     withIntermediateDirectories: true,
                                     attributes: nil)
-    } catch let error as NSError {
-        log.error(error.localizedDescription)
+    } catch let error {
+        os_log("%{errno}d", log: logFileSystem, type: .error, error.localizedDescription)
     }
 }
 
