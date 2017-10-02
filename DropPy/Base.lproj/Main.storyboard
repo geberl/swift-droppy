@@ -116,6 +116,12 @@
                                         <menuItem title="Delete" id="DZy-8o-Q3C">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="WPg-3B-lYU"/>
+                                        <menuItem title="Dev Mode" keyEquivalent="d" id="Lmj-0f-0Zt">
+                                            <connections>
+                                                <action selector="onDevModeMenuItem:" target="Voe-Tx-rLC" id="l4V-dI-rV3"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -160,7 +166,11 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="DropPy" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="DropPy" customModuleProvider="target">
+                    <connections>
+                        <outlet property="devModeMenuItem" destination="Lmj-0f-0Zt" id="wgW-ZS-PIF"/>
+                    </connections>
+                </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="76" y="-122"/>
@@ -252,6 +262,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" identifier="Logo" imageScaling="proportionallyDown" image="logo-default" id="DVK-e3-Ngl" userLabel="LogoImage"/>
                             </imageView>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xtp-L6-wJt" userLabel="Dev Mode Image View">
+                                <rect key="frame" x="146" y="28" width="82" height="82"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" identifier="Logo" imageScaling="proportionallyDown" image="logo-devmode-overlay" id="9Af-JX-66u" userLabel="Dev Mode Overlay Image"/>
+                            </imageView>
                             <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYf-lE-mJ8">
                                 <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -301,6 +316,7 @@
                         <outlet property="logButton" destination="da6-BW-mk3" id="QID-br-DtE"/>
                         <outlet property="logoImage" destination="DVK-e3-Ngl" id="aTM-bX-3qy"/>
                         <outlet property="logoImageView" destination="GMI-Zz-XD4" id="JtM-go-XIs"/>
+                        <outlet property="overlayImageView" destination="Xtp-L6-wJt" id="6ye-M1-RYp"/>
                         <outlet property="taskTextField" destination="lhT-H0-X1I" id="95K-Cc-nZT"/>
                         <outlet property="zoneImage" destination="ijI-bt-2u5" id="j3a-mk-Xze"/>
                         <outlet property="zoneImageView" destination="uYf-lE-mJ8" id="bUq-ab-xCb"/>
@@ -316,6 +332,7 @@
         <image name="button-edit" width="19" height="19"/>
         <image name="button-folder" width="19" height="19"/>
         <image name="logo-default" width="128" height="128"/>
+        <image name="logo-devmode-overlay" width="128" height="128"/>
         <image name="zone-dashed" width="256" height="256"/>
     </resources>
 </document>

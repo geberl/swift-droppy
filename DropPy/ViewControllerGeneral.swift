@@ -26,6 +26,8 @@ class ViewControllerGeneral: NSViewController {
         self.userDefaults.set(devModeEnabled, forKey: UserDefaultStruct.devModeEnabled)
 
         self.adjustIntermediaryFilesLabel()
+        
+        NotificationCenter.default.post(name: .devModeChanged, object: nil)
 
         if !devModeEnabled {
             guard let workspacePath = checkWorkspaceInfo() else { return }

@@ -48,7 +48,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let userDefaults = UserDefaults.standard
 
     var executionInProgress: Bool = false
-
+    
+    @IBOutlet weak var devModeMenuItem: NSMenuItem!
+    
+    @IBAction func onDevModeMenuItem(_ sender: NSMenuItem) {
+        if self.userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled) {
+            self.userDefaults.set(false, forKey: UserDefaultStruct.devModeEnabled)
+        } else {
+            self.userDefaults.set(true, forKey: UserDefaultStruct.devModeEnabled)
+        }
+        
+        self.loadDevMenuState()
+        NotificationCenter.default.post(name: .devModeChanged, object: nil)
+    }
+    
+    func loadDevMenuState() {
+        if self.userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled) {
+            self.devModeMenuItem.state = NSControl.StateValue.on
+        } else {
+            self.devModeMenuItem.state = NSControl.StateValue.off
+        }
+    }
+    
     func applicationWillFinishLaunching(_ notification: Notification) {
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.reloadWorkflows),
                                                name: .reloadWorkflows, object: nil)
@@ -64,6 +85,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.setNewWorkspace),
                                                name: .workspaceNotFound, object: nil)
+        
+        self.devModeMenuItem.isEnabled = true  // override auto enabling in "Workflow" menu for this item.
 
         if isFirstRun() {
             beginEvaluation()
@@ -72,6 +95,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             reapplyPrefs()
             loadWindowPosition()
+            self.loadDevMenuState()
             
             AppState.isLicensed = isLicensed()
             if !AppState.isLicensed {

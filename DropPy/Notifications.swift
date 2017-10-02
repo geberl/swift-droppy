@@ -40,4 +40,5 @@ extension Notification.Name {
     
     static let switchToPrefTab = Notification.Name("switchToPrefTab")
     static let editorDropped = Notification.Name("editorDropped")
+    static let devModeChanged = Notification.Name("devModeChanged")
 }

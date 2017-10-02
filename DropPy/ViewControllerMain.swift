@@ -19,7 +19,9 @@ class ViewControllerMain: NSViewController {
     @IBOutlet weak var logoImageView: NSImageView!
 
     @IBOutlet weak var zoneImageView: NSImageView!
-
+    
+    @IBOutlet weak var overlayImageView: NSImageView!
+    
     @IBOutlet weak var logoImage: NSImageCell!
 
     @IBOutlet weak var zoneImage: NSImageCell!
@@ -94,6 +96,19 @@ class ViewControllerMain: NSViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setTextFieldStatus),
                                                name: .executionStatus, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setDevModeOverlay),
+                                               name: .devModeChanged, object: nil)
+        
+        self.setDevModeOverlay(nil)
+    }
+    
+    @objc func setDevModeOverlay(_ notification: Notification?) {
+        if userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled) {
+            self.overlayImageView.isHidden = false
+        } else {
+            self.overlayImageView.isHidden = true
+        }
     }
     
     @objc func setTextFieldHidden(_ notification: Notification) {
