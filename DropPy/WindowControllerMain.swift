@@ -242,17 +242,22 @@ class WindowControllerMain: NSWindowController {
         errorAlert.layout()
         errorAlert.alertStyle = NSAlert.Style.warning
         errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
-        let response: NSApplication.ModalResponse = errorAlert.runModal()
 
-        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-            // Do nothing when clicked ok.
-        } else if response == NSApplication.ModalResponse.alertSecondButtonReturn {
-            // Open temp dir in finder.
-            NSWorkspace.shared.selectFile(logFilePath, inFileViewerRootedAtPath: tempPath)
-        } else if response == NSApplication.ModalResponse.alertThirdButtonReturn {
-            // Open log file in user editor.
-            NSWorkspace.shared.openFile(logFilePath)
-        }
+        errorAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSApplication.ModalResponse.alertSecondButtonReturn {
+                self.openFileInFinder(filePath: logFilePath, rootDir: tempPath)
+            } else if returnCode == NSApplication.ModalResponse.alertThirdButtonReturn {
+                self.openFileInDefaultApp(filePath: logFilePath)
+            }
+        })
+    }
+    
+    func openFileInFinder(filePath: String, rootDir: String) {
+        NSWorkspace.shared.selectFile(filePath, inFileViewerRootedAtPath: rootDir)
+    }
+    
+    func openFileInDefaultApp(filePath: String) {
+        NSWorkspace.shared.openFile(filePath)
     }
 
     @objc func updateErrorAlert(_ notification: Notification) {
@@ -265,32 +270,37 @@ class WindowControllerMain: NSWindowController {
         errorAlert.layout()
         errorAlert.alertStyle = NSAlert.Style.warning
         errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
-
-        let response: NSApplication.ModalResponse = errorAlert.runModal()
-
-        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-            guard let url = URL(string: "https://droppyapp.com/"), NSWorkspace.shared.open(url) else { return }
-        }
+        
+        errorAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
+                self.openUrlInBrowser(urlString: "https://droppyapp.com/")
+            }
+        })
+    }
+    
+    func openUrlInBrowser(urlString: String) {
+        guard let url = URL(string: urlString), NSWorkspace.shared.open(url) else { return }
     }
 
     @objc func updateNotAvailableAlert(_ notification: Notification) {
         guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }
         guard let thisVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
         
-        let errorAlert = NSAlert()
-        errorAlert.showsHelp = false
-        errorAlert.messageText = "No update available"
-        errorAlert.informativeText = "You're already using the latest version, v" + thisVersionString + "."
-        errorAlert.addButton(withTitle: "Ok")
-        errorAlert.addButton(withTitle: "Release Notes")
-        errorAlert.layout()
-        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "AppIcon"))
+        let infoAlert = NSAlert()
+        infoAlert.showsHelp = false
+        infoAlert.messageText = "No update available"
+        infoAlert.informativeText = "You're already using the latest version, v" + thisVersionString + "."
+        infoAlert.addButton(withTitle: "Ok")
+        infoAlert.addButton(withTitle: "Release Notes")
+        infoAlert.layout()
+        infoAlert.alertStyle = NSAlert.Style.informational
+        infoAlert.icon = NSImage(named: NSImage.Name(rawValue: "AppIcon"))
         
-        let response: NSApplication.ModalResponse = errorAlert.runModal()
-        
-        if response == NSApplication.ModalResponse.alertSecondButtonReturn {
-            guard let url = URL(string: releaseNotesLink), NSWorkspace.shared.open(url) else { return }
-        }
+        infoAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSApplication.ModalResponse.alertSecondButtonReturn {
+                self.openUrlInBrowser(urlString: releaseNotesLink)
+            }
+        })
     }
 
     @objc func updateAvailableAlert(_ notification: Notification) {
@@ -299,21 +309,23 @@ class WindowControllerMain: NSWindowController {
         guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }
         guard let downloadLink = notification.userInfo?["downloadLink"] as? String else { return }
 
-        let errorAlert = NSAlert()
-        errorAlert.showsHelp = false
-        errorAlert.messageText = "New update available"
-        errorAlert.informativeText = "There's a new version of DropPy, v" + newVersionString + ".\nYou're currently using v" + thisVersionString + "."
-        errorAlert.addButton(withTitle: "Download")
-        errorAlert.addButton(withTitle: "What's new?")
-        errorAlert.addButton(withTitle: "Cancel")
-        errorAlert.layout()
-        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "AppIcon"))
-        let response: NSApplication.ModalResponse = errorAlert.runModal()
-
-        if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-            guard let url = URL(string: downloadLink), NSWorkspace.shared.open(url) else { return }
-        } else if response == NSApplication.ModalResponse.alertSecondButtonReturn {
-            guard let url = URL(string: releaseNotesLink), NSWorkspace.shared.open(url) else { return }
-        }
+        let infoAlert = NSAlert()
+        infoAlert.showsHelp = false
+        infoAlert.messageText = "New update available"
+        infoAlert.informativeText = "There's a new version of DropPy, v" + newVersionString + ".\nYou're currently using v" + thisVersionString + "."
+        infoAlert.addButton(withTitle: "Download")
+        infoAlert.addButton(withTitle: "What's new?")
+        infoAlert.addButton(withTitle: "Cancel")
+        infoAlert.layout()
+        infoAlert.alertStyle = NSAlert.Style.informational
+        infoAlert.icon = NSImage(named: NSImage.Name(rawValue: "AppIcon"))
+        
+        infoAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
+                self.openUrlInBrowser(urlString: downloadLink)
+            } else if returnCode == NSApplication.ModalResponse.alertSecondButtonReturn {
+                self.openUrlInBrowser(urlString: releaseNotesLink)
+            }
+        })
     }
 }
