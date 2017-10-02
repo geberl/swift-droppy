@@ -56,7 +56,7 @@ class ViewControllerMain: NSViewController {
                                                name: .draggingEnteredOk, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setZoneLogoError),
-                                               name: .draggingEnteredNoWorkflowSelected, object: nil)
+                                               name: .draggingEnteredError, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setZoneDashed),
                                                name: .draggingExited, object: nil)

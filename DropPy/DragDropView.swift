@@ -12,19 +12,16 @@ import SwiftyJSON
 
 class DragDropView: NSView {
     
-    var workflowIsSelected = false
-    var droppedFilePath: String?
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
-        // Allow all types here. Just convert everything to a file.
+        // Allow all types here. Just convert everything to a file later.
 
         // Pboard types will be deprecated in a future release. Use UTIs instead.
         // https://developer.apple.com/library/content/documentation/Miscellaneous/Reference/UTIRef/Articles/System-DeclaredUniformTypeIdentifiers.html
 
         // Register all base types here to automatically allow all child types.
-        // So basicall everything that has '-' in its "conforms to" column in the documentation.
+        // So basicall everything that has '-' in its "conforms to" column in the above documentation.
         registerForDraggedTypes([
             NSPasteboard.PasteboardType(rawValue: "public.item"),              // Base type for the physical hierarchy.
             NSPasteboard.PasteboardType(rawValue: "public.content"),           // Base type for all document content.
@@ -41,12 +38,9 @@ class DragDropView: NSView {
 
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         if AppState.activeName == "" {
-            workflowIsSelected = false
-            NotificationCenter.default.post(name: .draggingEnteredNoWorkflowSelected, object: nil)
-            return .copy // allow drop (catch later, provide message -> better user experience)
-            // return [] // don't even allow drop
+            NotificationCenter.default.post(name: .draggingEnteredError, object: nil)
+            return [] // don't even allow drop.
         } else {
-            workflowIsSelected = true
             NotificationCenter.default.post(name: .draggingEnteredOk, object: nil)
             return .copy
         }
@@ -57,20 +51,25 @@ class DragDropView: NSView {
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+
+        // TODO this needs more work
+//        if (sender.draggingPasteboard().types?.contains(NSPasteboard.PasteboardType(rawValue: "com.apple.pasteboard.promised-file-content-type")))! {
+//            print("promise is contained")
+//
+//            let myFilePath: String = "/Users/guenther/Development/droppy-workspace/Temp/promises/"
+//            let createdFilePaths = sender.namesOfPromisedFilesDropped(atDestination: URL(fileURLWithPath: myFilePath))
+//            print(createdFilePaths ?? "nothing created, error")
+//        } else {
+//            print("promise is not contained")
+//        }
+        
         return true
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
-        // Display error messages only AFTER performDragOperation, basicall after macOS has discarded the dropped items.
-        // Otherwise the mouse cursor still contains a green circle with a white plus symbol while clicking the 'Ok' button.
-
-        if !workflowIsSelected {
-            NotificationCenter.default.post(name: .draggingExited, object: nil)
-        } else {
-            if let pasteb = sender?.draggingPasteboard() {
-                let pastebDict:[String: NSPasteboard] = ["draggingPasteboard": pasteb]
-                NotificationCenter.default.post(name: .droppingOk, object: nil, userInfo: pastebDict)
-            }
+        if let pasteb = sender?.draggingPasteboard() {
+            let pastebDict:[String: NSPasteboard] = ["draggingPasteboard": pasteb]
+            NotificationCenter.default.post(name: .droppingOk, object: nil, userInfo: pastebDict)
         }
     }
 }

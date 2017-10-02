@@ -16,7 +16,7 @@ extension Notification.Name {
     static let workflowSelectionChanged = Notification.Name("workflowSelectionChanged")
     
     static let draggingEnteredOk = Notification.Name("draggingEnteredOk")
-    static let draggingEnteredNoWorkflowSelected = Notification.Name("draggingEnteredNoWorkflowSelected")
+    static let draggingEnteredError = Notification.Name("draggingEnteredError")
     static let draggingExited = Notification.Name("draggingExited")
     static let droppingOk = Notification.Name("droppingOk")
     
