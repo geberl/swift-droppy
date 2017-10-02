@@ -135,11 +135,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func startPythonExecutor(_ notification: Notification) {
-        // Show registration window with open pruchase sheet to user on each drop.
+        // Show registration window with open purchase sheet to user on each drop.
         // At this moment do not refuse executing, maybe later in 2.0.
-        if !AppState.isInEvaluation && !AppState.isLicensed {
-            self.registrationWindowController.showWindow(self)
-            NotificationCenter.default.post(name: .reopenPurchaseSheet, object: nil)
+        if !AppState.isLicensed {
+            AppState.isInEvaluation = isInEvaluation()  // Recheck if evaluation period expired in the meantime.
+            if !AppState.isInEvaluation {
+                self.registrationWindowController.showWindow(self)
+                NotificationCenter.default.post(name: .reopenPurchaseSheet, object: nil)
+            }
         }
         
         guard let workflowFile: String = AppState.activeJsonFile else { return }
