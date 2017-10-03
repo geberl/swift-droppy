@@ -207,7 +207,6 @@ class PythonExecutor: NSObject {
 
                     if exit > 0 {
                         self.overallExitCode = 1
-                        // TODO only break THIS and parent queues, sister-queues might be unaffected by this failed Task
                         break
                     }
 
