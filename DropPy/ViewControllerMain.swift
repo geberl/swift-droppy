@@ -20,8 +20,7 @@ class ViewControllerMain: NSViewController {
 
     @IBOutlet weak var zoneImageView: NSImageView!
     
-    @IBOutlet weak var overlayImageView: NSImageView!
-    
+
     @IBOutlet weak var logoImage: NSImageCell!
 
     @IBOutlet weak var zoneImage: NSImageCell!
@@ -48,7 +47,13 @@ class ViewControllerMain: NSViewController {
         
         NotificationCenter.default.post(name: .executionCancel, object: nil)
     }
-
+    
+    @IBOutlet weak var devButton: NSButton!
+    
+    @IBAction func onDevButton(_ sender: NSButton) {
+        os_log("User clicked dev button.", log: logUi, type: .debug)
+    }
+    
     override func viewWillAppear() {
         super.viewWillAppear()
 
@@ -105,9 +110,9 @@ class ViewControllerMain: NSViewController {
     
     @objc func setDevModeOverlay(_ notification: Notification?) {
         if userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled) {
-            self.overlayImageView.isHidden = false
+            self.devButton.isHidden = false
         } else {
-            self.overlayImageView.isHidden = true
+            self.devButton.isHidden = true
         }
     }
     
