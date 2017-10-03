@@ -258,7 +258,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GMI-Zz-XD4">
-                                <rect key="frame" x="64" y="66" width="128" height="128"/>
+                                <rect key="frame" x="64" y="65" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" identifier="Logo" imageScaling="proportionallyDown" image="logo-default" id="DVK-e3-Ngl" userLabel="LogoImage"/>
                             </imageView>
@@ -272,7 +272,7 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lhT-H0-X1I">
-                                        <rect key="frame" x="3" y="170" width="227" height="49"/>
+                                        <rect key="frame" x="3" y="169" width="227" height="49"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Task ?/?" id="M4X-9W-nfp">
                                             <font key="font" metaFont="system"/>
