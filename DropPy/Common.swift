@@ -43,7 +43,7 @@ func makeDirs(path: String) {
         try fileManager.createDirectory(atPath: path,
                                         withIntermediateDirectories: true,
                                         attributes: nil)
-        os_log("Created dir at '%@'.", log: logFileSystem, type: .debug, path)
+        os_log("Created dir '%@'.", log: logFileSystem, type: .debug, path)
     } catch let error {
         os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
     }
@@ -54,7 +54,7 @@ func removeDir(path: String) {
     let fileManager = FileManager.default
     do {
         try fileManager.removeItem(atPath: path)
-        os_log("Removed dir at '%@'.", log: logFileSystem, type: .debug, path)
+        os_log("Removed dir '%@'.", log: logFileSystem, type: .debug, path)
     } catch let error {
         os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
     }

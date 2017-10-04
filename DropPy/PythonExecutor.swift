@@ -13,7 +13,7 @@ import os.log
 
 class PythonExecutor: NSObject {
 
-    var cacheDirPath: String
+    var tempDirPath: String
     var devModeEnabled: Bool
     
     var workflowFile: String
@@ -23,6 +23,7 @@ class PythonExecutor: NSObject {
     
     var startTime: DispatchTime
     
+    var cacheDirPath: String
     var runnerFilePath: String
     var timestampDirPath: String
     var logFilePath: String
@@ -32,12 +33,12 @@ class PythonExecutor: NSObject {
     var executionCancel: Bool
     var overallExitCode: Int
 
-    init(cacheDirPath: String, devModeEnabled: Bool, workflowFile: String, workspacePath: String,
+    init(tempDirPath: String, devModeEnabled: Bool, workflowFile: String, workspacePath: String,
          executablePath: String, executableArgs: String) {
         
-        os_log("Executing workflow.", log: logExecution, type: .debug)
+        os_log("Executing workflow '%@'.", log: logExecution, type: .debug, workflowFile)
         
-        self.cacheDirPath = cacheDirPath
+        self.tempDirPath = tempDirPath
         self.devModeEnabled = devModeEnabled
         
         self.workflowFile = workflowFile
@@ -47,11 +48,9 @@ class PythonExecutor: NSObject {
         
         self.startTime = DispatchTime.now()
         
-        var tempDirUrl: URL = URL(fileURLWithPath: self.cacheDirPath)
-        tempDirUrl.deleteLastPathComponent()
-        
-        self.runnerFilePath = tempDirUrl.path + "/" + "run.py"
-        self.timestampDirPath = tempDirUrl.path + "/" + Date().iso8601 + "/"
+        self.cacheDirPath = tempDirPath + "_cache" + "/"
+        self.runnerFilePath = tempDirPath + "run.py"
+        self.timestampDirPath = tempDirPath + Date().iso8601 + "/"
         self.logFilePath = self.timestampDirPath + "droppy.log"
         
         self.workflowPath = workspacePath + "Workflows" + "/" + workflowFile
@@ -243,16 +242,17 @@ class PythonExecutor: NSObject {
             os_log("%@", log: logExecution, type: .error, error.localizedDescription)
         }
     }
-
+    
     func cleanUp() {
         let statusDict:[String: String] = ["text": "Cleaning up\nPlease wait a moment"]
         NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
         
         if !self.devModeEnabled && self.overallExitCode == 0 {
-            removeDir(path: self.timestampDirPath)
+            removeDir(path: self.tempDirPath)
+            makeDirs(path: self.tempDirPath)
         }
     }
-
+    
     func evaluate() -> (String, Int) {
         self.writeWorkflowOutputLog()
         self.cleanUp()

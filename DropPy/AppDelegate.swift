@@ -25,10 +25,11 @@ let logUi = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "ui")
 struct AppState {
     static var allWorkflows = [String: Dictionary<String, String>]()
     
-    static var activeName: String?
-    static var activeInterpreterName: String?
-    static var activeJsonFile: String?
-    static var activeLogoFile: String?
+    static var activeName: String? = nil
+    static var activeInterpreterName: String? = nil
+    static var activeJsonFile: String? = nil
+    static var activeLogoFile: String? = nil
+    static var tempDirPath: String? = nil
     
     static var interpreterStockName: String = "macOS pre-installed"
     static var bundledWorkspaceVersion: String = "trunk (5374e25) (2017-09-15)"
@@ -68,6 +69,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             self.devModeMenuItem.state = NSControl.StateValue.off
         }
+    }
+    
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        if AppState.tempDirPath != nil {
+            if isDir(path: AppState.tempDirPath!) {
+                removeDir(path: AppState.tempDirPath!)
+            }
+        }
+        return NSApplication.TerminateReply.terminateNow
     }
     
     func applicationWillFinishLaunching(_ notification: Notification) {
@@ -145,6 +155,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         
+        guard let tempDirPath: String = AppState.tempDirPath else {
+            NotificationCenter.default.post(name: .executionFinished, object: nil)
+            return
+        }
         guard let workflowFile: String = AppState.activeJsonFile else {
             NotificationCenter.default.post(name: .executionFinished, object: nil)
             return
@@ -156,8 +170,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
-        guard let cacheDirPath = notification.userInfo?["cacheDirPath"] as? String else { return }
-
+        
         // The notification that starts this function is sometimes sent (or received?) twice.
         // Using a boolean class variable as a workaround prevents multiple instantiation of PythonExecutor.
         if !self.executionInProgress {
@@ -169,9 +182,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             var timestampDirPath: String = ""
             var exitCode: Int = 0
-
+            
             DispatchQueue.global(qos: .background).async {
-                let pythonExecutor = PythonExecutor(cacheDirPath: cacheDirPath,
+                let pythonExecutor = PythonExecutor(tempDirPath: tempDirPath,
                                                     devModeEnabled: devModeEnabled,
                                                     workflowFile: workflowFile,
                                                     workspacePath: workspacePath!,

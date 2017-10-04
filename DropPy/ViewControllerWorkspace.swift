@@ -59,7 +59,7 @@ class ViewControllerWorkspace: NSViewController {
         let fileManager = FileManager.default
         
         // Set temp directory and files, remove them if they already exist.
-        let tempPath: String = NSTemporaryDirectory() + "DropPy" + "/"
+        let tempPath: String = NSTemporaryDirectory() + "se.eberl.droppy" + "/"
         makeDirs(path: tempPath)
         let zipPath: String = tempPath + "droppy-workspace-master.zip"
         if isFile(path: zipPath) {

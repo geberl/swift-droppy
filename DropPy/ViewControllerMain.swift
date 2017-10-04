@@ -51,7 +51,11 @@ class ViewControllerMain: NSViewController {
     @IBOutlet weak var devButton: NSButton!
     
     @IBAction func onDevButton(_ sender: NSButton) {
-        os_log("User clicked dev button.", log: logUi, type: .debug)
+        if AppState.tempDirPath == nil {
+            AppState.tempDirPath = NSTemporaryDirectory() + "se.eberl.droppy" + "/"
+            makeDirs(path: AppState.tempDirPath!)
+        }
+        NSWorkspace.shared.selectFile(AppState.tempDirPath!, inFileViewerRootedAtPath: AppState.tempDirPath!)
     }
     
     override func viewWillAppear() {
@@ -127,10 +131,13 @@ class ViewControllerMain: NSViewController {
     }
     
     @objc func setLogButtonVisible(_ notification: Notification) {
-        guard let logFilePath = notification.userInfo?["logFilePath"] as? String else { return }
-        if logFilePath != "" {
-            self.logFilePath = logFilePath
-            self.logButton.isHidden = false
+        let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
+        if devModeEnabled {
+            guard let timestampDirPath = notification.userInfo?["timestampDirPath"] as? String else { return }
+            if timestampDirPath != "" {
+                self.logFilePath = timestampDirPath + "droppy.log"
+                self.logButton.isHidden = false
+            }
         }
     }
     

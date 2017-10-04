@@ -16,14 +16,14 @@ class DragDropView: NSView {
     var startTime: DispatchTime?
     var numberOfPromises: Int
     var numberOfExtractedPromises: Int
-    var cacheDirPath: String
+    var tempDirPath: String
     var logFilePath: String
     
     required init?(coder: NSCoder) {
         startTime = nil
         numberOfPromises = 0
         numberOfExtractedPromises = 0
-        cacheDirPath = ""
+        tempDirPath = ""
         logFilePath = ""
         super.init(coder: coder)
         
@@ -73,7 +73,7 @@ class DragDropView: NSView {
         var zeroDirPath: String
         var filesDirPath: String
         var promisesDirPath: String
-        (self.cacheDirPath, self.logFilePath, zeroDirPath, filesDirPath, promisesDirPath) = self.getPaths()
+        (self.tempDirPath, self.logFilePath, zeroDirPath, filesDirPath, promisesDirPath) = self.getPaths()
         
         let utiTypes = self.getUtiTypes(draggingInfo: sender)
         let symlinkedFiles = self.symlinkFiles(draggingInfo: sender, filesDirPath: filesDirPath)
@@ -85,16 +85,20 @@ class DragDropView: NSView {
     }
     
     func getPaths() -> (String, String, String, String, String) {
-        let cacheDirPath: String = NSTemporaryDirectory() + "se.eberl.droppy" + "/" + "_cache" + "/"
+        let tempDirPath: String = NSTemporaryDirectory() + "se.eberl.droppy" + "/"
+        let cacheDirPath: String = tempDirPath + "_cache" + "/"
         let logFilePath: String = cacheDirPath + "droppy.log"
         let zeroDirPath: String = cacheDirPath + "0" + "/"
         let filesDirPath: String = zeroDirPath + "files" + "/"
         let promisesDirPath: String = zeroDirPath + "promises" + "/"
         
-        os_log("cacheDirPath: '%@'", log: logDrop, type: .debug, cacheDirPath)
-        os_log("logFilePath: '%@'", log: logDrop, type: .debug, logFilePath)
-        os_log("zeroDirPath: '%@'", log: logDrop, type: .debug, zeroDirPath)
-        os_log("filesDirPath: '%@'", log: logDrop, type: .debug, filesDirPath)
+        AppState.tempDirPath = tempDirPath
+        
+        os_log("tempDirPath:     '%@'", log: logDrop, type: .debug, tempDirPath)
+        os_log("cacheDirPath:    '%@'", log: logDrop, type: .debug, cacheDirPath)
+        os_log("logFilePath:     '%@'", log: logDrop, type: .debug, logFilePath)
+        os_log("zeroDirPath:     '%@'", log: logDrop, type: .debug, zeroDirPath)
+        os_log("filesDirPath:    '%@'", log: logDrop, type: .debug, filesDirPath)
         os_log("promisesDirPath: '%@'", log: logDrop, type: .debug, promisesDirPath)
         
         // Delete the parent {temp}/_cache directory and recreate its subfolders.
@@ -104,7 +108,7 @@ class DragDropView: NSView {
         makeDirs(path: filesDirPath)
         makeDirs(path: promisesDirPath)
         
-        return (cacheDirPath, logFilePath, zeroDirPath, filesDirPath, promisesDirPath)
+        return (tempDirPath, logFilePath, zeroDirPath, filesDirPath, promisesDirPath)
     }
     
     func getUtiTypes(draggingInfo: NSDraggingInfo) -> [String] {
@@ -187,6 +191,7 @@ class DragDropView: NSView {
             let nanoTime = endTime.uptimeNanoseconds - startTime.uptimeNanoseconds
             let timeInterval = Double(nanoTime) / 1_000_000_000
             self.writeLog(prefix: "Drop Run Time:            ", lines: [String(format: "%.2f", timeInterval) + "s"])
+            self.writeLog(prefix: "", lines: [String(repeating: "=", count: 120)])
         }
     }
 
@@ -471,8 +476,8 @@ class DragDropView: NSView {
         if self.numberOfExtractedPromises == self.numberOfPromises {
             self.finishDropLog()
             os_log("All promises extracted. Send 'droppingConcluded' notification.", log: logDrop, type: .debug)
-            let pathDict:[String: String] = ["cacheDirPath": self.cacheDirPath]
-            NotificationCenter.default.post(name: .droppingConcluded, object: nil, userInfo: pathDict)
+            AppState.tempDirPath = self.tempDirPath
+            NotificationCenter.default.post(name: .droppingConcluded, object: nil)
         }
     }
     
@@ -480,8 +485,8 @@ class DragDropView: NSView {
         if self.numberOfPromises == 0 {
             self.finishDropLog()
             os_log("No promises contained. Send 'droppingConcluded' notification.", log: logDrop, type: .debug)
-            let pathDict:[String: String] = ["cacheDirPath": self.cacheDirPath]
-            NotificationCenter.default.post(name: .droppingConcluded, object: nil, userInfo: pathDict)
+            AppState.tempDirPath = self.tempDirPath
+            NotificationCenter.default.post(name: .droppingConcluded, object: nil)
         }
     }
 }

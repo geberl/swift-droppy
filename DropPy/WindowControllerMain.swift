@@ -248,13 +248,19 @@ class WindowControllerMain: NSWindowController {
 
         errorAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSApplication.ModalResponse.alertSecondButtonReturn {
-                self.openFileInFinder(filePath: logFilePath, rootDir: timestampDirPath)
+                var rootDirPath: String
+                if let tempDirPath = AppState.tempDirPath {
+                    rootDirPath = tempDirPath
+                } else {
+                    rootDirPath = timestampDirPath
+                }
+                self.openFileInFinder(filePath: logFilePath, rootDir: rootDirPath)
             } else if returnCode == NSApplication.ModalResponse.alertThirdButtonReturn {
                 self.openFileInDefaultApp(filePath: logFilePath)
             }
         })
     }
-    
+
     func openFileInFinder(filePath: String, rootDir: String) {
         NSWorkspace.shared.selectFile(filePath, inFileViewerRootedAtPath: rootDir)
     }
