@@ -30,6 +30,7 @@ class ViewControllerMain: NSViewController {
     @IBOutlet weak var logButton: NSButton!
 
     @IBAction func onLogButton(_ sender: NSButton) {
+        os_log("User clicked 'log' button.", log: logUi, type: .info)
         if let logFilePath = self.logFilePath {
             NSWorkspace.shared.openFile(logFilePath)
         }
@@ -38,7 +39,7 @@ class ViewControllerMain: NSViewController {
     @IBOutlet weak var cancelButton: NSButton!
     
     @IBAction func onCancelButton(_ sender: NSButton) {
-        os_log("User clicked cancel button during execution.", log: logUi, type: .debug)
+        os_log("User clicked cancel button during execution.", log: logUi, type: .info)
         
         self.cancelButton.isEnabled = false
         
@@ -51,6 +52,7 @@ class ViewControllerMain: NSViewController {
     @IBOutlet weak var devButton: NSButton!
     
     @IBAction func onDevButton(_ sender: NSButton) {
+        os_log("User clicked 'dev' button.", log: logUi, type: .info)
         if AppState.tempDirPath == nil {
             AppState.tempDirPath = NSTemporaryDirectory() + "se.eberl.droppy" + "/"
             makeDirs(path: AppState.tempDirPath!)
@@ -58,26 +60,44 @@ class ViewControllerMain: NSViewController {
         NSWorkspace.shared.selectFile(AppState.tempDirPath!, inFileViewerRootedAtPath: AppState.tempDirPath!)
     }
     
+    @IBOutlet weak var redropButton: NSButton!
+    
+    @IBAction func onRedropButton(_ sender: NSButton) {
+        os_log("User clicked 're-drop' button.", log: logUi, type: .info)
+        NotificationCenter.default.post(name: .droppingStarted, object: nil)
+        NotificationCenter.default.post(name: .droppingConcluded, object: nil)
+    }
+    
+    
     override func viewWillAppear() {
         super.viewWillAppear()
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setZoneLine),
                                                name: .draggingEnteredOk, object: nil)
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setZoneLogoError),
                                                name: .draggingEnteredError, object: nil)
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setZoneDashed),
                                                name: .draggingExited, object: nil)
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogo),
                                                name: .draggingExited, object: nil)
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogo),
                                                name: .workflowSelectionChanged, object: nil)
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogButtonInvisible),
                                                name: .workflowSelectionChanged, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogButtonInvisible),
+                                               name: .devModeChanged, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setRedropButtonInvisible),
+                                               name: .workflowSelectionChanged, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setRedropButtonInvisible),
+                                               name: .devModeChanged, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogoSpinner),
                                                name: .droppingStarted, object: nil)
@@ -98,6 +118,9 @@ class ViewControllerMain: NSViewController {
                                                name: .executionFinished, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogButtonVisible),
+                                               name: .executionFinished, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setRedropButtonVisible),
                                                name: .executionFinished, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setCancelButtonInvisible),
@@ -138,6 +161,17 @@ class ViewControllerMain: NSViewController {
                 self.logFilePath = timestampDirPath + "droppy.log"
                 self.logButton.isHidden = false
             }
+        }
+    }
+    
+    @objc func setRedropButtonInvisible(_ notification: Notification) {
+        self.redropButton.isHidden = true
+    }
+    
+    @objc func setRedropButtonVisible(_ notification: Notification) {
+        let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
+        if devModeEnabled {
+            self.redropButton.isHidden = false
         }
     }
     

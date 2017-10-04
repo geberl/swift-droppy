@@ -169,7 +169,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NotificationCenter.default.post(name: .executionFinished, object: nil)
             return
         }
-        let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
         
         // The notification that starts this function is sometimes sent (or received?) twice.
         // Using a boolean class variable as a workaround prevents multiple instantiation of PythonExecutor.
@@ -185,7 +184,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             DispatchQueue.global(qos: .background).async {
                 let pythonExecutor = PythonExecutor(tempDirPath: tempDirPath,
-                                                    devModeEnabled: devModeEnabled,
                                                     workflowFile: workflowFile,
                                                     workspacePath: workspacePath!,
                                                     executablePath: executablePath!,

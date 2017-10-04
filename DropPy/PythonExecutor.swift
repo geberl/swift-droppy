@@ -14,8 +14,6 @@ import os.log
 class PythonExecutor: NSObject {
 
     var tempDirPath: String
-    var devModeEnabled: Bool
-    
     var workflowFile: String
     var workspacePath: String
     var executablePath: String
@@ -33,14 +31,11 @@ class PythonExecutor: NSObject {
     var executionCancel: Bool
     var overallExitCode: Int
 
-    init(tempDirPath: String, devModeEnabled: Bool, workflowFile: String, workspacePath: String,
-         executablePath: String, executableArgs: String) {
+    init(tempDirPath: String, workflowFile: String, workspacePath: String, executablePath: String, executableArgs: String) {
         
         os_log("Executing workflow '%@'.", log: logExecution, type: .debug, workflowFile)
         
         self.tempDirPath = tempDirPath
-        self.devModeEnabled = devModeEnabled
-        
         self.workflowFile = workflowFile
         self.workspacePath = workspacePath
         self.executablePath = executablePath
@@ -247,7 +242,9 @@ class PythonExecutor: NSObject {
         let statusDict:[String: String] = ["text": "Cleaning up\nPlease wait a moment"]
         NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
         
-        if !self.devModeEnabled && self.overallExitCode == 0 {
+        let userDefaults = UserDefaults.standard
+        let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
+        if !devModeEnabled && self.overallExitCode == 0 {
             removeDir(path: self.tempDirPath)
             makeDirs(path: self.tempDirPath)
         }

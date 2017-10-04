@@ -287,6 +287,9 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="smallSystemBold"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="onRedropButton:" target="XfG-lQ-9wD" id="Ldb-NN-NWi"/>
+                                        </connections>
                                     </button>
                                     <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="da6-BW-mk3">
                                         <rect key="frame" x="87" y="18" width="60" height="17"/>
@@ -331,6 +334,7 @@
                         <outlet property="logButton" destination="da6-BW-mk3" id="QID-br-DtE"/>
                         <outlet property="logoImage" destination="DVK-e3-Ngl" id="aTM-bX-3qy"/>
                         <outlet property="logoImageView" destination="GMI-Zz-XD4" id="JtM-go-XIs"/>
+                        <outlet property="redropButton" destination="4qr-in-kGl" id="OIg-zO-fV4"/>
                         <outlet property="taskTextField" destination="lhT-H0-X1I" id="95K-Cc-nZT"/>
                         <outlet property="zoneImage" destination="ijI-bt-2u5" id="j3a-mk-Xze"/>
                         <outlet property="zoneImageView" destination="uYf-lE-mJ8" id="bUq-ab-xCb"/>
