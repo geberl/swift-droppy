@@ -18,7 +18,9 @@ extension Notification.Name {
     static let draggingEnteredOk = Notification.Name("draggingEnteredOk")
     static let draggingEnteredError = Notification.Name("draggingEnteredError")
     static let draggingExited = Notification.Name("draggingExited")
-    static let droppingOk = Notification.Name("droppingOk")
+    
+    static let droppingStarted = Notification.Name("droppingStarted")
+    static let droppingConcluded = Notification.Name("droppingConcluded")
     
     static let executionStatus = Notification.Name("executionStatus")
     static let executionCancel = Notification.Name("executionCancel")

@@ -13,34 +13,49 @@ import os.log
 
 class PythonExecutor: NSObject {
 
+    var cacheDirPath: String
+    var devModeEnabled: Bool
+    
     var workflowFile: String
     var workspacePath: String
     var executablePath: String
     var executableArgs: String
-    var devModeEnabled: Bool = false
-    var tempPath: String
-    var logFilePath: String
     
-    var startTime = DispatchTime.now()
+    var startTime: DispatchTime
+    
+    var runnerFilePath: String
+    var timestampDirPath: String
+    var logFilePath: String
+
     var workflowPath: String
-    var runnerPath: String
+    
     var executionCancel: Bool
     var overallExitCode: Int
 
-    init(workflowFile: String, workspacePath: String, executablePath: String, executableArgs: String,
-         devModeEnabled: Bool, tempPath: String, logFilePath: String) {
+    init(cacheDirPath: String, devModeEnabled: Bool, workflowFile: String, workspacePath: String,
+         executablePath: String, executableArgs: String) {
+        
         os_log("Executing workflow.", log: logExecution, type: .debug)
+        
+        self.cacheDirPath = cacheDirPath
+        self.devModeEnabled = devModeEnabled
         
         self.workflowFile = workflowFile
         self.workspacePath = workspacePath
         self.executablePath = executablePath
         self.executableArgs = executableArgs
-        self.devModeEnabled = devModeEnabled
-        self.tempPath = tempPath
-        self.logFilePath = logFilePath
-
+        
+        self.startTime = DispatchTime.now()
+        
+        var tempDirUrl: URL = URL(fileURLWithPath: self.cacheDirPath)
+        tempDirUrl.deleteLastPathComponent()
+        
+        self.runnerFilePath = tempDirUrl.path + "/" + "run.py"
+        self.timestampDirPath = tempDirUrl.path + "/" + Date().iso8601 + "/"
+        self.logFilePath = self.timestampDirPath + "droppy.log"
+        
         self.workflowPath = workspacePath + "Workflows" + "/" + workflowFile
-        self.runnerPath = tempPath + "run.py"
+        
         self.executionCancel = false
         self.overallExitCode = 0
 
@@ -55,7 +70,7 @@ class PythonExecutor: NSObject {
     }
     
     func prepareNextTempDir(taskNumber: Int) -> String {
-        let outputPath: String = self.tempPath + String(taskNumber)
+        let outputPath: String = self.timestampDirPath + String(taskNumber)
         if !isDir(path: outputPath) {
             makeDirs(path: outputPath)
         }
@@ -86,7 +101,7 @@ class PythonExecutor: NSObject {
 
     func writeWorkflowInputLog() {
         self.writeLog(prefix: "Workflow Path:            ", lines: [self.workflowPath])
-        self.writeLog(prefix: "Runner Path:              ", lines: [self.runnerPath])
+        self.writeLog(prefix: "Runner Path:              ", lines: [self.runnerFilePath])
         self.writeLog(prefix: "Interpreter Path:         ", lines: [self.executablePath])
         self.writeLog(prefix: "Interpreter Args:         ", lines: [self.executableArgs])
         self.writeLog(prefix: "", lines: [String(repeating: "=", count: 120)])
@@ -108,11 +123,10 @@ class PythonExecutor: NSObject {
         let endTime = DispatchTime.now()
         let nanoTime = endTime.uptimeNanoseconds - self.startTime.uptimeNanoseconds
         let timeInterval = Double(nanoTime) / 1_000_000_000
-        self.writeLog(prefix: "Run time:                 ", lines: [String(format: "%.2f", timeInterval) + "s"])
+        self.writeLog(prefix: "Python Run Time:          ", lines: [String(format: "%.2f", timeInterval) + "s"])
     }
 
-    func writeTaskInputLog(queueItem: JSON, queueCount: Int, taskNumber: Int,
-                           inputPath: String, outputPath: String) {
+    func writeTaskInputLog(queueItem: JSON, queueCount: Int, taskNumber: Int, inputPath: String, outputPath: String) {
 
         let queueDict: Dictionary<String, SwiftyJSON.JSON> = queueItem.dictionaryValue
         guard let taskName: String = queueDict["task"]?.stringValue else { return }
@@ -160,24 +174,26 @@ class PythonExecutor: NSObject {
         // Copy run.py from assets to the temp directory.
         if let asset = NSDataAsset(name: NSDataAsset.Name(rawValue: "run"), bundle: Bundle.main) {
             do {
-                try asset.data.write(to: URL(fileURLWithPath: self.runnerPath))
+                try asset.data.write(to: URL(fileURLWithPath: self.runnerFilePath))
             } catch {
                 os_log("Unable to copy run.py asset.", log: logExecution, type: .error, error.localizedDescription)
             }
         }
+        
+        // Copy _cache dir from drop to timestampdir for execution.
+        copyDir(sourceDirPath: self.cacheDirPath, targetDirPath: self.timestampDirPath)
 
         // Setup the log file.
         self.writeWorkflowInputLog()
 
         // Set dir "0".
-        var inputPath = self.tempPath + "0"
-        
+        var inputPath = self.timestampDirPath + "0"
+
         // Prepare dir "1".
         var outputPath = self.prepareNextTempDir(taskNumber: 1)
 
         do {
-            let data = try Data(contentsOf: URL(fileURLWithPath: workflowPath),
-                                options: .alwaysMapped)
+            let data = try Data(contentsOf: URL(fileURLWithPath: workflowPath), options: .alwaysMapped)
             let jsonObj = JSON(data: data)
             if jsonObj != JSON.null {
 
@@ -197,7 +213,7 @@ class PythonExecutor: NSObject {
 
                     let (out, err, exit) = executeCommand(command: self.executablePath,
                                                           args: [self.executableArgs,
-                                                                 self.runnerPath,
+                                                                 self.runnerFilePath,
                                                                  "-w" + self.workspacePath,
                                                                  "-j" + self.workflowFile,
                                                                  "-i" + inputPath,
@@ -233,31 +249,13 @@ class PythonExecutor: NSObject {
         NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
         
         if !self.devModeEnabled && self.overallExitCode == 0 {
-            let fileManager = FileManager.default
-
-            guard let enumerator: FileManager.DirectoryEnumerator =
-                fileManager.enumerator(atPath: self.tempPath) else {
-                    os_log("Temp directory not found at '%@'.", log: logExecution, type: .error, self.tempPath)
-                    return
-            }
-
-            while let element = enumerator.nextObject() as? String {
-                let elementPath = "\(self.tempPath)\(element)"
-                if element != "droppy.log" {
-                    do {
-                        try fileManager.removeItem(atPath: elementPath)
-                    } catch let error {
-                        os_log("%@", log: logExecution, type: .error, error.localizedDescription)
-                    }
-                }
-            }
-            os_log("Removed intermediary files from '%@'.", log: logExecution, type: .debug, self.tempPath)
+            removeDir(path: self.timestampDirPath)
         }
     }
 
-    func evaluate() -> Int {
+    func evaluate() -> (String, Int) {
         self.writeWorkflowOutputLog()
         self.cleanUp()
-        return self.overallExitCode
+        return (self.timestampDirPath, self.overallExitCode)
     }
 }

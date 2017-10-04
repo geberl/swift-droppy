@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import os.log
 
 
 struct UserDefaultStruct {
@@ -17,7 +18,7 @@ struct UserDefaultStruct {
     // The following variables are validated on app start and can afterwards safely be force unwrapped.
     
     static var workspacePath: String = "workspacePath"
-    static var workspacePathDefault: String = ""
+    static var workspacePathDefault: String = NSHomeDirectory() + "DropPy" + "/"
     
     static var workflowSelected: String = "workflowSelected"
     static var workflowSelectedDefault: String? = nil
@@ -90,10 +91,11 @@ func isKeyPresentInUserDefaults(key: String) -> Bool {
 
 
 func reapplyPrefs() {
-    // No check if directory/files actually exists here, this has to be checked before each usage.
+    os_log("Validating preferences.", log: logGeneral, type: .debug)
     
     let userDefaults = UserDefaults.standard
     
+    // No check if directory/files actually exists here, this has to be checked before each usage.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.workspacePath) {
         userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
     }

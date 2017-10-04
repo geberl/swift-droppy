@@ -75,7 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                name: .reloadWorkflows, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.startPythonExecutor),
-                                               name: .droppingOk, object: nil)
+                                               name: .droppingConcluded, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.setNewInterpreter),
                                                name: .interpreterNotFound, object: nil)
@@ -145,18 +145,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         
-        guard let workflowFile: String = AppState.activeJsonFile else { return }
-        
-        let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
+        guard let workflowFile: String = AppState.activeJsonFile else {
+            NotificationCenter.default.post(name: .executionFinished, object: nil)
+            return
+        }
         let workspacePath = checkWorkspaceInfo()
         let (executablePath, executableArgs) = self.checkInterpreterInfo()
         if (workspacePath == nil) || (executablePath == nil) || (executableArgs == nil) {
             NotificationCenter.default.post(name: .executionFinished, object: nil)
             return
         }
+        let devModeEnabled: Bool = userDefaults.bool(forKey: UserDefaultStruct.devModeEnabled)
+        guard let cacheDirPath = notification.userInfo?["cacheDirPath"] as? String else { return }
 
         // The notification that starts this function is sometimes sent (or received?) twice.
-        // Using a boolean class variable as a workaround prevents multiple instantiation of DropHandler/PythonExecutor.
+        // Using a boolean class variable as a workaround prevents multiple instantiation of PythonExecutor.
         if !self.executionInProgress {
             self.executionInProgress = true
             
@@ -164,54 +167,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let statusDict: [String: String] = ["text": "Preparing"]
             NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
             
-            var logFilePath: String = ""
-            var tempPath: String = ""
-            var dropExitCode: Int = 0
-            var execExitCode: Int = 0
+            var timestampDirPath: String = ""
+            var exitCode: Int = 0
 
             DispatchQueue.global(qos: .background).async {
-                if let draggingPasteboard = notification.userInfo?["draggingPasteboard"] as? NSPasteboard {
-                    let dropHandler = DropHandler(draggingPasteboard: draggingPasteboard,
-                                                  workspacePath: workspacePath!,
-                                                  devModeEnabled: devModeEnabled)
-                    dropHandler.run()
-                    (logFilePath, tempPath, dropExitCode) = dropHandler.evaluate()
-                } else {
-                    os_log("Unable to access draggingPasteboard. Skipping DropHandler.", log: logDrop, type: .error)
-                    dropExitCode = 1
-                }
+                let pythonExecutor = PythonExecutor(cacheDirPath: cacheDirPath,
+                                                    devModeEnabled: devModeEnabled,
+                                                    workflowFile: workflowFile,
+                                                    workspacePath: workspacePath!,
+                                                    executablePath: executablePath!,
+                                                    executableArgs: executableArgs!)
+                pythonExecutor.run()
+                (timestampDirPath, exitCode) = pythonExecutor.evaluate()
                 
-                if dropExitCode == 0 {
-                    let pythonExecutor = PythonExecutor(workflowFile: workflowFile,
-                                                        workspacePath: workspacePath!,
-                                                        executablePath: executablePath!,
-                                                        executableArgs: executableArgs!,
-                                                        devModeEnabled: devModeEnabled,
-                                                        tempPath: tempPath,
-                                                        logFilePath: logFilePath)
-                    pythonExecutor.run()
-                    execExitCode = pythonExecutor.evaluate()
-                } else {
-                    os_log("Skipping Workflow execution. DropHandler reported error.", log: logExecution, type: .error)
-                }
-
                 DispatchQueue.main.async {
-                    self.endPythonExecutor(logFilePath: logFilePath, tempPath: tempPath,
-                                           dropExitCode: dropExitCode, execExitCode: execExitCode)
+                    self.endPythonExecutor(timestampDirPath: timestampDirPath, exitCode: exitCode)
                 }
             }
         }
     }
     
-    func endPythonExecutor(logFilePath: String, tempPath: String, dropExitCode: Int, execExitCode: Int) {
+    func endPythonExecutor(timestampDirPath: String, exitCode: Int) {
         self.executionInProgress = false
 
-        let pathDict:[String: String] = ["logFilePath": logFilePath,
-                                         "tempPath": tempPath,
-                                         "dropExitCode": String(dropExitCode),
-                                         "execExitCode": String(execExitCode)]
-
+        let pathDict:[String: String] = ["timestampDirPath": timestampDirPath,
+                                         "exitCode": String(exitCode)]
         NotificationCenter.default.post(name: .executionFinished, object: nil, userInfo: pathDict)
+        
         os_log("Execution finished.", log: logExecution, type: .debug)
     }
 

@@ -38,11 +38,35 @@ func isFile(path: String) -> Bool {
 
 
 func makeDirs(path: String) {
-    let filemgr = FileManager.default
+    let fileManager = FileManager.default
     do {
-        try filemgr.createDirectory(atPath: path,
-                                    withIntermediateDirectories: true,
-                                    attributes: nil)
+        try fileManager.createDirectory(atPath: path,
+                                        withIntermediateDirectories: true,
+                                        attributes: nil)
+        os_log("Created dir at '%@'.", log: logFileSystem, type: .debug, path)
+    } catch let error {
+        os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
+    }
+}
+
+
+func removeDir(path: String) {
+    let fileManager = FileManager.default
+    do {
+        try fileManager.removeItem(atPath: path)
+        os_log("Removed dir at '%@'.", log: logFileSystem, type: .debug, path)
+    } catch let error {
+        os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
+    }
+}
+
+
+func copyDir(sourceDirPath: String, targetDirPath: String) {
+    let fileManager = FileManager.default
+    do {
+        try fileManager.copyItem(at: URL(fileURLWithPath: sourceDirPath),
+                                 to: URL(fileURLWithPath: targetDirPath))
+        os_log("Copied dir from '%@' to '%@.", log: logFileSystem, type: .debug, sourceDirPath, targetDirPath)
     } catch let error {
         os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
     }

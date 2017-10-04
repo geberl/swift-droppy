@@ -76,13 +76,13 @@ class ViewControllerMain: NSViewController {
                                                name: .workflowSelectionChanged, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogoSpinner),
-                                               name: .droppingOk, object: nil)
+                                               name: .droppingStarted, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setLogButtonInvisible),
-                                               name: .droppingOk, object: nil)
+                                               name: .droppingStarted, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setCancelButtonVisible),
-                                               name: .droppingOk, object: nil)
+                                               name: .droppingStarted, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerMain.setZoneDashed),
                                                name: .executionFinished, object: nil)

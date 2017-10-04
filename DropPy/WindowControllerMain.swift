@@ -43,7 +43,7 @@ class WindowControllerMain: NSWindowController {
                                                name: .workflowsChanged, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.disableToolbar),
-                                               name: .droppingOk, object: nil)
+                                               name: .droppingStarted, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.enableToolbar),
                                                name: .executionFinished, object: nil)
@@ -224,17 +224,15 @@ class WindowControllerMain: NSWindowController {
     }
 
     @objc func evaluateWorkflowResults(_ notification: Notification) {
-        guard let logFilePath = notification.userInfo?["logFilePath"] as? String else { return }
-        guard let tempPath = notification.userInfo?["tempPath"] as? String else { return }
-        guard let dropExitCode = notification.userInfo?["dropExitCode"] as? String else { return }
-        guard let execExitCode = notification.userInfo?["execExitCode"] as? String else { return }
+        guard let timestampDirPath = notification.userInfo?["timestampDirPath"] as? String else { return }
+        guard let exitCode = notification.userInfo?["exitCode"] as? String else { return }
         
-        if (Int(dropExitCode)! > 0) || (Int(execExitCode)! > 0) {
-            self.executionErrorAlert(logFilePath: logFilePath, tempPath: tempPath)
+        if Int(exitCode)! > 0 {
+            self.executionErrorAlert(timestampDirPath: timestampDirPath)
         }
     }
 
-    func executionErrorAlert(logFilePath: String, tempPath: String) {
+    func executionErrorAlert(timestampDirPath: String) {
         let errorAlert = NSAlert()
         errorAlert.showsHelp = false
         errorAlert.messageText = "Running one of your Tasks failed"
@@ -245,10 +243,12 @@ class WindowControllerMain: NSWindowController {
         errorAlert.layout()
         errorAlert.alertStyle = NSAlert.Style.warning
         errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
+        
+        let logFilePath = timestampDirPath + "droppy.log"
 
         errorAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSApplication.ModalResponse.alertSecondButtonReturn {
-                self.openFileInFinder(filePath: logFilePath, rootDir: tempPath)
+                self.openFileInFinder(filePath: logFilePath, rootDir: timestampDirPath)
             } else if returnCode == NSApplication.ModalResponse.alertThirdButtonReturn {
                 self.openFileInDefaultApp(filePath: logFilePath)
             }
