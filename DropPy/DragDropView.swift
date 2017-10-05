@@ -18,6 +18,7 @@ class DragDropView: NSView {
     var numberOfExtractedPromises: Int
     var tempDirPath: String
     var logFilePath: String
+    var executionCancel: Bool
     
     required init?(coder: NSCoder) {
         startTime = nil
@@ -25,6 +26,7 @@ class DragDropView: NSView {
         numberOfExtractedPromises = 0
         tempDirPath = ""
         logFilePath = ""
+        executionCancel = false
         super.init(coder: coder)
         
         // Allow all types here. Just convert everything to a file later.
@@ -46,8 +48,21 @@ class DragDropView: NSView {
             NSPasteboard.PasteboardType(rawValue: "public.executable"),        // Base type for executable data.
             NSPasteboard.PasteboardType(rawValue: "com.apple.resolvable")      // Items that the Alias Manager can resolve.
             ])
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(DragDropView.cancelExecution),
+                                               name: .executionCancel, object: nil)
     }
-
+    
+    @objc func cancelExecution(_ notification: Notification) {
+        self.executionCancel = true
+        
+        // Clear status text before sending executionFinished to avoid the text hanging at "Waiting ...".
+        let statusDict:[String: String] = ["text": ""]
+        NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
+        
+        NotificationCenter.default.post(name: .executionFinished, object: nil)
+    }
+    
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         if AppState.activeName == "" {
             NotificationCenter.default.post(name: .draggingEnteredError, object: nil)
@@ -72,17 +87,22 @@ class DragDropView: NSView {
         self.numberOfPromises = 0
         self.numberOfExtractedPromises = 0
         self.startTime = DispatchTime.now()
+        self.executionCancel = false
         
         var zeroDirPath: String
         var filesDirPath: String
         var promisesDirPath: String
         (self.tempDirPath, self.logFilePath, zeroDirPath, filesDirPath, promisesDirPath) = self.getPaths()
         
-        let utiTypes = self.getUtiTypes(draggingInfo: sender)
-        let symlinkedFiles = self.symlinkFiles(draggingInfo: sender, filesDirPath: filesDirPath)
-        self.startDropLog(utiTypes: utiTypes, symlinkedFiles: symlinkedFiles)
-        self.writeUtiData(draggingInfo: sender, utiTypes: utiTypes, zeroDirPath: zeroDirPath)
-        self.getPromisedFiles(draggingInfo: sender, promisesDirPath: promisesDirPath)
+        if !self.executionCancel {
+            let utiTypes = self.getUtiTypes(draggingInfo: sender)
+            let symlinkedFiles = self.symlinkFiles(draggingInfo: sender, filesDirPath: filesDirPath)
+            self.startDropLog(utiTypes: utiTypes, symlinkedFiles: symlinkedFiles)
+            self.writeUtiData(draggingInfo: sender, utiTypes: utiTypes, zeroDirPath: zeroDirPath)
+        }
+        if !self.executionCancel {
+            self.getPromisedFiles(draggingInfo: sender, promisesDirPath: promisesDirPath)
+        }
         
         return true
     }
@@ -476,7 +496,7 @@ class DragDropView: NSView {
             self.writeLog(prefix: "                          ", lines: [logFileContent])
         }
         
-        if self.numberOfExtractedPromises == self.numberOfPromises {
+        if (self.numberOfExtractedPromises == self.numberOfPromises) && !self.executionCancel {
             self.finishDropLog()
             os_log("All promises extracted. Send 'droppingConcluded' notification.", log: logDrop, type: .debug)
             AppState.tempDirPath = self.tempDirPath
@@ -485,7 +505,7 @@ class DragDropView: NSView {
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
-        if self.numberOfPromises == 0 {
+        if (self.numberOfPromises == 0) && !self.executionCancel {
             self.finishDropLog()
             os_log("No promises contained. Send 'droppingConcluded' notification.", log: logDrop, type: .debug)
             AppState.tempDirPath = self.tempDirPath
