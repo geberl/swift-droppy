@@ -79,10 +79,10 @@ class DragDropView: NSView {
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         NotificationCenter.default.post(name: .droppingStarted, object: nil)
-        
+
         let statusDict:[String: String] = ["text": "Creating files\nPlease wait a moment"]
         NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
-        
+
         // Reset class variables from last time.
         self.numberOfPromises = 0
         self.numberOfExtractedPromises = 0
@@ -95,15 +95,19 @@ class DragDropView: NSView {
         (self.tempDirPath, self.logFilePath, zeroDirPath, filesDirPath, promisesDirPath) = self.getPaths()
         
         if !self.executionCancel {
+            // self.getPromisedFiles(draggingInfo: sender, promisesDirPath: promisesDirPath)
+            
+            let promisesDirUrl: URL = URL(fileURLWithPath: promisesDirPath, isDirectory: true)
+            sender.namesOfPromisedFilesDropped(atDestination: promisesDirUrl)
+        }
+
+        if !self.executionCancel {
             let utiTypes = self.getUtiTypes(draggingInfo: sender)
             let symlinkedFiles = self.symlinkFiles(draggingInfo: sender, filesDirPath: filesDirPath)
             self.startDropLog(utiTypes: utiTypes, symlinkedFiles: symlinkedFiles)
             self.writeUtiData(draggingInfo: sender, utiTypes: utiTypes, zeroDirPath: zeroDirPath)
         }
-        if !self.executionCancel {
-            self.getPromisedFiles(draggingInfo: sender, promisesDirPath: promisesDirPath)
-        }
-        
+
         return true
     }
     
@@ -456,22 +460,26 @@ class DragDropView: NSView {
         // NOBODY in GitHub or the web has this implemented as of yet (2017-10-02) -> profit!
         
         os_log("Requested promised files into '%@'", log: logDrop, type: .debug, promisesDirPath)
+        
+        // Old way marked deprecated, but not yet removed in High Sierra. Also doesn't work in Photos, but is faster.
 
-        if let filePromises = draggingInfo.draggingPasteboard().readObjects(forClasses: [NSFilePromiseReceiver.self],
-                                                                            options: nil) as? [NSFilePromiseReceiver] {
-            self.numberOfPromises = filePromises.count
-            let promiseOperationQueue: OperationQueue = OperationQueue()
-            for filePromise in filePromises {
-                filePromise.receivePromisedFiles(atDestination: URL(fileURLWithPath: promisesDirPath),
-                                                 operationQueue: promiseOperationQueue,
-                                                 reader: self.readExtractedPromises)
-            }
-        } else {
-            self.numberOfPromises = 0
-        }
+        // New way (not yet working reliably for me in Mail, Photos but working in Calendar):
+//        if let filePromises = draggingInfo.draggingPasteboard().readObjects(forClasses: [NSFilePromiseReceiver.self],
+//                                                                            options: nil) as? [NSFilePromiseReceiver] {
+//            self.numberOfPromises = filePromises.count
+//            let promiseOperationQueue: OperationQueue = OperationQueue()
+//            for filePromise in filePromises {
+//                filePromise.receivePromisedFiles(atDestination: promisesDirUrl,
+//                                                 operationQueue: promiseOperationQueue,
+//                                                 reader: self.readExtractedPromises)
+//            }
+//        } else {
+//            self.numberOfPromises = 0
+//        }
     }
     
     func readExtractedPromises(myUrl: URL, myError: Error?) {
+        // This is only used for the new way in getPromisedFiles().
         self.numberOfExtractedPromises += 1
         var logFileContent: String
         
@@ -505,9 +513,11 @@ class DragDropView: NSView {
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
+        // This is used for the old way in getPromisedFiles() AND if there are no promises.
+        // When the new way in getPromisedFiles() is used this fires before the first promise is written to disk.
         if (self.numberOfPromises == 0) && !self.executionCancel {
             self.finishDropLog()
-            os_log("No promises contained. Send 'droppingConcluded' notification.", log: logDrop, type: .debug)
+            os_log("Send 'droppingConcluded' notification.", log: logDrop, type: .debug)
             AppState.tempDirPath = self.tempDirPath
             NotificationCenter.default.post(name: .droppingConcluded, object: nil)
         }
