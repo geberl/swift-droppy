@@ -183,44 +183,46 @@ class WindowControllerMain: NSWindowController {
     }
     
     func addWorkflow() {
-       guard let workspacePath = checkWorkspaceInfo() else { return }
+        os_log("Adding new workflow", log: logUi, type: .debug)
         
-       do {
-            // Get the current datetime as a string
-            let stringFromDate = Date().iso8601
+        guard let workspacePath = checkWorkspaceInfo() else { return }
+        let isoDateString = Date().iso8601like
+        let workflowFileName: String = "new_workflow_\(isoDateString).json"
+        let workflowName: String = "New Workflow \(isoDateString)"
+        let workflowFileUrl: URL = URL(fileURLWithPath: workspacePath + "Workflows" + "/" + workflowFileName)
+        os_log("Workflow path: %@", log: logFileSystem, type: .debug, workflowFileUrl.path)
         
-            // Determine Workflow name (for inside the JSON file) and the JSON file's filename.
-            let workflowName: String = "New Workflow \(stringFromDate)"
-            let workflowFileName: String = "new_workflow_\(stringFromDate).json"
-        
-            // Create SwiftyJSON object
-            let jsonObject: JSON = ["name": workflowName,
-                                    "author": "Your name here",
-                                    "description": "A short description what this Workflow does. Currently not accessed by DropPy. For now just for your own documentation purposes.",
-                                    "image": "",
-                                    "interpreterName": AppState.interpreterStockName,
-                                    "queue": []]
-        
-            // Convert SwiftyJSON object to string.
-            let jsonString = jsonObject.description
-        
-            // Setup objects needed for directory and file access.
-            let filePath: URL = NSURL.fileURL(withPath: workspacePath + "Workflows" + "/" + workflowFileName)
-        
-            // Write json string to file, this overwrites a preexisting file here.
-            try jsonString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
-
-            // Update global Workflow object.
-            AppState.activeInterpreterName = AppState.interpreterStockName
-            AppState.activeJsonFile = workflowFileName
-            AppState.activeName = workflowName
-            AppState.activeLogoFile = nil
-
-            // Open new file in editor.
-            self.editWorkflow()
-        } catch {
-            os_log("%@", log: logUi, type: .error, error.localizedDescription)
+        // Create empty text file.
+        do {
+            try "".write(to: workflowFileUrl, atomically: false, encoding: String.Encoding.utf8)
+        } catch let error {
+            os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
+            return
         }
+        
+        // Fill file with standard content.
+        if let fileHandle = FileHandle(forWritingAtPath: workflowFileUrl.path) {
+            defer { fileHandle.closeFile() }
+            fileHandle.seekToEndOfFile()
+            fileHandle.write("{\n".data(using: String.Encoding.utf8)!)
+            fileHandle.write("  \"name\": \"\(workflowName)\",\n".data(using: String.Encoding.utf8)!)
+            fileHandle.write("  \"author\": \"your@email.here\",\n".data(using: String.Encoding.utf8)!)
+            fileHandle.write("  \"description\": \"Optional. A short description what this Workflow does.\",\n".data(using: String.Encoding.utf8)!)
+            fileHandle.write("  \"image\": \"\",\n".data(using: String.Encoding.utf8)!)
+            fileHandle.write("  \"interpreterName\": \"\(AppState.interpreterStockName)\",\n".data(using: String.Encoding.utf8)!)
+            fileHandle.write("  \"queue\": [\n".data(using: String.Encoding.utf8)!)
+            fileHandle.write("  ]\n".data(using: String.Encoding.utf8)!)
+            fileHandle.write("}\n".data(using: String.Encoding.utf8)!)
+        }
+        
+        // Update global Workflow object.
+        AppState.activeInterpreterName = AppState.interpreterStockName
+        AppState.activeJsonFile = workflowFileName
+        AppState.activeName = workflowName
+        AppState.activeLogoFile = nil
+        
+        // Open new file in editor.
+        self.editWorkflow()
     }
 
     @objc func evaluateWorkflowResults(_ notification: Notification) {
