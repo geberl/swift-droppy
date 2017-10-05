@@ -462,20 +462,21 @@ class DragDropView: NSView {
         os_log("Requested promised files into '%@'", log: logDrop, type: .debug, promisesDirPath)
         
         // Old way marked deprecated, but not yet removed in High Sierra. Also doesn't work in Photos, but is faster.
+        // See above, where this function is comented out.
 
         // New way (not yet working reliably for me in Mail, Photos but working in Calendar):
-//        if let filePromises = draggingInfo.draggingPasteboard().readObjects(forClasses: [NSFilePromiseReceiver.self],
-//                                                                            options: nil) as? [NSFilePromiseReceiver] {
-//            self.numberOfPromises = filePromises.count
-//            let promiseOperationQueue: OperationQueue = OperationQueue()
-//            for filePromise in filePromises {
-//                filePromise.receivePromisedFiles(atDestination: promisesDirUrl,
-//                                                 operationQueue: promiseOperationQueue,
-//                                                 reader: self.readExtractedPromises)
-//            }
-//        } else {
-//            self.numberOfPromises = 0
-//        }
+        if let filePromises = draggingInfo.draggingPasteboard().readObjects(forClasses: [NSFilePromiseReceiver.self],
+                                                                            options: nil) as? [NSFilePromiseReceiver] {
+            self.numberOfPromises = filePromises.count
+            let promiseOperationQueue: OperationQueue = OperationQueue()
+            for filePromise in filePromises {
+                filePromise.receivePromisedFiles(atDestination: promisesDirUrl,
+                                                 operationQueue: promiseOperationQueue,
+                                                 reader: self.readExtractedPromises)
+            }
+        } else {
+            self.numberOfPromises = 0
+        }
     }
     
     func readExtractedPromises(myUrl: URL, myError: Error?) {
