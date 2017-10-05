@@ -65,6 +65,9 @@ class DragDropView: NSView {
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         NotificationCenter.default.post(name: .droppingStarted, object: nil)
         
+        let statusDict:[String: String] = ["text": "Creating files\nPlease wait a moment"]
+        NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
+        
         // Reset class variables from last time.
         self.numberOfPromises = 0
         self.numberOfExtractedPromises = 0
