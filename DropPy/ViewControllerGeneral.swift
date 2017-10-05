@@ -28,14 +28,6 @@ class ViewControllerGeneral: NSViewController {
         self.adjustIntermediaryFilesLabel()
         
         NotificationCenter.default.post(name: .devModeChanged, object: nil)
-
-        if !devModeEnabled {
-            guard let workspacePath = checkWorkspaceInfo() else { return }
-            let tempPath = workspacePath + "Temp" + "/"
-            if isDir(path: tempPath) {
-                self.askDeleteTempAlert(tempPath: tempPath)
-            }
-        }
     }
 
     @IBOutlet weak var intermediaryFilesTextField: NSTextField!
@@ -86,41 +78,10 @@ class ViewControllerGeneral: NSViewController {
 
     func adjustIntermediaryFilesLabel() {
         if self.radioEnableDevMode.state.rawValue == 1 {
-            guard let workspacePath = checkWorkspaceInfo() else { return }
-            let intermediaryFilesDir: String = workspacePath + "Temp" + "/"
-            self.intermediaryFilesTextField.stringValue = "Intermediary files will be saved to:\n\"\(intermediaryFilesDir)\""
+            self.intermediaryFilesTextField.stringValue = "Intermediary files will be saved until program exit.\n"
+            self.intermediaryFilesTextField.stringValue += "After running a Workflow some buttons to help you debugging will appear."
         } else {
             self.intermediaryFilesTextField.stringValue = "Intermediary files will not be saved."
-        }
-    }
-
-    func askDeleteTempAlert(tempPath: String) {
-        let myAlert = NSAlert()
-        myAlert.showsHelp = false
-        myAlert.messageText = "Delete Temp dir"
-        myAlert.informativeText = "The directory at '" + tempPath + "' can usually be deleted now."
-        myAlert.addButton(withTitle: "Delete")
-        myAlert.addButton(withTitle: "Cancel")
-        myAlert.layout()
-        myAlert.alertStyle = NSAlert.Style.critical
-        myAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
-
-        myAlert.beginSheetModal(for: NSApplication.shared.mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
-            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
-                self.removeTempDir(tempPath: tempPath)
-                // Call workflowSelectionChanged to make sure the log button is not visible any more.
-                NotificationCenter.default.post(name: .workflowSelectionChanged, object: nil)
-            }
-        })
-    }
-    
-    func removeTempDir(tempPath: String) {
-        do {
-            let fileManager = FileManager.default
-            try fileManager.removeItem(atPath: tempPath)
-            os_log("Removed temp dir at '%@'.", log: logFileSystem, type: .debug, tempPath)
-        } catch let error {
-            os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
         }
     }
 }
