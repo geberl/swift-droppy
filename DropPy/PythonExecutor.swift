@@ -45,7 +45,7 @@ class PythonExecutor: NSObject {
         
         self.cacheDirPath = tempDirPath + "_cache" + "/"
         self.runnerFilePath = tempDirPath + "run.py"
-        self.timestampDirPath = tempDirPath + Date().iso8601 + "/"
+        self.timestampDirPath = tempDirPath + Date().iso8601like + "/"
         self.logFilePath = self.timestampDirPath + "droppy.log"
         
         self.workflowPath = workspacePath + "Workflows" + "/" + workflowFile
@@ -94,7 +94,10 @@ class PythonExecutor: NSObject {
     }
 
     func writeWorkflowInputLog() {
+        self.writeLog(prefix: "Workflow Date/Time:       ", lines: [Date().readable])
+        self.writeLog(prefix: "Workspace Path:           ", lines: [self.workspacePath])
         self.writeLog(prefix: "Workflow Path:            ", lines: [self.workflowPath])
+        self.writeLog(prefix: "Temp Path:                ", lines: [self.tempDirPath])
         self.writeLog(prefix: "Runner Path:              ", lines: [self.runnerFilePath])
         self.writeLog(prefix: "Interpreter Path:         ", lines: [self.executablePath])
         self.writeLog(prefix: "Interpreter Args:         ", lines: [self.executableArgs])
@@ -117,7 +120,7 @@ class PythonExecutor: NSObject {
         let endTime = DispatchTime.now()
         let nanoTime = endTime.uptimeNanoseconds - self.startTime.uptimeNanoseconds
         let timeInterval = Double(nanoTime) / 1_000_000_000
-        self.writeLog(prefix: "Python Run Time:          ", lines: [String(format: "%.2f", timeInterval) + "s"])
+        self.writeLog(prefix: "Workflow Run Time:        ", lines: [String(format: "%.2f", timeInterval) + "s"])
     }
 
     func writeTaskInputLog(queueItem: JSON, queueCount: Int, taskNumber: Int, inputPath: String, outputPath: String) {

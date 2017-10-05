@@ -179,7 +179,7 @@ class DragDropView: NSView {
         self.writeLog(prefix: "Bundled droppy-workspace: ", lines: [AppState.bundledWorkspaceVersion])
         self.writeLog(prefix: "Bundled droppy-run:       ", lines: [AppState.bundledRunVersion])
         self.writeLog(prefix: "", lines: [String(repeating: "=", count: 120)])
-        self.writeLog(prefix: "Drop Date/Time:           ", lines: [Date().readable])
+        self.writeLog(prefix: "Dropped Date/Time:        ", lines: [Date().readable])
         self.writeLog(prefix: "Dropped Object Datatypes: ", lines: utiTypes)
         if symlinkedFiles.count > 0 {
             self.writeLog(prefix: "Dropped Files:            ", lines: symlinkedFiles)
@@ -193,7 +193,7 @@ class DragDropView: NSView {
             let endTime = DispatchTime.now()
             let nanoTime = endTime.uptimeNanoseconds - startTime.uptimeNanoseconds
             let timeInterval = Double(nanoTime) / 1_000_000_000
-            self.writeLog(prefix: "Drop Run Time:            ", lines: [String(format: "%.2f", timeInterval) + "s"])
+            self.writeLog(prefix: "Dropped Run Time:         ", lines: [String(format: "%.2f", timeInterval) + "s"])
             self.writeLog(prefix: "", lines: [String(repeating: "=", count: 120)])
         }
     }
