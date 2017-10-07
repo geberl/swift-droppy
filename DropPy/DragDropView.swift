@@ -96,7 +96,6 @@ class DragDropView: NSView {
         
         if !self.executionCancel {
             // self.getPromisedFiles(draggingInfo: sender, promisesDirPath: promisesDirPath)
-            
             let promisesDirUrl: URL = URL(fileURLWithPath: promisesDirPath, isDirectory: true)
             sender.namesOfPromisedFilesDropped(atDestination: promisesDirUrl)
         }
@@ -468,6 +467,8 @@ class DragDropView: NSView {
         if let filePromises = draggingInfo.draggingPasteboard().readObjects(forClasses: [NSFilePromiseReceiver.self],
                                                                             options: nil) as? [NSFilePromiseReceiver] {
             self.numberOfPromises = filePromises.count
+            
+            let promisesDirUrl: URL = URL(fileURLWithPath: promisesDirPath, isDirectory: true)
             let promiseOperationQueue: OperationQueue = OperationQueue()
             for filePromise in filePromises {
                 filePromise.receivePromisedFiles(atDestination: promisesDirUrl,
@@ -496,7 +497,8 @@ class DragDropView: NSView {
             logFileContent = "Ok:    " + myUrl.path
         }
         
-        os_log("Promised file %d/%d '%@'", log: logDrop, type: .debug, self.numberOfExtractedPromises, self.numberOfPromises, myUrl.path)
+        os_log("Promised file %d/%d '%@'", log: logDrop, type: .debug, self.numberOfExtractedPromises,
+               self.numberOfPromises, myUrl.path)
         
         if self.numberOfExtractedPromises == 1 {
             self.writeLog(prefix: "Dropped Promises:         ", lines: [logFileContent])
