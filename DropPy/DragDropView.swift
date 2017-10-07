@@ -95,9 +95,11 @@ class DragDropView: NSView {
         (self.tempDirPath, self.logFilePath, zeroDirPath, filesDirPath, promisesDirPath) = self.getPaths()
         
         if !self.executionCancel {
-            // self.getPromisedFiles(draggingInfo: sender, promisesDirPath: promisesDirPath)
-            let promisesDirUrl: URL = URL(fileURLWithPath: promisesDirPath, isDirectory: true)
-            sender.namesOfPromisedFilesDropped(atDestination: promisesDirUrl)
+            self.getPromisedFiles(draggingInfo: sender, promisesDirPath: promisesDirPath)
+            
+            // From Finder the old way MOVES the dropped file to the promises directory. Not what I want.
+            //let promisesDirUrl: URL = URL(fileURLWithPath: promisesDirPath, isDirectory: true)
+            //sender.namesOfPromisedFilesDropped(atDestination: promisesDirUrl)
         }
 
         if !self.executionCancel {
@@ -509,7 +511,7 @@ class DragDropView: NSView {
         
         if (self.numberOfExtractedPromises == self.numberOfPromises) && !self.executionCancel {
             self.finishDropLog()
-            os_log("All promises extracted. Send 'droppingConcluded' notification.", log: logDrop, type: .debug)
+            os_log("All promises extracted. Sending 'droppingConcluded' notification.", log: logDrop, type: .debug)
             AppState.tempDirPath = self.tempDirPath
             NotificationCenter.default.post(name: .droppingConcluded, object: nil)
         }
@@ -520,7 +522,7 @@ class DragDropView: NSView {
         // When the new way in getPromisedFiles() is used this fires before the first promise is written to disk.
         if (self.numberOfPromises == 0) && !self.executionCancel {
             self.finishDropLog()
-            os_log("Send 'droppingConcluded' notification.", log: logDrop, type: .debug)
+            os_log("No promises contained. Sending 'droppingConcluded' notification.", log: logDrop, type: .debug)
             AppState.tempDirPath = self.tempDirPath
             NotificationCenter.default.post(name: .droppingConcluded, object: nil)
         }
