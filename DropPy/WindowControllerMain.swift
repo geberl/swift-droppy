@@ -284,13 +284,13 @@ class WindowControllerMain: NSWindowController {
         
         errorAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
-                self.openUrlInBrowser(urlString: "https://droppyapp.com/")
+                openWebsite(webUrl: droppyappUrls.main)
             }
         })
     }
     
     func openUrlInBrowser(urlString: String) {
-        guard let url = URL(string: urlString), NSWorkspace.shared.open(url) else { return }
+        openWebsite(webUrl: URL(string: urlString))
     }
 
     @objc func updateNotAvailableAlert(_ notification: Notification) {

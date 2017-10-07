@@ -37,9 +37,8 @@ func manualUpdate(silent: Bool) {
     let userDefaults = UserDefaults.standard
     userDefaults.set(Date(), forKey: UserDefaultStruct.updateLast)
     
-    let jsonURL = URL(string: "https://droppyapp.com/version.json")
     let urlSession = URLSession(configuration: URLSessionConfiguration.default)
-    let task = urlSession.dataTask(with: jsonURL!) {data, response, error in
+    let task = urlSession.dataTask(with: droppyappUrls.versionJson!) {data, response, error in
         guard error == nil else {
             os_log("%@", log: logDrop, type: .error, (error?.localizedDescription)!)
             os_log("Checking for updates: Server did not respond.", log: logUpdate, type: .info)

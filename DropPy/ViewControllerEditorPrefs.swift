@@ -70,9 +70,7 @@ class ViewControllerEditorPrefs: NSViewController {
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://droppyapp.com/preferences/editor"), NSWorkspace.shared.open(url) {
-            os_log("Documentation site for Editor openened.", log: logUi, type: .debug)
-        }
+        openWebsite(webUrl: droppyappUrls.prefsEditor)
     }
     
     @objc func onEditorDropped(_ notification: Notification) {

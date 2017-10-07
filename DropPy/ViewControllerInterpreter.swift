@@ -129,9 +129,7 @@ class ViewControllerInterpreter: NSViewController {
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://droppyapp.com/preferences/interpreter"), NSWorkspace.shared.open(url) {
-            os_log("Documentation site for Interpreter openened.", log: logUi, type: .debug)
-        }
+        openWebsite(webUrl: droppyappUrls.prefsInterpreter)
     }
     
     func reloadSettings() {

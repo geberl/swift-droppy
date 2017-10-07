@@ -23,7 +23,7 @@ class ViewControllerRegistration: NSViewController {
     @IBOutlet weak var applyButton: NSButton!
 
     @IBAction func onPurchaseButton(_ sender: NSButton) {
-        self.openPurchaseWebsite()
+        openWebsite(webUrl: droppyappUrls.main)
     }
     
     @IBAction func onApplyButton(_ sender: NSButton) {
@@ -155,15 +155,9 @@ class ViewControllerRegistration: NSViewController {
 
         purchaseAlert.beginSheetModal(for: self.view.window!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
-                self.openPurchaseWebsite()
+                openWebsite(webUrl: droppyappUrls.main)
             }
         })
-    }
-    
-    func openPurchaseWebsite() {
-        if let url = URL(string: "https://droppyapp.com/"), NSWorkspace.shared.open(url) {
-            os_log("Main website opened.", log: logUi, type: .debug)
-        }
     }
     
     func getRegName() -> String {

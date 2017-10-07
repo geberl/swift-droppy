@@ -147,15 +147,11 @@ class ViewControllerWorkspace: NSViewController {
     }
     
     @IBAction func onOpenGitHubButton(_ sender: NSButton) {
-        if let url = URL(string: "https://github.com/geberl/droppy-workspace"), NSWorkspace.shared.open(url) {
-            os_log("GitHub site for droppy-workspace openened.", log: logUi, type: .debug)
-        }
+        openWebsite(webUrl: githubUrls.workspace)
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://droppyapp.com/preferences/workspace"), NSWorkspace.shared.open(url) {
-            os_log("Documentation site for Workspace openened.", log: logUi, type: .debug)
-        }
+        openWebsite(webUrl: droppyappUrls.prefsWorkspace)
     }
 
     func loadSettings() {

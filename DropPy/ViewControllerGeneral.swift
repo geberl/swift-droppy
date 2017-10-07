@@ -55,9 +55,7 @@ class ViewControllerGeneral: NSViewController {
     }
 
     @IBAction func onHelpButton(_ sender: NSButton) {
-        if let url = URL(string: "https://droppyapp.com/preferences/general"), NSWorkspace.shared.open(url) {
-            os_log("Documentation site for General openened.", log: logUi, type: .debug)
-        }
+        openWebsite(webUrl: droppyappUrls.prefsGeneral)
     }
 
     func loadSettings() {
