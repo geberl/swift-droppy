@@ -32,6 +32,7 @@
 		A48706381F567D5B005EF67C /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A48706371F567D5B005EF67C /* Registration.storyboard */; };
 		A487063A1F568065005EF67C /* ViewControllerRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48706391F568065005EF67C /* ViewControllerRegistration.swift */; };
 		A487063C1F5680A2005EF67C /* WindowControllerRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A487063B1F5680A2005EF67C /* WindowControllerRegistration.swift */; };
+		A48DAE581F88B5CA00D7F96E /* WebLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48DAE571F88B5CA00D7F96E /* WebLinks.swift */; };
 		A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B73C3F1F7D0E6200087A10 /* Notifications.swift */; };
 		A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */; };
 		A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */; };
@@ -123,6 +124,7 @@
 		A48706371F567D5B005EF67C /* Registration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
 		A48706391F568065005EF67C /* ViewControllerRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerRegistration.swift; sourceTree = "<group>"; };
 		A487063B1F5680A2005EF67C /* WindowControllerRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerRegistration.swift; sourceTree = "<group>"; };
+		A48DAE571F88B5CA00D7F96E /* WebLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinks.swift; sourceTree = "<group>"; };
 		A4B73C3F1F7D0E6200087A10 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerGeneral.swift; sourceTree = "<group>"; };
 		A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerInterpreter.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				A401DBF31F71292400A12302 /* Prefs.swift */,
 				A45EA3C11F7105E100EA4310 /* RegEval.swift */,
 				A401DBF51F712E3900A12302 /* Update.swift */,
+				A48DAE571F88B5CA00D7F96E /* WebLinks.swift */,
 				A46022751EED37F00060FA75 /* Main */,
 				A46CE6B61F459A0B000DEACB /* Editor */,
 				A48706361F567D1B005EF67C /* Registration */,
@@ -432,6 +435,7 @@
 					A45EA3C81F7108B900EA4310 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = QEZ83PUW72;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					A463932C1E8FDA40000C7BDB = {
@@ -442,11 +446,13 @@
 					};
 					A463933D1E8FDA40000C7BDB = {
 						CreatedOnToolsVersion = 8.3;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = A463932C1E8FDA40000C7BDB;
 					};
 					A46393481E8FDA40000C7BDB = {
 						CreatedOnToolsVersion = 8.3;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = A463932C1E8FDA40000C7BDB;
 					};
@@ -578,6 +584,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A48DAE581F88B5CA00D7F96E /* WebLinks.swift in Sources */,
 				A401DBF41F71292400A12302 /* Prefs.swift in Sources */,
 				A41A701B1F57354100117E18 /* Common.swift in Sources */,
 				A4EE62BF1F72C9E000370F26 /* CocoaFobError.swift in Sources */,

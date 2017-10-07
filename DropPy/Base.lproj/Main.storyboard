@@ -349,7 +349,7 @@
         <image name="button-add" width="19" height="19"/>
         <image name="button-edit" width="19" height="19"/>
         <image name="button-folder" width="19" height="19"/>
-        <image name="logo-default" width="128" height="128"/>
+        <image name="logo-default" width="256" height="256"/>
         <image name="zone-dashed" width="256" height="256"/>
     </resources>
 </document>
