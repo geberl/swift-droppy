@@ -13,11 +13,11 @@ import os.log
 
 struct droppyappUrls {
     static var main:             URL? = URL(string: "https://droppyapp.com/")
-    static var versionJson:      URL? = URL(string: "https://droppyapp.com/version.json")
-    static var prefsGeneral:     URL? = URL(string: "https://droppyapp.com/preferences/general/")
-    static var prefsInterpreter: URL? = URL(string: "https://droppyapp.com/preferences/interpreter/")
-    static var prefsEditor:      URL? = URL(string: "https://droppyapp.com/preferences/editor/")
-    static var prefsWorkspace:   URL? = URL(string: "https://droppyapp.com/preferences/workspace/")
+    static var versionJson:      URL? = URL(string: "https://download.droppyapp.com/version.json")
+    static var prefsGeneral:     URL? = URL(string: "https://docs.droppyapp.com/preferences/general/")
+    static var prefsInterpreter: URL? = URL(string: "https://docs.droppyapp.com/preferences/interpreter/")
+    static var prefsEditor:      URL? = URL(string: "https://docs.droppyapp.com/preferences/editor/")
+    static var prefsWorkspace:   URL? = URL(string: "https://docs.droppyapp.com/preferences/workspace/")
 }
 
 
