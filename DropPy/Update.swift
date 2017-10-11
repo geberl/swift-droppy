@@ -10,6 +10,11 @@ import Foundation
 import os.log
 
 
+enum JsonError: Error {
+    case misformed
+}
+
+
 func autoUpdate() {
     let userDefaults = UserDefaults.standard
     let updateDelta: Int = userDefaults.integer(forKey: UserDefaultStruct.updateDelta)
@@ -28,61 +33,78 @@ func autoUpdate() {
 func manualUpdate(silent: Bool) {
     if !isConnectedToNetwork() {
         os_log("No network connection available, skipping update check.", log: logUpdate, type: .info)
-        if !silent {
-            NotificationCenter.default.post(name: .updateError, object: nil)
-        }
+        DispatchQueue.main.async { if !silent { NotificationCenter.default.post(name: .updateError, object: nil) } }
         return
+    } else {
+        os_log("Network connection available, attempting to download 'version.json' file.", log: logUpdate, type: .info)
     }
     
-    let userDefaults = UserDefaults.standard
-    userDefaults.set(Date(), forKey: UserDefaultStruct.updateLast)
+    os_log("URL: '%@'.", log: logUpdate, type: .info, droppyappUrls.versionJson!.absoluteString)
     
     let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     let task = urlSession.dataTask(with: droppyappUrls.versionJson!) {data, response, error in
         guard error == nil else {
-            os_log("%@", log: logDrop, type: .error, (error?.localizedDescription)!)
-            os_log("Checking for updates: Server did not respond.", log: logUpdate, type: .info)
-            DispatchQueue.main.async {
-                if !silent {
-                    NotificationCenter.default.post(name: .updateError, object: nil)
-                }
-            }
+            os_log("%@", log: logUpdate, type: .error, (error?.localizedDescription)!)
+            DispatchQueue.main.async { if !silent { NotificationCenter.default.post(name: .updateError, object: nil) } }
             return
+        }
+
+        if let httpResponse = response as? HTTPURLResponse {
+            if httpResponse.statusCode == 404 {
+                os_log("File not found (status code 404).", log: logUpdate, type: .error)
+                DispatchQueue.main.async { if !silent { NotificationCenter.default.post(name: .updateError, object: nil) } }
+                return
+            } else if httpResponse.statusCode == 200 {
+                os_log("File downloaded (status code 200).", log: logUpdate, type: .info)
+            } else {
+                os_log("Unexpected response of server (status code %d).", log: logUpdate, type: .info,
+                       httpResponse.statusCode)
+            }
         }
         
         guard let data = data else {
-            os_log("Checking for updates: Response of server is empty.", log: logUpdate, type: .error)
-            DispatchQueue.main.async {
-                if !silent {
-                    NotificationCenter.default.post(name: .updateError, object: nil)
-                }
-            }
+            os_log("Content of data is nil.", log: logUpdate, type: .error)
+            DispatchQueue.main.async { if !silent { NotificationCenter.default.post(name: .updateError, object: nil) } }
             return
         }
         
-        let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: AnyObject]
-        let versionMajor = json["versionMajor"] as! Int
-        let versionMinor = json["versionMinor"] as! Int
-        let versionPatch = json["versionPatch"] as! Int
-        let versionDict:[String: String] = ["versionString": String(versionMajor) + "." + String(versionMinor) + "." + String(versionPatch),
-                                            "releaseNotesLink": json["releaseNotes"] as! String,
-                                            "downloadLink": json["download"] as! String]
-        
-        DispatchQueue.main.async {
-            if isLatestVersion(webVersionMajor: versionMajor,
-                               webVersionMinor: versionMinor,
-                               webVersionPatch: versionPatch) {
-                os_log("Checking for updates: No update available.", log: logUpdate, type: .info)
-                if !silent {
-                    NotificationCenter.default.post(name: .updateNotAvailable, object: nil, userInfo: versionDict)
+        do {
+            let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: AnyObject]
+            
+            guard let versionMajor = json["versionMajor"] as? Int else { throw JsonError.misformed}
+            guard let versionMinor = json["versionMinor"] as? Int else { throw JsonError.misformed}
+            guard let versionPatch = json["versionPatch"] as? Int else { throw JsonError.misformed}
+            guard let releaseNotes = json["releaseNotes"] as? String else { throw JsonError.misformed}
+            guard let downloadLink = json["downloadLink"] as? String else { throw JsonError.misformed}
+            
+            let versionDict:[String: String] = ["versionString": String(versionMajor) + "." + String(versionMinor) + "." + String(versionPatch),
+                                                "releaseNotesLink": releaseNotes,
+                                                "downloadLink": downloadLink]
+            
+            DispatchQueue.main.async {
+                if isLatestVersion(webVersionMajor: versionMajor,
+                                   webVersionMinor: versionMinor,
+                                   webVersionPatch: versionPatch) {
+                    os_log("Result: No update available.", log: logUpdate, type: .info)
+                    if !silent {
+                        NotificationCenter.default.post(name: .updateNotAvailable, object: nil, userInfo: versionDict)
+                    }
+                } else {
+                    os_log("Result: Update available. Showing dialog.", log: logUpdate, type: .info)
+                    NotificationCenter.default.post(name: .updateAvailable, object: nil, userInfo: versionDict)
                 }
-            } else {
-                os_log("Checking for updates: Update available.", log: logUpdate, type: .info)
-                NotificationCenter.default.post(name: .updateAvailable, object: nil, userInfo: versionDict)
             }
+        } catch let error {
+            os_log("%@", log: logUpdate, type: .error, error.localizedDescription)
+            os_log("JSON doesn't have the expected structure.", log: logUpdate, type: .error)
+            DispatchQueue.main.async { if !silent { NotificationCenter.default.post(name: .updateError, object: nil) } }
+            return
         }
     }
     task.resume()
+    
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(Date(), forKey: UserDefaultStruct.updateLast)
 }
 
 
