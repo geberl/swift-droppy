@@ -74,9 +74,9 @@ class ViewControllerEditor: NSViewController {
     }
     
     func replaceEditorContent(with: String) {
-        let previousCompleteRange = NSRange(location: 0, length: self.getContent().characters.count)
+        let previousCompleteRange = NSRange(location: 0, length: self.getContent().count)
         
-        let newCompleteRange = NSRange(location: 0, length: with.characters.count)
+        let newCompleteRange = NSRange(location: 0, length: with.count)
         let newContent = NSMutableAttributedString(string: with)
         if let monoFont = NSFont(name: "Menlo", size: 12) {
             newContent.setAttributes([NSAttributedStringKey.font: monoFont], range: newCompleteRange)

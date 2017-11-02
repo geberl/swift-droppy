@@ -45,7 +45,7 @@ class ViewControllerInterpreter: NSViewController {
         self.executableTextField.stringValue = newExecutable  // write trimmed string back to input
 
         // String must not be empty.
-        if newExecutable.characters.count == 0 {
+        if newExecutable.count == 0 {
             self.errorAlert(title: "Invalid executable", explanation: "You have to specify an executable.")
         }
         // String must start with "/".
@@ -70,7 +70,7 @@ class ViewControllerInterpreter: NSViewController {
                 self.executableTextField.stringValue = newExecutable
 
                 let presentArguments = self.argumentsTextField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)  // silently trim when getting the value
-                if presentArguments.characters.count > 0 {
+                if presentArguments.count > 0 {
                     newArguments = presentArguments + " " + newArguments
                 }
                 self.argumentsTextField.stringValue = newArguments
@@ -215,7 +215,7 @@ class ViewControllerInterpreter: NSViewController {
     func getInfoVersion(executable: String) -> String? {
         
         // Executable must not be empty.
-        if executable.characters.count == 0 {
+        if executable.count == 0 {
             return "no executable set"
         }
             
@@ -457,7 +457,7 @@ extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
             }
 
             // Empty value not allowed, reset to previous value.
-            if editedTextField.stringValue.characters.count == 0 {
+            if editedTextField.stringValue.count == 0 {
                 self.errorAlert(title: "Interpreter name can not be empty", explanation: "The value will be reset.")
                 editedTextField.stringValue = oldName
                 return

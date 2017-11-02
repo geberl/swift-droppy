@@ -239,21 +239,21 @@ class ViewControllerRegistration: NSViewController {
     
     func validateInput() -> Bool {
         let name: String = self.nameTextField.stringValue
-        if name.characters.count == 0 {
+        if name.count == 0 {
             self.showErrorSheet(messageText: "Input invalid",
                                 informativeText: "Name cannot be empty.")
             return false
         }
         
         let email: String = self.emailTextField.stringValue
-        if email.characters.count == 0 {
+        if email.count == 0 {
             self.showErrorSheet(messageText: "Input invalid",
                                 informativeText: "Email cannot be empty.")
             return false
         }
         
         let licenseCode = self.licenseCodeTextField.stringValue
-        if licenseCode.characters.count == 0 {
+        if licenseCode.count == 0 {
             self.showErrorSheet(messageText: "Input invalid",
                                 informativeText: "License code cannot be empty.")
             return false

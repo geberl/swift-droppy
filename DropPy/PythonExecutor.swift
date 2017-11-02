@@ -82,7 +82,7 @@ class PythonExecutor: NSObject {
                 if n == 0 {
                     prefixedLine = prefix + line + "\n"
                 } else {
-                    prefixedLine = String(repeating: " ", count: prefix.characters.count) + line + "\n"
+                    prefixedLine = String(repeating: " ", count: prefix.count) + line + "\n"
                 }
                 
                 if let lineData = prefixedLine.data(using: String.Encoding.utf8) {
