@@ -275,18 +275,19 @@ class WindowControllerMain: NSWindowController {
         let errorAlert = NSAlert()
         errorAlert.showsHelp = false
         errorAlert.messageText = "Unable to check for updates"
-        errorAlert.informativeText = "Are you connected?"
+        errorAlert.informativeText = "Are you connected? Is your Firewall blocking DropPy?"
         errorAlert.addButton(withTitle: "Visit Website")
         errorAlert.addButton(withTitle: "Cancel")
         errorAlert.layout()
         errorAlert.alertStyle = NSAlert.Style.warning
         errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
-        
-        errorAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
-            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
-                openWebsite(webUrl: droppyappUrls.main)
-            }
-        })
+        errorAlert.beginSheetModal(for: self.window!, completionHandler: self.updateErrorAlertCompletion)
+    }
+    
+    func updateErrorAlertCompletion(userChoice: NSApplication.ModalResponse) {
+        if userChoice == NSApplication.ModalResponse.alertFirstButtonReturn {
+            openWebsite(webUrl: droppyappUrls.main)
+        }
     }
     
     func openUrlInBrowser(urlString: String) {

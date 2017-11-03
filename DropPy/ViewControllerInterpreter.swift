@@ -118,12 +118,10 @@ class ViewControllerInterpreter: NSViewController {
         if (self.selectedRow > -1) {
             let selectedInterpreterName: String = self.interpreterNames[self.selectedRow]
             if selectedInterpreterName == AppState.interpreterStockName {
-                self.errorAlert(title: "Unable to remove", explanation: "The interpreter that comes with macOS cannot be removed.")
+                self.errorAlert(title: "Unable to remove",
+                                explanation: "The interpreter that comes with macOS cannot be removed.")
             } else {
-                self.criticalAlert(title: "Are you sure you want to remove this interpreter?",
-                                   explanation: "There is no undo. You'll have to manually add it again.",
-                                   confirmButtonText: "Remove interpreter",
-                                   confirmFunction: self.removeSelectedInterpreter)
+                self.confirmInterpreterAlert()
             }
         }
     }
@@ -136,6 +134,20 @@ class ViewControllerInterpreter: NSViewController {
         if let interpreterDict: Dictionary = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) {
             self.interpreterNames = Array(interpreterDict.keys).sorted()
         }
+    }
+    
+    func confirmInterpreterAlert() {
+        let criticalAlert = NSAlert()
+        criticalAlert.showsHelp = false
+        criticalAlert.messageText = "Are you sure you want to remove this interpreter?"
+        criticalAlert.informativeText = "There is no undo. You'll have to manually add it again."
+        criticalAlert.addButton(withTitle: "Remove interpreter")
+        criticalAlert.addButton(withTitle: "Cancel")
+        criticalAlert.layout()
+        criticalAlert.alertStyle = NSAlert.Style.critical
+        criticalAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
+        criticalAlert.beginSheetModal(for: NSApplication.shared.mainWindow!,
+                                      completionHandler: self.removeSelectedInterpreter)
     }
     
     func updateProperties() {
@@ -333,44 +345,29 @@ class ViewControllerInterpreter: NSViewController {
         self.tableView.reloadData()
     }
     
-    func removeSelectedInterpreter() {
-        let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
-        var newInterpreterDict = oldInterpreterDict
-        newInterpreterDict.removeValue(forKey: self.interpreterNames[self.selectedRow])
-        userDefaults.set(newInterpreterDict, forKey: UserDefaultStruct.interpreters)
-        
-        self.reloadSettings()
-        self.tableView.reloadData()
+    func removeSelectedInterpreter(userChoice: NSApplication.ModalResponse) {
+        if userChoice == NSApplication.ModalResponse.alertFirstButtonReturn {
+            let oldInterpreterDict: Dictionary<String, Dictionary<String, String>> = userDefaults.dictionary(forKey: UserDefaultStruct.interpreters) as! Dictionary<String, Dictionary<String, String>>
+            var newInterpreterDict = oldInterpreterDict
+            newInterpreterDict.removeValue(forKey: self.interpreterNames[self.selectedRow])
+            userDefaults.set(newInterpreterDict, forKey: UserDefaultStruct.interpreters)
+            
+            self.reloadSettings()
+            self.tableView.reloadData()
+            self.updateProperties()
+        }
     }
     
     func errorAlert(title: String, explanation: String) {
-        let myAlert = NSAlert()
-        myAlert.showsHelp = false
-        myAlert.messageText = title
-        myAlert.informativeText = explanation
-        myAlert.addButton(withTitle: "Ok")
-        myAlert.layout()
-        myAlert.alertStyle = NSAlert.Style.warning
-        myAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
-        myAlert.beginSheetModal(for: NSApplication.shared.mainWindow!)
-    }
-
-    func criticalAlert(title: String, explanation: String, confirmButtonText: String, confirmFunction: @escaping () -> Void) {
-        let criticalAlert = NSAlert()
-        criticalAlert.showsHelp = false
-        criticalAlert.messageText = title
-        criticalAlert.informativeText = explanation
-        criticalAlert.addButton(withTitle: confirmButtonText)
-        criticalAlert.addButton(withTitle: "Cancel")
-        criticalAlert.layout()
-        criticalAlert.alertStyle = NSAlert.Style.critical
-        criticalAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
-        
-        criticalAlert.beginSheetModal(for: NSApplication.shared.mainWindow!, completionHandler: { [unowned self] (returnCode) -> Void in
-            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
-                confirmFunction()
-            }
-        })
+        let errorAlert = NSAlert()
+        errorAlert.showsHelp = false
+        errorAlert.messageText = title
+        errorAlert.informativeText = explanation
+        errorAlert.addButton(withTitle: "Ok")
+        errorAlert.layout()
+        errorAlert.alertStyle = NSAlert.Style.warning
+        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
+        errorAlert.beginSheetModal(for: NSApplication.shared.mainWindow!)
     }
 }
 

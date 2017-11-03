@@ -152,12 +152,13 @@ class ViewControllerRegistration: NSViewController {
         purchaseAlert.addButton(withTitle: "Cancel")
         purchaseAlert.layout()
         purchaseAlert.icon = NSImage(named: NSImage.Name(rawValue: "AppIcon"))
-
-        purchaseAlert.beginSheetModal(for: self.view.window!, completionHandler: { [unowned self] (returnCode) -> Void in
-            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
-                openWebsite(webUrl: droppyappUrls.main)
-            }
-        })
+        purchaseAlert.beginSheetModal(for: self.view.window!, completionHandler: self.showPurchaseSheetCompletion)
+    }
+    
+    func showPurchaseSheetCompletion(userChoice: NSApplication.ModalResponse) {
+        if userChoice == NSApplication.ModalResponse.alertFirstButtonReturn {
+            openWebsite(webUrl: droppyappUrls.main)
+        }
     }
     
     func getRegName() -> String {
