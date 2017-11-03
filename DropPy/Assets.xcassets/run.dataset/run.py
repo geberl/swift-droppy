@@ -6,6 +6,7 @@ import argparse
 import importlib
 import json
 import os
+import six
 import sys
 import traceback
 
@@ -26,7 +27,7 @@ class Run(object):
     @staticmethod
     def read_workflow_json(workspace_path, workflow_name):
         workflow_path = os.path.join(workspace_path, WORKFLOW_SUBFOLDER_IN_WORKSPACE, workflow_name)
-        with open(workflow_path, 'r') as file_handler:
+        with open(workflow_path, str('r')) as file_handler:
             workflow_dict = json.loads(file_handler.read())
         return workflow_dict
 
@@ -61,6 +62,15 @@ class Run(object):
             sys.exit(1)
 
 
+def commandline_type(byte_string, encoding=sys.stdin.encoding):
+    # Source: https://stackoverflow.com/a/33812744
+    if six.PY2:
+        unicode_string = byte_string.decode(encoding)
+    else:  # if six.PY3:
+        unicode_string = str(byte_string)
+    return unicode_string
+
+
 def parse_arguments():
     """
     Ensured preconditions:
@@ -71,20 +81,34 @@ def parse_arguments():
     """
     parser = argparse.ArgumentParser()
     required_named = parser.add_argument_group('required named arguments')
-    required_named.add_argument('-w', '--workspace', help='absolute path to DropPy workspace',
-                                action='store', type=unicode, required=True)
-    required_named.add_argument('-j', '--json', help='name of selected Workflow json file',
-                                action='store', type=unicode, required=True)
-    required_named.add_argument('-i', '--input', help='absolute path to the input directory',
-                                action='store', type=unicode, required=True)
-    required_named.add_argument('-o', '--output', help='absolute path to the output directory',
-                                action='store', type=unicode, required=True)
-    parser.add_argument('-v', '--version', help='display version info and exit', action='store_true')
+    required_named.add_argument('-w', '--workspace',
+                                help='absolute path to DropPy workspace',
+                                action='store',
+                                type=commandline_type,
+                                required=True)
+    required_named.add_argument('-j', '--json',
+                                help='name of selected Workflow json file',
+                                action='store',
+                                type=commandline_type,
+                                required=True)
+    required_named.add_argument('-i', '--input',
+                                help='absolute path to the input directory',
+                                action='store',
+                                type=commandline_type,
+                                required=True)
+    required_named.add_argument('-o', '--output',
+                                help='absolute path to the output directory',
+                                action='store',
+                                type=commandline_type,
+                                required=True)
+    parser.add_argument('-v', '--version',
+                        help='display version info and exit',
+                        action='store_true')
     return parser.parse_args()
 
 
 def print_version():
-    print('Version 4, 2017-10-03')
+    print('Version 5, 2017-11-03')
     sys.exit(0)
 
 
