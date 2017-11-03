@@ -40,6 +40,8 @@ struct AppState {
     static var isLicensed: Bool = false
     static var isInEvaluation: Bool = false
     static var regEvalStatus: String = "Unlicensed (Evaluation)"
+    
+    static var systemVersion = ProcessInfo.processInfo.operatingSystemVersion
 }
 
 

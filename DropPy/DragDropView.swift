@@ -181,12 +181,18 @@ class DragDropView: NSView {
             return
         }
         
-        // Write some basic info into it.
+        // Write basic DropPy and system info.
         if let thisVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             self.writeLog(prefix: "DropPy Version:           ", lines: [thisVersion])
         } else {
             self.writeLog(prefix: "DropPy Version:           ", lines: ["???"])
         }
+        
+        var macOsVersionString: String = String(AppState.systemVersion.majorVersion) + "."
+        macOsVersionString += String(AppState.systemVersion.minorVersion) + "."
+        macOsVersionString += String(AppState.systemVersion.patchVersion)
+        self.writeLog(prefix: "macOS Version:            ", lines: [macOsVersionString])
+        
         if AppState.isLicensed {
             let userDefaults = UserDefaults.standard
             let regLicenseCode: String = userDefaults.string(forKey: UserDefaultStruct.regLicenseCode)!
@@ -201,8 +207,11 @@ class DragDropView: NSView {
                 self.writeLog(prefix: "Registration Status:      ", lines: ["Unlicensed (Evaluation over)"])
             }
         }
+        
         self.writeLog(prefix: "Bundled droppy-workspace: ", lines: [AppState.bundledWorkspaceVersion])
         self.writeLog(prefix: "Bundled droppy-run:       ", lines: [AppState.bundledRunVersion])
+        
+        // Write drop session info.
         self.writeLog(prefix: "", lines: [String(repeating: "-", count: 120)])
         self.writeLog(prefix: "Dropped Date/Time:        ", lines: [Date().readable])
         self.writeLog(prefix: "Dropped Object Datatypes: ", lines: utiTypes)
