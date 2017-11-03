@@ -95,12 +95,12 @@ class PythonExecutor: NSObject {
 
     func writeWorkflowInputLog() {
         self.writeLog(prefix: "Workflow Date/Time:       ", lines: [Date().readable])
-        self.writeLog(prefix: "Workspace Path:           ", lines: [self.workspacePath])
-        self.writeLog(prefix: "Workflow Path:            ", lines: [self.workflowPath])
-        self.writeLog(prefix: "Temp Path:                ", lines: [self.tempDirPath])
-        self.writeLog(prefix: "Runner Path:              ", lines: [self.runnerFilePath])
-        self.writeLog(prefix: "Interpreter Path:         ", lines: [self.executablePath])
-        self.writeLog(prefix: "Interpreter Args:         ", lines: [self.executableArgs])
+        self.writeLog(prefix: "Workspace Dir:            ", lines: [self.workspacePath])
+        self.writeLog(prefix: "Workflow File:            ", lines: [self.workflowPath])
+        self.writeLog(prefix: "Temp Dir:                 ", lines: [self.tempDirPath])
+        self.writeLog(prefix: "Runner File:              ", lines: [self.runnerFilePath])
+        self.writeLog(prefix: "Interpreter Executable:   ", lines: [self.executablePath])
+        self.writeLog(prefix: "Interpreter Arguments:    ", lines: [self.executableArgs])
         self.writeLog(prefix: "", lines: [String(repeating: "=", count: 120)])
     }
 
@@ -137,13 +137,13 @@ class PythonExecutor: NSObject {
             queueItemParamsList = queueItemParamsList.filter { !$0.isEmpty }
             let queueItemParamsOneLine = queueItemParamsList.joined(separator: " ")
 
-            self.writeLog(prefix: "  Parameters:             ", lines: [queueItemParamsOneLine])
+            self.writeLog(prefix: "  Kwargs:                 ", lines: [queueItemParamsOneLine])
         } else {
-            self.writeLog(prefix: "  Parameters:             ", lines: ["(none)"])
+            self.writeLog(prefix: "  Kwargs:                 ", lines: ["(none)"])
         }
 
-        self.writeLog(prefix: "  Input Path:             ", lines: [inputPath])
-        self.writeLog(prefix: "  Output Path:            ", lines: [outputPath])
+        self.writeLog(prefix: "  Input Dir:              ", lines: [inputPath])
+        self.writeLog(prefix: "  Output Dir:             ", lines: [outputPath])
 
         self.sendTaskStatusNotification(taskNumber: taskNumber, taskName: taskName, queueCount: queueCount)
     }
