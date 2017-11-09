@@ -86,6 +86,10 @@ func executeCommand(command: String, args: [String]) -> (output: [String], error
         let task = Process()
         task.launchPath = command
         task.arguments = args
+        task.environment = ["LC_ALL":           "en_US.UTF-8",
+                            "LC_CTYPE":         "en_US.UTF-8",
+                            "LANG":             "en_US.UTF-8",
+                            "PYTHONIOENCODING": "utf8"]
         
         let outpipe = Pipe()
         task.standardOutput = outpipe
