@@ -73,25 +73,29 @@ func copyDir(sourceDirPath: String, targetDirPath: String) {
 }
 
 
-func executeCommand(command: String, args: [String]) -> (output: [String], error: [String], exitCode: Int32) {
+func executeCommand(command: String, args: [String], setEnv: Bool = true) -> (output: [String], error: [String], exit: Int32) {
     // Source: https://stackoverflow.com/questions/29514738/get-terminal-output-after-a-command-swift#29519615
     
     var output: [String] = []
     var error: [String] = []
-    var status: Int32
+    var exit: Int32
     
     if isFile(path: command) {
         
         let task = Process()
         task.launchPath = command
         task.arguments = args
-        task.environment = ["LC_ALL":           "en_US.UTF-8",
-                            "LC_CTYPE":         "en_US.UTF-8",
-                            "LANG":             "en_US.UTF-8",
-                            "PYTHONIOENCODING": "utf8"]
+        
+        if setEnv {
+            task.environment = ["LC_ALL":           "en_US.UTF-8",
+                                "LC_CTYPE":         "en_US.UTF-8",
+                                "LANG":             "en_US.UTF-8",
+                                "PYTHONIOENCODING": "utf8"]
+        }
         
         let outpipe = Pipe()
         task.standardOutput = outpipe
+        
         let errpipe = Pipe()
         task.standardError = errpipe
         
@@ -110,15 +114,19 @@ func executeCommand(command: String, args: [String]) -> (output: [String], error
         }
         
         task.waitUntilExit()
-        status = task.terminationStatus
+        exit = task.terminationStatus
 
     } else {
         error.append("Command not found")
         error.append(command)
-        status = 1
+        exit = 1
     }
     
-    return (output, error, status)
+    os_log("Command Output '%@'", log: logFileSystem, type: .debug, output)
+    os_log("Command Error  '%@'", log: logFileSystem, type: .debug, error)
+    os_log("Command Exit   '%@'", log: logFileSystem, type: .debug, exit)
+    
+    return (output, error, exit)
 }
 
 

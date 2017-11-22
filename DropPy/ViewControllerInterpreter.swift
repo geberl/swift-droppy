@@ -244,11 +244,10 @@ class ViewControllerInterpreter: NSViewController {
         // File must exist.
         if !isFile(path: executable) {
             return "executable not found"
-
         }
 
-        let (output, error, status) = executeCommand(command: executable, args: ["--version"])
-        if status == 0 {
+        let (output, error, exit) = executeCommand(command: executable, args: ["--version"])
+        if exit == 0 {
             // Python 2 returns version string in stderr, but Python 3 in stdout; exit code is always 0 though.
             if output[0] != "" {
                 return output[0].replacingOccurrences(of: "Python ", with: "", options: .literal, range: nil)
@@ -262,8 +261,9 @@ class ViewControllerInterpreter: NSViewController {
     }
     
     func getInfoSystemDefault(executable: String) -> String? {
-        let (output, _, status) = executeCommand(command: "/usr/bin/which", args: ["python"])
-        if status == 0 {
+        // Setting the environment doesn't return anything for "which". No idea what's going on.
+        let (output, _, exit) = executeCommand(command: "/usr/bin/which", args: ["python"], setEnv: false)
+        if exit == 0 {
             if executable == output[0] {
                 return "yes"
             } else {
