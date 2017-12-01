@@ -3,61 +3,61 @@
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "Icon_round_16x16@1x.png",
+      "filename" : "icon_round_16x16@x1.png",
       "scale" : "1x"
     },
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "Icon_round_32x32@1x.png",
+      "filename" : "icon_round_32x32@x1-1.png",
       "scale" : "2x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "Icon_round_32x32@1x-1.png",
+      "filename" : "icon_round_32x32@x1.png",
       "scale" : "1x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "Icon_round_64x64@1x.png",
+      "filename" : "icon_round_64x64@x1.png",
       "scale" : "2x"
     },
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "icon_round_128x128@1x.png",
+      "filename" : "icon_round_128x128@x1.png",
       "scale" : "1x"
     },
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "icon_round_256x256@1x.png",
+      "filename" : "icon_round_256x256@x1.png",
       "scale" : "2x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "icon_round_256x256@1x-1.png",
+      "filename" : "icon_round_256x256@x1-1.png",
       "scale" : "1x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "icon_round_512x512@1x.png",
+      "filename" : "icon_round_512x512@x1.png",
       "scale" : "2x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "icon_round_512x512@1x-1.png",
+      "filename" : "icon_round_512x512@x1-1.png",
       "scale" : "1x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "Icon_round_1024x1024@1x.png",
+      "filename" : "icon_round_1024x1024@x1.png",
       "scale" : "2x"
     }
   ],
