@@ -73,7 +73,7 @@ func copyDir(sourceDirPath: String, targetDirPath: String) {
 }
 
 
-func executeCommand(command: String, args: [String], setEnv: Bool = true) -> (output: [String], error: [String], exit: Int32) {
+func executeCommand(command: String, args: [String], setEnv: Bool = true, debug: Bool = false) -> (output: [String], error: [String], exit: Int32) {
     // Source: https://stackoverflow.com/questions/29514738/get-terminal-output-after-a-command-swift#29519615
     
     var output: [String] = []
@@ -122,9 +122,11 @@ func executeCommand(command: String, args: [String], setEnv: Bool = true) -> (ou
         exit = 1
     }
     
-    os_log("Command Output '%@'", log: logFileSystem, type: .debug, output)
-    os_log("Command Error  '%@'", log: logFileSystem, type: .debug, error)
-    os_log("Command Exit   '%@'", log: logFileSystem, type: .debug, exit)
+    if debug {
+        os_log("Command Output '%@'", log: logFileSystem, type: .debug, output)
+        os_log("Command Error  '%@'", log: logFileSystem, type: .debug, error)
+        os_log("Command Exit   '%@'", log: logFileSystem, type: .debug, exit)
+    }
     
     return (output, error, exit)
 }
