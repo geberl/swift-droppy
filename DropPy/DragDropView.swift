@@ -118,7 +118,7 @@ class DragDropView: NSView {
         let logFilePath: String = cacheDirPath + "droppy.log"
         let zeroDirPath: String = cacheDirPath + "0" + "/"
         let filesDirPath: String = zeroDirPath + "files" + "/"
-        let promisesDirPath: String = zeroDirPath + "promises" + "/"
+        let promisesDirPath: String = zeroDirPath + "files.promised" + "/"
         
         AppState.tempDirPath = tempDirPath
         
@@ -440,11 +440,15 @@ class DragDropView: NSView {
         for dataType in utiTypes {
             if let data = draggingInfo.draggingPasteboard().data(forType: NSPasteboard.PasteboardType(rawValue: dataType)) {
                 do {
-                    var fileExtension: String = "txt"
+                    // Write each dataType in its own directory, with the correct fileExtension (if known).
+                    var fileExtension: String = ""
                     if knownUtiDataTypes[dataType] != nil {
-                        fileExtension = knownUtiDataTypes[dataType]!
+                        fileExtension = "." + knownUtiDataTypes[dataType]!
                     }
-                    let dataURL: URL = URL(fileURLWithPath: zeroDirPath + "/" + dataType + "." + fileExtension)
+                    let dataTypePath: String = zeroDirPath + "/" + dataType
+                    makeDirs(path: dataTypePath)
+                    let dataURL: URL = URL(fileURLWithPath: dataTypePath + "/" + "data" + fileExtension)
+                    
                     try data.write(to: dataURL)
                 } catch let error {
                     os_log("%@", log: logDrop, type: .error, error.localizedDescription)
