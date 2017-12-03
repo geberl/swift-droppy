@@ -14,7 +14,7 @@ class ViewControllerRegistration: NSViewController {
     
     let userDefaults = UserDefaults.standard
 
-    @IBOutlet weak var regEvalStatusTextField: NSTextField!
+    @IBOutlet weak var regTrialStatusTextField: NSTextField!
     @IBOutlet weak var nameTextField: NSTextField!
     @IBOutlet weak var companyTextField: NSTextField!
     @IBOutlet weak var emailTextField: NSTextField!
@@ -74,13 +74,13 @@ class ViewControllerRegistration: NSViewController {
             self.setUnlicensedValues()
         }
         
-        if !AppState.isLicensed && !AppState.isInEvaluation {
+        if !AppState.isLicensed && !AppState.isInTrial {
             self.showPurchaseSheet()
         }
     }
     
     func setLicensedValues() {
-        self.regEvalStatusTextField.stringValue = AppState.regEvalStatus
+        self.regTrialStatusTextField.stringValue = AppState.regTrialStatus
         self.purchaseButton.isHidden = true
         
         self.nameTextField.stringValue = userDefaults.string(forKey: UserDefaultStruct.regName)!
@@ -108,7 +108,7 @@ class ViewControllerRegistration: NSViewController {
     }
     
     func setUnlicensedValues() {
-        self.regEvalStatusTextField.stringValue = AppState.regEvalStatus
+        self.regTrialStatusTextField.stringValue = AppState.regTrialStatus
         self.purchaseButton.isHidden = false
         
         self.nameTextField.stringValue = ""
@@ -224,7 +224,7 @@ class ViewControllerRegistration: NSViewController {
         let licenseCode = self.licenseCodeTextField.stringValue
         userDefaults.set(licenseCode, forKey: UserDefaultStruct.regLicenseCode)
         
-        AppState.regEvalStatus = "Licensed ❤️"
+        AppState.regTrialStatus = "Licensed ❤️"
         AppState.isLicensed = true
     }
     
@@ -234,7 +234,7 @@ class ViewControllerRegistration: NSViewController {
         userDefaults.removeObject(forKey: UserDefaultStruct.regEmail)
         userDefaults.removeObject(forKey: UserDefaultStruct.regLicenseCode)
         
-        _ = isInEvaluation()  // this updates AppState.regEvalStatus.
+        _ = isInTrial()  // this updates AppState.regTrialStatus.
         AppState.isLicensed = false
     }
     

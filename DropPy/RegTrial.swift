@@ -1,5 +1,5 @@
 //
-//  RegEval.swift
+//  RegTrial.swift
 //  DropPy
 //
 //  Created by Günther Eberl on 19.09.17.
@@ -69,61 +69,61 @@ func shaDataToString(shaData: Data) -> String {
 }
 
 
-func beginEvaluation() {
+func beginTrial() {
     let userDefaults = UserDefaults.standard
     
-    let evalStartDate: Date = Date()
-    userDefaults.set(evalStartDate, forKey: UserDefaultStruct.evalStartDate)
+    let trialStartDate: Date = Date()
+    userDefaults.set(trialStartDate, forKey: UserDefaultStruct.trialStartDate)
     
-    let evalStartString: String = "\(evalStartDate.timeIntervalSince1970)" + "_" + AppState.evalStartSalt
-    let evalStartHash = evalStartString.sha512()
-    userDefaults.set(evalStartHash, forKey: UserDefaultStruct.evalStartHash)
+    let trialStartString: String = "\(trialStartDate.timeIntervalSince1970)" + "_" + AppState.trialStartSalt
+    let trialStartHash = trialStartString.sha512()
+    userDefaults.set(trialStartHash, forKey: UserDefaultStruct.trialStartHash)
     
-    let evalEndDate: Date = evalStartDate.addingTimeInterval(60 * 60 * 24 * 7 * 2)  // 14 days
+    let trialEndDate: Date = trialStartDate.addingTimeInterval(60 * 60 * 24 * 7 * 2)  // 14 days
     
-    AppState.isInEvaluation = true
-    AppState.regEvalStatus = "Unlicensed (Evaluation ends on " + evalEndDate.readableDate + ")"
-    os_log("Evaluation period started at %@ (ends at %@).", log: logLicense, type: .info,
-           evalStartDate.readable, evalEndDate.readable)
+    AppState.isInTrial = true
+    AppState.regTrialStatus = "Unlicensed (Trial ends on " + trialEndDate.readableDate + ")"
+    os_log("Trial period started at %@ (ends at %@).", log: logLicense, type: .info,
+           trialStartDate.readable, trialEndDate.readable)
 }
 
 
-func isInEvaluation() -> Bool {
+func isInTrial() -> Bool {
     let userDefaults = UserDefaults.standard
-    guard let evalStartDate: Date = userDefaults.object(forKey: UserDefaultStruct.evalStartDate) as? Date else { return false }
-    guard let evalStartHashSaved: Data = userDefaults.data(forKey: UserDefaultStruct.evalStartHash) else { return false }
+    guard let trialStartDate: Date = userDefaults.object(forKey: UserDefaultStruct.trialStartDate) as? Date else { return false }
+    guard let trialStartHashSaved: Data = userDefaults.data(forKey: UserDefaultStruct.trialStartHash) else { return false }
     
     let nowDate: Date = Date()
-    let evalEndDate: Date = evalStartDate.addingTimeInterval(60 * 60 * 24 * 7 * 2)  // 14 days
+    let trialEndDate: Date = trialStartDate.addingTimeInterval(60 * 60 * 24 * 7 * 2)  // 14 days
     
-    // Check if evalStartDate is still valid against evalStartHash.
-    let evalStartStringNew: String = "\(evalStartDate.timeIntervalSince1970)" + "_" + AppState.evalStartSalt
-    let evalStartHashNew: Data = evalStartStringNew.sha512()
-    if evalStartHashSaved != evalStartHashNew {
-        AppState.regEvalStatus = "Unlicensed (Evaluation ended)"
-        os_log("Evaluation period ended (evalStartHash invalid for evalStartDate).", log: logLicense, type: .error)
+    // Check if trialStartDate is still valid against trialStartHash.
+    let trialStartStringNew: String = "\(trialStartDate.timeIntervalSince1970)" + "_" + AppState.trialStartSalt
+    let trialStartHashNew: Data = trialStartStringNew.sha512()
+    if trialStartHashSaved != trialStartHashNew {
+        AppState.regTrialStatus = "Unlicensed (Trial ended)"
+        os_log("Trial period ended (trialStartHash invalid for trialStartDate).", log: logLicense, type: .error)
         return false
     }
     
-    // Check if now is before the evaluation's start date.
-    if nowDate < evalStartDate {
-        AppState.regEvalStatus = "Unlicensed (Evaluation ended)"
-        os_log("Evaluation period ended (now is before evalStartDate).", log: logLicense, type: .error)
+    // Check if now is before the trial's start date.
+    if nowDate < trialStartDate {
+        AppState.regTrialStatus = "Unlicensed (Trial ended)"
+        os_log("Trial period ended (now is before trialStartDate).", log: logLicense, type: .error)
         return false
     }
     
-    // Check if now is after the evaluation's end date.
-    if nowDate > evalEndDate {
-        AppState.regEvalStatus = "Unlicensed (Evaluation ended on " + evalEndDate.readableDate + ")"
-        os_log("Evaluation period over (ended at %@, started at %@).", log: logLicense, type: .info,
-               evalEndDate.readable, evalStartDate.readable)
+    // Check if now is after the trial's end date.
+    if nowDate > trialEndDate {
+        AppState.regTrialStatus = "Unlicensed (Trial ended on " + trialEndDate.readableDate + ")"
+        os_log("Trial period over (ended at %@, started at %@).", log: logLicense, type: .info,
+               trialEndDate.readable, trialStartDate.readable)
         return false
     }
     
-    // Product is still in evaluation.
-    AppState.regEvalStatus = "Unlicensed (Evaluation ends on " + evalEndDate.readableDate + ")"
-    os_log("Evaluation period active (will end at %@, started at %@).", log: logLicense, type: .info,
-           evalEndDate.readable, evalStartDate.readable)
+    // Product is still in trial.
+    AppState.regTrialStatus = "Unlicensed (Trial ends on " + trialEndDate.readableDate + ")"
+    os_log("Trial period active (will end at %@, started at %@).", log: logLicense, type: .info,
+           trialEndDate.readable, trialStartDate.readable)
     return true
 }
 
@@ -144,7 +144,7 @@ func isLicensed() -> Bool {
     let validLicense: Bool = checkValidLicense(licenseCode: licenseCode, regName: regName)
     if validLicense {
         os_log("Valid license found.", log: logLicense, type: .info)
-        AppState.regEvalStatus = "Licensed ❤️"
+        AppState.regTrialStatus = "Licensed ❤️"
         return true
     } else {
         os_log("No valid license found.", log: logLicense, type: .error)

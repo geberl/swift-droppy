@@ -47,11 +47,11 @@ struct UserDefaultStruct {
     static var updateDelta: String = "updateDelta"
     static var updateDeltaDefault: Int = 60 * 60 * 24 * 7  // a week in seconds, maxint of UInt64 is much higher.
     
-    static var evalStartDate: String = "evalStartDate"
-    static var evalStartDateDefault: Date = Date()
+    static var trialStartDate: String = "trialStartDate"
+    static var trialStartDateDefault: Date = Date()
     
-    static var evalStartHash: String = "evalStartHash"
-    static var evalStartHashDefault: String = ""  // wrong on purpose to invalidate on tampering.
+    static var trialStartHash: String = "trialStartHash"
+    static var trialStartHashDefault: String = ""  // wrong on purpose to invalidate on tampering.
     
     // The following values have no defaults and are not guaranteed to be present. No force unwrapping here!
     // They are only set on valid registering.
@@ -75,8 +75,8 @@ func isFirstRun() -> Bool {
     if isKeyPresentInUserDefaults(key: "interpreters") { return false }
     if isKeyPresentInUserDefaults(key: "updateLast") { return false }
     if isKeyPresentInUserDefaults(key: "updateDelta") { return false }
-    if isKeyPresentInUserDefaults(key: "evalStartDate") { return false }
-    if isKeyPresentInUserDefaults(key: "evalStartHash") { return false }
+    if isKeyPresentInUserDefaults(key: "trialStartDate") { return false }
+    if isKeyPresentInUserDefaults(key: "trialStartHash") { return false }
     return true
 }
 
@@ -135,11 +135,11 @@ func reapplyPrefs() {
         userDefaults.set(UserDefaultStruct.updateDeltaDefault, forKey: UserDefaultStruct.updateDelta)
     }
     
-    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.evalStartDate) {
-        userDefaults.set(UserDefaultStruct.evalStartDateDefault, forKey: UserDefaultStruct.evalStartDate)
+    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.trialStartDate) {
+        userDefaults.set(UserDefaultStruct.trialStartDateDefault, forKey: UserDefaultStruct.trialStartDate)
     }
-    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.evalStartHash) {
-        userDefaults.set(UserDefaultStruct.evalStartHashDefault, forKey: UserDefaultStruct.evalStartHash)
+    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.trialStartHash) {
+        userDefaults.set(UserDefaultStruct.trialStartHashDefault, forKey: UserDefaultStruct.trialStartHash)
     }
 }
 

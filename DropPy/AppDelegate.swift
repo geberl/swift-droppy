@@ -35,11 +35,11 @@ struct AppState {
     static var bundledWorkspaceVersion: String = "trunk (5374e25) (2017-09-15)"
     static var bundledRunVersion: String = "trunk (f9e8857c) (2017-11-03)"
     
-    static var evalStartSalt: String = "nBL4QzmKbk8vhnfke9uvNHRDUtwkoPvJ"
+    static var trialStartSalt: String = "nBL4QzmKbk8vhnfke9uvNHRDUtwkoPvJ"
     
     static var isLicensed: Bool = false
-    static var isInEvaluation: Bool = false
-    static var regEvalStatus: String = "Unlicensed (Evaluation)"
+    static var isInTrial: Bool = false
+    static var regTrialStatus: String = "Unlicensed (Trial)"
     
     static var systemVersion = ProcessInfo.processInfo.operatingSystemVersion
 }
@@ -101,7 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.devModeMenuItem.isEnabled = true  // override auto enabling in "Workflow" menu for this item.
 
         if isFirstRun() {
-            beginEvaluation()
+            beginTrial()
             reapplyPrefs()
             self.firstRunWindowController.showWindow(self)
         } else {
@@ -112,10 +112,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             AppState.isLicensed = isLicensed()
             if !AppState.isLicensed {
                 os_log("No license information found.", log: logLicense, type: .info)
-                AppState.isInEvaluation = isInEvaluation()
+                AppState.isInTrial = isInTrial()
             }
             
-            if !AppState.isInEvaluation && !AppState.isLicensed {
+            if !AppState.isInTrial && !AppState.isLicensed {
                 self.registrationWindowController.showWindow(self)
             }
 
@@ -150,8 +150,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Show registration window with open purchase sheet to user on each drop.
         // At this moment do not refuse executing, maybe later in 2.0.
         if !AppState.isLicensed {
-            AppState.isInEvaluation = isInEvaluation()  // Recheck if evaluation period expired in the meantime.
-            if !AppState.isInEvaluation {
+            AppState.isInTrial = isInTrial()  // Recheck if trial period expired in the meantime.
+            if !AppState.isInTrial {
                 self.registrationWindowController.showWindow(self)
                 NotificationCenter.default.post(name: .reopenPurchaseSheet, object: nil)
             }

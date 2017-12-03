@@ -201,10 +201,10 @@ class DragDropView: NSView {
             let regLicenseCodeCut: String = String(regLicenseCode[cutStartIndex...cutEndIndex])
             self.writeLog(prefix: "Registration Status:      ", lines: ["Licensed (\(regLicenseCodeCut)...)"])
         } else {
-            if AppState.isInEvaluation {
-                self.writeLog(prefix: "Registration Status:      ", lines: ["Unlicensed (Evaluation)"])
+            if AppState.isInTrial {
+                self.writeLog(prefix: "Registration Status:      ", lines: ["Unlicensed (Trial)"])
             } else {
-                self.writeLog(prefix: "Registration Status:      ", lines: ["Unlicensed (Evaluation over)"])
+                self.writeLog(prefix: "Registration Status:      ", lines: ["Unlicensed (Trial over)"])
             }
         }
         
