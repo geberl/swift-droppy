@@ -166,7 +166,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="DropPy" customModuleProvider="target">
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="DropPy">
                     <connections>
                         <outlet property="devModeMenuItem" destination="Lmj-0f-0Zt" id="wgW-ZS-PIF"/>
                     </connections>
@@ -179,7 +179,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="WindowControllerMain" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="DropPy" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="DropPy" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="WindowMain" customModule="DropPy" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
                         <rect key="contentRect" x="722" y="293" width="250" height="250"/>
@@ -267,7 +267,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" identifier="Border" image="zone-dashed" id="ijI-bt-2u5" userLabel="ZoneImage"/>
                             </imageView>
-                            <view wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK1-lV-7qF" customClass="DragDropView" customModule="DropPy" customModuleProvider="target">
+                            <view wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK1-lV-7qF" customClass="DragDropView" customModule="DropPy">
                                 <rect key="frame" x="11" y="11" width="234" height="234"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
@@ -349,7 +349,7 @@
         <image name="button-add" width="19" height="19"/>
         <image name="button-edit" width="19" height="19"/>
         <image name="button-folder" width="19" height="19"/>
-        <image name="logo-default" width="256" height="256"/>
+        <image name="logo-default" width="128" height="128"/>
         <image name="zone-dashed" width="256" height="256"/>
     </resources>
 </document>

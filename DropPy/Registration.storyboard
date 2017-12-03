@@ -10,7 +10,7 @@
         <scene sceneID="DQe-2u-V4i">
             <objects>
                 <windowController id="U38-DQ-yvd" customClass="WindowControllerRegistration" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Registration" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="cNo-YR-jc2">
+                    <window key="window" title="Registration" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="cNo-YR-jc2" customClass="WindowRegistration" customModule="DropPy" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
