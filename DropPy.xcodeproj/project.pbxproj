@@ -19,9 +19,10 @@
 		A43E6CCB1FD40B9F00D6F8BA /* WindowEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCA1FD40B9F00D6F8BA /* WindowEditor.swift */; };
 		A43E6CCD1FD40BF500D6F8BA /* WindowRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCC1FD40BF500D6F8BA /* WindowRegistration.swift */; };
 		A43E6CCF1FD40C3B00D6F8BA /* WindowPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCE1FD40C3B00D6F8BA /* WindowPrefs.swift */; };
-		A43E6CD11FD40C6900D6F8BA /* WindowFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CD01FD40C6900D6F8BA /* WindowFirstRun.swift */; };
+		A4410F921FD419780001F7F7 /* ViewControllerFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4410F911FD419780001F7F7 /* ViewControllerFirstRun.swift */; };
+		A4410F941FD41B9F0001F7F7 /* WindowControllerFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */; };
+		A4410F961FD420710001F7F7 /* WindowFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4410F951FD420710001F7F7 /* WindowFirstRun.swift */; };
 		A444507D1EF0EC5600EBB485 /* FirstRun.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */; };
-		A444507F1EF0EDD200EBB485 /* WindowControllerFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A444507E1EF0EDD200EBB485 /* WindowControllerFirstRun.swift */; };
 		A45EA3C21F7105E100EA4310 /* RegTrial.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45EA3C11F7105E100EA4310 /* RegTrial.swift */; };
 		A45EA3D01F7108B900EA4310 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A45EA3D11F7108B900EA4310 /* CommonCrypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -106,9 +107,10 @@
 		A43E6CCA1FD40B9F00D6F8BA /* WindowEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowEditor.swift; sourceTree = "<group>"; };
 		A43E6CCC1FD40BF500D6F8BA /* WindowRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRegistration.swift; sourceTree = "<group>"; };
 		A43E6CCE1FD40C3B00D6F8BA /* WindowPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowPrefs.swift; sourceTree = "<group>"; };
-		A43E6CD01FD40C6900D6F8BA /* WindowFirstRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowFirstRun.swift; sourceTree = "<group>"; };
+		A4410F911FD419780001F7F7 /* ViewControllerFirstRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFirstRun.swift; sourceTree = "<group>"; };
+		A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllerFirstRun.swift; sourceTree = "<group>"; };
+		A4410F951FD420710001F7F7 /* WindowFirstRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowFirstRun.swift; sourceTree = "<group>"; };
 		A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FirstRun.storyboard; sourceTree = "<group>"; };
-		A444507E1EF0EDD200EBB485 /* WindowControllerFirstRun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerFirstRun.swift; sourceTree = "<group>"; };
 		A45EA3C11F7105E100EA4310 /* RegTrial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegTrial.swift; sourceTree = "<group>"; };
 		A45EA3C31F71082B00EA4310 /* CommonCrypto.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CommonCrypto.xcconfig; sourceTree = SOURCE_ROOT; };
 		A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,8 +207,9 @@
 			isa = PBXGroup;
 			children = (
 				A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */,
-				A444507E1EF0EDD200EBB485 /* WindowControllerFirstRun.swift */,
-				A43E6CD01FD40C6900D6F8BA /* WindowFirstRun.swift */,
+				A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */,
+				A4410F951FD420710001F7F7 /* WindowFirstRun.swift */,
+				A4410F911FD419780001F7F7 /* ViewControllerFirstRun.swift */,
 			);
 			name = FirstRun;
 			sourceTree = "<group>";
@@ -603,9 +606,9 @@
 				A43E6CCB1FD40B9F00D6F8BA /* WindowEditor.swift in Sources */,
 				A48DAE581F88B5CA00D7F96E /* WebLinks.swift in Sources */,
 				A401DBF41F71292400A12302 /* Prefs.swift in Sources */,
+				A4410F961FD420710001F7F7 /* WindowFirstRun.swift in Sources */,
 				A41A701B1F57354100117E18 /* Common.swift in Sources */,
 				A4EE62BF1F72C9E000370F26 /* CocoaFobError.swift in Sources */,
-				A43E6CD11FD40C6900D6F8BA /* WindowFirstRun.swift in Sources */,
 				A4EE62C21F72C9EC00370F26 /* CocoaFobStringExt.swift in Sources */,
 				A401DBF61F712E3900A12302 /* Update.swift in Sources */,
 				A4C61CF11F56982900759F57 /* PythonExecutor.swift in Sources */,
@@ -613,16 +616,17 @@
 				A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */,
 				A4EE62BD1F72C9B800370F26 /* CFUtil.swift in Sources */,
 				A46CE6BA1F459BEE000DEACB /* WindowControllerEditor.swift in Sources */,
-				A444507F1EF0EDD200EBB485 /* WindowControllerFirstRun.swift in Sources */,
 				A46CE6BC1F459F87000DEACB /* ViewControllerEditor.swift in Sources */,
 				A4EE62C31F72C9EC00370F26 /* CocoaFobLicVerifier.swift in Sources */,
 				A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */,
 				A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */,
+				A4410F921FD419780001F7F7 /* ViewControllerFirstRun.swift in Sources */,
 				A43523571F7D6A6000265672 /* TabViewControllerPrefs.swift in Sources */,
 				A487063C1F5680A2005EF67C /* WindowControllerRegistration.swift in Sources */,
 				A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */,
 				A43E6CC91FD40A9800D6F8BA /* WindowMain.swift in Sources */,
 				A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */,
+				A4410F941FD41B9F0001F7F7 /* WindowControllerFirstRun.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,
 				A45EA3C21F7105E100EA4310 /* RegTrial.swift in Sources */,
 				A43E6CCD1FD40BF500D6F8BA /* WindowRegistration.swift in Sources */,

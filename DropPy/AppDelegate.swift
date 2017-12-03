@@ -103,12 +103,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if isFirstRun() {
             beginTrial()
             reapplyPrefs()
-            self.firstRunWindowController.showWindow(self)
+            self.showFirstRunModal()
         } else {
             reapplyPrefs()
             loadWindowPosition()
             self.loadDevMenuState()
-            
+
             AppState.isLicensed = isLicensed()
             if !AppState.isLicensed {
                 os_log("No license information found.", log: logLicense, type: .info)
@@ -289,7 +289,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }()
     
     @IBAction func showFirstRunWindow(_ sender: Any) {
-        self.firstRunWindowController.showWindow(self)
+        self.showFirstRunModal()
+    }
+    
+    func showFirstRunModal() {
+        if let windowFirstRun = firstRunWindowController.window {
+            let application = NSApplication.shared
+            application.runModal(for: windowFirstRun)
+            windowFirstRun.close()
+        }
     }
     
     func reloadWorkflowsFromDir() {

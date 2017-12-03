@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="afP-fq-TZo">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="SCc-ZT-7Af">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
@@ -7,49 +7,60 @@
     </dependencies>
     <scenes>
         <!--Window Controller-->
-        <scene sceneID="S8x-eo-QDd">
+        <scene sceneID="54p-VZ-fG6">
             <objects>
-                <windowController showSeguePresentationStyle="single" id="afP-fq-TZo" customClass="WindowControllerFirstRun" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="CM8-ut-gtS" customClass="WindowFirstRun" customModule="DropPy" customModuleProvider="target">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                <windowController id="SCc-ZT-7Af" customClass="WindowControllerFirstRun" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="First Run Experience" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="gkC-nO-fIz" customClass="WindowFirstRun" customModule="DropPy" customModuleProvider="target">
+                        <windowStyleMask key="styleMask" titled="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="294" y="363" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
                         <connections>
-                            <outlet property="delegate" destination="afP-fq-TZo" id="CcC-2f-4Qm"/>
+                            <outlet property="delegate" destination="SCc-ZT-7Af" id="rRb-uv-oeH"/>
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="NfN-wj-hNO" kind="relationship" relationship="window.shadowedContentViewController" id="PUp-AJ-6C5"/>
+                        <segue destination="iHp-eb-Mg2" kind="relationship" relationship="window.shadowedContentViewController" id="0Rp-fS-MXP"/>
                     </connections>
                 </windowController>
-                <customObject id="fSK-tL-dfh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="ClT-WJ-qeL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-8" y="197"/>
+            <point key="canvasLocation" x="392" y="7"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="mz2-LF-Wn3">
+        <!--View Controller First Run-->
+        <scene sceneID="duV-Tc-dGX">
             <objects>
-                <viewController showSeguePresentationStyle="single" id="NfN-wj-hNO" sceneMemberID="viewController">
-                    <view key="view" id="7vL-vR-fg4">
+                <viewController id="iHp-eb-Mg2" customClass="ViewControllerFirstRun" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="sY5-dx-1FG">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZMe-dS-P79">
-                                <rect key="frame" x="157" y="126" width="166" height="17"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ck6-aN-361">
+                                <rect key="frame" x="141" y="138" width="37" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="First Run Experience Now" id="dHK-Rm-T01">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="abc" id="pxC-1t-EFK">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cod-WX-tpe">
+                                <rect key="frame" x="14" y="13" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="K5s-m1-r7y">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCloseButton:" target="iHp-eb-Mg2" id="mSK-9J-jY0"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                 </viewController>
-                <customObject id="idx-ac-PyO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="7DQ-4T-UEV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="603" y="191"/>
+            <point key="canvasLocation" x="1011" y="147"/>
         </scene>
     </scenes>
 </document>

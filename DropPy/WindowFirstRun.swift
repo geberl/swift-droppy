@@ -9,7 +9,7 @@
 import Cocoa
 
 class WindowFirstRun: NSWindow {
-    
+
     // Empty class created to get rid of XCode bug in 9.1:
     // (only this message shows up on startup on the console, the app starts and works without problems)
     
