@@ -101,9 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.devModeMenuItem.isEnabled = true  // override auto enabling in "Workflow" menu for this item.
 
         if isFirstRun() {
-            beginTrial()
-            reapplyPrefs()
-            self.showFirstRunModal()
+            self.showSetupAssistant()
         } else {
             reapplyPrefs()
             loadWindowPosition()
@@ -119,15 +117,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.registrationWindowController.showWindow(self)
             }
 
-            autoUpdate()
+            autoUpdate() // no checking for updates on the first start, the second launch is soon enough.
         }
     }
     
     func applicationWillBecomeActive(_ notification: Notification) {
-        self.reloadWorkflowsFromDir()
+        if !isFirstRun() {
+            self.reloadWorkflowsFromDir()
+        }
     }
     
     @objc func reloadWorkflows(_ notification: Notification) {
+
         self.reloadWorkflowsFromDir()
     }
 
@@ -289,15 +290,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }()
     
     @IBAction func showFirstRunWindow(_ sender: Any) {
-        self.showFirstRunModal()
+        self.showSetupAssistant()
     }
     
-    func showFirstRunModal() {
+    func showSetupAssistant() {
+        // Set the Workspace and extract the default content via this assistant.
         if let windowFirstRun = firstRunWindowController.window {
             let application = NSApplication.shared
+            // Use a modal window so the user can not access DropPy before going though with the initial setup.
             application.runModal(for: windowFirstRun)
             windowFirstRun.close()
         }
+        
+        // The trial period only starts once the initial setup has been completed successfully.
+        beginTrial()
+        
+        // Initialize the rest of the preferences with their default values.
+        reapplyPrefs()
+        
+        // And load the Workflows for the first time.
+        NotificationCenter.default.post(name: .reloadWorkflows, object: nil)
     }
     
     func reloadWorkflowsFromDir() {

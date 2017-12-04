@@ -12,7 +12,6 @@ class ViewControllerFirstRun: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("abc")
     }
     
     @IBAction func onCloseButton(_ sender: NSButton) {

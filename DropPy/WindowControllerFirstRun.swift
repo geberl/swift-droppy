@@ -12,8 +12,6 @@ class WindowControllerFirstRun: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
-        
-        print("def")
     }
 
 }
