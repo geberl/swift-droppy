@@ -18,7 +18,7 @@ struct UserDefaultStruct {
     // The following variables are validated on app start and can afterwards safely be force unwrapped.
     
     static var workspacePath: String = "workspacePath"
-    static var workspacePathDefault: String = NSHomeDirectory() + "DropPy" + "/"
+    static var workspacePathDefault: String = NSHomeDirectory() + "/" + "DropPy" + "/"
     
     static var workflowSelected: String = "workflowSelected"
     static var workflowSelectedDefault: String? = nil
@@ -95,7 +95,7 @@ func reapplyPrefs() {
     
     let userDefaults = UserDefaults.standard
     
-    // No check if directory/files actually exists here, this has to be checked before each usage.
+    // No check if these directory/files actually exists here, this has to be checked before each usage.
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.workspacePath) {
         userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
     }
