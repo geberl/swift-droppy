@@ -207,11 +207,11 @@ func saveWindowPosition() {
 func checkWorkspaceInfo() -> String? {
     let userDefaults = UserDefaults.standard
     
-    guard let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath) else {
+    if userDefaults.string(forKey: UserDefaultStruct.workspacePath) == nil {
+        // Key for workspacePath doesn't exist in UserDefaults any more. Set to default and continue.
         userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
-        NotificationCenter.default.post(name: .workspaceNotFound, object: nil)
-        return nil
     }
+    let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
     
     if isDir(path: workspacePath) {
         if !isDir(path: workspacePath + "/" + "Images") {
