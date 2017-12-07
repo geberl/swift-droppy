@@ -9,7 +9,7 @@
 import Cocoa
 
 class ViewControllerWorkspaceSetup: NSViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -17,15 +17,25 @@ class ViewControllerWorkspaceSetup: NSViewController {
     @IBAction func onCancelButton(_ sender: NSButton) {
         let application = NSApplication.shared
         application.stopModal()
+        
+        // TODO actually close app
     }
     
     @IBAction func onPreviousButton(_ sender: NSButton) {
-        let parentTabViewController:NSTabViewController = self.parent! as! NSTabViewController
+        let parentTabViewController: NSTabViewController = self.parent! as! NSTabViewController
+        
+        parentTabViewController.transitionOptions = [NSViewController.TransitionOptions.slideBackward,
+                                                     NSViewController.TransitionOptions.crossfade]
+        
         parentTabViewController.tabView.selectTabViewItem(at: 0)
     }
 
     @IBAction func onNextButton(_ sender: NSButton) {
         let parentTabViewController:NSTabViewController = self.parent! as! NSTabViewController
+        
+        parentTabViewController.transitionOptions = [NSViewController.TransitionOptions.slideForward,
+                                                     NSViewController.TransitionOptions.crossfade]
+        
         parentTabViewController.tabView.selectTabViewItem(at: 2)
     }
 

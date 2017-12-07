@@ -20,12 +20,20 @@ class ViewControllerDocs: NSViewController {
     }
     
     @IBAction func onPreviousButton(_ sender: NSButton) {
-        let parentTabViewController:NSTabViewController = self.parent! as! NSTabViewController
+        let parentTabViewController: NSTabViewController = self.parent! as! NSTabViewController
+        
+        parentTabViewController.transitionOptions = [NSViewController.TransitionOptions.slideBackward,
+                                                     NSViewController.TransitionOptions.crossfade]
+        
         parentTabViewController.tabView.selectTabViewItem(at: 1)
     }
     
     @IBAction func onNextButton(_ sender: NSButton) {
-        let parentTabViewController:NSTabViewController = self.parent! as! NSTabViewController
+        let parentTabViewController: NSTabViewController = self.parent! as! NSTabViewController
+        
+        parentTabViewController.transitionOptions = [NSViewController.TransitionOptions.slideForward,
+                                                     NSViewController.TransitionOptions.crossfade]
+        
         parentTabViewController.tabView.selectTabViewItem(at: 3)
     }
     

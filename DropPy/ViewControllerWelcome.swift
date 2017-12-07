@@ -17,10 +17,16 @@ class ViewControllerWelcome: NSViewController {
     @IBAction func onCancelButton(_ sender: NSButton) {
         let application = NSApplication.shared
         application.stopModal()
+        
+        // TODO actually close app
     }
     
     @IBAction func onNextButton(_ sender: NSButton) {
         let parentTabViewController:NSTabViewController = self.parent! as! NSTabViewController
+        
+        parentTabViewController.transitionOptions = [NSViewController.TransitionOptions.slideForward,
+                                                     NSViewController.TransitionOptions.crossfade]
+        
         parentTabViewController.tabView.selectTabViewItem(at: 1)
     }
     
