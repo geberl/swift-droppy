@@ -13,19 +13,5 @@ class ViewControllerFinish: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-    @IBAction func onPreviousButton(_ sender: NSButton) {
-        let parentTabViewController: NSTabViewController = self.parent! as! NSTabViewController
-        
-        parentTabViewController.transitionOptions = [NSViewController.TransitionOptions.slideBackward,
-                                                     NSViewController.TransitionOptions.crossfade]
-        
-        parentTabViewController.tabView.selectTabViewItem(at: 2)
-    }
-    
-    @IBAction func onFinishButton(_ sender: Any) {
-        let application = NSApplication.shared
-        application.stopModal()
-    }
-    
+
 }

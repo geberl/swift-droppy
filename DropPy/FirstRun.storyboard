@@ -18,44 +18,99 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="Ujj-O7-icu" kind="relationship" relationship="window.shadowedContentViewController" id="7dx-Bb-RUR"/>
+                        <segue destination="Y0E-ZQ-xvb" kind="relationship" relationship="window.shadowedContentViewController" id="DDL-BO-Bis"/>
                     </connections>
                 </windowController>
                 <customObject id="ClT-WJ-qeL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="393" y="-68"/>
+            <point key="canvasLocation" x="685" y="-544"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="QSg-t4-fLg">
+        <!--Split View Controller-->
+        <scene sceneID="t1q-d0-1AQ">
             <objects>
-                <viewController id="9V4-4n-SXK" sceneMemberID="viewController">
-                    <view key="view" id="Zdw-gL-5HY">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                <splitViewController id="Y0E-ZQ-xvb" sceneMemberID="viewController">
+                    <splitViewItems>
+                        <splitViewItem id="z4b-nu-Ee8"/>
+                        <splitViewItem id="tIh-yD-QaL"/>
+                    </splitViewItems>
+                    <splitView key="splitView" dividerStyle="thin" id="OGL-uT-nCc">
+                        <rect key="frame" x="0.0" y="0.0" width="536" height="298"/>
                         <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
-                <customObject id="bId-8e-W9u" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                        <connections>
+                            <outlet property="delegate" destination="Y0E-ZQ-xvb" id="y1d-Xe-v6V"/>
+                        </connections>
+                    </splitView>
+                    <connections>
+                        <outlet property="splitView" destination="OGL-uT-nCc" id="MxX-bR-SE0"/>
+                        <segue destination="Ujj-O7-icu" kind="relationship" relationship="splitItems" id="b5U-5C-cZ0"/>
+                        <segue destination="Cag-Oi-gXy" kind="relationship" relationship="splitItems" id="9t5-6v-iGl"/>
+                    </connections>
+                </splitViewController>
+                <customObject id="AsS-lS-t0G" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1501" y="-131"/>
+            <point key="canvasLocation" x="685" y="-32"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="DdG-cH-fSK">
+        <!--Buttons-->
+        <scene sceneID="OPl-uU-KVg">
             <objects>
-                <viewController id="l7D-Sl-UVS" sceneMemberID="viewController">
-                    <view key="view" id="bho-BJ-7tW">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                <viewController title="Buttons" id="Cag-Oi-gXy" customClass="ViewControllerButtons" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Tca-dl-hug">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="61"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bvZ-T1-M2z">
+                                <rect key="frame" x="14" y="13" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q1Y-wp-vRz">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCancelButton:" target="Cag-Oi-gXy" id="jZw-HY-15v"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JdY-Xz-sb3">
+                                <rect key="frame" x="405" y="13" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C2d-y1-OWv">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onNextButton:" target="Cag-Oi-gXy" id="J1x-Fn-xIl"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D8X-tv-Eei">
+                                <rect key="frame" x="324" y="13" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Previous" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NI9-v1-neM">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onPreviousButton:" target="Cag-Oi-gXy" id="iem-A0-t0H"/>
+                                </connections>
+                            </button>
+                        </subviews>
                     </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="bvZ-T1-M2z" id="08s-Uj-trj"/>
+                        <outlet property="nextButton" destination="JdY-Xz-sb3" id="mUa-rQ-5Vd"/>
+                        <outlet property="previousButton" destination="D8X-tv-Eei" id="dQs-ou-a9F"/>
+                    </connections>
                 </viewController>
-                <customObject id="Ftk-RG-Ckm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="pHn-Zv-qyB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1501" y="241"/>
+            <point key="canvasLocation" x="951" y="338"/>
         </scene>
-        <!--Tab View Controller-->
+        <!--Tabs-->
         <scene sceneID="rCi-mD-6On">
             <objects>
                 <customObject id="W8l-CM-okj" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <tabViewController selectedTabViewItemIndex="0" tabStyle="unspecified" canPropagateSelectedChildViewControllerTitle="NO" id="Ujj-O7-icu" sceneMemberID="viewController">
+                <tabViewController title="Tabs" selectedTabViewItemIndex="0" tabStyle="unspecified" canPropagateSelectedChildViewControllerTitle="NO" id="Ujj-O7-icu" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem identifier="" id="HCC-2c-xsa"/>
                         <tabViewItem identifier="" id="ayx-DZ-xTE"/>
@@ -81,7 +136,7 @@
                     </connections>
                 </tabViewController>
             </objects>
-            <point key="canvasLocation" x="392" y="457"/>
+            <point key="canvasLocation" x="389" y="457"/>
         </scene>
         <!--Welcome-->
         <scene sceneID="ybk-BO-ZI8">
@@ -114,39 +169,6 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cod-WX-tpe">
-                                <rect key="frame" x="14" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="K5s-m1-r7y">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onCancelButton:" target="MZt-lI-nsu" id="1pa-0m-0K4"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YR0-fm-Xmh">
-                                <rect key="frame" x="405" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dvB-aY-oeh">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onNextButton:" target="MZt-lI-nsu" id="PZj-lL-h8d"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jKn-ku-d1M">
-                                <rect key="frame" x="324" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Previous" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8TG-8j-hZ6">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
                         </subviews>
                     </view>
                 </viewController>
@@ -162,31 +184,6 @@ Gw
                         <rect key="frame" x="0.0" y="0.0" width="500" height="360"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p50-f3-ib1">
-                                <rect key="frame" x="14" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6bK-ql-pud">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onCancelButton:" target="xgF-j1-aI1" id="NuL-0I-pBs"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Wx-V6-XGP">
-                                <rect key="frame" x="324" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Previous" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NqC-17-SLD">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onPreviousButton:" target="xgF-j1-aI1" id="O90-pL-gk8"/>
-                                </connections>
-                            </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zna-uX-Ho3">
                                 <rect key="frame" x="130" y="208" width="162" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -196,17 +193,6 @@ Gw
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hln-Ez-D92">
-                                <rect key="frame" x="405" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KfK-QR-wJ3">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onNextButton:" target="xgF-j1-aI1" id="Uab-7p-O3y"/>
-                                </connections>
-                            </button>
                         </subviews>
                     </view>
                 </viewController>
@@ -231,42 +217,6 @@ Gw
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J95-Nh-4x9">
-                                <rect key="frame" x="14" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="c5F-Zd-Eot">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onCancelButton:" target="2en-6N-rfY" id="tdV-zo-K38"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aoJ-aZ-6zS">
-                                <rect key="frame" x="405" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IOu-M5-2Cl">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onNextButton:" target="2en-6N-rfY" id="wS9-yQ-fcD"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z0i-as-OCJ">
-                                <rect key="frame" x="324" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Previous" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="L1J-hd-4J1">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onPreviousButton:" target="2en-6N-rfY" id="wLp-8E-9F2"/>
-                                </connections>
-                            </button>
                         </subviews>
                     </view>
                 </viewController>
@@ -291,39 +241,6 @@ Gw
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e3z-wD-gA2">
-                                <rect key="frame" x="405" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Finish" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3uA-S7-CnU">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onFinishButton:" target="oLS-cw-0iW" id="wza-0c-a9X"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eR8-sU-PMH">
-                                <rect key="frame" x="14" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vx7-ts-gbp">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                </buttonCell>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7bx-fI-R6k">
-                                <rect key="frame" x="324" y="13" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Previous" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WkK-9S-7Zb">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onPreviousButton:" target="oLS-cw-0iW" id="Yos-Yn-cbf"/>
-                                </connections>
-                            </button>
                         </subviews>
                     </view>
                 </viewController>

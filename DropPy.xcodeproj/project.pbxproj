@@ -43,6 +43,7 @@
 		A4B42B5D1FD5D4C80078AC69 /* ViewControllerDocs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B42B5C1FD5D4C80078AC69 /* ViewControllerDocs.swift */; };
 		A4B42B601FD5D4EE0078AC69 /* ViewControllerFinish.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B42B5E1FD5D4EE0078AC69 /* ViewControllerFinish.swift */; };
 		A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B73C3F1F7D0E6200087A10 /* Notifications.swift */; };
+		A4BC0AD91FD950D300EF42BE /* ViewControllerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BC0AD81FD950D300EF42BE /* ViewControllerButtons.swift */; };
 		A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */; };
 		A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */; };
 		A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */; };
@@ -144,6 +145,7 @@
 		A4B42B5C1FD5D4C80078AC69 /* ViewControllerDocs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDocs.swift; sourceTree = "<group>"; };
 		A4B42B5E1FD5D4EE0078AC69 /* ViewControllerFinish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFinish.swift; sourceTree = "<group>"; };
 		A4B73C3F1F7D0E6200087A10 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		A4BC0AD81FD950D300EF42BE /* ViewControllerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerButtons.swift; sourceTree = "<group>"; };
 		A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerGeneral.swift; sourceTree = "<group>"; };
 		A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerInterpreter.swift; sourceTree = "<group>"; };
 		A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWorkspace.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */,
 				A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */,
 				A4410F951FD420710001F7F7 /* WindowFirstRun.swift */,
+				A4BC0AD81FD950D300EF42BE /* ViewControllerButtons.swift */,
 				A4B42B561FD5C6530078AC69 /* ViewControllerWelcome.swift */,
 				A4B42B581FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift */,
 				A4B42B5C1FD5D4C80078AC69 /* ViewControllerDocs.swift */,
@@ -627,6 +630,7 @@
 				A46CE6BA1F459BEE000DEACB /* WindowControllerEditor.swift in Sources */,
 				A46CE6BC1F459F87000DEACB /* ViewControllerEditor.swift in Sources */,
 				A4B42B5A1FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift in Sources */,
+				A4BC0AD91FD950D300EF42BE /* ViewControllerButtons.swift in Sources */,
 				A4EE62C31F72C9EC00370F26 /* CocoaFobLicVerifier.swift in Sources */,
 				A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */,
 				A4B42B571FD5C6530078AC69 /* ViewControllerWelcome.swift in Sources */,
