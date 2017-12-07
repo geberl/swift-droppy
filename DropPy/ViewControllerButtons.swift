@@ -20,8 +20,7 @@ class ViewControllerButtons: NSViewController {
     }
 
     @IBAction func onCancelButton(_ sender: NSButton) {
-        let application = NSApplication.shared
-        application.stopModal()
+        self.askCloseWindow()
     }
     
     @IBAction func onPreviousButton(_ sender: NSButton) {
@@ -30,6 +29,58 @@ class ViewControllerButtons: NSViewController {
     
     @IBAction func onNextButton(_ sender: NSButton) {
         self.onPreviousOrNextButton(buttonType: "Next")
+    }
+    
+    func askCloseWindow() {
+        let parentTabViewController = self.getSlideTabViewController()
+        if (parentTabViewController != nil) {
+            
+            // Get the index of the currently active TabViewItem (zero based).
+            let selectedTabViewIndex = parentTabViewController!.tabView.indexOfTabViewItem(
+                parentTabViewController!.tabView.selectedTabViewItem!)
+            
+            // Step 1 must be completed at least, otherwise exit app completely.
+            
+            // TODO this is a bad check. The thing that actually needs to be set is the needed settings.
+            // If after that the user clicks back to view one he should still be able to exit without confirmation and without having to complete it again.
+            
+            if selectedTabViewIndex <= 1 {
+                self.confirmEarlyExit()
+            } else {
+                AppState.initialSetupCompleted = true
+                self.closeWindow()
+            }
+        } else {
+            // This should never happen. Close window to be save.
+            self.closeWindow()
+        }
+    }
+    
+    func closeWindow() {
+        let application = NSApplication.shared
+        application.stopModal()
+    }
+    
+    func confirmEarlyExit() {
+        let criticalAlert = NSAlert()
+        criticalAlert.showsHelp = false
+        criticalAlert.messageText = "Initial Setup incomplete"
+        criticalAlert.informativeText = "Without completing the initial setup DropPy can't start.\n\n"
+        criticalAlert.informativeText  += "This assistant will be shown again next time."
+        criticalAlert.addButton(withTitle: "Cancel")
+        criticalAlert.addButton(withTitle: "Exit DropPy")
+        criticalAlert.layout()
+        criticalAlert.alertStyle = NSAlert.Style.critical
+        criticalAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
+        criticalAlert.beginSheetModal(for: self.view.window!,
+                                      completionHandler: self.confiremEarlyExitCompletion)
+    }
+    
+    func confiremEarlyExitCompletion(userChoice: NSApplication.ModalResponse) {
+        if userChoice == NSApplication.ModalResponse.alertSecondButtonReturn {
+            AppState.initialSetupCompleted = false
+            self.closeWindow()
+        }
     }
     
     func onPreviousOrNextButton(buttonType: String) {
@@ -47,8 +98,7 @@ class ViewControllerButtons: NSViewController {
             if (selectedTabViewIndex + 1 == numberOfTabViewItems) && (buttonType == "Next") {
                 
                 // Close the window.
-                let application = NSApplication.shared
-                application.stopModal()
+                self.closeWindow()
                 
             } else {
                 

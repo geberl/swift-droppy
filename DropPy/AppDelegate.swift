@@ -35,6 +35,7 @@ struct AppState {
     static var bundledWorkspaceVersion: String = "trunk (5374e25) (2017-09-15)"
     static var bundledRunVersion: String = "trunk (f9e8857c) (2017-11-03)"
     
+    static var initialSetupCompleted: Bool = false
     static var trialStartSalt: String = "nBL4QzmKbk8vhnfke9uvNHRDUtwkoPvJ"
     
     static var isLicensed: Bool = false
@@ -300,6 +301,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Use a modal window so the user can not access DropPy before going though with the initial setup.
             application.runModal(for: windowFirstRun)
             windowFirstRun.close()
+            
+            if !AppState.initialSetupCompleted {
+                NSApplication.shared.terminate(self)
+            }
         }
         
         // The trial period only starts once the initial setup has been completed successfully.

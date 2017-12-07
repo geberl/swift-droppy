@@ -334,8 +334,8 @@
 			isa = PBXGroup;
 			children = (
 				A46CE6B71F459A34000DEACB /* Editor.storyboard */,
-				A43E6CCA1FD40B9F00D6F8BA /* WindowEditor.swift */,
 				A46CE6B91F459BEE000DEACB /* WindowControllerEditor.swift */,
+				A43E6CCA1FD40B9F00D6F8BA /* WindowEditor.swift */,
 				A46CE6BB1F459F87000DEACB /* ViewControllerEditor.swift */,
 			);
 			name = Editor;
