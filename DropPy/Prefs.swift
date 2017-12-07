@@ -64,7 +64,7 @@ struct UserDefaultStruct {
 
 
 func isFirstRun() -> Bool {
-    // Check all keys independently. As soon as one is found it can't be the app's first run.
+    // Check all relevant keys independently. As soon as one is found it can't be the app's first run.
     if isKeyPresentInUserDefaults(key: "workspacePath") { return false }
     if isKeyPresentInUserDefaults(key: "workflowSelected") { return false }
     if isKeyPresentInUserDefaults(key: "devModeEnabled") { return false }

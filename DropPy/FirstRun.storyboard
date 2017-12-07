@@ -249,7 +249,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sHA-au-sqq">
-                                <rect key="frame" x="18" y="20" width="438" height="28"/>
+                                <rect key="frame" x="50" y="34" width="438" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Not available here. Please use Preferences - Workspace to manage this after initial setup." id="TwG-ph-Vlq">
                                     <font key="font" metaFont="smallSystem"/>
@@ -260,6 +260,10 @@ Gw
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="defaultContentCheckbox" destination="A83-Kv-CMU" id="c8u-Bh-1al"/>
+                        <outlet property="defaultContentDescription" destination="UuG-ac-Y9u" id="Ey9-ez-vuN"/>
+                        <outlet property="defaultContentNotice" destination="sHA-au-sqq" id="UH7-Ph-CmP"/>
+                        <outlet property="workspaceChangeButton" destination="VKj-hu-RdX" id="QYJ-S9-i0m"/>
                         <outlet property="workspaceDirectoryTextField" destination="aMy-wX-xJV" id="vVD-vx-T4D"/>
                     </connections>
                 </viewController>

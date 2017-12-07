@@ -100,14 +100,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                name: .workspaceNotFound, object: nil)
         
         self.devModeMenuItem.isEnabled = true  // override auto enabling in "Workflow" menu for this item.
-
-        if isFirstRun() {
-            self.showSetupAssistant()
-        } else {
+        
+        AppState.initialSetupCompleted = !isFirstRun()
+        if AppState.initialSetupCompleted {
             reapplyPrefs()
             loadWindowPosition()
             self.loadDevMenuState()
-
+            
             AppState.isLicensed = isLicensed()
             if !AppState.isLicensed {
                 os_log("No license information found.", log: logLicense, type: .info)
@@ -117,19 +116,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if !AppState.isInTrial && !AppState.isLicensed {
                 self.registrationWindowController.showWindow(self)
             }
-
+            
             autoUpdate() // no checking for updates on the first start, the second launch is soon enough.
+        } else {
+            self.showSetupAssistant()
+            
+            // TODO if exited out something still seems to be written to the userprefs! Does this fix it?
+            if AppState.initialSetupCompleted {
+                beginTrial()  // Trial period only starts once the initial setup has been completed successfully.
+                reapplyPrefs()  // Initialize the rest of the preferences with their default values.
+                NotificationCenter.default.post(name: .reloadWorkflows, object: nil)
+            }
         }
     }
     
     func applicationWillBecomeActive(_ notification: Notification) {
-        if !isFirstRun() {
+        if AppState.initialSetupCompleted {
             self.reloadWorkflowsFromDir()
         }
     }
     
     @objc func reloadWorkflows(_ notification: Notification) {
-
         self.reloadWorkflowsFromDir()
     }
 
@@ -290,7 +297,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return wcSB.instantiateInitialController() as! WindowControllerFirstRun
     }()
     
-    @IBAction func showFirstRunWindow(_ sender: Any) {
+    @IBAction func showFirstRunWindow(_ sender: NSMenuItem) {
         self.showSetupAssistant()
     }
     
@@ -302,19 +309,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             application.runModal(for: windowFirstRun)
             windowFirstRun.close()
             
+            // Exit DropPy completely if the initial setup was cancelled before a workspaceDir was set.
             if !AppState.initialSetupCompleted {
                 NSApplication.shared.terminate(self)
             }
         }
-        
-        // The trial period only starts once the initial setup has been completed successfully.
-        beginTrial()
-        
-        // Initialize the rest of the preferences with their default values.
-        reapplyPrefs()
-        
-        // And load the Workflows for the first time.
-        NotificationCenter.default.post(name: .reloadWorkflows, object: nil)
     }
     
     func reloadWorkflowsFromDir() {

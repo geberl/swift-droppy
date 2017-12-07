@@ -7,8 +7,11 @@
 //
 
 import Cocoa
+import os.log
 
 class ViewControllerButtons: NSViewController {
+    
+    let userDefaults = UserDefaults.standard
     
     @IBOutlet weak var cancelButton: NSButton!
     @IBOutlet weak var previousButton: NSButton!
@@ -20,7 +23,7 @@ class ViewControllerButtons: NSViewController {
     }
 
     @IBAction func onCancelButton(_ sender: NSButton) {
-        self.askCloseWindow()
+        self.checkSetupCompleted()
     }
     
     @IBAction func onPreviousButton(_ sender: NSButton) {
@@ -31,31 +34,35 @@ class ViewControllerButtons: NSViewController {
         self.onPreviousOrNextButton(buttonType: "Next")
     }
     
-    func askCloseWindow() {
-        let parentTabViewController = self.getSlideTabViewController()
-        if (parentTabViewController != nil) {
+    func checkSetupCompleted() {
+        // Check if a workspacePath was set in the UserDefaults. This is the only condition that needs to be guaranteed.
+        if let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath) {
+
+            // Create directory structure (this is non-destructive, can always be called).
+            self.createWorkspaceDir(workspacePath: workspacePath)
             
-            // Get the index of the currently active TabViewItem (zero based).
-            let selectedTabViewIndex = parentTabViewController!.tabView.indexOfTabViewItem(
-                parentTabViewController!.tabView.selectedTabViewItem!)
+            // TODO: Extract content, but not always, only if that button on view 3 is set.
             
-            // Step 1 must be completed at least, otherwise exit app completely.
-            
-            // TODO this is a bad check. The thing that actually needs to be set is the needed settings.
-            // If after that the user clicks back to view one he should still be able to exit without confirmation and without having to complete it again.
-            
-            if selectedTabViewIndex <= 1 {
-                self.confirmEarlyExit()
-            } else {
-                AppState.initialSetupCompleted = true
-                self.closeWindow()
-            }
-        } else {
-            // This should never happen. Close window to be save.
+            AppState.initialSetupCompleted = true
             self.closeWindow()
+            
+        } else {
+            self.confirmEarlyExit()
         }
     }
     
+    func createWorkspaceDir(workspacePath: String) {
+        if !isDir(path: workspacePath + "/" + "Images") {
+            makeDirs(path: workspacePath + "/" + "Images")
+        }
+        if !isDir(path: workspacePath + "/" + "Tasks") {
+            makeDirs(path: workspacePath + "/" + "Tasks")
+        }
+        if !isDir(path: workspacePath + "/" + "Workflows") {
+            makeDirs(path: workspacePath + "/" + "Workflows")
+        }
+    }
+
     func closeWindow() {
         let application = NSApplication.shared
         application.stopModal()
@@ -73,10 +80,10 @@ class ViewControllerButtons: NSViewController {
         criticalAlert.alertStyle = NSAlert.Style.critical
         criticalAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
         criticalAlert.beginSheetModal(for: self.view.window!,
-                                      completionHandler: self.confiremEarlyExitCompletion)
+                                      completionHandler: self.confirmEarlyExitCompletion)
     }
     
-    func confiremEarlyExitCompletion(userChoice: NSApplication.ModalResponse) {
+    func confirmEarlyExitCompletion(userChoice: NSApplication.ModalResponse) {
         if userChoice == NSApplication.ModalResponse.alertSecondButtonReturn {
             AppState.initialSetupCompleted = false
             self.closeWindow()
@@ -90,33 +97,46 @@ class ViewControllerButtons: NSViewController {
             // Get the index of the currently active TabViewItem (zero based).
             let selectedTabViewIndex = parentTabViewController!.tabView.indexOfTabViewItem(
                 parentTabViewController!.tabView.selectedTabViewItem!)
-            
+
             // Get the total number of TabViewItems.
             let numberOfTabViewItems = parentTabViewController!.tabView.numberOfTabViewItems
             
             // Determine if this is the last TabViewItem and user clicked on "Next".
             if (selectedTabViewIndex + 1 == numberOfTabViewItems) && (buttonType == "Next") {
-                
                 // Close the window.
-                self.closeWindow()
-                
-            } else {
-                
-                // Adjust the animation and switch to the previous/next TabViewItem.
-                if (buttonType == "Previous") {
-                    parentTabViewController!.transitionOptions = [NSViewController.TransitionOptions.slideBackward,
-                                                                  NSViewController.TransitionOptions.crossfade]
-                    parentTabViewController!.tabView.selectTabViewItem(at: selectedTabViewIndex - 1)
-                }
-                else if (buttonType == "Next") {
-                    parentTabViewController!.transitionOptions = [NSViewController.TransitionOptions.slideForward,
-                                                                  NSViewController.TransitionOptions.crossfade]
-                    parentTabViewController!.tabView.selectTabViewItem(at: selectedTabViewIndex + 1)
-                }
-                
-                // Adjust the text on the buttons.
-                self.setButtonLabels()
+                self.checkSetupCompleted()
+                return  // make sure to not execute anything below, indexes may run over (a timing thing)
             }
+            
+            // Check if the user clicked past the view where the workspaceDir settings are displayed.
+            if (selectedTabViewIndex + 1 == 2) && (buttonType == "Next") {
+                // Check if a custom key was set.
+                if let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath) {
+                    os_log("Custom workspacePath: '%@'", log: logGeneral, type: .debug, workspacePath)
+                }
+                // No key was set, assume user is ok with the defaults.
+                else {
+                    os_log("Assuming default workspacePath: '%@'", log: logGeneral, type: .debug,
+                           UserDefaultStruct.workspacePathDefault)
+                    self.userDefaults.set(UserDefaultStruct.workspacePathDefault,
+                                          forKey: UserDefaultStruct.workspacePath)
+                }
+            }
+            
+            // Adjust the animation and switch to the previous/next TabViewItem.
+            if (buttonType == "Previous") {
+                parentTabViewController!.transitionOptions = [NSViewController.TransitionOptions.slideBackward,
+                                                              NSViewController.TransitionOptions.crossfade]
+                parentTabViewController!.tabView.selectTabViewItem(at: selectedTabViewIndex - 1)
+            }
+            else if (buttonType == "Next") {
+                parentTabViewController!.transitionOptions = [NSViewController.TransitionOptions.slideForward,
+                                                              NSViewController.TransitionOptions.crossfade]
+                parentTabViewController!.tabView.selectTabViewItem(at: selectedTabViewIndex + 1)
+            }
+            
+            // Adjust the text on the buttons.
+            self.setButtonLabels()
         }
     }
     
