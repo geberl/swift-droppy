@@ -9,6 +9,7 @@
 import Cocoa
 import SystemConfiguration
 import os.log
+import SSZipArchive
 
 
 func isDir(path: String) -> Bool {
@@ -166,6 +167,94 @@ func createWorkspaceDirStructure(workspacePath: String) {
     }
     if !isDir(path: workspacePath + "/" + "Workflows") {
         makeDirs(path: workspacePath + "/" + "Workflows")
+    }
+}
+
+
+func extractBundledWorkspace(workspacePath: String) {
+    let fileManager = FileManager.default
+    
+    // Set temp directory and files, remove them if they already exist.
+    let tempPath: String = NSTemporaryDirectory() + "se.eberl.droppy" + "/"
+    makeDirs(path: tempPath)
+    let zipPath: String = tempPath + "droppy-workspace-master.zip"
+    if isFile(path: zipPath) {
+        do {
+            try fileManager.removeItem(atPath: zipPath)
+        } catch let error {
+            os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
+        }
+    }
+    let unzipPath: String = tempPath + "droppy-workspace-master" + "/"
+    if isDir(path: unzipPath) {
+        do {
+            try fileManager.removeItem(atPath: unzipPath)
+        } catch let error {
+            os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
+        }
+    }
+    
+    // Copy bundled-workspace from assets to the temp directory.
+    if let asset = NSDataAsset(name: NSDataAsset.Name(rawValue: "bundled-workspace"), bundle: Bundle.main) {
+        do {
+            try asset.data.write(to: URL(fileURLWithPath: zipPath))
+            os_log("Copied bundled asset to '%@'.", log: logFileSystem, type: .error, zipPath)
+        } catch let error {
+            os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
+        }
+    }
+    
+    // Unzip to a subfolder of the temp directory.
+    SSZipArchive.unzipFile(atPath: zipPath, toDestination: tempPath)
+    os_log("Unzipped '%@' to '%@'.", log: logFileSystem, type: .error, zipPath, tempPath)
+    
+    // Copy to Workspace.
+    guard let enumerator: FileManager.DirectoryEnumerator =
+        fileManager.enumerator(atPath: unzipPath) else {
+            os_log("Directory not found at '%@'.", log: logFileSystem, type: .error, unzipPath)
+            return
+    }
+    
+    while let element = enumerator.nextObject() as? String {
+        var srcURL: URL = URL(fileURLWithPath: unzipPath)
+        srcURL.appendPathComponent(element)
+        var dstURL: URL = URL(fileURLWithPath: workspacePath)
+        dstURL.appendPathComponent(element)
+        
+        // Create directories.
+        if isDir(path: srcURL.path) {
+            if !isDir(path: dstURL.path) {
+                makeDirs(path: dstURL.path)
+            }
+        }
+        
+        // Copy files (after removing their previous version).
+        if isFile(path: srcURL.path){
+            if isFile(path: srcURL.path){
+                do {
+                    try fileManager.removeItem(at: dstURL)
+                } catch let error {
+                    os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
+                }
+            }
+            do {
+                try fileManager.copyItem(at: srcURL, to: dstURL)
+            } catch let error {
+                os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
+            }
+        }
+    }
+    
+    // Clean up.
+    do {
+        try fileManager.removeItem(atPath: zipPath)
+    } catch let error {
+        os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
+    }
+    do {
+        try fileManager.removeItem(atPath: unzipPath)
+    } catch let error {
+        os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
     }
 }
 
