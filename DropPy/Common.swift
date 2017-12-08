@@ -157,6 +157,19 @@ func isConnectedToNetwork() -> Bool {
 }
 
 
+func createWorkspaceDirStructure(workspacePath: String) {
+    if !isDir(path: workspacePath + "/" + "Images") {
+        makeDirs(path: workspacePath + "/" + "Images")
+    }
+    if !isDir(path: workspacePath + "/" + "Tasks") {
+        makeDirs(path: workspacePath + "/" + "Tasks")
+    }
+    if !isDir(path: workspacePath + "/" + "Workflows") {
+        makeDirs(path: workspacePath + "/" + "Workflows")
+    }
+}
+
+
 extension Formatter {
     static let iso8601: DateFormatter = {
         let formatter = DateFormatter()

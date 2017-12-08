@@ -39,15 +39,7 @@ class ViewControllerWorkspace: NSViewController {
                 self.workspaceDirectoryTextField.stringValue = selectedPath
                 self.userDefaults.set(selectedPath, forKey: UserDefaultStruct.workspacePath)
                 
-                if !isDir(path: selectedPath + "/" + "Images") {
-                    makeDirs(path: selectedPath + "/" + "Images")
-                }
-                if !isDir(path: selectedPath + "/" + "Tasks") {
-                    makeDirs(path: selectedPath + "/" + "Tasks")
-                }
-                if !isDir(path: selectedPath + "/" + "Workflows") {
-                    makeDirs(path: selectedPath + "/" + "Workflows")
-                }
+                createWorkspaceDirStructure(workspacePath: selectedPath)
                 
                 NotificationCenter.default.post(name: .reloadWorkflows, object: nil)
                 NotificationCenter.default.post(name: .workflowSelectionChanged, object: nil)

@@ -39,7 +39,7 @@ class ViewControllerButtons: NSViewController {
         if let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath) {
 
             // Create directory structure (this is non-destructive, can always be called).
-            self.createWorkspaceDir(workspacePath: workspacePath)
+            createWorkspaceDirStructure(workspacePath: workspacePath)
             
             // TODO: Extract content, but not always, only if that button on view 3 is set.
             
@@ -48,18 +48,6 @@ class ViewControllerButtons: NSViewController {
             
         } else {
             self.confirmEarlyExit()
-        }
-    }
-    
-    func createWorkspaceDir(workspacePath: String) {
-        if !isDir(path: workspacePath + "/" + "Images") {
-            makeDirs(path: workspacePath + "/" + "Images")
-        }
-        if !isDir(path: workspacePath + "/" + "Tasks") {
-            makeDirs(path: workspacePath + "/" + "Tasks")
-        }
-        if !isDir(path: workspacePath + "/" + "Workflows") {
-            makeDirs(path: workspacePath + "/" + "Workflows")
         }
     }
 
