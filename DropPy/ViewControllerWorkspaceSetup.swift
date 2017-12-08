@@ -45,7 +45,11 @@ class ViewControllerWorkspaceSetup: NSViewController {
             }
         }
     }
-
+    
+    func getDefaultContentCheckboxValue() -> Bool {
+        return Bool(truncating: self.defaultContentCheckbox.state as NSNumber)
+    }
+    
     func loadSettings() {
         if let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath) {
             // Key already present, workspacePath was set already. Show actual value in text field. Disable change button.

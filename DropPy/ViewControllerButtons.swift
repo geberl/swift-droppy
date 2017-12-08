@@ -34,6 +34,28 @@ class ViewControllerButtons: NSViewController {
         self.onPreviousOrNextButton(buttonType: "Next")
     }
     
+    func checkExtractWorkspace() -> Bool {
+        let parentTabViewController = self.getSlideTabViewController()
+        if (parentTabViewController != nil) {
+            
+            // Get the ViewController that contains the checkbox.
+            var workspaceViewController: ViewControllerWorkspaceSetup? = nil
+            for viewController in parentTabViewController!.childViewControllers {
+                if viewController.title! == "Workspace Setup" {
+                    workspaceViewController = viewController as? ViewControllerWorkspaceSetup
+                    break
+                }
+            }
+            
+            // Get the checkbox.
+            if (workspaceViewController != nil) {
+                return workspaceViewController!.getDefaultContentCheckboxValue()
+            }
+        }
+        
+        return false  // default don't extract, however this should never be reachable.
+    }
+    
     func checkSetupCompleted() {
         // Check if a workspacePath was set in the UserDefaults. This is the only condition that needs to be guaranteed.
         if let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath) {
@@ -41,8 +63,15 @@ class ViewControllerButtons: NSViewController {
             // Create directory structure (this is non-destructive, can always be called).
             createWorkspaceDirStructure(workspacePath: workspacePath)
             
-            // TODO: Extract content, but not always, only if that button on view 3 is set.
-            
+            // Get the status of the "Extract default content" checkbox and extract that content.
+            let extractWorkspace: Bool = self.checkExtractWorkspace()
+            if extractWorkspace {
+                print("extracting")
+                extractBundledWorkspace(workspacePath: workspacePath)
+            } else {
+                print("not extracting")
+            }
+
             AppState.initialSetupCompleted = true
             self.closeWindow()
             
