@@ -272,7 +272,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func setNewWorkspace(_ notification: Notification) {
         self.preferencesWindowController.showWindow(self)
         
-        var informativeText: String = "The Workspace directory can't be found.\n\n"
+        var informativeText: String = "The Workspace folder can't be found.\n\n"
         informativeText += "Please adjust your settings."
         self.preferencesWindowController.switchToPrefTab(index: 3,
                                                          messageText: "Workspace not found",
