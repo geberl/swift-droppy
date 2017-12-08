@@ -20,7 +20,12 @@ class ViewControllerWorkspaceSetup: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.loadSettings()
+        self.setWorkspacePath()  // triggered only once on load,.
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        self.setCheckbox()  // triggered on each slide forward/back that displays that tab.
     }
 
     @IBAction func onWorkspaceChangeButton(_ sender: NSButton) {
@@ -50,10 +55,9 @@ class ViewControllerWorkspaceSetup: NSViewController {
         return Bool(truncating: self.defaultContentCheckbox.state as NSNumber)
     }
     
-    func loadSettings() {
-        if let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath) {
-            // Key already present, workspacePath was set already. Show actual value in text field. Disable change button.
-            self.workspaceDirectoryTextField.stringValue = workspacePath
+    func setCheckbox() {
+        if AppState.initialSetupCompleted {
+            // Set the workspace change button to disabled.
             self.workspaceChangeButton.isEnabled = false
             
             // Set the checkbox to unchecked and unchangeable. Extracting default contents again here is ambiguous.
@@ -62,8 +66,7 @@ class ViewControllerWorkspaceSetup: NSViewController {
             self.defaultContentDescription.isEnabled = false
             self.defaultContentNotice.isHidden = false
         } else {
-            // Key not present. Show default value in text field. Enable change button.
-            self.workspaceDirectoryTextField.stringValue = UserDefaultStruct.workspacePathDefault
+            // Set the workspace change button to enabled.
             self.workspaceChangeButton.isEnabled = true
             
             // Allow the checkbox to be edited. Default checked. Notice hidden.
@@ -74,4 +77,13 @@ class ViewControllerWorkspaceSetup: NSViewController {
         }
     }
     
+    func setWorkspacePath() {
+        if let workspacePath: String = userDefaults.string(forKey: UserDefaultStruct.workspacePath) {
+            // Key already present, workspacePath was set already. Show the actual value in text field.
+            self.workspaceDirectoryTextField.stringValue = workspacePath
+        } else {
+            // Key not present. Show the default value in text field.
+            self.workspaceDirectoryTextField.stringValue = UserDefaultStruct.workspacePathDefault
+        }
+    }
 }

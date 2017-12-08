@@ -66,15 +66,12 @@ class ViewControllerButtons: NSViewController {
             // Get the status of the "Extract default content" checkbox and extract that content.
             let extractWorkspace: Bool = self.checkExtractWorkspace()
             if extractWorkspace {
-                print("extracting")
                 extractBundledWorkspace(workspacePath: workspacePath)
             } else {
-                print("not extracting")
             }
 
             AppState.initialSetupCompleted = true
             self.closeWindow()
-            
         } else {
             self.confirmEarlyExit()
         }
