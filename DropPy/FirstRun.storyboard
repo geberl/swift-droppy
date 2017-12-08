@@ -61,7 +61,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bvZ-T1-M2z">
                                 <rect key="frame" x="14" y="13" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q1Y-wp-vRz">
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q1Y-wp-vRz">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
@@ -75,9 +75,10 @@ Gw
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JdY-Xz-sb3">
                                 <rect key="frame" x="405" y="13" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C2d-y1-OWv">
+                                <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C2d-y1-OWv">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent"></string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onNextButton:" target="Cag-Oi-gXy" id="J1x-Fn-xIl"/>
@@ -86,9 +87,10 @@ Gw
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D8X-tv-Eei">
                                 <rect key="frame" x="324" y="13" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Previous" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NI9-v1-neM">
+                                <buttonCell key="cell" type="push" title="Previous" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NI9-v1-neM">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent"></string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onPreviousButton:" target="Cag-Oi-gXy" id="iem-A0-t0H"/>
@@ -117,7 +119,7 @@ Gw
                         <tabViewItem id="y7B-xN-Fhm"/>
                         <tabViewItem id="L69-Dv-U4a"/>
                     </tabViewItems>
-                    <viewControllerTransitionOptions key="transitionOptions" crossfade="YES" slideLeft="YES"/>
+                    <viewControllerTransitionOptions key="transitionOptions" slideLeft="YES"/>
                     <tabView key="tabView" misplaced="YES" type="noTabsNoBorder" id="4xk-U8-HbI">
                         <rect key="frame" x="0.0" y="0.0" width="570" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
