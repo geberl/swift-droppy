@@ -145,28 +145,37 @@ Gw
             <objects>
                 <viewController title="Welcome" id="MZt-lI-nsu" customClass="ViewControllerWelcome" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="QsS-DZ-y8y">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="552"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VgZ-BK-Eyz">
-                                <rect key="frame" x="0.0" y="138" width="500" height="224"/>
+                                <rect key="frame" x="0.0" y="302" width="500" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="welcome" id="ZrK-ah-wCA"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="first-run-1" id="ZrK-ah-wCA"/>
                             </imageView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ck6-aN-361">
-                                <rect key="frame" x="18" y="97" width="213" height="24"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p5R-EW-DIf">
+                                <rect key="frame" x="24" y="107" width="524" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Welcome to DropPy." id="pxC-1t-EFK">
-                                    <font key="font" metaFont="system" size="20"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Before you can use the app you need to set some things up." id="amr-Ux-uVw">
+                                    <font key="font" metaFont="system" size="16"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p5R-EW-DIf">
-                                <rect key="frame" x="18" y="57" width="524" height="24"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vOM-WR-K5c">
+                                <rect key="frame" x="18" y="180" width="439" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Before you can use the app you need to set some things up." id="amr-Ux-uVw">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Thanks for trying out DropPy. (heart emoji)" id="SsN-uz-Ghs">
                                     <font key="font" metaFont="system" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ck6-aN-361">
+                                <rect key="frame" x="24" y="235" width="213" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Welcome" id="pxC-1t-EFK">
+                                    <font key="font" metaFont="system" size="20"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -176,36 +185,18 @@ Gw
                 </viewController>
                 <customObject id="aT4-nK-26k" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-389" y="1011"/>
+            <point key="canvasLocation" x="-389" y="1107"/>
         </scene>
         <!--Workspace Setup-->
         <scene sceneID="u1R-Xr-JbQ">
             <objects>
                 <viewController title="Workspace Setup" id="xgF-j1-aI1" customClass="ViewControllerWorkspaceSetup" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="A2y-KZ-zha">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="552"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zna-uX-Ho3">
-                                <rect key="frame" x="181" y="280" width="162" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Workspace here" id="wFk-gZ-eCz">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bQr-X6-tf5">
-                                <rect key="frame" x="20" y="141" width="338" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="GNc-EJ-OdO">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VKj-hu-RdX">
-                                <rect key="frame" x="375" y="134" width="105" height="32"/>
+                                <rect key="frame" x="375" y="109" width="105" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2hr-9P-35y">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -216,7 +207,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xDb-9Y-sxh">
-                                <rect key="frame" x="18" y="180" width="131" height="17"/>
+                                <rect key="frame" x="18" y="145" width="131" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Workspace folder:" id="bUy-DP-D9b">
                                     <font key="font" metaFont="system"/>
@@ -225,15 +216,15 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A83-Kv-CMU">
-                                <rect key="frame" x="50" y="104" width="182" height="18"/>
+                                <rect key="frame" x="18" y="91" width="292" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Extract default content" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hgV-HK-tB3">
+                                <buttonCell key="cell" type="check" title="Extract default content (recommended)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hgV-HK-tB3">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UuG-ac-Y9u">
-                                <rect key="frame" x="44" y="70" width="438" height="28"/>
+                                <rect key="frame" x="18" y="48" width="438" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="This extracts the bundled *.png/*.py/*.json files into your Workspace folder. Existing files will be overwritten." id="gW8-Wi-pt9">
                                     <font key="font" metaFont="smallSystem"/>
@@ -242,7 +233,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aMy-wX-xJV">
-                                <rect key="frame" x="20" y="140" width="338" height="22"/>
+                                <rect key="frame" x="20" y="115" width="338" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Ama-8q-kV1">
                                     <font key="font" metaFont="system"/>
@@ -250,10 +241,42 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sHA-au-sqq">
-                                <rect key="frame" x="50" y="34" width="438" height="28"/>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mku-YW-DPj">
+                                <rect key="frame" x="0.0" y="302" width="500" height="250"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="first-run-2" id="eOc-EV-SvS"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bkU-Ly-HuT">
+                                <rect key="frame" x="18" y="248" width="472" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Not available here. Please use Preferences - Workspace to manage this after initial setup." id="TwG-ph-Vlq">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="In DropPy's Workspace folder all the Python Tasks, JSON Workflows and Images are stored." id="FS8-n5-g0w">
+                                    <font key="font" metaFont="system" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1ez-Hi-LpP">
+                                <rect key="frame" x="18" y="170" width="472" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="But you can put it in iCloud or Dropbox if you want sync." id="xh7-yb-694">
+                                    <font key="font" metaFont="system" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GpT-JH-fAx">
+                                <rect key="frame" x="18" y="214" width="472" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Usually it's located in your Home directory." id="bUp-2L-Sj9">
+                                    <font key="font" metaFont="system" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sHA-au-sqq">
+                                <rect key="frame" x="18" y="12" width="438" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Not available. Please use the Workspace tab in Preferences to manage your Workspace after initial setup." id="TwG-ph-Vlq">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -271,20 +294,25 @@ Gw
                 </viewController>
                 <customObject id="9am-p3-5JS" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="131" y="1011"/>
+            <point key="canvasLocation" x="131" y="1107"/>
         </scene>
         <!--Documentation-->
         <scene sceneID="AXf-fJ-R70">
             <objects>
                 <viewController title="Documentation" id="2en-6N-rfY" customClass="ViewControllerDocs" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="PoA-iX-E4d">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="552"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QjH-wj-PQ8">
+                                <rect key="frame" x="0.0" y="302" width="500" height="250"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="first-run-3" id="nhV-kN-8cZ"/>
+                            </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVH-Df-g34">
-                                <rect key="frame" x="139" y="197" width="162" height="27"/>
+                                <rect key="frame" x="169" y="139" width="162" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Documentation here" id="grD-gS-pEf">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Content here" id="grD-gS-pEf">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -295,18 +323,23 @@ Gw
                 </viewController>
                 <customObject id="LXY-J5-0If" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="653" y="1011"/>
+            <point key="canvasLocation" x="653" y="1107"/>
         </scene>
         <!--Finish-->
         <scene sceneID="GOG-j5-xIa">
             <objects>
                 <viewController title="Finish" id="oLS-cw-0iW" customClass="ViewControllerFinish" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="JqA-yP-1JD">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="552"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="klm-8f-VgA">
+                                <rect key="frame" x="0.0" y="302" width="500" height="250"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="first-run-4" id="4Vk-x1-bpC"/>
+                            </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kyH-XZ-2gd">
-                                <rect key="frame" x="178" y="208" width="162" height="27"/>
+                                <rect key="frame" x="180" y="157" width="162" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Support here" id="OcY-KR-Irg">
                                     <font key="font" metaFont="system"/>
@@ -319,10 +352,13 @@ Gw
                 </viewController>
                 <customObject id="oCZ-C0-pGz" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1175" y="1011"/>
+            <point key="canvasLocation" x="1175" y="1107"/>
         </scene>
     </scenes>
     <resources>
-        <image name="welcome" width="4771" height="2103"/>
+        <image name="first-run-1" width="500" height="250"/>
+        <image name="first-run-2" width="500" height="250"/>
+        <image name="first-run-3" width="500" height="250"/>
+        <image name="first-run-4" width="500" height="250"/>
     </resources>
 </document>
