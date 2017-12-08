@@ -18,7 +18,7 @@ struct UserDefaultStruct {
     // The following variables are validated on app start and can afterwards safely be force unwrapped.
     
     static var workspacePath: String = "workspacePath"
-    static var workspacePathDefault: String = NSHomeDirectory() + "/" + "DropPy" + "/"
+    static var workspacePathDefault: String = NSHomeDirectory() + "/" + "DropPy"  // no '/' at end!
     
     static var workflowSelected: String = "workflowSelected"
     static var workflowSelectedDefault: String? = nil
@@ -211,7 +211,7 @@ func checkWorkspaceInfo() -> String? {
         // Key for workspacePath doesn't exist in UserDefaults any more. Set to default and continue.
         userDefaults.set(UserDefaultStruct.workspacePathDefault, forKey: UserDefaultStruct.workspacePath)
     }
-    let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath)!
+    let workspacePath = userDefaults.string(forKey: UserDefaultStruct.workspacePath)!  // no '/' at end
     
     if isDir(path: workspacePath) {
         if !isDir(path: workspacePath + "/" + "Images") {
