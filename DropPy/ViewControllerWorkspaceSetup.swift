@@ -30,6 +30,7 @@ class ViewControllerWorkspaceSetup: NSViewController {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false
+        panel.canCreateDirectories = true
         
         panel.beginSheetModal(for: window) { (result) in
             if result.rawValue == NSFileHandlingPanelOKButton {

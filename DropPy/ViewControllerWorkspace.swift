@@ -25,11 +25,12 @@ class ViewControllerWorkspace: NSViewController {
     
     @IBAction func onWorkspaceChangeButton(_ sender: NSButton) {
         guard let window = view.window else { return }
-
+        
         let panel = NSOpenPanel()
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false
+        panel.canCreateDirectories = true
         
         panel.beginSheetModal(for: window) { (result) in
             if result.rawValue == NSFileHandlingPanelOKButton {
