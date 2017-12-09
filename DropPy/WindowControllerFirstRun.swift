@@ -12,9 +12,8 @@ class WindowControllerFirstRun: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
-        self.window?.setFrame(NSMakeRect(0.0, 0.0, 550, 400), display: true)
+        self.window?.setFrame(NSMakeRect(0.0, 0.0, 500, 618), display: true)  // 618 for view height of 550 + 41
         self.window?.center()
-        self.window?.title = ""
     }
 
 }

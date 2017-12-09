@@ -409,6 +409,7 @@
                                 <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OfH-Xj-TVV">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent">r</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onButtonClearEditor:" target="b3V-Ji-Eo7" id="TkC-bU-qnN"/>
@@ -535,6 +536,7 @@
                                 <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Tdv-H2-uD1">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent">c</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onWorkspaceChangeButton:" target="Rku-20-kef" id="c88-TE-VsL"/>

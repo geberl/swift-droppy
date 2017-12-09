@@ -10,7 +10,8 @@
         <scene sceneID="54p-VZ-fG6">
             <objects>
                 <windowController showSeguePresentationStyle="single" id="SCc-ZT-7Af" customClass="WindowControllerFirstRun" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="First Run" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" titleVisibility="hidden" id="gkC-nO-fIz" customClass="WindowFirstRun" customModule="DropPy" customModuleProvider="target">
+                    <window key="window" title="First Run Assistant" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="gkC-nO-fIz" customClass="WindowFirstRun" customModule="DropPy" customModuleProvider="target">
+                        <windowStyleMask key="styleMask" titled="YES"/>
                         <rect key="contentRect" x="294" y="363" width="570" height="350"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
                         <connections>
@@ -28,7 +29,7 @@
         <!--Split View Controller-->
         <scene sceneID="t1q-d0-1AQ">
             <objects>
-                <splitViewController id="Y0E-ZQ-xvb" sceneMemberID="viewController">
+                <splitViewController showSeguePresentationStyle="single" id="Y0E-ZQ-xvb" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="z4b-nu-Ee8"/>
                         <splitViewItem id="tIh-yD-QaL"/>
@@ -53,7 +54,7 @@
         <!--Buttons-->
         <scene sceneID="OPl-uU-KVg">
             <objects>
-                <viewController title="Buttons" id="Cag-Oi-gXy" customClass="ViewControllerButtons" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Buttons" showSeguePresentationStyle="single" id="Cag-Oi-gXy" customClass="ViewControllerButtons" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Tca-dl-hug">
                         <rect key="frame" x="0.0" y="0.0" width="500" height="61"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -78,7 +79,9 @@ Gw
                                 <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C2d-y1-OWv">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent"></string>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onNextButton:" target="Cag-Oi-gXy" id="J1x-Fn-xIl"/>
@@ -90,7 +93,9 @@ Gw
                                 <buttonCell key="cell" type="push" title="Previous" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NI9-v1-neM">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent"></string>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onPreviousButton:" target="Cag-Oi-gXy" id="iem-A0-t0H"/>
@@ -106,7 +111,7 @@ Gw
                 </viewController>
                 <customObject id="pHn-Zv-qyB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="951" y="338"/>
+            <point key="canvasLocation" x="951" y="337.5"/>
         </scene>
         <!--Tabs-->
         <scene sceneID="rCi-mD-6On">
@@ -143,18 +148,18 @@ Gw
         <!--Welcome-->
         <scene sceneID="ybk-BO-ZI8">
             <objects>
-                <viewController title="Welcome" id="MZt-lI-nsu" customClass="ViewControllerWelcome" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Welcome" showSeguePresentationStyle="single" id="MZt-lI-nsu" customClass="ViewControllerWelcome" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="QsS-DZ-y8y">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="552"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="550"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VgZ-BK-Eyz">
-                                <rect key="frame" x="0.0" y="302" width="500" height="250"/>
+                                <rect key="frame" x="0.0" y="300" width="500" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="first-run-1" id="ZrK-ah-wCA"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p5R-EW-DIf">
-                                <rect key="frame" x="24" y="107" width="524" height="24"/>
+                                <rect key="frame" x="24" y="105" width="524" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Before you can use the app you need to set some things up." id="amr-Ux-uVw">
                                     <font key="font" metaFont="system" size="16"/>
@@ -163,7 +168,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vOM-WR-K5c">
-                                <rect key="frame" x="18" y="180" width="439" height="24"/>
+                                <rect key="frame" x="18" y="178" width="439" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Thanks for trying out DropPy. (heart emoji)" id="SsN-uz-Ghs">
                                     <font key="font" metaFont="system" size="16"/>
@@ -172,7 +177,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ck6-aN-361">
-                                <rect key="frame" x="24" y="235" width="213" height="24"/>
+                                <rect key="frame" x="24" y="233" width="213" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Welcome" id="pxC-1t-EFK">
                                     <font key="font" metaFont="system" size="20"/>
@@ -190,13 +195,13 @@ Gw
         <!--Workspace Setup-->
         <scene sceneID="u1R-Xr-JbQ">
             <objects>
-                <viewController title="Workspace Setup" id="xgF-j1-aI1" customClass="ViewControllerWorkspaceSetup" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Workspace Setup" showSeguePresentationStyle="single" id="xgF-j1-aI1" customClass="ViewControllerWorkspaceSetup" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="A2y-KZ-zha">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="552"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="550"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VKj-hu-RdX">
-                                <rect key="frame" x="375" y="109" width="105" height="32"/>
+                                <rect key="frame" x="375" y="107" width="105" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2hr-9P-35y">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -207,7 +212,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xDb-9Y-sxh">
-                                <rect key="frame" x="18" y="145" width="131" height="17"/>
+                                <rect key="frame" x="18" y="143" width="131" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Workspace folder:" id="bUy-DP-D9b">
                                     <font key="font" metaFont="system"/>
@@ -216,7 +221,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A83-Kv-CMU">
-                                <rect key="frame" x="18" y="91" width="292" height="18"/>
+                                <rect key="frame" x="18" y="89" width="292" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Extract default content (recommended)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hgV-HK-tB3">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -224,7 +229,7 @@ Gw
                                 </buttonCell>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UuG-ac-Y9u">
-                                <rect key="frame" x="18" y="48" width="438" height="28"/>
+                                <rect key="frame" x="18" y="46" width="438" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="This extracts the bundled *.png/*.py/*.json files into your Workspace folder. Existing files will be overwritten." id="gW8-Wi-pt9">
                                     <font key="font" metaFont="smallSystem"/>
@@ -233,7 +238,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aMy-wX-xJV">
-                                <rect key="frame" x="20" y="115" width="338" height="22"/>
+                                <rect key="frame" x="20" y="113" width="338" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Ama-8q-kV1">
                                     <font key="font" metaFont="system"/>
@@ -242,12 +247,12 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mku-YW-DPj">
-                                <rect key="frame" x="0.0" y="302" width="500" height="250"/>
+                                <rect key="frame" x="0.0" y="300" width="500" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="first-run-2" id="eOc-EV-SvS"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bkU-Ly-HuT">
-                                <rect key="frame" x="18" y="248" width="472" height="38"/>
+                                <rect key="frame" x="18" y="246" width="472" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="In DropPy's Workspace folder all the Python Tasks, JSON Workflows and Images are stored." id="FS8-n5-g0w">
                                     <font key="font" metaFont="system" size="16"/>
@@ -256,7 +261,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1ez-Hi-LpP">
-                                <rect key="frame" x="18" y="170" width="472" height="26"/>
+                                <rect key="frame" x="18" y="168" width="472" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="But you can put it in iCloud or Dropbox if you want sync." id="xh7-yb-694">
                                     <font key="font" metaFont="system" size="16"/>
@@ -265,7 +270,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GpT-JH-fAx">
-                                <rect key="frame" x="18" y="214" width="472" height="19"/>
+                                <rect key="frame" x="18" y="212" width="472" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Usually it's located in your Home directory." id="bUp-2L-Sj9">
                                     <font key="font" metaFont="system" size="16"/>
@@ -274,7 +279,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sHA-au-sqq">
-                                <rect key="frame" x="18" y="12" width="438" height="28"/>
+                                <rect key="frame" x="18" y="10" width="438" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Not available. Please use the Workspace tab in Preferences to manage your Workspace after initial setup." id="TwG-ph-Vlq">
                                     <font key="font" metaFont="smallSystem"/>
@@ -299,18 +304,18 @@ Gw
         <!--Documentation-->
         <scene sceneID="AXf-fJ-R70">
             <objects>
-                <viewController title="Documentation" id="2en-6N-rfY" customClass="ViewControllerDocs" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Documentation" showSeguePresentationStyle="single" id="2en-6N-rfY" customClass="ViewControllerDocs" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="PoA-iX-E4d">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="552"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="550"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QjH-wj-PQ8">
-                                <rect key="frame" x="0.0" y="302" width="500" height="250"/>
+                                <rect key="frame" x="0.0" y="300" width="500" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="first-run-3" id="nhV-kN-8cZ"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVH-Df-g34">
-                                <rect key="frame" x="169" y="139" width="162" height="27"/>
+                                <rect key="frame" x="169" y="137" width="162" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Content here" id="grD-gS-pEf">
                                     <font key="font" metaFont="system"/>
@@ -328,18 +333,18 @@ Gw
         <!--Finish-->
         <scene sceneID="GOG-j5-xIa">
             <objects>
-                <viewController title="Finish" id="oLS-cw-0iW" customClass="ViewControllerFinish" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Finish" showSeguePresentationStyle="single" id="oLS-cw-0iW" customClass="ViewControllerFinish" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="JqA-yP-1JD">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="552"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="550"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="klm-8f-VgA">
-                                <rect key="frame" x="0.0" y="302" width="500" height="250"/>
+                                <rect key="frame" x="0.0" y="300" width="500" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="first-run-4" id="4Vk-x1-bpC"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kyH-XZ-2gd">
-                                <rect key="frame" x="180" y="157" width="162" height="39"/>
+                                <rect key="frame" x="180" y="155" width="162" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Support here" id="OcY-KR-Irg">
                                     <font key="font" metaFont="system"/>
