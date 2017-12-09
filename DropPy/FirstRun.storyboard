@@ -11,7 +11,6 @@
             <objects>
                 <windowController showSeguePresentationStyle="single" id="SCc-ZT-7Af" customClass="WindowControllerFirstRun" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="First Run Assistant" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="gkC-nO-fIz" customClass="WindowFirstRun" customModule="DropPy" customModuleProvider="target">
-                        <windowStyleMask key="styleMask" titled="YES"/>
                         <rect key="contentRect" x="294" y="363" width="570" height="350"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
                         <connections>
@@ -55,12 +54,12 @@
         <scene sceneID="OPl-uU-KVg">
             <objects>
                 <viewController title="Buttons" showSeguePresentationStyle="single" id="Cag-Oi-gXy" customClass="ViewControllerButtons" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="Tca-dl-hug">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="61"/>
+                    <view key="view" wantsLayer="YES" id="Tca-dl-hug">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bvZ-T1-M2z">
-                                <rect key="frame" x="14" y="13" width="81" height="32"/>
+                                <rect key="frame" x="14" y="6" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q1Y-wp-vRz">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -74,28 +73,22 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JdY-Xz-sb3">
-                                <rect key="frame" x="405" y="13" width="81" height="32"/>
+                                <rect key="frame" x="405" y="6" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C2d-y1-OWv">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onNextButton:" target="Cag-Oi-gXy" id="J1x-Fn-xIl"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D8X-tv-Eei">
-                                <rect key="frame" x="324" y="13" width="81" height="32"/>
+                                <rect key="frame" x="324" y="6" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Previous" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NI9-v1-neM">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-CA
-</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="onPreviousButton:" target="Cag-Oi-gXy" id="iem-A0-t0H"/>
@@ -111,7 +104,7 @@ CA
                 </viewController>
                 <customObject id="pHn-Zv-qyB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="951" y="337.5"/>
+            <point key="canvasLocation" x="951" y="333.5"/>
         </scene>
         <!--Tabs-->
         <scene sceneID="rCi-mD-6On">
