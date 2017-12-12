@@ -13,5 +13,17 @@ class ViewControllerFinish: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
+    @IBAction func onEmailButton(_ sender: NSButton) {
+        openWebsite(webUrl: servicesUrls.guentherMail)
+    }
+    
+    @IBAction func onTwitterButton(_ sender: NSButton) {
+        openWebsite(webUrl: servicesUrls.twitter)
+    }
+    
+    @IBAction func onKeybaseButton(_ sender: NSButton) {
+        openWebsite(webUrl: servicesUrls.keybase)
+    }
+    
 }

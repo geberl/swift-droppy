@@ -63,7 +63,7 @@ class ViewControllerWorkspaceSetup: NSViewController {
             // Set the checkbox to unchecked and unchangeable. Extracting default contents again here is ambiguous.
             self.defaultContentCheckbox.isEnabled = false
             self.defaultContentCheckbox.state = NSControl.StateValue(rawValue: 0)
-            self.defaultContentDescription.isEnabled = false
+            self.defaultContentDescription.isHidden = true
             self.defaultContentNotice.isHidden = false
         } else {
             // Set the workspace change button to enabled.
@@ -72,7 +72,7 @@ class ViewControllerWorkspaceSetup: NSViewController {
             // Allow the checkbox to be edited. Default checked. Notice hidden.
             self.defaultContentCheckbox.isEnabled = true
             self.defaultContentCheckbox.state = NSControl.StateValue(rawValue: 1)
-            self.defaultContentDescription.isEnabled = true
+            self.defaultContentDescription.isHidden = false
             self.defaultContentNotice.isHidden = true
         }
     }
