@@ -56,7 +56,7 @@ class ViewControllerWorkspace: NSViewController {
     }
     
     @IBAction func onOpenGitHubButton(_ sender: NSButton) {
-        openWebsite(webUrl: githubUrls.workspace)
+        openWebsite(webUrl: servicesUrls.githubWorkspace)
     }
     
     @IBAction func onHelpButton(_ sender: NSButton) {
