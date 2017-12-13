@@ -292,6 +292,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         manualUpdate(silent: false)
     }
     
+    @IBAction func showReleaseNotes(_ sender: NSMenuItem) {
+        print("show release notes")
+    }
+    
+    @IBAction func showDocumentation(_ sender: NSMenuItem) {
+        print("show documentation")
+    }
+    
+    @IBAction func showSupport(_ sender: NSMenuItem) {
+        print("show support")
+    }
+    
+    @IBAction func showPrivacyStatement(_ sender: NSMenuItem) {
+        print("show privacy statement")
+    }
+    
+    @IBAction func showProductWebsite(_ sender: NSMenuItem) {
+        print("show product website")
+    }
+    
     lazy var firstRunWindowController: WindowControllerFirstRun  = {
         let wcSB = NSStoryboard(name: NSStoryboard.Name(rawValue: "FirstRun"), bundle: Bundle.main)
         return wcSB.instantiateInitialController() as! WindowControllerFirstRun
@@ -300,6 +320,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func showFirstRunWindow(_ sender: NSMenuItem) {
         self.showSetupAssistant()
     }
+    
+    
     
     func showSetupAssistant() {
         // Set the Workspace and extract the default content via this assistant.
