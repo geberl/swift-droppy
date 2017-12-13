@@ -293,23 +293,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func showReleaseNotes(_ sender: NSMenuItem) {
-        print("show release notes")
+        openWebsite(webUrl: droppyappUrls.releaseNotes)
     }
     
     @IBAction func showDocumentation(_ sender: NSMenuItem) {
-        print("show documentation")
+        openWebsite(webUrl: droppyappUrls.docs)
     }
     
     @IBAction func showSupport(_ sender: NSMenuItem) {
-        print("show support")
+        openWebsite(webUrl: droppyappUrls.support)
     }
     
     @IBAction func showPrivacyStatement(_ sender: NSMenuItem) {
-        print("show privacy statement")
+        openWebsite(webUrl: droppyappUrls.privacy)
     }
     
     @IBAction func showProductWebsite(_ sender: NSMenuItem) {
-        print("show product website")
+        openWebsite(webUrl: droppyappUrls.main)
     }
     
     lazy var firstRunWindowController: WindowControllerFirstRun  = {
@@ -320,8 +320,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func showFirstRunWindow(_ sender: NSMenuItem) {
         self.showSetupAssistant()
     }
-    
-    
     
     func showSetupAssistant() {
         // Set the Workspace and extract the default content via this assistant.
