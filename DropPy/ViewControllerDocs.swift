@@ -14,4 +14,8 @@ class ViewControllerDocs: NSViewController {
         super.viewDidLoad()
     }
     
+    @IBAction func onDocsButton(_ sender: NSButton) {
+        openWebsite(webUrl: droppyappUrls.docs)
+    }
+    
 }
