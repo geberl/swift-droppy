@@ -293,7 +293,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func showReleaseNotes(_ sender: NSMenuItem) {
-        openWebsite(webUrl: droppyappUrls.releaseNotes)
+        if let versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            openWebsite(webUrl: droppyappUrls.releaseNotes?.appendingPathComponent(versionNumber))
+        } else {
+            openWebsite(webUrl: droppyappUrls.releaseNotes)
+        }
     }
     
     @IBAction func showDocumentation(_ sender: NSMenuItem) {
