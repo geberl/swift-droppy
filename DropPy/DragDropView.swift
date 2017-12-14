@@ -18,6 +18,7 @@ class DragDropView: NSView {
     var numberOfExtractedPromises: Int
     var tempDirPath: String
     var logFilePath: String
+    var executionInProgress: Bool
     var executionCancel: Bool
     
     required init?(coder: NSCoder) {
@@ -26,6 +27,7 @@ class DragDropView: NSView {
         numberOfExtractedPromises = 0
         tempDirPath = ""
         logFilePath = ""
+        executionInProgress = false
         executionCancel = false
         super.init(coder: coder)
         
@@ -49,8 +51,22 @@ class DragDropView: NSView {
             NSPasteboard.PasteboardType(rawValue: "com.apple.resolvable")      // Items that the Alias Manager can resolve.
             ])
         
+        NotificationCenter.default.addObserver(self, selector: #selector(DragDropView.beginExecution),
+                                               name: .droppingStarted, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(DragDropView.endExecution),
+                                               name: .executionFinished, object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(DragDropView.cancelExecution),
                                                name: .executionCancel, object: nil)
+    }
+
+    @objc func beginExecution(_ notification: Notification) {
+        self.executionInProgress = true
+    }
+    
+    @objc func endExecution(_ notification: Notification) {
+        self.executionInProgress = false
     }
     
     @objc func cancelExecution(_ notification: Notification) {
@@ -68,8 +84,13 @@ class DragDropView: NSView {
             NotificationCenter.default.post(name: .draggingEnteredError, object: nil)
             return [] // don't even allow drop.
         } else {
-            NotificationCenter.default.post(name: .draggingEnteredOk, object: nil)
-            return .copy
+            if self.executionInProgress == true {
+                NotificationCenter.default.post(name: .draggingEnteredError, object: nil)
+                return [] // don't even allow drop.
+            } else {
+                NotificationCenter.default.post(name: .draggingEnteredOk, object: nil)
+                return .copy
+            }
         }
     }
 
