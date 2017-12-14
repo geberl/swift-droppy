@@ -168,15 +168,9 @@ class PythonExecutor: NSObject {
     }
 
     func run() {
-        // Copy run.py from assets to the temp directory.
-        if let asset = NSDataAsset(name: NSDataAsset.Name(rawValue: "run"), bundle: Bundle.main) {
-            do {
-                try asset.data.write(to: URL(fileURLWithPath: self.runnerFilePath))
-            } catch {
-                os_log("Unable to copy run.py asset.", log: logExecution, type: .error, error.localizedDescription)
-            }
-        }
-        
+        // Make sure there is a file 'run.py' at the expected location.
+        extractBundledRun()
+
         // Copy _cache dir from drop to timestampdir for execution.
         copyDir(sourceDirPath: self.cacheDirPath, targetDirPath: self.timestampDirPath)
 
