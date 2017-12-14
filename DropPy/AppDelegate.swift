@@ -121,7 +121,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             self.showSetupAssistant()
             
-            // TODO if exited out something still seems to be written to the userprefs! Does this fix it?
             if AppState.initialSetupCompleted {
                 beginTrial()  // Trial period only starts once the initial setup has been completed successfully.
                 reapplyPrefs()  // Initialize the rest of the preferences with their default values.

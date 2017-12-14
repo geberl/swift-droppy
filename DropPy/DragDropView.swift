@@ -525,9 +525,9 @@ class DragDropView: NSView {
             os_log("%@", log: logDrop, type: .error, myError!.localizedDescription)
             logFileContent = "Error: " + myUrl.path + "(" + myError!.localizedDescription + ")"
             
-            // TODO: Mail shows me a timeout error (but seems to copy the file alright). Ignore timeouts?
+            // Apple Mail shows me a timeout error (but seems to copy the file alright).
             // https://stackoverflow.com/questions/11028769/nsurlerrordomain-error-codes-description#11037210
-            // I don't think this is my error. Safari support is also sometimes spotty.
+            // I don't think this is my error.
             // In any case numberOfExtractedPromises counts up, so even if an error is thrown execution continues.
         } else {
             logFileContent = "Ok:    " + myUrl.path

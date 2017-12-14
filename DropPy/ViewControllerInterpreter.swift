@@ -54,7 +54,7 @@ class ViewControllerInterpreter: NSViewController {
         }
         // String must not contain arguments.
         else if newExecutable.range(of:" ") != nil {
-            // TODO this solution does not catch '/abc/def/python -B -c -R "/abc/def/ghi"', however the later checks fail for this.
+            // This solution does not catch '/abc/def/python -B -c -R "/abc/def/ghi"', however the later checks fail for this.
 
             // Example starting out with /Users/guenther/My Virtual Env/bin/python -B -c -R
             var executablePathArray: Array = newExecutable.components(separatedBy: "/")  // [Users, guenther, My Virtual Env, bin, python -B -c -R]
