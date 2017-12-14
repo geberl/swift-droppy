@@ -80,7 +80,7 @@ class DragDropView: NSView {
     }
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
-        if AppState.activeName == "" {
+        if AppState.activeName == nil {
             NotificationCenter.default.post(name: .draggingEnteredError, object: nil)
             return [] // don't even allow drop.
         } else {
