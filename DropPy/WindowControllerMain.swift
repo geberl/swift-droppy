@@ -59,6 +59,9 @@ class WindowControllerMain: NSWindowController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.updateAvailableAlert),
                                                name: .updateAvailable, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.workflowIdenticalNameAlert),
+                                               name: .workflowIdenticalName, object: nil)
     }
     
     @objc func disableToolbar(_ notification: Notification){
@@ -262,6 +265,25 @@ class WindowControllerMain: NSWindowController {
     
     func openFileInDefaultApp(filePath: String) {
         NSWorkspace.shared.openFile(filePath)
+    }
+    
+    @objc func workflowIdenticalNameAlert(_ notification: Notification) {
+        guard let workflowName = notification.userInfo?["workflowName"] as? String else { return }
+        guard let workflowLoadedPath = notification.userInfo?["workflowLoadedPath"] as? String else { return }
+        guard let workflowSkippedPath = notification.userInfo?["workflowSkippedPath"] as? String else { return }
+        
+        let errorAlert = NSAlert()
+        errorAlert.showsHelp = false
+        errorAlert.messageText = "Workflow name '" + workflowName + "' already in use"
+        errorAlert.informativeText = "You can't use the same Workflow name multiple times.\n\n"
+        errorAlert.informativeText += "The Workflow '" + workflowLoadedPath + "' was loaded, "
+        errorAlert.informativeText += "but '" + workflowSkippedPath + "' was skipped.\n\n"
+        errorAlert.informativeText += "Edit the 'name' property in one of those JSON files to get rid of this warning."
+        errorAlert.addButton(withTitle: "Ok")
+        errorAlert.layout()
+        errorAlert.alertStyle = NSAlert.Style.warning
+        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
+        errorAlert.beginSheetModal(for: self.window!)
     }
 
     @objc func updateErrorAlert(_ notification: Notification) {

@@ -357,10 +357,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                         options: .alwaysMapped)
                     let jsonObj = JSON(data: data)
                     if jsonObj != JSON.null {
-                        workflowsTemp[jsonObj["name"].stringValue] = [String: String]()
-                        workflowsTemp[jsonObj["name"].stringValue]?["image"] = jsonObj["image"].stringValue
-                        workflowsTemp[jsonObj["name"].stringValue]?["file"] = element
-                        workflowsTemp[jsonObj["name"].stringValue]?["interpreterName"] = jsonObj["interpreterName"].stringValue
+                        let workflowName = jsonObj["name"].stringValue
+                        let workflowImage = jsonObj["image"].stringValue
+                        let workflowFile = element
+                        let workflowInterpreterName = jsonObj["interpreterName"].stringValue
+                        
+                        // Make sure the same name is already used by another Workflow.
+                        if workflowsTemp[workflowName] == nil {
+                            workflowsTemp[workflowName] = [String: String]()
+                            workflowsTemp[workflowName]?["image"] = workflowImage
+                            workflowsTemp[workflowName]?["file"] = workflowFile
+                            workflowsTemp[workflowName]?["interpreterName"] = workflowInterpreterName
+                        } else {
+                            let workflowFileLoaded = (workflowsTemp[workflowName]?["file"])!
+                            os_log("Workflow name '%@' already used in '%@'. Workflow file '%@' not loaded.",
+                                   log: logGeneral, type: .error, workflowName, workflowFileLoaded, workflowFile)
+                            
+                            let userInfo:[String: String] = ["workflowName": workflowName,
+                                                             "workflowLoadedPath": workflowFileLoaded,
+                                                             "workflowSkippedPath": workflowFile]
+                            
+                            NotificationCenter.default.post(name: .workflowIdenticalName, object: nil,
+                                                            userInfo: userInfo)
+                        }
                     }
                 } catch let error {
                     os_log("%@", log: logGeneral, type: .error, error.localizedDescription)
