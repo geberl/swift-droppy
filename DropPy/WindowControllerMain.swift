@@ -62,21 +62,14 @@ class WindowControllerMain: NSWindowController {
     }
     
     @objc func disableToolbar(_ notification: Notification){
-        //TODO this doesn't work becauset this references the nsmenu, not the nspopupbutton (two levels up ...)
-        //ToolbarDropdown.isEnabled = false
-        
-        for menuItem in ToolbarDropdown.items {
-            menuItem.isEnabled = false
-        }
+        workflowPopUp.isEnabled = false
         actionButtons.setEnabled(false, forSegment: 0)
         actionButtons.setEnabled(false, forSegment: 1)
         actionButtons.setEnabled(false, forSegment: 2)
     }
     
     @objc func enableToolbar(_ notification: Notification){
-        for menuItem in ToolbarDropdown.items {
-            menuItem.isEnabled = true
-        }
+        workflowPopUp.isEnabled = true
         actionButtons.setEnabled(true, forSegment: 0)
         actionButtons.setEnabled(true, forSegment: 1)
         actionButtons.setEnabled(true, forSegment: 2)
