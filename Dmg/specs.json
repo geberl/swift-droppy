@@ -1,0 +1,9 @@
+{
+  "title": "DropPy Installer",
+  "icon": "icon_dmg.icns",
+  "background": "background.png",
+  "contents": [
+    { "x": 192, "y": 92, "type": "file", "path": "/Users/guenther/Downloads/DropPy_v1.0.0/DropPy.app" },
+    { "x": 448, "y": 92, "type": "link", "path": "/Applications" }
+  ]
+}
