@@ -174,10 +174,11 @@ func createWorkspaceDirStructure(workspacePath: String) {
 func extractBundledWorkspace(workspacePath: String) {
     let fileManager = FileManager.default
     
-    // Set temp directory and files, remove them if they already exist.
+    // Set temp directory and file, remove it if it already exists.
     let tempPath: String = NSTemporaryDirectory() + "se.eberl.droppy" + "/"
     makeDirs(path: tempPath)
-    let zipPath: String = tempPath + "droppy-workspace-master.zip"
+    
+    let zipPath: String = tempPath + "droppy-workspace-temp.zip"
     if isFile(path: zipPath) {
         do {
             try fileManager.removeItem(atPath: zipPath)
@@ -185,7 +186,8 @@ func extractBundledWorkspace(workspacePath: String) {
             os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
         }
     }
-    let unzipPath: String = tempPath + "droppy-workspace-master" + "/"
+    
+    let unzipPath: String = tempPath + "droppy-workspace-temp" + "/"
     if isDir(path: unzipPath) {
         do {
             try fileManager.removeItem(atPath: unzipPath)
@@ -193,8 +195,8 @@ func extractBundledWorkspace(workspacePath: String) {
             os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
         }
     }
-    
-    // Copy bundled-droppy-workspace from assets to the temp directory.
+
+    // Copy content of asset bundled-droppy-workspace to the temp directory as droppy-workspace-temp.zip.
     if let asset = NSDataAsset(name: NSDataAsset.Name(rawValue: "bundled-droppy-workspace"), bundle: Bundle.main) {
         do {
             try asset.data.write(to: URL(fileURLWithPath: zipPath))
@@ -203,20 +205,32 @@ func extractBundledWorkspace(workspacePath: String) {
             os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
         }
     }
+
     
-    // Unzip to a subfolder of the temp directory.
-    SSZipArchive.unzipFile(atPath: zipPath, toDestination: tempPath)
-    os_log("Unzipped '%@' to '%@'.", log: logFileSystem, type: .error, zipPath, tempPath)
+    // Unzip into the dedicated temp directory.
+    SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath)
+    os_log("Unzipped '%@' to '%@'.", log: logFileSystem, type: .error, zipPath, unzipPath)
     
-    // Copy to Workspace.
-    guard let enumerator: FileManager.DirectoryEnumerator =
+    // The zip file contained a sub-directory. Find out its name (depends on release version of Workspace).
+    guard let subDirEnumerator: FileManager.DirectoryEnumerator =
         fileManager.enumerator(atPath: unzipPath) else {
             os_log("Directory not found at '%@'.", log: logFileSystem, type: .error, unzipPath)
             return
     }
-    
+    var subDirName: String = ""
+    while let element = subDirEnumerator.nextObject() as? String {
+        subDirName = element
+        break
+    }
+
+    // Copy its content to the user's Workspace directory.
+    guard let enumerator: FileManager.DirectoryEnumerator =
+        fileManager.enumerator(atPath: unzipPath + subDirName + "/") else {
+            os_log("Directory not found at '%@'.", log: logFileSystem, type: .error, unzipPath)
+            return
+    }
     while let element = enumerator.nextObject() as? String {
-        var srcURL: URL = URL(fileURLWithPath: unzipPath)
+        var srcURL: URL = URL(fileURLWithPath: unzipPath + subDirName + "/")
         srcURL.appendPathComponent(element)
         var dstURL: URL = URL(fileURLWithPath: workspacePath)
         dstURL.appendPathComponent(element)
