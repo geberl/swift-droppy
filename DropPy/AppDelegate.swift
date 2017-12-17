@@ -53,6 +53,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var executionInProgress: Bool = false
     
+    @IBAction func onNewWorkflowMenuItem(_ sender: NSMenuItem) {
+        NotificationCenter.default.post(name: .workflowNew, object: nil)
+    }
+    
+    @IBAction func onEditWorkflowMenuItem(_ sender: NSMenuItem) {
+        NotificationCenter.default.post(name: .workflowEdit, object: nil)
+    }
+    
+    @IBAction func onDeleteWorkflowMenuItem(_ sender: NSMenuItem) {
+        NotificationCenter.default.post(name: .workflowDelete, object: nil)
+    }
+    
+    @IBAction func onOpenWorkspaceMenuItem(_ sender: NSMenuItem) {
+        NotificationCenter.default.post(name: .workflowDirOpen, object: nil)
+    }
+    
     @IBOutlet weak var devModeMenuItem: NSMenuItem!
     
     @IBAction func onDevModeMenuItem(_ sender: NSMenuItem) {

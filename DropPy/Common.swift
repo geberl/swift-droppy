@@ -74,6 +74,18 @@ func copyDir(sourceDirPath: String, targetDirPath: String) {
 }
 
 
+func trashDirOrFile(path: String) {
+    let fileManager = FileManager.default
+    do {
+        try fileManager.trashItem(at: URL(fileURLWithPath: path),
+                                  resultingItemURL: nil)
+        os_log("Deleted item to trash '%@.", log: logFileSystem, type: .debug, path)
+    } catch let error {
+        os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
+    }
+}
+
+
 func executeCommand(command: String, args: [String], setEnv: Bool = true, debug: Bool = false) -> (output: [String], error: [String], exit: Int32) {
     // Source: https://stackoverflow.com/questions/29514738/get-terminal-output-after-a-command-swift#29519615
     

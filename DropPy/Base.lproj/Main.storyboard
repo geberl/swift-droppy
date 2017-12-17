@@ -110,14 +110,30 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Workflow" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Edit" keyEquivalent="e" id="IAo-SY-fd9"/>
-                                        <menuItem title="Open Directory" keyEquivalent="o" id="DVo-aG-piG"/>
-                                        <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl"/>
+                                        <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
+                                            <connections>
+                                                <action selector="onNewWorkflowMenuItem:" target="Voe-Tx-rLC" id="b6P-iF-LaQ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Edit" keyEquivalent="e" id="IAo-SY-fd9">
+                                            <connections>
+                                                <action selector="onEditWorkflowMenuItem:" target="Voe-Tx-rLC" id="BIZ-f9-W8M"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Delete" id="DZy-8o-Q3C">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onDeleteWorkflowMenuItem:" target="Voe-Tx-rLC" id="sz6-fB-ZkT"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="oz0-Gg-cfJ"/>
+                                        <menuItem title="Open Workspace Folder" keyEquivalent="o" id="DVo-aG-piG">
+                                            <connections>
+                                                <action selector="onOpenWorkspaceMenuItem:" target="Voe-Tx-rLC" id="JFP-cX-Iwo"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="WPg-3B-lYU"/>
-                                        <menuItem title="Dev Mode" keyEquivalent="d" id="Lmj-0f-0Zt">
+                                        <menuItem title="Development Mode" keyEquivalent="d" id="Lmj-0f-0Zt">
                                             <connections>
                                                 <action selector="onDevModeMenuItem:" target="Voe-Tx-rLC" id="l4V-dI-rV3"/>
                                             </connections>
@@ -226,10 +242,10 @@
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="069E188E-41E8-46E5-80F5-3AF66CAF6EBD" label="Actions" paletteLabel="Actions" image="button-add" id="nGL-hq-ps5">
                                     <nil key="toolTip"/>
-                                    <size key="minSize" width="100" height="28"/>
-                                    <size key="maxSize" width="100" height="28"/>
+                                    <size key="minSize" width="100" height="23"/>
+                                    <size key="maxSize" width="105" height="28"/>
                                     <segmentedControl key="view" verticalHuggingPriority="750" id="wrr-nz-pw1">
-                                        <rect key="frame" x="0.0" y="14" width="100" height="28"/>
+                                        <rect key="frame" x="0.0" y="14" width="104" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="WLV-8x-Cma">
                                             <font key="font" metaFont="system"/>

@@ -23,13 +23,13 @@ class WindowControllerMain: NSWindowController {
     
     @IBAction func ToolbarActions(_ sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
-            self.editWorkflow()
+            self.editWorkflow(nil)
         }
         else if sender.selectedSegment == 1 {
-            self.openFinder()
+            self.openFinder(nil)
         }
         else if sender.selectedSegment == 2 {
-            self.addWorkflow()
+            self.addWorkflow(nil)
         }
     }
 
@@ -62,6 +62,18 @@ class WindowControllerMain: NSWindowController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.workflowIdenticalNameAlert),
                                                name: .workflowIdenticalName, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.addWorkflow),
+                                               name: .workflowNew, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.editWorkflow),
+                                               name: .workflowEdit, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.openFinder),
+                                               name: .workflowDirOpen, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.askDeleteWorkflow),
+                                               name: .workflowDelete, object: nil)
     }
     
     @objc func disableToolbar(_ notification: Notification){
@@ -138,34 +150,64 @@ class WindowControllerMain: NSWindowController {
         NotificationCenter.default.post(name: .workflowSelectionChanged, object: nil)
     }
 
-    func openFinder() {
+    @objc func openFinder(_ notification: Notification?) {
         guard let workspacePath = checkWorkspaceInfo() else { return }
         guard let jsonFile: String = AppState.activeJsonFile else { return }
 
         NSWorkspace.shared.selectFile(workspacePath + "Workflows" + "/" + jsonFile,
                                       inFileViewerRootedAtPath: workspacePath)
     }
+    
+    @objc func askDeleteWorkflow(_ notification: Notification?) {
+        guard let workspacePath = checkWorkspaceInfo() else { return }
+        guard let jsonFile: String = AppState.activeJsonFile else { return }
+        guard let jsonName: String = AppState.activeName else { return }
 
-    func editWorkflow() {
+        let warningAlert = NSAlert()
+        warningAlert.showsHelp = false
+        warningAlert.messageText = "Delete Workflow '" + jsonName + "'"
+        warningAlert.informativeText = "Are you sure you want to remove this Workflow?"
+        warningAlert.addButton(withTitle: "Cancel")
+        warningAlert.addButton(withTitle: "Move to Trash")
+        warningAlert.layout()
+        warningAlert.alertStyle = NSAlert.Style.warning
+        warningAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
+        
+        warningAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
+            if returnCode == NSApplication.ModalResponse.alertSecondButtonReturn {
+                os_log("Deleting workflow '%@'", log: logUi, type: .debug, jsonName)
+                self.deleteWorkflow(workflowPath: workspacePath + "Workflows" + "/" + jsonFile)
+            } else {
+                os_log("User clicked 'Cancel' on delete Workflow alert.'", log: logUi, type: .debug)
+            }
+        })
+    }
+    
+    func deleteWorkflow(workflowPath: String) {
+        trashDirOrFile(path: workflowPath)
+        NotificationCenter.default.post(name: .reloadWorkflows, object: nil)
+    }
+    
+    @objc func editWorkflow(_ notification: Notification?) {
         guard let workspacePath = checkWorkspaceInfo() else { return }
         guard let jsonFile: String = AppState.activeJsonFile else { return }
         
         let jsonPath: String = workspacePath + "Workflows" + "/" + jsonFile
-
+        
         if let editorForWorkflows: String = self.userDefaults.string(forKey: UserDefaultStruct.editorForWorkflows) {
             
             if editorForWorkflows == "Internal Workflow editor" {
                 // TODO: Implement internal Workflow editor and have it open from here.
                 // Should currently not be possible to land here, deactivated, entry not displaed in preferences.
                 os_log("TODO: Open internal Workflow editor now", log: logUi, type: .debug)
-
+                
             } else if editorForWorkflows == "Internal text editor" {
                 self.editorWindowController.showWindow(self)
-
+                
                 // Put path into dict inside Notification.
                 let pathDict:[String: String] = ["path": jsonPath]
                 NotificationCenter.default.post(name: .loadFileInEditor, object: nil, userInfo: pathDict)
-
+                
             } else if editorForWorkflows == "External text editor" {
                 guard let editorAppPath: String = self.userDefaults.string(forKey: UserDefaultStruct.editorAppPath) else { return }
                 if isDir(path: editorAppPath) {
@@ -178,7 +220,7 @@ class WindowControllerMain: NSWindowController {
         }
     }
     
-    func addWorkflow() {
+    @objc func addWorkflow(_ notification: Notification?) {
         os_log("Adding new workflow", log: logUi, type: .debug)
         
         guard let workspacePath = checkWorkspaceInfo() else { return }
@@ -218,7 +260,7 @@ class WindowControllerMain: NSWindowController {
         AppState.activeLogoFile = nil
         
         // Open new file in editor.
-        self.editWorkflow()
+        self.editWorkflow(nil)
     }
 
     @objc func evaluateWorkflowResults(_ notification: Notification) {
