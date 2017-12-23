@@ -32,8 +32,8 @@ struct AppState {
     static var tempDirPath: String? = nil
     
     static var interpreterStockName: String = "macOS pre-installed"
-    static var bundledWorkspaceVersion: String = "v1.0 (4459083) (2017-12-14)"
-    static var bundledRunVersion: String = "v1.0 (55bc02e) (2017-12-14)"
+    static var bundledWorkspaceVersion: String = "v2.0 (6558798) (2017-12-23)"
+    static var bundledRunVersion: String = "v2.0 (c5c07dc) (2017-12-21)"
     
     static var initialSetupCompleted: Bool = false
     static var trialStartSalt: String = "nBL4QzmKbk8vhnfke9uvNHRDUtwkoPvJ"

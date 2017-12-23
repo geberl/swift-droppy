@@ -313,13 +313,12 @@ func extractBundledWorkspace(workspacePath: String) {
             os_log("%@", log: logFileSystem, type: .error, error.localizedDescription)
         }
     }
-
     
-    // Unzip into the dedicated temp directory.
+    // Unzip the zip file into the dedicated temp directory.
     SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath)
     os_log("Unzipped '%@' to '%@'.", log: logFileSystem, type: .debug, zipPath, unzipPath)
     
-    // The zip file contained a sub-directory. Find out its name (depends on release version of Workspace).
+    // The zip file contains a sub-directory. Find out its name (depends on release version of Workspace).
     guard let subDirEnumerator: FileManager.DirectoryEnumerator =
         fileManager.enumerator(atPath: unzipPath) else {
             os_log("Directory not found at '%@'.", log: logFileSystem, type: .error, unzipPath)
