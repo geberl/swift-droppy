@@ -171,16 +171,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func startPythonExecutor(_ notification: Notification) {
-        // Show registration window with open purchase sheet to user on each drop.
-        // At this moment do not refuse executing, maybe later in 2.0.
-        if !AppState.isLicensed {
-            AppState.isInTrial = isInTrial()  // Recheck if trial period expired in the meantime.
-            if !AppState.isInTrial {
-                self.registrationWindowController.showWindow(self)
-                NotificationCenter.default.post(name: .reopenPurchaseSheet, object: nil)
-            }
-        }
-        
         guard let tempDirPath: String = AppState.tempDirPath else {
             NotificationCenter.default.post(name: .executionFinished, object: nil)
             return
