@@ -30,6 +30,7 @@ struct AppState {
     static var activeJsonFile: String? = nil
     static var activeLogoFile: String? = nil
     static var tempDirPath: String? = nil
+    static var executionInProgress: Bool = false
     
     static var interpreterStockName: String = "macOS pre-installed"
     static var bundledWorkspaceVersion: String = "v2.0 (6558798) (2017-12-23)"
@@ -50,8 +51,6 @@ struct AppState {
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     let userDefaults = UserDefaults.standard
-
-    var executionInProgress: Bool = false
     
     @IBAction func onNewWorkflowMenuItem(_ sender: NSMenuItem) {
         NotificationCenter.default.post(name: .workflowNew, object: nil)
@@ -105,6 +104,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.startPythonExecutor),
                                                name: .droppingConcluded, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.cancelPythonExecutor),
+                                               name: .executionCancel, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.setNewInterpreter),
                                                name: .interpreterNotFound, object: nil)
@@ -188,8 +190,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // The notification that starts this function is sometimes sent (or received?) twice.
         // Using a boolean class variable as a workaround prevents multiple instantiation of PythonExecutor.
-        if !self.executionInProgress {
-            self.executionInProgress = true
+        if !AppState.executionInProgress {
+            AppState.executionInProgress = true
             
             // Usually doesn't appear on screen, because the steps until the first Task is executed happen so fast.
             let statusDict: [String: String] = ["text": "Preparing"]
@@ -211,11 +213,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     self.endPythonExecutor(timestampDirPath: timestampDirPath, exitCode: exitCode)
                 }
             }
+        } else {
+            os_log("Execution already in progress.", log: logExecution, type: .debug)
         }
     }
     
+    @objc func cancelPythonExecutor(_ notification: Notification) {
+        AppState.executionInProgress = false
+    }
+    
     func endPythonExecutor(timestampDirPath: String, exitCode: Int) {
-        self.executionInProgress = false
+        AppState.executionInProgress = false
 
         let pathDict:[String: String] = ["timestampDirPath": timestampDirPath,
                                          "exitCode": String(exitCode)]
