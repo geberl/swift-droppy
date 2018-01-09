@@ -33,7 +33,7 @@ struct AppState {
     static var executionInProgress: Bool = false
     
     static var interpreterStockName: String = "macOS pre-installed"
-    static var bundledWorkspaceVersion: String = "v2.0 (6558798) (2017-12-23)"
+    static var bundledWorkspaceVersion: String = "v2.1 (832bf42) (2018-01-09)"
     static var bundledRunVersion: String = "v2.0 (c5c07dc) (2017-12-21)"
     
     static var initialSetupCompleted: Bool = false
