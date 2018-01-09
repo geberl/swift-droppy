@@ -73,7 +73,7 @@ class DragDropView: NSView {
         self.executionCancel = true
         
         // Clear status text before sending executionFinished to avoid the text hanging at "Waiting ...".
-        let statusDict:[String: String] = ["text": ""]
+        let statusDict: [String: String] = ["text": ""]
         NotificationCenter.default.post(name: .executionStatus, object: nil, userInfo: statusDict)
         
         NotificationCenter.default.post(name: .executionFinished, object: nil)
@@ -95,7 +95,15 @@ class DragDropView: NSView {
     }
 
     override func draggingExited(_ sender: NSDraggingInfo?) {
-        NotificationCenter.default.post(name: .draggingExited, object: nil)
+        // Put info about the current execution status in the dict, to set the correct images.
+        var statusDict: [String: Bool] = [:]
+        if self.executionInProgress {
+            statusDict["executionInProgress"] = true
+        } else {
+            statusDict["executionInProgress"] = false
+        }
+        
+        NotificationCenter.default.post(name: .draggingExited, object: nil, userInfo: statusDict)
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {

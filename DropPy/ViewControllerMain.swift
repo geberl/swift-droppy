@@ -194,14 +194,32 @@ class ViewControllerMain: NSViewController {
     }
     
     @objc func setZoneDashed(_ notification: Notification) {
+        // Determine if there should not be the line version set instead.
+        if let executionInProgress = notification.userInfo?["executionInProgress"] as? Bool {
+            if executionInProgress {
+                self.setZoneLine(nil)
+                return
+            }
+        }
+        
+        // Execution is not in progress, set the dashed version.
         zoneImage.image = NSImage(named: NSImage.Name(rawValue: "zone-dashed"))
     }
     
-    @objc func setZoneLine(_ notification: Notification) {
+    @objc func setZoneLine(_ notification: Notification?) {
         zoneImage.image = NSImage(named: NSImage.Name(rawValue: "zone-line"))
     }
     
     @objc func setLogo(_ notification: Notification) {
+        // Determine if there should not be the spinner logo set instead.
+        if let executionInProgress = notification.userInfo?["executionInProgress"] as? Bool {
+            if executionInProgress {
+                self.setLogoSpinner(nil)
+                return
+            }
+        }
+        
+        // Execution is not in progress, set the Workflow's image, or the default one.
         logoImageView.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
         logoImageView.animates = false
         
@@ -223,7 +241,7 @@ class ViewControllerMain: NSViewController {
         }
     }
     
-    @objc func setLogoSpinner(_ notification: Notification) {
+    @objc func setLogoSpinner(_ notification: Notification?) {
         if let asset = NSDataAsset(name: NSDataAsset.Name(rawValue: "logo-spinner"), bundle: Bundle.main) {
             logoImageView.imageScaling = NSImageScaling.scaleNone
             logoImageView.animates = true
