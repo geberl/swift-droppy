@@ -279,16 +279,18 @@ class WindowControllerMain: NSWindowController {
         errorAlert.messageText = "Running one of your Tasks failed"
         errorAlert.informativeText = "Take a look in the log file for details."
         errorAlert.addButton(withTitle: "Ok")
-        errorAlert.addButton(withTitle: "Open temp dir")
         errorAlert.addButton(withTitle: "Open log file")
+        errorAlert.addButton(withTitle: "Open temp dir")
         errorAlert.layout()
         errorAlert.alertStyle = NSAlert.Style.warning
         errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
         
         let logFilePath = timestampDirPath + "droppy.log"
-
+        
         errorAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSApplication.ModalResponse.alertSecondButtonReturn {
+                self.openFileInDefaultApp(filePath: logFilePath)
+            } else if returnCode == NSApplication.ModalResponse.alertThirdButtonReturn {
                 var rootDirPath: String
                 if let tempDirPath = AppState.tempDirPath {
                     rootDirPath = tempDirPath
@@ -296,8 +298,6 @@ class WindowControllerMain: NSWindowController {
                     rootDirPath = timestampDirPath
                 }
                 self.openFileInFinder(filePath: logFilePath, rootDir: rootDirPath)
-            } else if returnCode == NSApplication.ModalResponse.alertThirdButtonReturn {
-                self.openFileInDefaultApp(filePath: logFilePath)
             }
         })
     }
