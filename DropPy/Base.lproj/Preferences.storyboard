@@ -452,7 +452,7 @@
                                         <items>
                                             <menuItem title="Internal text editor" state="on" id="djL-MK-gRX"/>
                                             <menuItem title="External text editor" enabled="NO" id="9RT-gh-3oG"/>
-                                            <menuItem title="Internal Workflow editor" hidden="YES" enabled="NO" id="ce6-ir-N3V"/>
+                                            <menuItem title="Internal Workflow editor" id="ce6-ir-N3V"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>

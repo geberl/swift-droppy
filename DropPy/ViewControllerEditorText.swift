@@ -1,5 +1,5 @@
 //
-//  ViewControllerEditor.swift
+//  ViewControllerEditorText.swift
 //  DropPy
 //
 //  Created by Günther Eberl on 17.08.17.
@@ -10,7 +10,7 @@ import Cocoa
 import os.log
 
 
-class ViewControllerEditor: NSViewController {
+class ViewControllerEditorText: NSViewController {
     
     var jsonPath: String = ""
     
@@ -18,7 +18,7 @@ class ViewControllerEditor: NSViewController {
         super.viewWillAppear()
         self.correctTextViewBehavior()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerEditor.loadFile),
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerEditorText.loadFile),
                                                name: .loadFileInEditor, object: nil)
     }
 

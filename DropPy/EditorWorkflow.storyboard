@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="rLJ-BA-VOK">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.SpriteKitIBPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="QRL-Bk-cOR">
+            <objects>
+                <windowController id="rLJ-BA-VOK" customClass="WindowControllerEditorWorkflow" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Workflow Editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="v5s-32-1Ka" customClass="WindowEditorWorkflow" customModule="DropPy" customModuleProvider="target">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+                        <connections>
+                            <outlet property="delegate" destination="rLJ-BA-VOK" id="4wx-ZQ-hlM"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="vHS-Qq-JTP" kind="relationship" relationship="window.shadowedContentViewController" id="C6k-IL-2wC"/>
+                    </connections>
+                </windowController>
+                <customObject id="eyy-iO-f9P" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="12" y="58"/>
+        </scene>
+        <!--Tab View Controller-->
+        <scene sceneID="KhR-FW-gyF">
+            <objects>
+                <tabViewController selectedTabViewItemIndex="0" id="vHS-Qq-JTP" sceneMemberID="viewController">
+                    <tabViewItems>
+                        <tabViewItem label="CGRect" identifier="" id="dIz-xU-oTv"/>
+                        <tabViewItem label="SpriteKit" id="wa5-RZ-c08"/>
+                    </tabViewItems>
+                    <tabView key="tabView" type="noTabsNoBorder" id="omZ-tu-EAK">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <font key="font" metaFont="message"/>
+                        <tabViewItems/>
+                        <connections>
+                            <outlet property="delegate" destination="vHS-Qq-JTP" id="Ic1-FC-Ldo"/>
+                        </connections>
+                    </tabView>
+                    <connections>
+                        <outlet property="tabView" destination="omZ-tu-EAK" id="Fxo-rH-UxR"/>
+                        <segue destination="1dU-Rb-Esf" kind="relationship" relationship="tabItems" id="mAx-ub-Jve"/>
+                        <segue destination="6Su-bn-9sq" kind="relationship" relationship="tabItems" id="cWH-IM-edF"/>
+                    </connections>
+                </tabViewController>
+                <customObject id="FIi-cQ-BfB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="12" y="491"/>
+        </scene>
+        <!--View Controller Spritekit-->
+        <scene sceneID="BXA-n1-k3B">
+            <objects>
+                <viewController id="6Su-bn-9sq" customClass="ViewControllerSpritekit" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="0rq-en-Sp4">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <skView fixedFrame="YES" asynchronous="NO" sceneName="MyScene.sks" shouldCullNonVisibleNodes="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5e-zZ-vD1">
+                                <rect key="frame" x="20" y="20" width="410" height="235"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </skView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Odz-Lw-evB">
+                                <rect key="frame" x="18" y="263" width="444" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Test One Three" id="gHc-Fe-mfd">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="bwD-ln-Oxb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="790" y="345"/>
+        </scene>
+        <!--View Controller Rects-->
+        <scene sceneID="PQ3-72-V04">
+            <objects>
+                <viewController id="1dU-Rb-Esf" customClass="ViewControllerRects" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="KpI-WV-amK">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A2B-qt-Pe5" customClass="ViewBackground" customModule="DropPy" customModuleProvider="target">
+                                <rect key="frame" x="20" y="20" width="317" height="260"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </customView>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lNd-aa-j5e">
+                                <rect key="frame" x="355" y="252" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C6U-0n-niG">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onCreateButton:" target="1dU-Rb-Esf" id="4Pe-9U-ouw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="Unx-7p-xT1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="790" y="735"/>
+        </scene>
+    </scenes>
+</document>

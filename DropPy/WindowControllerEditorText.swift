@@ -1,5 +1,5 @@
 //
-//  WindowControllerEditor.swift
+//  WindowControllerEditorText.swift
 //  DropPy
 //
 //  Created by Günther Eberl on 17.08.17.
@@ -8,13 +8,13 @@
 
 import Cocoa
 
-class WindowControllerEditor: NSWindowController {
+class WindowControllerEditorText: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
         self.window?.center()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerEditor.closeWindow),
+        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerEditorText.closeWindow),
                                                name: .closeEditor, object: nil)
     }
     

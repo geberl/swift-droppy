@@ -33,11 +33,16 @@ class WindowControllerMain: NSWindowController {
         }
     }
 
-    lazy var editorWindowController: WindowControllerEditor  = {
-        let wcSB = NSStoryboard(name: NSStoryboard.Name(rawValue: "Editor"), bundle: Bundle.main)
-        return wcSB.instantiateInitialController() as! WindowControllerEditor
+    lazy var textEditorWindowController: WindowControllerEditorText  = {
+        let wcSB = NSStoryboard(name: NSStoryboard.Name(rawValue: "EditorText"), bundle: Bundle.main)
+        return wcSB.instantiateInitialController() as! WindowControllerEditorText
     }()
-
+    
+    lazy var workflowEditorWindowController: WindowControllerEditorWorkflow  = {
+        let wcSB = NSStoryboard(name: NSStoryboard.Name(rawValue: "EditorWorkflow"), bundle: Bundle.main)
+        return wcSB.instantiateInitialController() as! WindowControllerEditorWorkflow
+    }()
+    
     override func windowWillLoad() {
         NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.refreshToolbarDropdown),
                                                name: .workflowsChanged, object: nil)
@@ -201,8 +206,10 @@ class WindowControllerMain: NSWindowController {
                 // Should currently not be possible to land here, deactivated, entry not displaed in preferences.
                 os_log("TODO: Open internal Workflow editor now", log: logUi, type: .debug)
                 
+                self.workflowEditorWindowController.showWindow(self)
+                
             } else if editorForWorkflows == "Internal text editor" {
-                self.editorWindowController.showWindow(self)
+                self.textEditorWindowController.showWindow(self)
                 
                 // Put path into dict inside Notification.
                 let pathDict:[String: String] = ["path": jsonPath]

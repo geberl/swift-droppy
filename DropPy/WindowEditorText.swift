@@ -1,5 +1,5 @@
 //
-//  WindowEditor.swift
+//  WindowEditorText.swift
 //  DropPy
 //
 //  Created by Günther Eberl on 03.12.17.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class WindowEditor: NSWindow {
+class WindowEditorText: NSWindow {
     
     // Empty class created to get rid of XCode bug in 9.1:
     // (only this message shows up on startup on the console, the app starts and works without problems)

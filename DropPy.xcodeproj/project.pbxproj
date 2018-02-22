@@ -16,7 +16,7 @@
 		A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432EA711EED81BB00DCF128 /* ViewControllerEditorPrefs.swift */; };
 		A43523571F7D6A6000265672 /* TabViewControllerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43523561F7D6A6000265672 /* TabViewControllerPrefs.swift */; };
 		A43E6CC91FD40A9800D6F8BA /* WindowMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CC81FD40A9800D6F8BA /* WindowMain.swift */; };
-		A43E6CCB1FD40B9F00D6F8BA /* WindowEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCA1FD40B9F00D6F8BA /* WindowEditor.swift */; };
+		A43E6CCB1FD40B9F00D6F8BA /* WindowEditorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCA1FD40B9F00D6F8BA /* WindowEditorText.swift */; };
 		A43E6CCD1FD40BF500D6F8BA /* WindowRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCC1FD40BF500D6F8BA /* WindowRegistration.swift */; };
 		A43E6CCF1FD40C3B00D6F8BA /* WindowPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCE1FD40C3B00D6F8BA /* WindowPrefs.swift */; };
 		A4410F941FD41B9F0001F7F7 /* WindowControllerFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */; };
@@ -31,9 +31,9 @@
 		A46393381E8FDA40000C7BDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46393361E8FDA40000C7BDB /* Main.storyboard */; };
 		A46393431E8FDA40000C7BDB /* DropPyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393421E8FDA40000C7BDB /* DropPyTests.swift */; };
 		A463934E1E8FDA40000C7BDB /* DropPyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A463934D1E8FDA40000C7BDB /* DropPyUITests.swift */; };
-		A46CE6B81F459A34000DEACB /* Editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46CE6B71F459A34000DEACB /* Editor.storyboard */; };
-		A46CE6BA1F459BEE000DEACB /* WindowControllerEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46CE6B91F459BEE000DEACB /* WindowControllerEditor.swift */; };
-		A46CE6BC1F459F87000DEACB /* ViewControllerEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46CE6BB1F459F87000DEACB /* ViewControllerEditor.swift */; };
+		A46CE6B81F459A34000DEACB /* EditorText.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46CE6B71F459A34000DEACB /* EditorText.storyboard */; };
+		A46CE6BA1F459BEE000DEACB /* WindowControllerEditorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46CE6B91F459BEE000DEACB /* WindowControllerEditorText.swift */; };
+		A46CE6BC1F459F87000DEACB /* ViewControllerEditorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46CE6BB1F459F87000DEACB /* ViewControllerEditorText.swift */; };
 		A48706381F567D5B005EF67C /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A48706371F567D5B005EF67C /* Registration.storyboard */; };
 		A487063A1F568065005EF67C /* ViewControllerRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48706391F568065005EF67C /* ViewControllerRegistration.swift */; };
 		A487063C1F5680A2005EF67C /* WindowControllerRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A487063B1F5680A2005EF67C /* WindowControllerRegistration.swift */; };
@@ -48,6 +48,14 @@
 		A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */; };
 		A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */; };
 		A4C61CF11F56982900759F57 /* PythonExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C61CF01F56982900759F57 /* PythonExecutor.swift */; };
+		A4C97EAE203EE36F008AA81F /* EditorWorkflow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4C97EAD203EE36F008AA81F /* EditorWorkflow.storyboard */; };
+		A4C97EB0203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EAF203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift */; };
+		A4C97EB2203EF53D008AA81F /* WindowEditorWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB1203EF53D008AA81F /* WindowEditorWorkflow.swift */; };
+		A4C97EB4203EF59E008AA81F /* ViewControllerSpritekit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB3203EF59E008AA81F /* ViewControllerSpritekit.swift */; };
+		A4C97EB6203EFC9B008AA81F /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A4C97EB5203EFC9B008AA81F /* MyScene.sks */; };
+		A4C97EB8203EFE98008AA81F /* ViewControllerRects.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB7203EFE98008AA81F /* ViewControllerRects.swift */; };
+		A4C97EBA203F07AE008AA81F /* ViewBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB9203F07AE008AA81F /* ViewBackground.swift */; };
+		A4C97EBC203F12E3008AA81F /* ViewTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EBB203F12E3008AA81F /* ViewTask.swift */; };
 		A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */; };
 		A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E8DF931EDAA29100D12029 /* DragDropView.swift */; };
 		A4EE62BD1F72C9B800370F26 /* CFUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62BC1F72C9B800370F26 /* CFUtil.swift */; };
@@ -108,7 +116,7 @@
 		A432EA711EED81BB00DCF128 /* ViewControllerEditorPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEditorPrefs.swift; sourceTree = "<group>"; };
 		A43523561F7D6A6000265672 /* TabViewControllerPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerPrefs.swift; sourceTree = "<group>"; };
 		A43E6CC81FD40A9800D6F8BA /* WindowMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowMain.swift; sourceTree = "<group>"; };
-		A43E6CCA1FD40B9F00D6F8BA /* WindowEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowEditor.swift; sourceTree = "<group>"; };
+		A43E6CCA1FD40B9F00D6F8BA /* WindowEditorText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowEditorText.swift; sourceTree = "<group>"; };
 		A43E6CCC1FD40BF500D6F8BA /* WindowRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRegistration.swift; sourceTree = "<group>"; };
 		A43E6CCE1FD40C3B00D6F8BA /* WindowPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowPrefs.swift; sourceTree = "<group>"; };
 		A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllerFirstRun.swift; sourceTree = "<group>"; };
@@ -133,9 +141,9 @@
 		A46393491E8FDA40000C7BDB /* DropPyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DropPyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A463934D1E8FDA40000C7BDB /* DropPyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropPyUITests.swift; sourceTree = "<group>"; };
 		A463934F1E8FDA40000C7BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A46CE6B71F459A34000DEACB /* Editor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Editor.storyboard; sourceTree = "<group>"; };
-		A46CE6B91F459BEE000DEACB /* WindowControllerEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerEditor.swift; sourceTree = "<group>"; };
-		A46CE6BB1F459F87000DEACB /* ViewControllerEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEditor.swift; sourceTree = "<group>"; };
+		A46CE6B71F459A34000DEACB /* EditorText.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EditorText.storyboard; sourceTree = "<group>"; };
+		A46CE6B91F459BEE000DEACB /* WindowControllerEditorText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerEditorText.swift; sourceTree = "<group>"; };
+		A46CE6BB1F459F87000DEACB /* ViewControllerEditorText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEditorText.swift; sourceTree = "<group>"; };
 		A48706371F567D5B005EF67C /* Registration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
 		A48706391F568065005EF67C /* ViewControllerRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerRegistration.swift; sourceTree = "<group>"; };
 		A487063B1F5680A2005EF67C /* WindowControllerRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerRegistration.swift; sourceTree = "<group>"; };
@@ -150,6 +158,14 @@
 		A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerInterpreter.swift; sourceTree = "<group>"; };
 		A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWorkspace.swift; sourceTree = "<group>"; };
 		A4C61CF01F56982900759F57 /* PythonExecutor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PythonExecutor.swift; sourceTree = "<group>"; };
+		A4C97EAD203EE36F008AA81F /* EditorWorkflow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditorWorkflow.storyboard; sourceTree = "<group>"; };
+		A4C97EAF203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllerEditorWorkflow.swift; sourceTree = "<group>"; };
+		A4C97EB1203EF53D008AA81F /* WindowEditorWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowEditorWorkflow.swift; sourceTree = "<group>"; };
+		A4C97EB3203EF59E008AA81F /* ViewControllerSpritekit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerSpritekit.swift; sourceTree = "<group>"; };
+		A4C97EB5203EFC9B008AA81F /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
+		A4C97EB7203EFE98008AA81F /* ViewControllerRects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerRects.swift; sourceTree = "<group>"; };
+		A4C97EB9203F07AE008AA81F /* ViewBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBackground.swift; sourceTree = "<group>"; };
+		A4C97EBB203F12E3008AA81F /* ViewTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTask.swift; sourceTree = "<group>"; };
 		A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerMain.swift; sourceTree = "<group>"; };
 		A4E8DF931EDAA29100D12029 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
 		A4EE62BC1F72C9B800370F26 /* CFUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFUtil.swift; sourceTree = "<group>"; };
@@ -304,9 +320,10 @@
 				A401DBF51F712E3900A12302 /* Update.swift */,
 				A48DAE571F88B5CA00D7F96E /* WebLinks.swift */,
 				A46022751EED37F00060FA75 /* Main */,
-				A46CE6B61F459A0B000DEACB /* Editor */,
-				A48706361F567D1B005EF67C /* Registration */,
+				A46CE6B61F459A0B000DEACB /* Editor Text */,
+				A4C97EAC203EE309008AA81F /* Editor Workflow */,
 				A46022741EED37D10060FA75 /* Preferences */,
+				A48706361F567D1B005EF67C /* Registration */,
 				A444507B1EF0EBF000EBB485 /* FirstRun */,
 			);
 			path = DropPy;
@@ -330,15 +347,15 @@
 			path = DropPyUITests;
 			sourceTree = "<group>";
 		};
-		A46CE6B61F459A0B000DEACB /* Editor */ = {
+		A46CE6B61F459A0B000DEACB /* Editor Text */ = {
 			isa = PBXGroup;
 			children = (
-				A46CE6B71F459A34000DEACB /* Editor.storyboard */,
-				A46CE6B91F459BEE000DEACB /* WindowControllerEditor.swift */,
-				A43E6CCA1FD40B9F00D6F8BA /* WindowEditor.swift */,
-				A46CE6BB1F459F87000DEACB /* ViewControllerEditor.swift */,
+				A46CE6B71F459A34000DEACB /* EditorText.storyboard */,
+				A46CE6B91F459BEE000DEACB /* WindowControllerEditorText.swift */,
+				A43E6CCA1FD40B9F00D6F8BA /* WindowEditorText.swift */,
+				A46CE6BB1F459F87000DEACB /* ViewControllerEditorText.swift */,
 			);
-			name = Editor;
+			name = "Editor Text";
 			sourceTree = "<group>";
 		};
 		A48706361F567D1B005EF67C /* Registration */ = {
@@ -350,6 +367,21 @@
 				A48706391F568065005EF67C /* ViewControllerRegistration.swift */,
 			);
 			name = Registration;
+			sourceTree = "<group>";
+		};
+		A4C97EAC203EE309008AA81F /* Editor Workflow */ = {
+			isa = PBXGroup;
+			children = (
+				A4C97EAD203EE36F008AA81F /* EditorWorkflow.storyboard */,
+				A4C97EAF203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift */,
+				A4C97EB1203EF53D008AA81F /* WindowEditorWorkflow.swift */,
+				A4C97EB7203EFE98008AA81F /* ViewControllerRects.swift */,
+				A4C97EB9203F07AE008AA81F /* ViewBackground.swift */,
+				A4C97EBB203F12E3008AA81F /* ViewTask.swift */,
+				A4C97EB3203EF59E008AA81F /* ViewControllerSpritekit.swift */,
+				A4C97EB5203EFC9B008AA81F /* MyScene.sks */,
+			);
+			name = "Editor Workflow";
 			sourceTree = "<group>";
 		};
 		A4EE62BB1F72C97500370F26 /* CocoaFob */ = {
@@ -524,8 +556,10 @@
 				A46393351E8FDA40000C7BDB /* Assets.xcassets in Resources */,
 				A48706381F567D5B005EF67C /* Registration.storyboard in Resources */,
 				A46393381E8FDA40000C7BDB /* Main.storyboard in Resources */,
-				A46CE6B81F459A34000DEACB /* Editor.storyboard in Resources */,
+				A4C97EAE203EE36F008AA81F /* EditorWorkflow.storyboard in Resources */,
+				A46CE6B81F459A34000DEACB /* EditorText.storyboard in Resources */,
 				A417ACE41EED7AFD00C08DED /* Preferences.storyboard in Resources */,
+				A4C97EB6203EFC9B008AA81F /* MyScene.sks in Resources */,
 				A444507D1EF0EC5600EBB485 /* FirstRun.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -615,10 +649,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A43E6CCF1FD40C3B00D6F8BA /* WindowPrefs.swift in Sources */,
-				A43E6CCB1FD40B9F00D6F8BA /* WindowEditor.swift in Sources */,
+				A43E6CCB1FD40B9F00D6F8BA /* WindowEditorText.swift in Sources */,
 				A48DAE581F88B5CA00D7F96E /* WebLinks.swift in Sources */,
 				A401DBF41F71292400A12302 /* Prefs.swift in Sources */,
+				A4C97EB8203EFE98008AA81F /* ViewControllerRects.swift in Sources */,
 				A4410F961FD420710001F7F7 /* WindowFirstRun.swift in Sources */,
+				A4C97EB2203EF53D008AA81F /* WindowEditorWorkflow.swift in Sources */,
 				A41A701B1F57354100117E18 /* Common.swift in Sources */,
 				A4EE62BF1F72C9E000370F26 /* CocoaFobError.swift in Sources */,
 				A4EE62C21F72C9EC00370F26 /* CocoaFobStringExt.swift in Sources */,
@@ -627,11 +663,13 @@
 				A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */,
 				A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */,
 				A4EE62BD1F72C9B800370F26 /* CFUtil.swift in Sources */,
-				A46CE6BA1F459BEE000DEACB /* WindowControllerEditor.swift in Sources */,
-				A46CE6BC1F459F87000DEACB /* ViewControllerEditor.swift in Sources */,
+				A46CE6BA1F459BEE000DEACB /* WindowControllerEditorText.swift in Sources */,
+				A46CE6BC1F459F87000DEACB /* ViewControllerEditorText.swift in Sources */,
+				A4C97EBC203F12E3008AA81F /* ViewTask.swift in Sources */,
 				A4B42B5A1FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift in Sources */,
 				A4BC0AD91FD950D300EF42BE /* ViewControllerButtons.swift in Sources */,
 				A4EE62C31F72C9EC00370F26 /* CocoaFobLicVerifier.swift in Sources */,
+				A4C97EBA203F07AE008AA81F /* ViewBackground.swift in Sources */,
 				A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */,
 				A4B42B571FD5C6530078AC69 /* ViewControllerWelcome.swift in Sources */,
 				A4B42B5D1FD5D4C80078AC69 /* ViewControllerDocs.swift in Sources */,
@@ -642,11 +680,13 @@
 				A43E6CC91FD40A9800D6F8BA /* WindowMain.swift in Sources */,
 				A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */,
 				A4410F941FD41B9F0001F7F7 /* WindowControllerFirstRun.swift in Sources */,
+				A4C97EB4203EF59E008AA81F /* ViewControllerSpritekit.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,
 				A45EA3C21F7105E100EA4310 /* RegTrial.swift in Sources */,
 				A43E6CCD1FD40BF500D6F8BA /* WindowRegistration.swift in Sources */,
 				A487063A1F568065005EF67C /* ViewControllerRegistration.swift in Sources */,
 				A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */,
+				A4C97EB0203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift in Sources */,
 				A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */,
 				A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */,
 				A4B42B601FD5D4EE0078AC69 /* ViewControllerFinish.swift in Sources */,
