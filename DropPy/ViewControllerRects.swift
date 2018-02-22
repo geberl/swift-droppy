@@ -10,10 +10,6 @@ import Cocoa
 import os.log
 
 
-// Useful resource:
-// https://stackoverflow.com/questions/46097132/how-to-move-nsimageview-inside-nsview-in-cocoa
-
-
 class ViewControllerRects: NSViewController {
     
     override func viewWillAppear() {
@@ -24,12 +20,6 @@ class ViewControllerRects: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         os_log("ViewControllerRects viewDidAppear", log: logGeneral)
-        
-//        let theRectangle = NSView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-//        theRectangle.wantsLayer = true
-//        theRectangle.layer!.backgroundColor = NSColor.red.cgColor
-//        self.view.addSubview(theRectangle)
-        
     }
     
     @IBAction func onCreateButton(_ sender: NSButton) {

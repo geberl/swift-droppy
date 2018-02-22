@@ -91,13 +91,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A2B-qt-Pe5" customClass="ViewBackground" customModule="DropPy" customModuleProvider="target">
-                                <rect key="frame" x="20" y="20" width="317" height="260"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="A2B-qt-Pe5" customClass="ViewBackground" customModule="DropPy" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="350" height="300"/>
                             </customView>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lNd-aa-j5e">
-                                <rect key="frame" x="355" y="252" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lNd-aa-j5e">
+                                <rect key="frame" x="364" y="252" width="72" height="32"/>
                                 <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C6U-0n-niG">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -107,6 +105,15 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="A2B-qt-Pe5" secondAttribute="trailing" constant="100" id="3F7-vK-Mlk"/>
+                            <constraint firstItem="lNd-aa-j5e" firstAttribute="top" secondItem="KpI-WV-amK" secondAttribute="top" constant="20" id="7in-Zv-avh"/>
+                            <constraint firstItem="A2B-qt-Pe5" firstAttribute="top" secondItem="KpI-WV-amK" secondAttribute="top" id="NPj-rd-kB2"/>
+                            <constraint firstItem="lNd-aa-j5e" firstAttribute="leading" secondItem="A2B-qt-Pe5" secondAttribute="trailing" constant="20" id="e9d-S8-YZX"/>
+                            <constraint firstItem="A2B-qt-Pe5" firstAttribute="leading" secondItem="KpI-WV-amK" secondAttribute="leading" id="l3U-9l-UdB"/>
+                            <constraint firstAttribute="trailing" secondItem="lNd-aa-j5e" secondAttribute="trailing" constant="20" id="l99-y2-a7h"/>
+                            <constraint firstAttribute="bottom" secondItem="A2B-qt-Pe5" secondAttribute="bottom" id="w39-Su-AT1"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <customObject id="Unx-7p-xT1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
