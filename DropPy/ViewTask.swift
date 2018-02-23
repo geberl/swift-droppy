@@ -33,8 +33,11 @@ class ViewTask: NSView {
         label.alignment = .center
         self.addSubview(label)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewTask.selectionBorder),
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewTask.select),
                                                name: .selectTask, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewTask.select),
+                                               name: .clearSelection, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(ViewTask.remove),
                                                name: .removeTask, object: nil)
@@ -44,8 +47,11 @@ class ViewTask: NSView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func selectionBorder(_  notification: Notification) {
-        guard let uuidToSelect = notification.userInfo?["selectedTask"] as? String else { return }
+    @objc func select(_  notification: Notification) {
+        guard let uuidToSelect = notification.userInfo?["selectedTask"] as? String else {
+            self.layer?.borderWidth = 0
+            return
+        }
         
         if self.uuid == uuidToSelect {
             self.layer?.borderWidth = 4

@@ -9,9 +9,9 @@
         <!--Window Controller-->
         <scene sceneID="QRL-Bk-cOR">
             <objects>
-                <windowController id="rLJ-BA-VOK" customClass="WindowControllerEditorWorkflow" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController showSeguePresentationStyle="single" id="rLJ-BA-VOK" customClass="WindowControllerEditorWorkflow" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Workflow Editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="v5s-32-1Ka" customClass="WindowEditorWorkflow" customModule="DropPy" customModuleProvider="target">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
@@ -25,22 +25,22 @@
                 </windowController>
                 <customObject id="eyy-iO-f9P" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12" y="58"/>
+            <point key="canvasLocation" x="584" y="-478"/>
         </scene>
         <!--View Controller Rects-->
         <scene sceneID="PQ3-72-V04">
             <objects>
                 <viewController id="1dU-Rb-Esf" customClass="ViewControllerRects" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="KpI-WV-amK">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="A2B-qt-Pe5" customClass="ViewBackground" customModule="DropPy" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="350" height="300"/>
+                                <rect key="frame" x="200" y="0.0" width="400" height="500"/>
                             </customView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lNd-aa-j5e">
-                                <rect key="frame" x="364" y="252" width="72" height="32"/>
-                                <buttonCell key="cell" type="push" title="+" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C6U-0n-niG">
+                                <rect key="frame" x="14" y="452" width="172" height="32"/>
+                                <buttonCell key="cell" type="push" title="Add" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C6U-0n-niG">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -49,8 +49,8 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zWz-fs-7PB" userLabel="Remove">
-                                <rect key="frame" x="364" y="221" width="72" height="32"/>
-                                <buttonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="K5A-qy-gSW">
+                                <rect key="frame" x="14" y="421" width="172" height="32"/>
+                                <buttonCell key="cell" type="push" title="Remove" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="K5A-qy-gSW">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -58,29 +58,34 @@
                                     <action selector="onRemoveButton:" target="1dU-Rb-Esf" id="9do-al-xEv"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q1D-7H-s9M">
-                                <rect key="frame" x="388" y="151" width="37" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="RJe-Dy-wPi">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e5M-xR-KTh">
+                                <rect key="frame" x="618" y="463" width="164" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Properties" id="w6j-x2-Ve3">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="A2B-qt-Pe5" secondAttribute="trailing" constant="100" id="3F7-vK-Mlk"/>
+                            <constraint firstItem="A2B-qt-Pe5" firstAttribute="leading" secondItem="zWz-fs-7PB" secondAttribute="trailing" constant="20" id="2H6-b5-5tf"/>
+                            <constraint firstItem="lNd-aa-j5e" firstAttribute="leading" secondItem="KpI-WV-amK" secondAttribute="leading" constant="20" id="2gi-JH-0m0"/>
+                            <constraint firstAttribute="trailing" secondItem="A2B-qt-Pe5" secondAttribute="trailing" constant="200" id="3F7-vK-Mlk"/>
+                            <constraint firstItem="zWz-fs-7PB" firstAttribute="leading" secondItem="KpI-WV-amK" secondAttribute="leading" constant="20" id="5dm-gy-FnK"/>
+                            <constraint firstItem="e5M-xR-KTh" firstAttribute="top" secondItem="KpI-WV-amK" secondAttribute="top" constant="20" id="66j-rl-eSj"/>
                             <constraint firstItem="lNd-aa-j5e" firstAttribute="top" secondItem="KpI-WV-amK" secondAttribute="top" constant="20" id="7in-Zv-avh"/>
-                            <constraint firstItem="zWz-fs-7PB" firstAttribute="leading" secondItem="A2B-qt-Pe5" secondAttribute="trailing" constant="20" id="B6t-rU-3ME"/>
+                            <constraint firstAttribute="trailing" secondItem="e5M-xR-KTh" secondAttribute="trailing" constant="20" id="BtE-LI-DS4"/>
                             <constraint firstItem="A2B-qt-Pe5" firstAttribute="top" secondItem="KpI-WV-amK" secondAttribute="top" id="NPj-rd-kB2"/>
-                            <constraint firstItem="lNd-aa-j5e" firstAttribute="leading" secondItem="A2B-qt-Pe5" secondAttribute="trailing" constant="20" id="e9d-S8-YZX"/>
-                            <constraint firstAttribute="trailing" secondItem="zWz-fs-7PB" secondAttribute="trailing" constant="20" id="gn9-LJ-gYl"/>
+                            <constraint firstItem="A2B-qt-Pe5" firstAttribute="leading" secondItem="KpI-WV-amK" secondAttribute="leading" constant="200" id="bcw-8R-SFZ"/>
+                            <constraint firstItem="e5M-xR-KTh" firstAttribute="leading" secondItem="A2B-qt-Pe5" secondAttribute="trailing" constant="20" id="f6V-gJ-QK5"/>
                             <constraint firstItem="zWz-fs-7PB" firstAttribute="top" secondItem="lNd-aa-j5e" secondAttribute="bottom" constant="10" id="i4Y-NV-7Sv"/>
-                            <constraint firstItem="A2B-qt-Pe5" firstAttribute="leading" secondItem="KpI-WV-amK" secondAttribute="leading" id="l3U-9l-UdB"/>
-                            <constraint firstAttribute="trailing" secondItem="lNd-aa-j5e" secondAttribute="trailing" constant="20" id="l99-y2-a7h"/>
+                            <constraint firstItem="A2B-qt-Pe5" firstAttribute="leading" secondItem="lNd-aa-j5e" secondAttribute="trailing" constant="20" id="kDR-HN-Arh"/>
                             <constraint firstAttribute="bottom" secondItem="A2B-qt-Pe5" secondAttribute="bottom" id="w39-Su-AT1"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="removeButton" destination="zWz-fs-7PB" id="ZcK-nb-Ju6"/>
+                    </connections>
                 </viewController>
                 <customObject id="Unx-7p-xT1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

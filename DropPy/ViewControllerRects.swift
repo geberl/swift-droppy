@@ -15,6 +15,12 @@ class ViewControllerRects: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         os_log("ViewControllerRects viewWillAppear", log: logGeneral)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerRects.disableRemoveButton),
+                                               name: .clearSelection, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerRects.enableRemoveButton),
+                                               name: .selectTask, object: nil)
     }
     
     override func viewDidAppear() {
@@ -30,6 +36,19 @@ class ViewControllerRects: NSViewController {
     @IBAction func onRemoveButton(_ sender: NSButton) {
         os_log("onRemoveButton", log: logGeneral)
         NotificationCenter.default.post(name: .removeTask, object: nil)
+        self.disableRemoveButton(nil)
+    }
+    
+    @IBOutlet weak var removeButton: NSButton!
+    
+    @objc func disableRemoveButton(_ notification: Notification?) {
+        os_log("disableRemoveButton", log: logGeneral)
+        self.removeButton.isEnabled = false
+    }
+    
+    @objc func enableRemoveButton(_ notification: Notification?) {
+        os_log("enableRemoveButton", log: logGeneral)
+        self.removeButton.isEnabled = true
     }
     
 }

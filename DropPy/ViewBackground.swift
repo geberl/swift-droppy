@@ -32,5 +32,10 @@ class ViewBackground: NSView {
         let myTask = ViewTask()
         self.addSubview(myTask)
     }
+    
+    override func mouseDown(with event: NSEvent) {
+        super.mouseDown(with: event)
+        NotificationCenter.default.post(name: .clearSelection, object: nil)
+    }
 
 }

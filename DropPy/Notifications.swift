@@ -52,4 +52,5 @@ extension Notification.Name {
     static let addTask = Notification.Name("addTask")
     static let removeTask = Notification.Name("removeTask")
     static let selectTask = Notification.Name("selectTask")
+    static let clearSelection = Notification.Name("clearSelection")
 }
