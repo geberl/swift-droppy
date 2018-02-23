@@ -22,9 +22,14 @@ class ViewControllerRects: NSViewController {
         os_log("ViewControllerRects viewDidAppear", log: logGeneral)
     }
     
-    @IBAction func onCreateButton(_ sender: NSButton) {
-        os_log("onCreateButton", log: logGeneral)
+    @IBAction func onAddButton(_ sender: NSButton) {
+        os_log("onAddButton", log: logGeneral)
         NotificationCenter.default.post(name: .addTask, object: nil)
+    }
+    
+    @IBAction func onRemoveButton(_ sender: NSButton) {
+        os_log("onRemoveButton", log: logGeneral)
+        NotificationCenter.default.post(name: .removeTask, object: nil)
     }
     
 }

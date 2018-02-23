@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
-        <plugIn identifier="com.apple.SpriteKitIBPlugin" version="13771"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,67 +20,12 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="vHS-Qq-JTP" kind="relationship" relationship="window.shadowedContentViewController" id="C6k-IL-2wC"/>
+                        <segue destination="1dU-Rb-Esf" kind="relationship" relationship="window.shadowedContentViewController" id="xdE-hm-nzb"/>
                     </connections>
                 </windowController>
                 <customObject id="eyy-iO-f9P" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="12" y="58"/>
-        </scene>
-        <!--Tab View Controller-->
-        <scene sceneID="KhR-FW-gyF">
-            <objects>
-                <tabViewController selectedTabViewItemIndex="0" id="vHS-Qq-JTP" sceneMemberID="viewController">
-                    <tabViewItems>
-                        <tabViewItem label="CGRect" identifier="" id="dIz-xU-oTv"/>
-                        <tabViewItem label="SpriteKit" id="wa5-RZ-c08"/>
-                    </tabViewItems>
-                    <tabView key="tabView" type="noTabsNoBorder" id="omZ-tu-EAK">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <font key="font" metaFont="message"/>
-                        <tabViewItems/>
-                        <connections>
-                            <outlet property="delegate" destination="vHS-Qq-JTP" id="Ic1-FC-Ldo"/>
-                        </connections>
-                    </tabView>
-                    <connections>
-                        <outlet property="tabView" destination="omZ-tu-EAK" id="Fxo-rH-UxR"/>
-                        <segue destination="1dU-Rb-Esf" kind="relationship" relationship="tabItems" id="mAx-ub-Jve"/>
-                        <segue destination="6Su-bn-9sq" kind="relationship" relationship="tabItems" id="cWH-IM-edF"/>
-                    </connections>
-                </tabViewController>
-                <customObject id="FIi-cQ-BfB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="12" y="491"/>
-        </scene>
-        <!--View Controller Spritekit-->
-        <scene sceneID="BXA-n1-k3B">
-            <objects>
-                <viewController id="6Su-bn-9sq" customClass="ViewControllerSpritekit" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="0rq-en-Sp4">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <skView fixedFrame="YES" asynchronous="NO" sceneName="MyScene.sks" shouldCullNonVisibleNodes="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5e-zZ-vD1">
-                                <rect key="frame" x="20" y="20" width="410" height="235"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </skView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Odz-Lw-evB">
-                                <rect key="frame" x="18" y="263" width="444" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Test One Three" id="gHc-Fe-mfd">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
-                    </view>
-                </viewController>
-                <customObject id="bwD-ln-Oxb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="790" y="345"/>
         </scene>
         <!--View Controller Rects-->
         <scene sceneID="PQ3-72-V04">
@@ -96,20 +40,33 @@
                             </customView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lNd-aa-j5e">
                                 <rect key="frame" x="364" y="252" width="72" height="32"/>
-                                <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C6U-0n-niG">
+                                <buttonCell key="cell" type="push" title="+" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C6U-0n-niG">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="onCreateButton:" target="1dU-Rb-Esf" id="4Pe-9U-ouw"/>
+                                    <action selector="onAddButton:" target="1dU-Rb-Esf" id="4Pe-9U-ouw"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zWz-fs-7PB" userLabel="Remove">
+                                <rect key="frame" x="364" y="221" width="72" height="32"/>
+                                <buttonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="K5A-qy-gSW">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onRemoveButton:" target="1dU-Rb-Esf" id="9do-al-xEv"/>
                                 </connections>
                             </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="A2B-qt-Pe5" secondAttribute="trailing" constant="100" id="3F7-vK-Mlk"/>
                             <constraint firstItem="lNd-aa-j5e" firstAttribute="top" secondItem="KpI-WV-amK" secondAttribute="top" constant="20" id="7in-Zv-avh"/>
+                            <constraint firstItem="zWz-fs-7PB" firstAttribute="leading" secondItem="A2B-qt-Pe5" secondAttribute="trailing" constant="20" id="B6t-rU-3ME"/>
                             <constraint firstItem="A2B-qt-Pe5" firstAttribute="top" secondItem="KpI-WV-amK" secondAttribute="top" id="NPj-rd-kB2"/>
                             <constraint firstItem="lNd-aa-j5e" firstAttribute="leading" secondItem="A2B-qt-Pe5" secondAttribute="trailing" constant="20" id="e9d-S8-YZX"/>
+                            <constraint firstAttribute="trailing" secondItem="zWz-fs-7PB" secondAttribute="trailing" constant="20" id="gn9-LJ-gYl"/>
+                            <constraint firstItem="zWz-fs-7PB" firstAttribute="top" secondItem="lNd-aa-j5e" secondAttribute="bottom" constant="10" id="i4Y-NV-7Sv"/>
                             <constraint firstItem="A2B-qt-Pe5" firstAttribute="leading" secondItem="KpI-WV-amK" secondAttribute="leading" id="l3U-9l-UdB"/>
                             <constraint firstAttribute="trailing" secondItem="lNd-aa-j5e" secondAttribute="trailing" constant="20" id="l99-y2-a7h"/>
                             <constraint firstAttribute="bottom" secondItem="A2B-qt-Pe5" secondAttribute="bottom" id="w39-Su-AT1"/>
@@ -118,7 +75,7 @@
                 </viewController>
                 <customObject id="Unx-7p-xT1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="790" y="735"/>
+            <point key="canvasLocation" x="584" y="58"/>
         </scene>
     </scenes>
 </document>

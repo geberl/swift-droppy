@@ -51,8 +51,6 @@
 		A4C97EAE203EE36F008AA81F /* EditorWorkflow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4C97EAD203EE36F008AA81F /* EditorWorkflow.storyboard */; };
 		A4C97EB0203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EAF203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift */; };
 		A4C97EB2203EF53D008AA81F /* WindowEditorWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB1203EF53D008AA81F /* WindowEditorWorkflow.swift */; };
-		A4C97EB4203EF59E008AA81F /* ViewControllerSpritekit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB3203EF59E008AA81F /* ViewControllerSpritekit.swift */; };
-		A4C97EB6203EFC9B008AA81F /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A4C97EB5203EFC9B008AA81F /* MyScene.sks */; };
 		A4C97EB8203EFE98008AA81F /* ViewControllerRects.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB7203EFE98008AA81F /* ViewControllerRects.swift */; };
 		A4C97EBA203F07AE008AA81F /* ViewBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB9203F07AE008AA81F /* ViewBackground.swift */; };
 		A4C97EBC203F12E3008AA81F /* ViewTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EBB203F12E3008AA81F /* ViewTask.swift */; };
@@ -161,8 +159,6 @@
 		A4C97EAD203EE36F008AA81F /* EditorWorkflow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditorWorkflow.storyboard; sourceTree = "<group>"; };
 		A4C97EAF203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllerEditorWorkflow.swift; sourceTree = "<group>"; };
 		A4C97EB1203EF53D008AA81F /* WindowEditorWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowEditorWorkflow.swift; sourceTree = "<group>"; };
-		A4C97EB3203EF59E008AA81F /* ViewControllerSpritekit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerSpritekit.swift; sourceTree = "<group>"; };
-		A4C97EB5203EFC9B008AA81F /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
 		A4C97EB7203EFE98008AA81F /* ViewControllerRects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerRects.swift; sourceTree = "<group>"; };
 		A4C97EB9203F07AE008AA81F /* ViewBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBackground.swift; sourceTree = "<group>"; };
 		A4C97EBB203F12E3008AA81F /* ViewTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTask.swift; sourceTree = "<group>"; };
@@ -378,8 +374,6 @@
 				A4C97EB7203EFE98008AA81F /* ViewControllerRects.swift */,
 				A4C97EB9203F07AE008AA81F /* ViewBackground.swift */,
 				A4C97EBB203F12E3008AA81F /* ViewTask.swift */,
-				A4C97EB3203EF59E008AA81F /* ViewControllerSpritekit.swift */,
-				A4C97EB5203EFC9B008AA81F /* MyScene.sks */,
 			);
 			name = "Editor Workflow";
 			sourceTree = "<group>";
@@ -559,7 +553,6 @@
 				A4C97EAE203EE36F008AA81F /* EditorWorkflow.storyboard in Resources */,
 				A46CE6B81F459A34000DEACB /* EditorText.storyboard in Resources */,
 				A417ACE41EED7AFD00C08DED /* Preferences.storyboard in Resources */,
-				A4C97EB6203EFC9B008AA81F /* MyScene.sks in Resources */,
 				A444507D1EF0EC5600EBB485 /* FirstRun.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -680,7 +673,6 @@
 				A43E6CC91FD40A9800D6F8BA /* WindowMain.swift in Sources */,
 				A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */,
 				A4410F941FD41B9F0001F7F7 /* WindowControllerFirstRun.swift in Sources */,
-				A4C97EB4203EF59E008AA81F /* ViewControllerSpritekit.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,
 				A45EA3C21F7105E100EA4310 /* RegTrial.swift in Sources */,
 				A43E6CCD1FD40BF500D6F8BA /* WindowRegistration.swift in Sources */,

@@ -50,4 +50,5 @@ extension Notification.Name {
     static let devModeChanged = Notification.Name("devModeChanged")
     
     static let addTask = Notification.Name("addTask")
+    static let removeTask = Notification.Name("removeTask")
 }
