@@ -11,6 +11,9 @@ import os.log
 
 
 class ViewBackground: NSView {
+    
+    let snapToGrid: Bool = true
+    let gridSize: CGFloat = 15
 
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)!

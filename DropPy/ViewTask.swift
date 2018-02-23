@@ -76,15 +76,17 @@ class ViewTask: NSView {
                              y: newPoint.y - firstMouseDownPoint.y)
         let origin = self.frame.origin
         let size = self.frame.size
-        let parentSize = self.superview!.frame.size
+        
+        let backgroundView = self.superview as! ViewBackground
+        let backgroundSize = backgroundView.frame.size
         
         var positionX: CGFloat
         if origin.x + offset.x < 0 {
             // Dragging left of left border.
             positionX = 0
-        } else if origin.x + offset.x + size.width > parentSize.width {
+        } else if origin.x + offset.x + size.width > backgroundSize.width {
             // Dragging right of right border.
-            positionX = parentSize.width - size.width
+            positionX = backgroundSize.width - size.width
         } else {
             // Dragging within ok area.
             positionX = origin.x + offset.x
@@ -94,12 +96,17 @@ class ViewTask: NSView {
         if origin.y + offset.y < 0 {
             // Dragging below bottom border.
             positionY = 0
-        } else if origin.y + offset.y + size.height > parentSize.height {
+        } else if origin.y + offset.y + size.height > backgroundSize.height {
             // Dragging above top border.
-            positionY = parentSize.height - size.height
+            positionY = backgroundSize.height - size.height
         } else {
             // Dragging within ok area.
             positionY = origin.y + offset.y
+        }
+        
+        if backgroundView.snapToGrid == true {
+            positionX = CGFloat( Int(positionX / backgroundView.gridSize) * Int(backgroundView.gridSize) )
+            positionY = CGFloat( Int(positionY / backgroundView.gridSize) * Int(backgroundView.gridSize) )
         }
 
         self.frame = NSRect(x: positionX, y: positionY, width: size.width, height: size.height)
