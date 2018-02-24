@@ -43,6 +43,8 @@
 		A4B42B5D1FD5D4C80078AC69 /* ViewControllerDocs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B42B5C1FD5D4C80078AC69 /* ViewControllerDocs.swift */; };
 		A4B42B601FD5D4EE0078AC69 /* ViewControllerFinish.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B42B5E1FD5D4EE0078AC69 /* ViewControllerFinish.swift */; };
 		A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B73C3F1F7D0E6200087A10 /* Notifications.swift */; };
+		A4B853B82041601300EC123F /* ObjectTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B853B72041601300EC123F /* ObjectTask.swift */; };
+		A4B853BA2041604D00EC123F /* ObjectTaskCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B853B92041604D00EC123F /* ObjectTaskCategory.swift */; };
 		A4BC0AD91FD950D300EF42BE /* ViewControllerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BC0AD81FD950D300EF42BE /* ViewControllerButtons.swift */; };
 		A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */; };
 		A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */; };
@@ -151,6 +153,8 @@
 		A4B42B5C1FD5D4C80078AC69 /* ViewControllerDocs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDocs.swift; sourceTree = "<group>"; };
 		A4B42B5E1FD5D4EE0078AC69 /* ViewControllerFinish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFinish.swift; sourceTree = "<group>"; };
 		A4B73C3F1F7D0E6200087A10 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		A4B853B72041601300EC123F /* ObjectTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectTask.swift; sourceTree = "<group>"; };
+		A4B853B92041604D00EC123F /* ObjectTaskCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectTaskCategory.swift; sourceTree = "<group>"; };
 		A4BC0AD81FD950D300EF42BE /* ViewControllerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerButtons.swift; sourceTree = "<group>"; };
 		A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerGeneral.swift; sourceTree = "<group>"; };
 		A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerInterpreter.swift; sourceTree = "<group>"; };
@@ -374,6 +378,8 @@
 				A4C97EB7203EFE98008AA81F /* ViewControllerRects.swift */,
 				A4C97EB9203F07AE008AA81F /* ViewBackground.swift */,
 				A4C97EBB203F12E3008AA81F /* ViewTask.swift */,
+				A4B853B92041604D00EC123F /* ObjectTaskCategory.swift */,
+				A4B853B72041601300EC123F /* ObjectTask.swift */,
 			);
 			name = "Editor Workflow";
 			sourceTree = "<group>";
@@ -656,6 +662,7 @@
 				A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */,
 				A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */,
 				A4EE62BD1F72C9B800370F26 /* CFUtil.swift in Sources */,
+				A4B853BA2041604D00EC123F /* ObjectTaskCategory.swift in Sources */,
 				A46CE6BA1F459BEE000DEACB /* WindowControllerEditorText.swift in Sources */,
 				A46CE6BC1F459F87000DEACB /* ViewControllerEditorText.swift in Sources */,
 				A4C97EBC203F12E3008AA81F /* ViewTask.swift in Sources */,
@@ -681,6 +688,7 @@
 				A4C97EB0203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift in Sources */,
 				A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */,
 				A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */,
+				A4B853B82041601300EC123F /* ObjectTask.swift in Sources */,
 				A4B42B601FD5D4EE0078AC69 /* ViewControllerFinish.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
