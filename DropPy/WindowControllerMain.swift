@@ -201,12 +201,12 @@ class WindowControllerMain: NSWindowController {
         
         if let editorForWorkflows: String = self.userDefaults.string(forKey: UserDefaultStruct.editorForWorkflows) {
             
-            if editorForWorkflows == "Internal Workflow editor" {
-                // TODO: Implement internal Workflow editor and have it open from here.
-                // Should currently not be possible to land here, deactivated, entry not displaed in preferences.
-                os_log("TODO: Open internal Workflow editor now", log: logUi, type: .debug)
-                
+            if editorForWorkflows == "Internal workflow editor" {
                 self.workflowEditorWindowController.showWindow(self)
+                
+                // Put path into dict inside Notification.
+                let pathDict:[String: String] = ["path": jsonPath]
+                NotificationCenter.default.post(name: .loadFileInEditor, object: nil, userInfo: pathDict)
                 
             } else if editorForWorkflows == "Internal text editor" {
                 self.textEditorWindowController.showWindow(self)

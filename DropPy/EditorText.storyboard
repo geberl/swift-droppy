@@ -32,7 +32,7 @@
         <!--View Controller Editor Text-->
         <scene sceneID="Xjt-fB-Zum">
             <objects>
-                <viewController id="AxO-qe-rmV" customClass="ViewControllerEditorText" sceneMemberID="viewController">
+                <viewController id="AxO-qe-rmV" customClass="ViewControllerEditorText" customModule="DropPy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="dBh-ta-seF">
                         <rect key="frame" x="0.0" y="0.0" width="720" height="489"/>
                         <autoresizingMask key="autoresizingMask"/>

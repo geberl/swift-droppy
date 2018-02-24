@@ -33,7 +33,7 @@ struct UserDefaultStruct {
     static var editorIconPathDefault: String = ""
     
     static var editorForWorkflows: String = "editorForWorkflows"
-    static var editorForWorkflowsDefault: String = "Internal text editor" // TODO: Set "Internal Workflow editor" as default once done.
+    static var editorForWorkflowsDefault: String = "Internal workflow editor"
     
     static var editorForTasks: String = "editorForTasks"
     static var editorForTasksDefault: String = "Internal text editor"
