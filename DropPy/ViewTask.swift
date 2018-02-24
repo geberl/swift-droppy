@@ -83,7 +83,7 @@ class ViewTask: NSView {
         let origin = self.frame.origin
         let size = self.frame.size
         
-        let backgroundView = self.superview as! ViewBackground
+        let backgroundView = self.superview as! ViewEditArea
         let backgroundSize = backgroundView.frame.size
         
         var positionX: CGFloat

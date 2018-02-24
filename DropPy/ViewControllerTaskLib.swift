@@ -1,8 +1,8 @@
 //
-//  ViewControllerRects.swift
+//  ViewControllerTaskLib.swift
 //  DropPy
 //
-//  Created by Günther Eberl on 22.02.18.
+//  Created by Günther Eberl on 24.02.18.
 //  Copyright © 2018 Günther Eberl. All rights reserved.
 //
 
@@ -14,18 +14,29 @@ import os.log
 // https://www.raywenderlich.com/123463/nsoutlineview-macos-tutorial
 
 
-class ViewControllerRects: NSViewController {
+class ViewControllerTaskLib: NSViewController {
     
     @IBOutlet weak var taskOutlineView: NSOutlineView!
     
     var taskCategories = [ObjectTaskCategory]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        os_log("ViewControllerRects viewDidLoad", log: logGeneral)
+        os_log("ViewControllerTaskLib viewDidLoad", log: logGeneral)
         
         self.loadTasks()
         self.taskOutlineView.reloadItem(nil, reloadChildren: true)
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        os_log("ViewControllerTaskLib viewWillAppear", log: logGeneral)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerTaskLib.disableRemoveButton),
+                                               name: .clearSelection, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerTaskLib.enableRemoveButton),
+                                               name: .selectTask, object: nil)
     }
     
     func loadTasks() {
@@ -40,20 +51,8 @@ class ViewControllerRects: NSViewController {
         self.taskCategories.append(taskCatTwo)
     }
     
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        os_log("ViewControllerRects viewWillAppear", log: logGeneral)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerRects.disableRemoveButton),
-                                               name: .clearSelection, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewControllerRects.enableRemoveButton),
-                                               name: .selectTask, object: nil)
-    }
-    
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        os_log("ViewControllerRects viewDidAppear", log: logGeneral)
+    @IBAction func onReloadButton(_ sender: NSButton) {
+        os_log("onReloadButton", log: logGeneral)
     }
     
     @IBAction func onAddButton(_ sender: NSButton) {
@@ -78,11 +77,10 @@ class ViewControllerRects: NSViewController {
         os_log("enableRemoveButton", log: logGeneral)
         self.removeButton.isEnabled = true
     }
-    
 }
 
 
-extension ViewControllerRects: NSOutlineViewDataSource {
+extension ViewControllerTaskLib: NSOutlineViewDataSource {
     // Functions are called for EVERY level of the hierarchy, so there are several cases to handle, one per level.
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
@@ -90,7 +88,7 @@ extension ViewControllerRects: NSOutlineViewDataSource {
         if let taskCategory = item as? ObjectTaskCategory {
             return taskCategory.children.count
         }
-
+        
         return self.taskCategories.count
     }
     
@@ -99,7 +97,7 @@ extension ViewControllerRects: NSOutlineViewDataSource {
         if let taskCategory = item as? ObjectTaskCategory {
             return taskCategory.children[index]
         }
-
+        
         return self.taskCategories[index]
     }
     
@@ -114,7 +112,7 @@ extension ViewControllerRects: NSOutlineViewDataSource {
 }
 
 
-extension ViewControllerRects: NSOutlineViewDelegate {
+extension ViewControllerTaskLib: NSOutlineViewDelegate {
     
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         var view: NSTableCellView?
@@ -127,7 +125,7 @@ extension ViewControllerRects: NSOutlineViewDelegate {
                 textField.sizeToFit()
             }
         } else if let taskItem = item as? ObjectTask {
-
+            
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TaskCell"),
                                         owner: self) as? NSTableCellView
             
@@ -135,7 +133,7 @@ extension ViewControllerRects: NSOutlineViewDelegate {
                 textField.stringValue = taskItem.name
                 textField.sizeToFit()
             }
-
+            
         }
         
         return view
@@ -147,10 +145,10 @@ extension ViewControllerRects: NSOutlineViewDelegate {
         guard let outlineView = notification.object as? NSOutlineView else {
             return
         }
-
+        
         let selectedIndex = outlineView.selectedRow
         // Only displyed items are being counted, of all hierachy levels. Not displayed children are not counted.
         print(selectedIndex)
-
+        
     }
 }

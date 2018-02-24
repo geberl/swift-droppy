@@ -1,5 +1,5 @@
 //
-//  ViewBackground.swift
+//  ViewEditArea.swift
 //  DropPy
 //
 //  Created by Günther Eberl on 22.02.18.
@@ -10,19 +10,19 @@ import Cocoa
 import os.log
 
 
-class ViewBackground: NSView {
+class ViewEditArea: NSView {
     
     let snapToGrid: Bool = true
     let gridSize: CGFloat = 15
 
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)!
-        os_log("ViewBackground init", log: logGeneral)
+        os_log("ViewEditArea init", log: logGeneral)
         
         self.wantsLayer = true
         self.layer?.backgroundColor = NSColor.darkGray.cgColor
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewBackground.addTask),
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewEditArea.addTask),
                                                name: .addTask, object: nil)
     }
     
