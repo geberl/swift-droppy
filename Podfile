@@ -6,6 +6,5 @@ target 'DropPy' do
   use_frameworks!
 
   # Pods for DropPy
-  pod 'SwiftyJSON'
   pod 'SSZipArchive'
 end
