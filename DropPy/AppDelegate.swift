@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import SwiftyJSON
 import os.log
 
 
@@ -44,6 +43,39 @@ struct AppState {
     static var regTrialStatus: String = "Unlicensed (Trial)"
     
     static var systemVersion = ProcessInfo.processInfo.operatingSystemVersion
+}
+
+
+// Struct for wrapping workflow.json files.
+// See http://swiftjson.guide or https://benscheirman.com/2017/06/swift-json/
+struct WorkflowJson: Codable {
+    // Must-have keys.
+    let name: String
+    let interpreterName: String
+    
+    // Optional keys.
+    let author: String?
+    let description: String?
+    let documentation: String?
+    let image: String?
+
+    // The rest of the content is ignored on purpose.
+    // At least for now, may be different when I need to write these files also.
+    // It will get complicated because kwargs is arbitrary string + any type of data (integer, string, array, ...).
+}
+// Extension for the WorkflowJson struct, to allow for loading keys that may be present or not.
+extension WorkflowJson {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.name = try container.decode(String.self, forKey: .name)
+        self.interpreterName = try container.decode(String.self, forKey: .interpreterName)
+        
+        if let author = try container.decodeIfPresent(String.self, forKey: .author) { self.author = author } else { self.author = nil }
+        if let description = try container.decodeIfPresent(String.self, forKey: .description) { self.description = description } else { self.description = nil }
+        if let documentation = try container.decodeIfPresent(String.self, forKey: .documentation) { self.documentation = documentation } else { self.documentation = nil }
+        if let image = try container.decodeIfPresent(String.self, forKey: .image) { self.image = image } else { self.image = nil }
+    }
 }
 
 
@@ -366,33 +398,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         while let element = enumerator.nextObject() as? String {
             if element.lowercased().hasSuffix(".json") {
                 do {
-                    let data = try Data(contentsOf: URL(fileURLWithPath: workflowPath + "/" + element),
-                                        options: .alwaysMapped)
-                    let jsonObj = JSON(data: data)
-                    if jsonObj != JSON.null {
-                        let workflowName = jsonObj["name"].stringValue
-                        let workflowImage = jsonObj["image"].stringValue
+                    let jsonPath: URL = URL(fileURLWithPath: workflowPath + "/" + element)
+                    let jsonString = try String(contentsOf: jsonPath, encoding: .utf8)
+                    let jsonData = jsonString.data(using: .utf8)!
+                    let jsonDecoder = JSONDecoder()
+                    
+                    if let workflowContent = try? jsonDecoder.decode(WorkflowJson.self, from: jsonData) {
+
+                        let workflowName = workflowContent.name
+                        let workflowImage = workflowContent.image
                         let workflowFile = element
-                        let workflowInterpreterName = jsonObj["interpreterName"].stringValue
+                        let workflowInterpreterName = workflowContent.interpreterName
                         
-                        // Make sure the same name is already used by another Workflow.
-                        if workflowsTemp[workflowName] == nil {
-                            workflowsTemp[workflowName] = [String: String]()
-                            workflowsTemp[workflowName]?["image"] = workflowImage
-                            workflowsTemp[workflowName]?["file"] = workflowFile
-                            workflowsTemp[workflowName]?["interpreterName"] = workflowInterpreterName
+                        // Make sure the same name is not already used by another Workflow.
+                        if workflowsTemp[workflowContent.name] == nil {
+                            workflowsTemp[workflowContent.name] = [String: String]()
+                            workflowsTemp[workflowContent.name]?["image"] = workflowImage
+                            workflowsTemp[workflowContent.name]?["file"] = workflowFile
+                            workflowsTemp[workflowContent.name]?["interpreterName"] = workflowInterpreterName
                         } else {
                             let workflowFileLoaded = (workflowsTemp[workflowName]?["file"])!
                             os_log("Workflow name '%@' already used in '%@'. Workflow file '%@' not loaded.",
                                    log: logGeneral, type: .error, workflowName, workflowFileLoaded, workflowFile)
-                            
+
                             let userInfo:[String: String] = ["workflowName": workflowName,
                                                              "workflowLoadedPath": workflowFileLoaded,
                                                              "workflowSkippedPath": workflowFile]
-                            
+
                             NotificationCenter.default.post(name: .workflowIdenticalName, object: nil,
                                                             userInfo: userInfo)
                         }
+                        
+                    } else {
+                        os_log("Unable to decode Workflow from '%@'", log: logGeneral, type: .error, element)
                     }
                 } catch let error {
                     os_log("%@", log: logGeneral, type: .error, error.localizedDescription)
