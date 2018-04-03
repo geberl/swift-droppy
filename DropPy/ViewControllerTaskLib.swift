@@ -148,7 +148,5 @@ extension ViewControllerTaskLib: NSOutlineViewDelegate {
         
         let selectedIndex = outlineView.selectedRow
         // Only displyed items are being counted, of all hierachy levels. Not displayed children are not counted.
-        print(selectedIndex)
-        
     }
 }
