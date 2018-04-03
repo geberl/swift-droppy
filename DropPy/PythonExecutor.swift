@@ -185,7 +185,7 @@ class PythonExecutor: NSObject {
 
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: workflowPath), options: .alwaysMapped)
-            let jsonObj = JSON(data: data)
+            let jsonObj = try JSON(data: data)
             if jsonObj != JSON.null {
 
                 let queue: Array = jsonObj["queue"].arrayValue

@@ -1,14 +1,14 @@
 PODS:
-  - SSZipArchive (2.0.3)
-  - SwiftyJSON (3.1.4)
+  - SSZipArchive (2.1.1)
+  - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
   - SSZipArchive
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  SSZipArchive: b6648b70a36303ca5be9f0351174b347e1886236
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  SSZipArchive: 14401ade5f8e82aba1ff03e9f88e9de60937ae60
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
 PODFILE CHECKSUM: 02fcc536292d6f62a861b151950f61380e7da814
 
