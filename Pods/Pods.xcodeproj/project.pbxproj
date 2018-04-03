@@ -76,11 +76,11 @@
 
 /* Begin PBXFileReference section */
 		0137A8AA39EDAE7F436F12F3F8E32D33 /* SwiftyJSON-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyJSON-dummy.m"; sourceTree = "<group>"; };
-		0204277C56B977678BD17E1528698B87 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		02C2D3880A8464CE1D66F756918968F7 /* pwd2key.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = pwd2key.c; path = SSZipArchive/minizip/aes/pwd2key.c; sourceTree = "<group>"; };
+		0204277C56B977678BD17E1528698B87 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyJSON.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		02C2D3880A8464CE1D66F756918968F7 /* pwd2key.c */ = {isa = PBXFileReference; includeInIndex = 1; name = pwd2key.c; path = SSZipArchive/minizip/aes/pwd2key.c; sourceTree = "<group>"; };
 		0D98153BFCB8BE1760FCC3D3A8B56B59 /* Pods-DropPy-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DropPy-acknowledgements.plist"; sourceTree = "<group>"; };
 		100092463BA2311978716C7EEAE0A0EC /* Pods-DropPy-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DropPy-acknowledgements.markdown"; sourceTree = "<group>"; };
-		112071EE2939D122B2CD9191380D57BD /* unzip.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = SSZipArchive/minizip/unzip.c; sourceTree = "<group>"; };
+		112071EE2939D122B2CD9191380D57BD /* unzip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = unzip.c; path = SSZipArchive/minizip/unzip.c; sourceTree = "<group>"; };
 		131F4767B2172125FA3D016DECB74EF8 /* SwiftyJSON-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyJSON-prefix.pch"; sourceTree = "<group>"; };
 		1E3CA10C50761C283F6971F79B4F77E4 /* SwiftyJSON.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyJSON.xcconfig; sourceTree = "<group>"; };
 		270DD1219F1E6CF00379D39F252D87C6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
@@ -94,53 +94,53 @@
 		485603C1A0E848F455C4B2043E355D46 /* Pods-DropPy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DropPy.debug.xcconfig"; sourceTree = "<group>"; };
 		4D759556571C344FC23D4864EC0BC42F /* brg_endian.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = brg_endian.h; path = SSZipArchive/minizip/aes/brg_endian.h; sourceTree = "<group>"; };
 		4E64307875110030A45D89830B338DBE /* SSZipArchive-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SSZipArchive-umbrella.h"; sourceTree = "<group>"; };
-		5336653AAF9E54C56D58D23647DAC79C /* zip.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = zip.c; path = SSZipArchive/minizip/zip.c; sourceTree = "<group>"; };
-		58865CF3576E08CF5E669284F6644F36 /* Pods_DropPy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D24025F8312FC58C24A496E1631B64B /* minishared.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = minishared.c; path = SSZipArchive/minizip/minishared.c; sourceTree = "<group>"; };
+		5336653AAF9E54C56D58D23647DAC79C /* zip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = zip.c; path = SSZipArchive/minizip/zip.c; sourceTree = "<group>"; };
+		58865CF3576E08CF5E669284F6644F36 /* Pods_DropPy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DropPy.framework; path = "Pods-DropPy.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D24025F8312FC58C24A496E1631B64B /* minishared.c */ = {isa = PBXFileReference; includeInIndex = 1; name = minishared.c; path = SSZipArchive/minizip/minishared.c; sourceTree = "<group>"; };
 		5DD65B4FFC2BD60EA9368FC556B4C7A8 /* aesopt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = aesopt.h; path = SSZipArchive/minizip/aes/aesopt.h; sourceTree = "<group>"; };
 		62ADC6547B2D354033157B97E3F0C3CA /* SwiftyJSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Source/SwiftyJSON.swift; sourceTree = "<group>"; };
 		6414CA1D45A36D6B68A26401B18323A5 /* hmac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = hmac.h; path = SSZipArchive/minizip/aes/hmac.h; sourceTree = "<group>"; };
-		6677943E37B8E9C4F00DEF90149DAADD /* Pods-DropPy.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-DropPy.modulemap"; sourceTree = "<group>"; };
+		6677943E37B8E9C4F00DEF90149DAADD /* Pods-DropPy.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-DropPy.modulemap"; sourceTree = "<group>"; };
 		67C7E198AFF979BA6029CA72AC5822A7 /* SwiftyJSON-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyJSON-umbrella.h"; sourceTree = "<group>"; };
-		6A0E2846FBF12CBE99B8E3993A59E60A /* ioapi.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = SSZipArchive/minizip/ioapi.c; sourceTree = "<group>"; };
+		6A0E2846FBF12CBE99B8E3993A59E60A /* ioapi.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ioapi.c; path = SSZipArchive/minizip/ioapi.c; sourceTree = "<group>"; };
 		6CF3A84DB633D4C824F542022D11D957 /* SSZipCommon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSZipCommon.h; path = SSZipArchive/SSZipCommon.h; sourceTree = "<group>"; };
 		73D1DEB140CF1B1282E662E163784280 /* aes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = aes.h; path = SSZipArchive/minizip/aes/aes.h; sourceTree = "<group>"; };
 		7A39A2290179249BA3BB73E1921E733D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D0F33ACDB994242415905E20676F815 /* prng.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = prng.h; path = SSZipArchive/minizip/aes/prng.h; sourceTree = "<group>"; };
 		7F20D29A3D19EDFCFF608BB2513F890B /* SSZipArchive-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SSZipArchive-dummy.m"; sourceTree = "<group>"; };
 		7F6D59E5F5774A3936355987793E5B16 /* aes_ni.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = aes_ni.h; path = SSZipArchive/minizip/aes/aes_ni.h; sourceTree = "<group>"; };
-		807F04E3DCD3B13AE99DAF209B5DC4FF /* aes_ni.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = aes_ni.c; path = SSZipArchive/minizip/aes/aes_ni.c; sourceTree = "<group>"; };
+		807F04E3DCD3B13AE99DAF209B5DC4FF /* aes_ni.c */ = {isa = PBXFileReference; includeInIndex = 1; name = aes_ni.c; path = SSZipArchive/minizip/aes/aes_ni.c; sourceTree = "<group>"; };
 		820A0ED8DE65D6FC72FA0C3BE7C6BA99 /* pwd2key.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pwd2key.h; path = SSZipArchive/minizip/aes/pwd2key.h; sourceTree = "<group>"; };
-		8B5259BA72C211856C5A4A67FD5F480F /* SSZipArchive.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SSZipArchive.modulemap; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		8B5259BA72C211856C5A4A67FD5F480F /* SSZipArchive.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SSZipArchive.modulemap; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		99E0D4EB9586F4EB879F9476EBB9EB6D /* ZipArchive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZipArchive.h; path = SSZipArchive/ZipArchive.h; sourceTree = "<group>"; };
 		A04222EDC10DBFBA8518E674A6878F5A /* minishared.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = minishared.h; path = SSZipArchive/minizip/minishared.h; sourceTree = "<group>"; };
 		A3F3BE9457A5B96078600FEB52955F94 /* SSZipArchive.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SSZipArchive.m; path = SSZipArchive/SSZipArchive.m; sourceTree = "<group>"; };
 		AAD6CF100ED4B303CE5309F7F6878AF1 /* Pods-DropPy-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DropPy-dummy.m"; sourceTree = "<group>"; };
-		AB836159EE87C0280F9AF89E2F1CF95E /* crypt.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = crypt.c; path = SSZipArchive/minizip/crypt.c; sourceTree = "<group>"; };
-		B25938D186242B7941FD70F05387D37E /* ioapi_buf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = ioapi_buf.c; path = SSZipArchive/minizip/ioapi_buf.c; sourceTree = "<group>"; };
-		B269E590B536F181D6E3FDB10E3619E6 /* aestab.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = aestab.c; path = SSZipArchive/minizip/aes/aestab.c; sourceTree = "<group>"; };
+		AB836159EE87C0280F9AF89E2F1CF95E /* crypt.c */ = {isa = PBXFileReference; includeInIndex = 1; name = crypt.c; path = SSZipArchive/minizip/crypt.c; sourceTree = "<group>"; };
+		B25938D186242B7941FD70F05387D37E /* ioapi_buf.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ioapi_buf.c; path = SSZipArchive/minizip/ioapi_buf.c; sourceTree = "<group>"; };
+		B269E590B536F181D6E3FDB10E3619E6 /* aestab.c */ = {isa = PBXFileReference; includeInIndex = 1; name = aestab.c; path = SSZipArchive/minizip/aes/aestab.c; sourceTree = "<group>"; };
 		B65531E88209052DE6CCE629E1127B3A /* Pods-DropPy-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DropPy-resources.sh"; sourceTree = "<group>"; };
-		BD5194D143AE6531CD8EBCEF598DECE4 /* ioapi_mem.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = ioapi_mem.c; path = SSZipArchive/minizip/ioapi_mem.c; sourceTree = "<group>"; };
+		BD5194D143AE6531CD8EBCEF598DECE4 /* ioapi_mem.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ioapi_mem.c; path = SSZipArchive/minizip/ioapi_mem.c; sourceTree = "<group>"; };
 		BE950D69B3C6CFE06CF4EFE34D4FD233 /* fileenc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fileenc.h; path = SSZipArchive/minizip/aes/fileenc.h; sourceTree = "<group>"; };
 		C0AB4E86698390914A2D4DF6E183B0D6 /* Pods-DropPy-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DropPy-umbrella.h"; sourceTree = "<group>"; };
-		C535A1597271FC74F7CEB1F95225E4BC /* SSZipArchive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C73A7C0C48399A91E3DF250B9D377C7A /* hmac.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = hmac.c; path = SSZipArchive/minizip/aes/hmac.c; sourceTree = "<group>"; };
+		C535A1597271FC74F7CEB1F95225E4BC /* SSZipArchive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SSZipArchive.framework; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C73A7C0C48399A91E3DF250B9D377C7A /* hmac.c */ = {isa = PBXFileReference; includeInIndex = 1; name = hmac.c; path = SSZipArchive/minizip/aes/hmac.c; sourceTree = "<group>"; };
 		CA52ADF5F6C399CE0FD2067C0B8CE81A /* Pods-DropPy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DropPy.release.xcconfig"; sourceTree = "<group>"; };
 		D35CF0C32CAB04E3CFC0DEA5E11EEAFB /* ioapi_mem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ioapi_mem.h; path = SSZipArchive/minizip/ioapi_mem.h; sourceTree = "<group>"; };
 		D5D9F40C639BCAC15A19F023470F32A5 /* crypt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = SSZipArchive/minizip/crypt.h; sourceTree = "<group>"; };
 		DCF133D791B2B7AFA6AA59348DFC59E2 /* aestab.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = aestab.h; path = SSZipArchive/minizip/aes/aestab.h; sourceTree = "<group>"; };
-		DFB4D9454C298E0396B16084F7B6531D /* SwiftyJSON.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftyJSON.modulemap; sourceTree = "<group>"; };
+		DFB4D9454C298E0396B16084F7B6531D /* SwiftyJSON.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SwiftyJSON.modulemap; sourceTree = "<group>"; };
 		E3C57538236BA06F9E26F0727AF9549B /* ioapi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = SSZipArchive/minizip/ioapi.h; sourceTree = "<group>"; };
 		E59CCAACAE9ED28A97F2E5E5F2BF0728 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E773D730871D5A0C0AB5131CA7337A85 /* SSZipArchive.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SSZipArchive.xcconfig; sourceTree = "<group>"; };
 		ED70875E4A3CDDFC6656BE1268E55CF7 /* unzip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = SSZipArchive/minizip/unzip.h; sourceTree = "<group>"; };
-		F2D39ACD9E67FB7CCD83600EC72B60F4 /* fileenc.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = fileenc.c; path = SSZipArchive/minizip/aes/fileenc.c; sourceTree = "<group>"; };
-		F3501B29C7FE4F4F40C64ABA2F296AE7 /* sha1.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = SSZipArchive/minizip/aes/sha1.c; sourceTree = "<group>"; };
+		F2D39ACD9E67FB7CCD83600EC72B60F4 /* fileenc.c */ = {isa = PBXFileReference; includeInIndex = 1; name = fileenc.c; path = SSZipArchive/minizip/aes/fileenc.c; sourceTree = "<group>"; };
+		F3501B29C7FE4F4F40C64ABA2F296AE7 /* sha1.c */ = {isa = PBXFileReference; includeInIndex = 1; name = sha1.c; path = SSZipArchive/minizip/aes/sha1.c; sourceTree = "<group>"; };
 		F9DD7F2B89E6D44084E4D7790A355D74 /* zip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = zip.h; path = SSZipArchive/minizip/zip.h; sourceTree = "<group>"; };
-		FC389D40AE32ECB7F6F04C992566EBCE /* aescrypt.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = aescrypt.c; path = SSZipArchive/minizip/aes/aescrypt.c; sourceTree = "<group>"; };
-		FEDCD8E4442E03CB9FCD153B1090C2CA /* aeskey.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = aeskey.c; path = SSZipArchive/minizip/aes/aeskey.c; sourceTree = "<group>"; };
-		FF954AF4697D6958D99AC9B1B37044DB /* prng.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = prng.c; path = SSZipArchive/minizip/aes/prng.c; sourceTree = "<group>"; };
+		FC389D40AE32ECB7F6F04C992566EBCE /* aescrypt.c */ = {isa = PBXFileReference; includeInIndex = 1; name = aescrypt.c; path = SSZipArchive/minizip/aes/aescrypt.c; sourceTree = "<group>"; };
+		FEDCD8E4442E03CB9FCD153B1090C2CA /* aeskey.c */ = {isa = PBXFileReference; includeInIndex = 1; name = aeskey.c; path = SSZipArchive/minizip/aes/aeskey.c; sourceTree = "<group>"; };
+		FF954AF4697D6958D99AC9B1B37044DB /* prng.c */ = {isa = PBXFileReference; includeInIndex = 1; name = prng.c; path = SSZipArchive/minizip/aes/prng.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +240,7 @@
 				62ADC6547B2D354033157B97E3F0C3CA /* SwiftyJSON.swift */,
 				943A68F543373D3CDDDA42D00BC166A4 /* Support Files */,
 			);
+			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -313,6 +314,7 @@
 				99E0D4EB9586F4EB879F9476EBB9EB6D /* ZipArchive.h */,
 				8AF6DD21B9D57A6FEE51FE58EA92244B /* Support Files */,
 			);
+			name = SSZipArchive;
 			path = SSZipArchive;
 			sourceTree = "<group>";
 		};
@@ -437,7 +439,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -564,7 +566,6 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -572,7 +573,6 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -603,7 +603,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
@@ -622,7 +621,6 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -630,7 +628,6 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
