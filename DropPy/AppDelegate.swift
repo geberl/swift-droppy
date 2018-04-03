@@ -52,24 +52,28 @@ struct WorkflowJson: Codable {
     // Must-have keys.
     let name: String
     let interpreterName: String
-    
+    let queue: [WorkflowQueueItem]
     // Optional keys.
     let author: String?
     let description: String?
     let documentation: String?
     let image: String?
-
-    // The rest of the content is ignored on purpose.
-    // At least for now, may be different when I need to write these files also.
+}
+struct WorkflowQueueItem: Codable {
+    // Must-have keys.
+    let task: String
+    // Optional keys.
+    // The content is ignored on purpose. At least for now, may be different when I need to write these files also.
     // It will get complicated because kwargs is arbitrary string + any type of data (integer, string, array, ...).
 }
-// Extension for the WorkflowJson struct, to allow for loading keys that may be present or not.
+// Extension for structs, to allow for loading keys that may be present or not.
 extension WorkflowJson {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.name = try container.decode(String.self, forKey: .name)
         self.interpreterName = try container.decode(String.self, forKey: .interpreterName)
+        self.queue = try container.decode(Array.self, forKey: .queue)
         
         if let author = try container.decodeIfPresent(String.self, forKey: .author) { self.author = author } else { self.author = nil }
         if let description = try container.decodeIfPresent(String.self, forKey: .description) { self.description = description } else { self.description = nil }
@@ -77,7 +81,12 @@ extension WorkflowJson {
         if let image = try container.decodeIfPresent(String.self, forKey: .image) { self.image = image } else { self.image = nil }
     }
 }
-
+extension WorkflowQueueItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.task = try container.decode(String.self, forKey: .task)
+    }
+}
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
