@@ -122,30 +122,22 @@ class PythonExecutor: NSObject {
         self.writeLog(prefix: "Workflow Run Time:        ", lines: [String(format: "%.2f", timeInterval) + "s"])
     }
 
-    func writeTaskInputLog(queueCount: Int, taskNumber: Int, taskName: String, inputPath: String, outputPath: String) {
+    func writeTaskInputLog(queueCount: Int, taskNumber: Int, taskName: String, taskKwArgs: [String: String],
+                           inputPath: String, outputPath: String) {
 
         let logText: String = "Running Task \(taskNumber + 1)/\(queueCount): '\(taskName)'"
         self.writeLog(prefix: "", lines: [logText])
         os_log("%@", log: logExecution, type: .info, logText)
-        
-        // TODO figure out how Json works with arbitrary typed content.
-//        if taskKwargs.count > 0 {
-//            for (key, value) in taskKwargs {
-//                print(key + " -> " + value)
-//            }
-//
-//            // let queueDict: Dictionary<String, SwiftyJSON.JSON> = queueItem.dictionaryValue
-//            //        if let queueItemParams: String = queueDict["kwargs"]?.rawString() {
-//            //            var queueItemParamsList = queueItemParams.components(separatedBy: .whitespacesAndNewlines)
-//            //            queueItemParamsList = queueItemParamsList.filter { !$0.isEmpty }
-//            //            let queueItemParamsOneLine = queueItemParamsList.joined(separator: " ")
-//            //
-//            //            self.writeLog(prefix: "  Kwargs:                 ", lines: [queueItemParamsOneLine])
-//            //        }
-//
-//        } else {
-//            self.writeLog(prefix: "  Kwargs:                 ", lines: ["(none)"])
-//        }
+
+        if taskKwArgs.count > 0 {
+            var keyValueLines: [String] = []
+            for (key, value) in taskKwArgs {
+                keyValueLines.append(key + ": " + value)
+            }
+            self.writeLog(prefix: "  Kwargs:                 ", lines: keyValueLines)
+        } else {
+            self.writeLog(prefix: "  Kwargs:                 ", lines: [""])
+        }
 
         self.writeLog(prefix: "  Input Dir:              ", lines: [inputPath])
         self.writeLog(prefix: "  Output Dir:             ", lines: [outputPath])
@@ -192,23 +184,44 @@ class PythonExecutor: NSObject {
             let jsonPath: URL = URL(fileURLWithPath: workflowPath)
             let jsonString = try String(contentsOf: jsonPath, encoding: .utf8)
             let jsonData = jsonString.data(using: .utf8)!
-            let jsonDecoder = JSONDecoder()
+            let jsonSerial = try JSONSerialization.jsonObject(with: jsonData, options: []) as! [String: AnyObject]
             
-            if let workflowContent = try? jsonDecoder.decode(WorkflowJson.self, from: jsonData) {
-                let workflowQueue = workflowContent.queue
+            if let workflowQueue = jsonSerial["queue"] as? [[String: Any]] {
+                let workflowQueueCount: Int = workflowQueue.count
                 
                 for (taskNumber, queueItem) in workflowQueue.enumerated() {
+                    
                     // Check if user clicked cancel in the meantime, abort before beginning work on the next Task.
-                    if self.executionCancel {
-                        break
-                    }
+                    if self.executionCancel { break }
 
-                    self.writeTaskInputLog(queueCount: workflowQueue.count,
+                    // Task name must always be present.
+                    guard let taskName = queueItem["task"] as? String else { throw JsonError.misformed }
+                    
+                    // Task kwargs may be present or not.
+                    var taskKwArgs: [String: String] = [:]
+                    if queueItem.keys.contains("kwargs") {
+                        if let taskArgs = queueItem["kwargs"] as? [String: Any] {
+                            for (key, value) in taskArgs {
+                                // This contains plenty of whitespace and newlines for pretty printing of objects.
+                                let valueRaw: String = String(describing: value)
+                                
+                                // Split into array and seperate by one whitespace to clean it up a bit.
+                                var valueArray: [String] = valueRaw.components(separatedBy: .whitespacesAndNewlines)
+                                valueArray = valueArray.filter { !$0.isEmpty }
+                                let valueClean = valueArray.joined(separator: " ")
+
+                                taskKwArgs[key] = valueClean
+                            }
+                        }
+                    }
+                    
+                    self.writeTaskInputLog(queueCount: workflowQueueCount,
                                            taskNumber: taskNumber,
-                                           taskName: queueItem.task,
+                                           taskName: taskName,
+                                           taskKwArgs: taskKwArgs,
                                            inputPath: inputPath,
                                            outputPath: outputPath)
-
+                    
                     let (out, err, exit) = executeCommand(command: self.executablePath,
                                                           args: [self.executableArgs,
                                                                  self.runnerFilePath,
@@ -216,26 +229,28 @@ class PythonExecutor: NSObject {
                                                                  "-j" + self.workflowFile,
                                                                  "-i" + inputPath,
                                                                  "-o" + outputPath])
-
+                    
                     self.writeTaskOutputLog(out: out, err: err, exit: exit)
-
+                    
                     if exit > 0 {
                         self.overallExitCode = 1
                         break
                     }
-
+                    
                     if (taskNumber + 1 < workflowQueue.count) && !self.executionCancel {
                         // taskNumber +1 because taskNumber starts counting at 0 BUT workflowQueue.count at 1.
-
+                        
                         // Current Task's output directory is next Task's input directory.
                         inputPath = outputPath
-
+                        
                         // +2 because taskNumber starts counting at 0 AND we're preparing for the following Task.
                         outputPath = self.prepareNextTempDir(taskNumber: taskNumber + 2)
-
+                        
                         self.writeLog(prefix: "", lines: [String(repeating: "-", count: 120)])
                     }
                 }
+            } else {
+                os_log("Workflow contains no 'queue' element.", log: logExecution, type: .error)
             }
         } catch let error {
             os_log("%@", log: logExecution, type: .error, error.localizedDescription)

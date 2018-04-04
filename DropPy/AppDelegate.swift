@@ -60,13 +60,12 @@ struct WorkflowJson: Codable {
     let image: String?
 }
 struct WorkflowQueueItem: Codable {
-    // Must-have keys.
     let task: String
-    // Optional keys.
-    // The content is ignored on purpose. At least for now, may be different when I need to write these files also.
-    // It will get complicated because kwargs is arbitrary string + any type of data (integer, string, array, ...).
+    // The "kwargs" item is ignored on purpose!
+    // Reason: Parsing arbitrary content (dictionary of string: any) into Codable struct is not possile.
+    // Working with JSONSerialization for arbitrary content is the intended way by Apple.
 }
-// Extension for structs, to allow for loading keys that may be present or not.
+// Extension for the WorkflowJson structs, to allow for loading keys that may be present or not.
 extension WorkflowJson {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -81,12 +80,7 @@ extension WorkflowJson {
         if let image = try container.decodeIfPresent(String.self, forKey: .image) { self.image = image } else { self.image = nil }
     }
 }
-extension WorkflowQueueItem {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.task = try container.decode(String.self, forKey: .task)
-    }
-}
+
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
