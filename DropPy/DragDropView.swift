@@ -544,7 +544,9 @@ class DragDropView: NSView {
             
             // Apple Mail shows me a timeout error (but seems to copy the file alright).
             // https://stackoverflow.com/questions/11028769/nsurlerrordomain-error-codes-description#11037210
-            // I don't think this is my error.
+            // -> I don't think this is my error.
+            //https://stackoverflow.com/questions/47991603/receive-promised-e-mail-in-macos-10-12
+            // -> But this is exactly it.
             // In any case numberOfExtractedPromises counts up, so even if an error is thrown execution continues.
         } else {
             logFileContent = "Ok:    " + myUrl.path
