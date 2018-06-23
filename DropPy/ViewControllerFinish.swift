@@ -22,8 +22,4 @@ class ViewControllerFinish: NSViewController {
         openWebsite(webUrl: servicesUrls.twitter)
     }
     
-    @IBAction func onKeybaseButton(_ sender: NSButton) {
-        openWebsite(webUrl: servicesUrls.keybase)
-    }
-    
 }

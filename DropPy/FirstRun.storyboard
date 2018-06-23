@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="SCc-ZT-7Af">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="SCc-ZT-7Af">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -123,7 +123,6 @@ Gw
                         <rect key="frame" x="0.0" y="0.0" width="570" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <font key="font" metaFont="system"/>
-                        <tabViewItems/>
                         <connections>
                             <outlet property="delegate" destination="Ujj-O7-icu" id="PV3-qY-aHj"/>
                         </connections>
@@ -521,7 +520,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gnd-Nt-sDi">
-                                <rect key="frame" x="18" y="156" width="464" height="19"/>
+                                <rect key="frame" x="18" y="124" width="464" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Let's get in touch." id="iE1-5o-QvU">
                                     <font key="font" metaFont="systemBold" size="16"/>
@@ -530,7 +529,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ln-q2-8to">
-                                <rect key="frame" x="14" y="108" width="472" height="32"/>
+                                <rect key="frame" x="14" y="76" width="472" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Email  -  guenther@droppyapp.com" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="JHm-v0-F9V">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -541,7 +540,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yv1-fg-Cph">
-                                <rect key="frame" x="14" y="76" width="472" height="32"/>
+                                <rect key="frame" x="14" y="44" width="472" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Twitter  -  @eberl_se" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="NSo-pD-f5c">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -549,17 +548,6 @@ Gw
                                 </buttonCell>
                                 <connections>
                                     <action selector="onTwitterButton:" target="oLS-cw-0iW" id="zMM-yL-BKn"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QbF-Pw-bua">
-                                <rect key="frame" x="14" y="43" width="472" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Keybase  -  guenther" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="ARd-5N-IHQ">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onKeybaseButton:" target="oLS-cw-0iW" id="jT5-mZ-v9o"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bFo-Hp-fa3">

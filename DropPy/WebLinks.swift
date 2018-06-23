@@ -30,7 +30,6 @@ struct droppyappUrls {
 struct servicesUrls {
     static var guentherMail:     URL? = URL(string: "mailto:guenther@droppyapp.com")
     static var twitter:          URL? = URL(string: "https://twitter.com/eberl_se")
-    static var keybase:          URL? = URL(string: "https://keybase.io/guenther")
     static var githubRun:        URL? = URL(string: "https://github.com/geberl/droppy-run/")
     static var githubWorkspace:  URL? = URL(string: "https://github.com/geberl/droppy-workspace/")
 }
