@@ -38,7 +38,7 @@ class ViewControllerWorkspaceSetup: NSViewController {
         panel.canCreateDirectories = true
         
         panel.beginSheetModal(for: window) { (result) in
-            if result.rawValue == NSFileHandlingPanelOKButton {
+            if result == NSApplication.ModalResponse.OK {
                 let selectedFolder: URL = panel.urls[0]
                 let selectedPath: String = selectedFolder.path
                 

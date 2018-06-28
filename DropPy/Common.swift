@@ -9,7 +9,6 @@
 import Cocoa
 import SystemConfiguration
 import os.log
-import SSZipArchive
 
 
 func isDir(path: String) -> Bool {
@@ -225,7 +224,7 @@ func extractBundledRun() {
         }
         
         // Unzip into the dedicated temp directory.
-        SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath)
+        //SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath) // TODO this cocoapod has been removed
         os_log("Unzipped '%@' to '%@'.", log: logFileSystem, type: .debug, zipPath, unzipPath)
         
         // The zip file contained a sub-directory. Find out its name (depends on release version of Run).
@@ -315,7 +314,7 @@ func extractBundledWorkspace(workspacePath: String) {
     }
     
     // Unzip the zip file into the dedicated temp directory.
-    SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath)
+    //SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath) // TODO this cocoapod has been removed
     os_log("Unzipped '%@' to '%@'.", log: logFileSystem, type: .debug, zipPath, unzipPath)
     
     // The zip file contains a sub-directory. Find out its name (depends on release version of Workspace).
