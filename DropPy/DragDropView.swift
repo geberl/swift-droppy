@@ -106,16 +106,6 @@ class DragDropView: NSView {
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        // Show registration window with open purchase sheet to user on each drop.
-        // At this moment do not refuse executing, maybe later in 2.0.
-        if !AppState.isLicensed {
-            AppState.isInTrial = isInTrial()  // Recheck if trial period expired in the meantime.
-            if !AppState.isInTrial {
-                //self.registrationWindowController.showWindow(self)
-                NotificationCenter.default.post(name: .reopenPurchaseSheet, object: nil)
-            }
-        }
-        
         NotificationCenter.default.post(name: .droppingStarted, object: nil)
 
         let statusDict:[String: String] = ["text": "Creating files\nPlease wait a moment"]
@@ -230,22 +220,6 @@ class DragDropView: NSView {
         macOsVersionString += String(AppState.systemVersion.minorVersion) + "."
         macOsVersionString += String(AppState.systemVersion.patchVersion)
         self.writeLog(prefix: "macOS Version:            ", lines: [macOsVersionString])
-        
-        if AppState.isLicensed {
-            let userDefaults = UserDefaults.standard
-            let regLicenseCode: String = userDefaults.string(forKey: UserDefaultStruct.regLicenseCode)!
-            let cutStartIndex = regLicenseCode.index(regLicenseCode.startIndex, offsetBy: 0)
-            let cutEndIndex = regLicenseCode.index(regLicenseCode.endIndex, offsetBy: -30)
-            let regLicenseCodeCut: String = String(regLicenseCode[cutStartIndex...cutEndIndex])
-            self.writeLog(prefix: "Registration Status:      ", lines: ["Licensed (\(regLicenseCodeCut)...)"])
-        } else {
-            if AppState.isInTrial {
-                self.writeLog(prefix: "Registration Status:      ", lines: ["Unlicensed (Trial)"])
-            } else {
-                self.writeLog(prefix: "Registration Status:      ", lines: ["Unlicensed (Trial over)"])
-            }
-        }
-        
         self.writeLog(prefix: "Bundled droppy-workspace: ", lines: [AppState.bundledWorkspaceVersion])
         self.writeLog(prefix: "Bundled droppy-run:       ", lines: [AppState.bundledRunVersion])
         

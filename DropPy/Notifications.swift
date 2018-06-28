@@ -35,9 +35,6 @@ extension Notification.Name {
     static let editorNotFound = Notification.Name("editorNotFound")
     static let workspaceNotFound = Notification.Name("workspaceNotFound")
     
-    static let reopenPurchaseSheet = Notification.Name("reopenPurchaseSheet")
-    static let closeRegistration = Notification.Name("closeRegistration")
-    
     static let updateError = Notification.Name("updateError")
     static let updateNotAvailable = Notification.Name("updateNotAvailable")
     static let updateAvailable = Notification.Name("updateAvailable")

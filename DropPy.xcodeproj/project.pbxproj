@@ -16,14 +16,12 @@
 		A43523571F7D6A6000265672 /* TabViewControllerPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43523561F7D6A6000265672 /* TabViewControllerPrefs.swift */; };
 		A43E6CC91FD40A9800D6F8BA /* WindowMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CC81FD40A9800D6F8BA /* WindowMain.swift */; };
 		A43E6CCB1FD40B9F00D6F8BA /* WindowEditorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCA1FD40B9F00D6F8BA /* WindowEditorText.swift */; };
-		A43E6CCD1FD40BF500D6F8BA /* WindowRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCC1FD40BF500D6F8BA /* WindowRegistration.swift */; };
 		A43E6CCF1FD40C3B00D6F8BA /* WindowPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCE1FD40C3B00D6F8BA /* WindowPrefs.swift */; };
 		A44105552041CB1400B3C304 /* ViewControllerTaskProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44105542041CB1400B3C304 /* ViewControllerTaskProps.swift */; };
 		A44105582041CB6C00B3C304 /* ViewControllerTaskLib.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44105562041CB6C00B3C304 /* ViewControllerTaskLib.swift */; };
 		A4410F941FD41B9F0001F7F7 /* WindowControllerFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */; };
 		A4410F961FD420710001F7F7 /* WindowFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4410F951FD420710001F7F7 /* WindowFirstRun.swift */; };
 		A444507D1EF0EC5600EBB485 /* FirstRun.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */; };
-		A45EA3C21F7105E100EA4310 /* RegTrial.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45EA3C11F7105E100EA4310 /* RegTrial.swift */; };
 		A45EA3D01F7108B900EA4310 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A45EA3D11F7108B900EA4310 /* CommonCrypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393301E8FDA40000C7BDB /* AppDelegate.swift */; };
@@ -33,9 +31,6 @@
 		A46CE6B81F459A34000DEACB /* EditorText.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46CE6B71F459A34000DEACB /* EditorText.storyboard */; };
 		A46CE6BA1F459BEE000DEACB /* WindowControllerEditorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46CE6B91F459BEE000DEACB /* WindowControllerEditorText.swift */; };
 		A46CE6BC1F459F87000DEACB /* ViewControllerEditorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46CE6BB1F459F87000DEACB /* ViewControllerEditorText.swift */; };
-		A48706381F567D5B005EF67C /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A48706371F567D5B005EF67C /* Registration.storyboard */; };
-		A487063A1F568065005EF67C /* ViewControllerRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48706391F568065005EF67C /* ViewControllerRegistration.swift */; };
-		A487063C1F5680A2005EF67C /* WindowControllerRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A487063B1F5680A2005EF67C /* WindowControllerRegistration.swift */; };
 		A48DAE581F88B5CA00D7F96E /* WebLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48DAE571F88B5CA00D7F96E /* WebLinks.swift */; };
 		A4B42B571FD5C6530078AC69 /* ViewControllerWelcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B42B561FD5C6530078AC69 /* ViewControllerWelcome.swift */; };
 		A4B42B5A1FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B42B581FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift */; };
@@ -57,10 +52,6 @@
 		A4C97EBC203F12E3008AA81F /* ViewTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EBB203F12E3008AA81F /* ViewTask.swift */; };
 		A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */; };
 		A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E8DF931EDAA29100D12029 /* DragDropView.swift */; };
-		A4EE62BD1F72C9B800370F26 /* CFUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62BC1F72C9B800370F26 /* CFUtil.swift */; };
-		A4EE62BF1F72C9E000370F26 /* CocoaFobError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62BE1F72C9E000370F26 /* CocoaFobError.swift */; };
-		A4EE62C21F72C9EC00370F26 /* CocoaFobStringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62C01F72C9EC00370F26 /* CocoaFobStringExt.swift */; };
-		A4EE62C31F72C9EC00370F26 /* CocoaFobLicVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE62C11F72C9EC00370F26 /* CocoaFobLicVerifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,14 +91,12 @@
 		A43523561F7D6A6000265672 /* TabViewControllerPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerPrefs.swift; sourceTree = "<group>"; };
 		A43E6CC81FD40A9800D6F8BA /* WindowMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowMain.swift; sourceTree = "<group>"; };
 		A43E6CCA1FD40B9F00D6F8BA /* WindowEditorText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowEditorText.swift; sourceTree = "<group>"; };
-		A43E6CCC1FD40BF500D6F8BA /* WindowRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRegistration.swift; sourceTree = "<group>"; };
 		A43E6CCE1FD40C3B00D6F8BA /* WindowPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowPrefs.swift; sourceTree = "<group>"; };
 		A44105542041CB1400B3C304 /* ViewControllerTaskProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskProps.swift; sourceTree = "<group>"; };
 		A44105562041CB6C00B3C304 /* ViewControllerTaskLib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskLib.swift; sourceTree = "<group>"; };
 		A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllerFirstRun.swift; sourceTree = "<group>"; };
 		A4410F951FD420710001F7F7 /* WindowFirstRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowFirstRun.swift; sourceTree = "<group>"; };
 		A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FirstRun.storyboard; sourceTree = "<group>"; };
-		A45EA3C11F7105E100EA4310 /* RegTrial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegTrial.swift; sourceTree = "<group>"; };
 		A45EA3C31F71082B00EA4310 /* CommonCrypto.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CommonCrypto.xcconfig; sourceTree = SOURCE_ROOT; };
 		A45EA3C91F7108B900EA4310 /* CommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A45EA3CC1F7108B900EA4310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -123,9 +112,6 @@
 		A46CE6B71F459A34000DEACB /* EditorText.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EditorText.storyboard; sourceTree = "<group>"; };
 		A46CE6B91F459BEE000DEACB /* WindowControllerEditorText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerEditorText.swift; sourceTree = "<group>"; };
 		A46CE6BB1F459F87000DEACB /* ViewControllerEditorText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEditorText.swift; sourceTree = "<group>"; };
-		A48706371F567D5B005EF67C /* Registration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
-		A48706391F568065005EF67C /* ViewControllerRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerRegistration.swift; sourceTree = "<group>"; };
-		A487063B1F5680A2005EF67C /* WindowControllerRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerRegistration.swift; sourceTree = "<group>"; };
 		A48DAE571F88B5CA00D7F96E /* WebLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinks.swift; sourceTree = "<group>"; };
 		A4B42B561FD5C6530078AC69 /* ViewControllerWelcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerWelcome.swift; sourceTree = "<group>"; };
 		A4B42B581FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerWorkspaceSetup.swift; sourceTree = "<group>"; };
@@ -147,10 +133,6 @@
 		A4C97EBB203F12E3008AA81F /* ViewTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTask.swift; sourceTree = "<group>"; };
 		A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerMain.swift; sourceTree = "<group>"; };
 		A4E8DF931EDAA29100D12029 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
-		A4EE62BC1F72C9B800370F26 /* CFUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFUtil.swift; sourceTree = "<group>"; };
-		A4EE62BE1F72C9E000370F26 /* CocoaFobError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobError.swift; sourceTree = "<group>"; };
-		A4EE62C01F72C9EC00370F26 /* CocoaFobStringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobStringExt.swift; sourceTree = "<group>"; };
-		A4EE62C11F72C9EC00370F26 /* CocoaFobLicVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFobLicVerifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,7 +251,6 @@
 				A46393341E8FDA40000C7BDB /* Assets.xcassets */,
 				A46393391E8FDA40000C7BDB /* Info.plist */,
 				A463932F1E8FDA40000C7BDB /* DropPy */,
-				A4EE62BB1F72C97500370F26 /* CocoaFob */,
 				A45EA3CA1F7108B900EA4310 /* CommonCrypto */,
 				A463932E1E8FDA40000C7BDB /* Products */,
 				08408B51D3A4022FB24DF6C6 /* Frameworks */,
@@ -293,14 +274,12 @@
 				A4B73C3F1F7D0E6200087A10 /* Notifications.swift */,
 				A4C61CF01F56982900759F57 /* PythonExecutor.swift */,
 				A401DBF31F71292400A12302 /* Prefs.swift */,
-				A45EA3C11F7105E100EA4310 /* RegTrial.swift */,
 				A401DBF51F712E3900A12302 /* Update.swift */,
 				A48DAE571F88B5CA00D7F96E /* WebLinks.swift */,
 				A46022751EED37F00060FA75 /* Main */,
 				A46CE6B61F459A0B000DEACB /* Editor Text */,
 				A4C97EAC203EE309008AA81F /* Editor Workflow */,
 				A46022741EED37D10060FA75 /* Preferences */,
-				A48706361F567D1B005EF67C /* Registration */,
 				A444507B1EF0EBF000EBB485 /* FirstRun */,
 			);
 			path = DropPy;
@@ -317,17 +296,6 @@
 			name = "Editor Text";
 			sourceTree = "<group>";
 		};
-		A48706361F567D1B005EF67C /* Registration */ = {
-			isa = PBXGroup;
-			children = (
-				A48706371F567D5B005EF67C /* Registration.storyboard */,
-				A487063B1F5680A2005EF67C /* WindowControllerRegistration.swift */,
-				A43E6CCC1FD40BF500D6F8BA /* WindowRegistration.swift */,
-				A48706391F568065005EF67C /* ViewControllerRegistration.swift */,
-			);
-			name = Registration;
-			sourceTree = "<group>";
-		};
 		A4C97EAC203EE309008AA81F /* Editor Workflow */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,17 +308,6 @@
 				A441055C2041CC2400B3C304 /* Right */,
 			);
 			name = "Editor Workflow";
-			sourceTree = "<group>";
-		};
-		A4EE62BB1F72C97500370F26 /* CocoaFob */ = {
-			isa = PBXGroup;
-			children = (
-				A4EE62BC1F72C9B800370F26 /* CFUtil.swift */,
-				A4EE62BE1F72C9E000370F26 /* CocoaFobError.swift */,
-				A4EE62C11F72C9EC00370F26 /* CocoaFobLicVerifier.swift */,
-				A4EE62C01F72C9EC00370F26 /* CocoaFobStringExt.swift */,
-			);
-			path = CocoaFob;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -462,7 +419,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A46393351E8FDA40000C7BDB /* Assets.xcassets in Resources */,
-				A48706381F567D5B005EF67C /* Registration.storyboard in Resources */,
 				A46393381E8FDA40000C7BDB /* Main.storyboard in Resources */,
 				A4C97EAE203EE36F008AA81F /* EditorWorkflow.storyboard in Resources */,
 				A46CE6B81F459A34000DEACB /* EditorText.storyboard in Resources */,
@@ -545,35 +501,27 @@
 				A4C97EB2203EF53D008AA81F /* WindowEditorWorkflow.swift in Sources */,
 				A41A701B1F57354100117E18 /* Common.swift in Sources */,
 				A44105582041CB6C00B3C304 /* ViewControllerTaskLib.swift in Sources */,
-				A4EE62BF1F72C9E000370F26 /* CocoaFobError.swift in Sources */,
-				A4EE62C21F72C9EC00370F26 /* CocoaFobStringExt.swift in Sources */,
 				A401DBF61F712E3900A12302 /* Update.swift in Sources */,
 				A4C61CF11F56982900759F57 /* PythonExecutor.swift in Sources */,
 				A417ACE61EED7D5300C08DED /* WindowControllerPrefs.swift in Sources */,
 				A432EA721EED81BB00DCF128 /* ViewControllerEditorPrefs.swift in Sources */,
-				A4EE62BD1F72C9B800370F26 /* CFUtil.swift in Sources */,
 				A4B853BA2041604D00EC123F /* ObjectTaskCategory.swift in Sources */,
 				A46CE6BA1F459BEE000DEACB /* WindowControllerEditorText.swift in Sources */,
 				A46CE6BC1F459F87000DEACB /* ViewControllerEditorText.swift in Sources */,
 				A4C97EBC203F12E3008AA81F /* ViewTask.swift in Sources */,
 				A4B42B5A1FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift in Sources */,
 				A4BC0AD91FD950D300EF42BE /* ViewControllerButtons.swift in Sources */,
-				A4EE62C31F72C9EC00370F26 /* CocoaFobLicVerifier.swift in Sources */,
 				A4C97EBA203F07AE008AA81F /* ViewEditArea.swift in Sources */,
 				A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */,
 				A4B42B571FD5C6530078AC69 /* ViewControllerWelcome.swift in Sources */,
 				A4B42B5D1FD5D4C80078AC69 /* ViewControllerDocs.swift in Sources */,
 				A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */,
 				A43523571F7D6A6000265672 /* TabViewControllerPrefs.swift in Sources */,
-				A487063C1F5680A2005EF67C /* WindowControllerRegistration.swift in Sources */,
 				A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */,
 				A43E6CC91FD40A9800D6F8BA /* WindowMain.swift in Sources */,
 				A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */,
 				A4410F941FD41B9F0001F7F7 /* WindowControllerFirstRun.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,
-				A45EA3C21F7105E100EA4310 /* RegTrial.swift in Sources */,
-				A43E6CCD1FD40BF500D6F8BA /* WindowRegistration.swift in Sources */,
-				A487063A1F568065005EF67C /* ViewControllerRegistration.swift in Sources */,
 				A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */,
 				A4C97EB0203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift in Sources */,
 				A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */,

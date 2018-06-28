@@ -46,20 +46,6 @@ struct UserDefaultStruct {
     
     static var updateDelta: String = "updateDelta"
     static var updateDeltaDefault: Int = 60 * 60 * 24 * 7  // a week in seconds, maxint of UInt64 is much higher.
-    
-    static var trialStartDate: String = "trialStartDate"
-    static var trialStartDateDefault: Date = Date()
-    
-    static var trialStartHash: String = "trialStartHash"
-    static var trialStartHashDefault: String = ""  // wrong on purpose to invalidate on tampering.
-    
-    // The following values have no defaults and are not guaranteed to be present. No force unwrapping here!
-    // They are only set on valid registering.
-    
-    static var regName: String = "regName"
-    static var regCompany: String = "regCompany"
-    static var regEmail: String = "regEmail"
-    static var regLicenseCode: String = "regLicenseCode"
 }
 
 
@@ -75,8 +61,6 @@ func isFirstRun() -> Bool {
     if isKeyPresentInUserDefaults(key: "interpreters") { return false }
     if isKeyPresentInUserDefaults(key: "updateLast") { return false }
     if isKeyPresentInUserDefaults(key: "updateDelta") { return false }
-    if isKeyPresentInUserDefaults(key: "trialStartDate") { return false }
-    if isKeyPresentInUserDefaults(key: "trialStartHash") { return false }
     return true
 }
 
@@ -133,13 +117,6 @@ func reapplyPrefs() {
     }
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.updateDelta) {
         userDefaults.set(UserDefaultStruct.updateDeltaDefault, forKey: UserDefaultStruct.updateDelta)
-    }
-    
-    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.trialStartDate) {
-        userDefaults.set(UserDefaultStruct.trialStartDateDefault, forKey: UserDefaultStruct.trialStartDate)
-    }
-    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.trialStartHash) {
-        userDefaults.set(UserDefaultStruct.trialStartHashDefault, forKey: UserDefaultStruct.trialStartHash)
     }
 }
 

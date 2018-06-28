@@ -13,7 +13,6 @@ import os.log
 // Logger configuration.
 let logGeneral = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "general")
 let logUpdate = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "update")
-let logLicense = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "license")
 let logFileSystem = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "filesystem")
 let logDrop = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "drop")
 let logExecution = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "execution")
@@ -36,12 +35,7 @@ struct AppState {
     static var bundledRunVersion: String = "v2.0 (c5c07dc) (2017-12-21)"
     
     static var initialSetupCompleted: Bool = false
-    static var trialStartSalt: String = "nBL4QzmKbk8vhnfke9uvNHRDUtwkoPvJ"
-    
-    static var isLicensed: Bool = false
-    static var isInTrial: Bool = false
-    static var regTrialStatus: String = "Unlicensed (Trial)"
-    
+
     static var systemVersion = ProcessInfo.processInfo.operatingSystemVersion
 }
 
@@ -159,23 +153,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             reapplyPrefs()
             loadWindowPosition()
             self.loadDevMenuState()
-            
-            AppState.isLicensed = isLicensed()
-            if !AppState.isLicensed {
-                os_log("No license information found.", log: logLicense, type: .info)
-                AppState.isInTrial = isInTrial()
-            }
-            
-            if !AppState.isInTrial && !AppState.isLicensed {
-                self.registrationWindowController.showWindow(self)
-            }
-            
             autoUpdate() // no checking for updates on the first start, the second launch is soon enough.
         } else {
             self.showSetupAssistant()
-            
             if AppState.initialSetupCompleted {
-                beginTrial()  // Trial period only starts once the initial setup has been completed successfully.
                 reapplyPrefs()  // Initialize the rest of the preferences with their default values.
                 NotificationCenter.default.post(name: .reloadWorkflows, object: nil)
             }
@@ -325,15 +306,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.preferencesWindowController.switchToPrefTab(index: 3,
                                                          messageText: "Workspace not found",
                                                          informativeText: informativeText)
-    }
-    
-    lazy var registrationWindowController: WindowControllerRegistration  = {
-        let wcSb = NSStoryboard(name: NSStoryboard.Name(rawValue: "Registration"), bundle: Bundle.main)
-        return wcSb.instantiateInitialController() as! WindowControllerRegistration
-    }()
-    
-    @IBAction func showRegistrationWindow(_ sender: NSMenuItem) {
-        self.registrationWindowController.showWindow(self)
     }
     
     @IBAction func checkForUpdates(_ sender: NSMenuItem) {
