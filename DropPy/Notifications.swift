@@ -35,10 +35,6 @@ extension Notification.Name {
     static let editorNotFound = Notification.Name("editorNotFound")
     static let workspaceNotFound = Notification.Name("workspaceNotFound")
     
-    static let updateError = Notification.Name("updateError")
-    static let updateNotAvailable = Notification.Name("updateNotAvailable")
-    static let updateAvailable = Notification.Name("updateAvailable")
-    
     static let loadFileInEditor = Notification.Name("loadFileInEditor")
     static let closeEditor = Notification.Name("closeEditor")
     

@@ -54,15 +54,6 @@ class WindowControllerMain: NSWindowController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.evaluateWorkflowResults),
                                                name: .executionFinished, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.updateErrorAlert),
-                                               name: .updateError, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.updateNotAvailableAlert),
-                                               name: .updateNotAvailable, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.updateAvailableAlert),
-                                               name: .updateAvailable, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(WindowControllerMain.workflowIdenticalNameAlert),
                                                name: .workflowIdenticalName, object: nil)
@@ -333,75 +324,5 @@ class WindowControllerMain: NSWindowController {
         errorAlert.alertStyle = NSAlert.Style.warning
         errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
         errorAlert.beginSheetModal(for: self.window!)
-    }
-
-    @objc func updateErrorAlert(_ notification: Notification) {
-        let errorAlert = NSAlert()
-        errorAlert.showsHelp = false
-        errorAlert.messageText = "Unable to check for updates"
-        errorAlert.informativeText = "Are you connected? Is your Firewall blocking DropPy?"
-        errorAlert.addButton(withTitle: "Visit Website")
-        errorAlert.addButton(withTitle: "Cancel")
-        errorAlert.layout()
-        errorAlert.alertStyle = NSAlert.Style.warning
-        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
-        errorAlert.beginSheetModal(for: self.window!, completionHandler: self.updateErrorAlertCompletion)
-    }
-    
-    func updateErrorAlertCompletion(userChoice: NSApplication.ModalResponse) {
-        if userChoice == NSApplication.ModalResponse.alertFirstButtonReturn {
-            openWebsite(webUrl: droppyappUrls.main)
-        }
-    }
-    
-    func openUrlInBrowser(urlString: String) {
-        openWebsite(webUrl: URL(string: urlString))
-    }
-
-    @objc func updateNotAvailableAlert(_ notification: Notification) {
-        guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }
-        guard let thisVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
-        
-        let infoAlert = NSAlert()
-        infoAlert.showsHelp = false
-        infoAlert.messageText = "No update available"
-        infoAlert.informativeText = "You're already using the latest version, v" + thisVersionString + "."
-        infoAlert.addButton(withTitle: "Ok")
-        infoAlert.addButton(withTitle: "Release Notes")
-        infoAlert.layout()
-        infoAlert.alertStyle = NSAlert.Style.informational
-        infoAlert.icon = NSImage(named: NSImage.Name(rawValue: "AppIcon"))
-        
-        infoAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
-            if returnCode == NSApplication.ModalResponse.alertSecondButtonReturn {
-                self.openUrlInBrowser(urlString: releaseNotesLink)
-            }
-        })
-    }
-
-    @objc func updateAvailableAlert(_ notification: Notification) {
-        guard let thisVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
-        guard let newVersionString = notification.userInfo?["versionString"] as? String else { return }
-        guard let releaseNotesLink = notification.userInfo?["releaseNotesLink"] as? String else { return }
-        guard let downloadLink = notification.userInfo?["downloadLink"] as? String else { return }
-
-        let infoAlert = NSAlert()
-        infoAlert.showsHelp = false
-        infoAlert.messageText = "New update available"
-        infoAlert.informativeText = "There's a new version of DropPy, v" + newVersionString + ".\nYou're currently using v" + thisVersionString + "."
-        infoAlert.addButton(withTitle: "Download")
-        infoAlert.addButton(withTitle: "What's new?")
-        infoAlert.addButton(withTitle: "Cancel")
-        infoAlert.layout()
-        infoAlert.alertStyle = NSAlert.Style.informational
-        infoAlert.icon = NSImage(named: NSImage.Name(rawValue: "AppIcon"))
-        
-        infoAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
-            if returnCode == NSApplication.ModalResponse.alertFirstButtonReturn {
-                self.openUrlInBrowser(urlString: downloadLink)
-            } else if returnCode == NSApplication.ModalResponse.alertSecondButtonReturn {
-                self.openUrlInBrowser(urlString: releaseNotesLink)
-            }
-        })
     }
 }

@@ -40,12 +40,6 @@ struct UserDefaultStruct {
     
     static var interpreters: String = "interpreters"
     static var interpretersDefault: Dictionary = ["macOS pre-installed": ["executable": "/usr/bin/python", "arguments": "-B"]]
-    
-    static var updateLast: String = "updateLast"
-    static var updateLastDefault: Date = Date()
-    
-    static var updateDelta: String = "updateDelta"
-    static var updateDeltaDefault: Int = 60 * 60 * 24 * 7  // a week in seconds, maxint of UInt64 is much higher.
 }
 
 
@@ -59,8 +53,6 @@ func isFirstRun() -> Bool {
     if isKeyPresentInUserDefaults(key: "editorForWorkflows") { return false }
     if isKeyPresentInUserDefaults(key: "editorForTasks") { return false }
     if isKeyPresentInUserDefaults(key: "interpreters") { return false }
-    if isKeyPresentInUserDefaults(key: "updateLast") { return false }
-    if isKeyPresentInUserDefaults(key: "updateDelta") { return false }
     return true
 }
 
@@ -110,13 +102,6 @@ func reapplyPrefs() {
     
     if !isKeyPresentInUserDefaults(key: UserDefaultStruct.interpreters) {
         userDefaults.set(UserDefaultStruct.interpretersDefault, forKey: UserDefaultStruct.interpreters)
-    }
-    
-    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.updateLast) {
-        userDefaults.set(UserDefaultStruct.updateLastDefault, forKey: UserDefaultStruct.updateLast)
-    }
-    if !isKeyPresentInUserDefaults(key: UserDefaultStruct.updateDelta) {
-        userDefaults.set(UserDefaultStruct.updateDeltaDefault, forKey: UserDefaultStruct.updateDelta)
     }
 }
 

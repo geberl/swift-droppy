@@ -429,3 +429,7 @@ extension Date {
         return Formatter.readableDate.string(from: self)
     }
 }
+
+enum JsonError: Error {
+    case misformed
+}

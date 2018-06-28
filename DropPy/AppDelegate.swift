@@ -12,7 +12,6 @@ import os.log
 
 // Logger configuration.
 let logGeneral = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "general")
-let logUpdate = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "update")
 let logFileSystem = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "filesystem")
 let logDrop = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "drop")
 let logExecution = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "execution")
@@ -153,7 +152,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             reapplyPrefs()
             loadWindowPosition()
             self.loadDevMenuState()
-            autoUpdate() // no checking for updates on the first start, the second launch is soon enough.
         } else {
             self.showSetupAssistant()
             if AppState.initialSetupCompleted {
@@ -306,10 +304,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.preferencesWindowController.switchToPrefTab(index: 3,
                                                          messageText: "Workspace not found",
                                                          informativeText: informativeText)
-    }
-    
-    @IBAction func checkForUpdates(_ sender: NSMenuItem) {
-        manualUpdate(silent: false)
     }
     
     @IBAction func showReleaseNotes(_ sender: NSMenuItem) {
