@@ -34,19 +34,17 @@ class PythonExecutor: NSObject {
         
         os_log("Executing workflow '%@'.", log: logExecution, type: .debug, workflowFile)
         
+        self.startTime = DispatchTime.now()
+        
         self.tempDirPath = tempDirPath
         self.workflowFile = workflowFile
         self.workspacePath = workspacePath
         self.executablePath = executablePath
         self.executableArgs = executableArgs
-        
-        self.startTime = DispatchTime.now()
-        
         self.cacheDirPath = tempDirPath + "_cache" + "/"
-        self.runnerFilePath = tempDirPath + "run.py"
         self.timestampDirPath = tempDirPath + Date().iso8601like + "/"
         self.logFilePath = self.timestampDirPath + "droppy.log"
-        
+        self.runnerFilePath = workspacePath + "Runners" + "/" + "run.py"
         self.workflowPath = workspacePath + "Workflows" + "/" + workflowFile
         
         self.executionCancel = false
@@ -165,9 +163,6 @@ class PythonExecutor: NSObject {
     }
 
     func run() {
-        // Make sure there is a file 'run.py' at the expected location.
-        extractBundledRun()
-
         // Copy _cache dir from drop to timestampdir for execution.
         copyDir(sourceDirPath: self.cacheDirPath, targetDirPath: self.timestampDirPath)
 

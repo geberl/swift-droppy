@@ -47,6 +47,7 @@
 		A4C97EB8203EFE98008AA81F /* ViewControllerEditorWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB7203EFE98008AA81F /* ViewControllerEditorWorkflow.swift */; };
 		A4C97EBA203F07AE008AA81F /* ViewEditArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB9203F07AE008AA81F /* ViewEditArea.swift */; };
 		A4C97EBC203F12E3008AA81F /* ViewTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EBB203F12E3008AA81F /* ViewTask.swift */; };
+		A4D0D80320E94D230087F23D /* DataCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D0D80220E94D230087F23D /* DataCompression.swift */; };
 		A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */; };
 		A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E8DF931EDAA29100D12029 /* DragDropView.swift */; };
 /* End PBXBuildFile section */
@@ -65,9 +66,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D1965F5303BF80DC5E7FB52 /* Pods_DropPyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		497C418422CF2B2058F90C8E /* Pods_DropPyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8077B363D66782A696F40634 /* Pods_DropPy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropPy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A401DBF31F71292400A12302 /* Prefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prefs.swift; sourceTree = "<group>"; };
 		A417ACE31EED7AFD00C08DED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Preferences.storyboard; sourceTree = "<group>"; };
 		A417ACE51EED7D5300C08DED /* WindowControllerPrefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerPrefs.swift; sourceTree = "<group>"; };
@@ -110,6 +108,7 @@
 		A4C97EB7203EFE98008AA81F /* ViewControllerEditorWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerEditorWorkflow.swift; sourceTree = "<group>"; };
 		A4C97EB9203F07AE008AA81F /* ViewEditArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEditArea.swift; sourceTree = "<group>"; };
 		A4C97EBB203F12E3008AA81F /* ViewTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTask.swift; sourceTree = "<group>"; };
+		A4D0D80220E94D230087F23D /* DataCompression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCompression.swift; sourceTree = "<group>"; };
 		A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerMain.swift; sourceTree = "<group>"; };
 		A4E8DF931EDAA29100D12029 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,16 +124,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		08408B51D3A4022FB24DF6C6 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8077B363D66782A696F40634 /* Pods_DropPy.framework */,
-				497C418422CF2B2058F90C8E /* Pods_DropPyTests.framework */,
-				1D1965F5303BF80DC5E7FB52 /* Pods_DropPyUITests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		A441055A2041CC0000B3C304 /* Center */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,7 +200,6 @@
 				A46393391E8FDA40000C7BDB /* Info.plist */,
 				A463932F1E8FDA40000C7BDB /* DropPy */,
 				A463932E1E8FDA40000C7BDB /* Products */,
-				08408B51D3A4022FB24DF6C6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -228,6 +216,7 @@
 			children = (
 				A46393301E8FDA40000C7BDB /* AppDelegate.swift */,
 				A41A701A1F57354100117E18 /* Common.swift */,
+				A4D0D80220E94D230087F23D /* DataCompression.swift */,
 				A4B73C3F1F7D0E6200087A10 /* Notifications.swift */,
 				A4C61CF01F56982900759F57 /* PythonExecutor.swift */,
 				A401DBF31F71292400A12302 /* Prefs.swift */,
@@ -418,6 +407,7 @@
 				A4BC0AD91FD950D300EF42BE /* ViewControllerButtons.swift in Sources */,
 				A4C97EBA203F07AE008AA81F /* ViewEditArea.swift in Sources */,
 				A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */,
+				A4D0D80320E94D230087F23D /* DataCompression.swift in Sources */,
 				A4B42B571FD5C6530078AC69 /* ViewControllerWelcome.swift in Sources */,
 				A4B42B5D1FD5D4C80078AC69 /* ViewControllerDocs.swift in Sources */,
 				A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */,

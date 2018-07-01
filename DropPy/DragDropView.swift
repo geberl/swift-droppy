@@ -221,7 +221,6 @@ class DragDropView: NSView {
         macOsVersionString += String(AppState.systemVersion.patchVersion)
         self.writeLog(prefix: "macOS Version:            ", lines: [macOsVersionString])
         self.writeLog(prefix: "Bundled droppy-workspace: ", lines: [AppState.bundledWorkspaceVersion])
-        self.writeLog(prefix: "Bundled droppy-run:       ", lines: [AppState.bundledRunVersion])
         
         // Write drop session info.
         self.writeLog(prefix: "", lines: [String(repeating: "-", count: 120)])
