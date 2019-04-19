@@ -33,12 +33,12 @@ class WindowControllerMain: NSWindowController {
     }
 
     lazy var textEditorWindowController: WindowControllerEditorText  = {
-        let wcSB = NSStoryboard(name: NSStoryboard.Name(rawValue: "EditorText"), bundle: Bundle.main)
+        let wcSB = NSStoryboard(name: "EditorText", bundle: Bundle.main)
         return wcSB.instantiateInitialController() as! WindowControllerEditorText
     }()
     
     lazy var workflowEditorWindowController: WindowControllerEditorWorkflow  = {
-        let wcSB = NSStoryboard(name: NSStoryboard.Name(rawValue: "EditorWorkflow"), bundle: Bundle.main)
+        let wcSB = NSStoryboard(name: "EditorWorkflow", bundle: Bundle.main)
         return wcSB.instantiateInitialController() as! WindowControllerEditorWorkflow
     }()
     
@@ -166,7 +166,7 @@ class WindowControllerMain: NSWindowController {
         warningAlert.addButton(withTitle: "Move to Trash")
         warningAlert.layout()
         warningAlert.alertStyle = NSAlert.Style.warning
-        warningAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
+        warningAlert.icon = NSImage(named: "alert")
         
         warningAlert.beginSheetModal(for: self.window!, completionHandler: { [unowned self] (returnCode) -> Void in
             if returnCode == NSApplication.ModalResponse.alertSecondButtonReturn {
@@ -280,7 +280,7 @@ class WindowControllerMain: NSWindowController {
         errorAlert.addButton(withTitle: "Open temp dir")
         errorAlert.layout()
         errorAlert.alertStyle = NSAlert.Style.warning
-        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
+        errorAlert.icon = NSImage(named: "error")
         
         let logFilePath = timestampDirPath + "droppy.log"
         
@@ -322,7 +322,7 @@ class WindowControllerMain: NSWindowController {
         errorAlert.addButton(withTitle: "Ok")
         errorAlert.layout()
         errorAlert.alertStyle = NSAlert.Style.warning
-        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
+        errorAlert.icon = NSImage(named: "alert")
         errorAlert.beginSheetModal(for: self.window!)
     }
 }

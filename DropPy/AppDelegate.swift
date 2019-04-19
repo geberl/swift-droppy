@@ -263,7 +263,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     lazy var preferencesWindowController: WindowControllerPrefs  = {
-        let wcSb = NSStoryboard(name: NSStoryboard.Name(rawValue: "Preferences"), bundle: Bundle.main)
+        let wcSb = NSStoryboard(name: "Preferences", bundle: Bundle.main)
         return wcSb.instantiateInitialController() as! WindowControllerPrefs
     }()
     
@@ -330,7 +330,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     lazy var firstRunWindowController: WindowControllerFirstRun  = {
-        let wcSB = NSStoryboard(name: NSStoryboard.Name(rawValue: "FirstRun"), bundle: Bundle.main)
+        let wcSB = NSStoryboard(name: "FirstRun", bundle: Bundle.main)
         return wcSB.instantiateInitialController() as! WindowControllerFirstRun
     }()
     

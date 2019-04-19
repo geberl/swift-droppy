@@ -40,7 +40,7 @@ class ViewControllerButtons: NSViewController {
             
             // Get the ViewController that contains the checkbox.
             var workspaceViewController: ViewControllerWorkspaceSetup? = nil
-            for viewController in parentTabViewController!.childViewControllers {
+            for viewController in parentTabViewController!.children {
                 if viewController.title! == "Workspace Setup" {
                     workspaceViewController = viewController as? ViewControllerWorkspaceSetup
                     break
@@ -92,7 +92,7 @@ class ViewControllerButtons: NSViewController {
         criticalAlert.addButton(withTitle: "Exit DropPy")
         criticalAlert.layout()
         criticalAlert.alertStyle = NSAlert.Style.critical
-        criticalAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
+        criticalAlert.icon = NSImage(named: "error")
         criticalAlert.beginSheetModal(for: self.view.window!,
                                       completionHandler: self.confirmEarlyExitCompletion)
     }
@@ -159,7 +159,7 @@ class ViewControllerButtons: NSViewController {
         let parentSplitViewController: NSSplitViewController = self.parent! as! NSSplitViewController
         var parentTabViewController: NSTabViewController? = nil
         
-        for viewController in parentSplitViewController.childViewControllers {
+        for viewController in parentSplitViewController.children {
             if viewController.title! == "Tabs" {
                 parentTabViewController = viewController as? NSTabViewController
                 return parentTabViewController

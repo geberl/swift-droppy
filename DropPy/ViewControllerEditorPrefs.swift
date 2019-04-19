@@ -148,7 +148,7 @@ class EditorAppImageView: NSImageView {
     }
 
     func containsPasteboardType(sender: NSDraggingInfo, pasteboardType: String) -> Bool {
-        let pasteboard = sender.draggingPasteboard()
+        let pasteboard = sender.draggingPasteboard
         
         if pasteboard.types?.contains(NSPasteboard.PasteboardType(rawValue: pasteboardType)) == true {
             return true
@@ -159,7 +159,7 @@ class EditorAppImageView: NSImageView {
     }
     
     func countNumberOfItems(sender: NSDraggingInfo, pasteboardType: String) -> Int {
-        if let board = sender.draggingPasteboard().propertyList(forType: NSPasteboard.PasteboardType(rawValue: pasteboardType)) as? NSArray {
+        if let board = sender.draggingPasteboard.propertyList(forType: NSPasteboard.PasteboardType(rawValue: pasteboardType)) as? NSArray {
             let itemsCount = board.count
             return itemsCount
         } else {
@@ -169,7 +169,7 @@ class EditorAppImageView: NSImageView {
     }
     
     func getFileExtension(sender: NSDraggingInfo) -> String {
-        if let board = sender.draggingPasteboard().propertyList(forType: NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")) as? NSArray {
+        if let board = sender.draggingPasteboard.propertyList(forType: NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")) as? NSArray {
             if board.count == 1 {
                 let fileExtension = (board[0] as! NSString).pathExtension
                 return fileExtension
@@ -184,7 +184,7 @@ class EditorAppImageView: NSImageView {
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        if let board = sender.draggingPasteboard().propertyList(forType: NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")) as? NSArray {
+        if let board = sender.draggingPasteboard.propertyList(forType: NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")) as? NSArray {
             if board.count == 1 {
                 self.appPath = board[0] as! String
                 self.iconPath = getAppIconPath(appPath: appPath)

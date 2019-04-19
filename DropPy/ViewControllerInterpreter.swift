@@ -145,7 +145,7 @@ class ViewControllerInterpreter: NSViewController {
         criticalAlert.addButton(withTitle: "Cancel")
         criticalAlert.layout()
         criticalAlert.alertStyle = NSAlert.Style.critical
-        criticalAlert.icon = NSImage(named: NSImage.Name(rawValue: "alert"))
+        criticalAlert.icon = NSImage(named: "alert")
         criticalAlert.beginSheetModal(for: NSApplication.shared.mainWindow!,
                                       completionHandler: self.removeSelectedInterpreter)
     }
@@ -366,7 +366,7 @@ class ViewControllerInterpreter: NSViewController {
         errorAlert.addButton(withTitle: "Ok")
         errorAlert.layout()
         errorAlert.alertStyle = NSAlert.Style.warning
-        errorAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
+        errorAlert.icon = NSImage(named: "error")
         errorAlert.beginSheetModal(for: NSApplication.shared.mainWindow!)
     }
 }
@@ -434,13 +434,13 @@ extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
         }
     }
 
-    override func controlTextDidBeginEditing(_ obj: Notification) {
+    func controlTextDidBeginEditing(_ obj: Notification) {
         // Triggered once the user adds/removes the first character. Not when the textfield changes to editing mode.
         
         // Does not matter, I just want to save the new value.
     }
     
-    override func controlTextDidEndEditing(_ obj: Notification) {
+    func controlTextDidEndEditing(_ obj: Notification) {
         // Triggered when in editing mode and textfield is deselected or enter is pressed (doesn't matter if text actually changed or not).
 
         if let editedTextField: NSTextField = obj.object as? NSTextField {
@@ -476,7 +476,7 @@ extension ViewControllerInterpreter: NSTableViewDelegate, NSTextFieldDelegate {
         }
     }
 
-    override func controlTextDidChange(_ obj: Notification) {
+    func controlTextDidChange(_ obj: Notification) {
         // Get the data every time the user writes a character. But not when using the arrow keys.
 
         // Not necessary to use this to provide live behavior.

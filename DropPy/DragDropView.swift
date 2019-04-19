@@ -170,7 +170,7 @@ class DragDropView: NSView {
     func getUtiTypes(draggingInfo: NSDraggingInfo) -> [String] {
         var utiTypes: [String] = []
         
-        if let types = draggingInfo.draggingPasteboard().types {
+        if let types = draggingInfo.draggingPasteboard.types {
             for type in types {
                 if self.isUtiType(typeName: type.rawValue) {
                     utiTypes.append(type.rawValue)
@@ -311,7 +311,7 @@ class DragDropView: NSView {
     func getFilePaths(draggingInfo: NSDraggingInfo) -> [String] {
         // No luck getting this to work with the new "public.file-url" instead of the old "NSFilenamesPboardType"
         // https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/AccessingFilesandDirectories/AccessingFilesandDirectories.html
-        if let filePathsArray = draggingInfo.draggingPasteboard().propertyList(forType: NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")) as? NSArray {
+        if let filePathsArray = draggingInfo.draggingPasteboard.propertyList(forType: NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")) as? NSArray {
             if let filePaths = filePathsArray as? [String] {
                 return filePaths
             }
@@ -449,7 +449,7 @@ class DragDropView: NSView {
         ]
         
         for dataType in utiTypes {
-            if let data = draggingInfo.draggingPasteboard().data(forType: NSPasteboard.PasteboardType(rawValue: dataType)) {
+            if let data = draggingInfo.draggingPasteboard.data(forType: NSPasteboard.PasteboardType(rawValue: dataType)) {
                 do {
                     // Write each dataType in its own directory, with the correct fileExtension (if known).
                     var fileExtension: String = ""
@@ -490,7 +490,7 @@ class DragDropView: NSView {
         // See above, where this function is comented out.
 
         // New way (not yet working reliably for me in Mail, Photos but working in Calendar):
-        if let filePromises = draggingInfo.draggingPasteboard().readObjects(forClasses: [NSFilePromiseReceiver.self],
+        if let filePromises = draggingInfo.draggingPasteboard.readObjects(forClasses: [NSFilePromiseReceiver.self],
                                                                             options: nil) as? [NSFilePromiseReceiver] {
             self.numberOfPromises = filePromises.count
             

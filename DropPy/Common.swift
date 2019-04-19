@@ -208,7 +208,7 @@ func extractBundledWorkspace(workspacePath: String) {
     }
 
     // Copy content of asset bundled-droppy-workspace to the temp directory as droppy-workspace-temp.zip.
-    if let asset = NSDataAsset(name: NSDataAsset.Name(rawValue: "bundled-droppy-workspace"), bundle: Bundle.main) {
+    if let asset = NSDataAsset(name: "bundled-droppy-workspace", bundle: Bundle.main) {
         do {
             try asset.data.write(to: URL(fileURLWithPath: zipPath))
             os_log("Copied bundled asset to '%@'.", log: logFileSystem, type: .debug, zipPath)

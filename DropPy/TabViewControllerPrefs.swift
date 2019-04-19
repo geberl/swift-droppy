@@ -65,7 +65,7 @@ class TabViewControllerPrefs: NSTabViewController {
         invalidAlert.informativeText = informativeText
         invalidAlert.addButton(withTitle: "Ok")
         invalidAlert.layout()
-        invalidAlert.icon = NSImage(named: NSImage.Name(rawValue: "error"))
+        invalidAlert.icon = NSImage(named: "error")
         invalidAlert.beginSheetModal(for: self.view.window!)
     }
 }
