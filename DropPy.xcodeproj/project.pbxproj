@@ -47,7 +47,6 @@
 		A4C97EB8203EFE98008AA81F /* ViewControllerEditorWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB7203EFE98008AA81F /* ViewControllerEditorWorkflow.swift */; };
 		A4C97EBA203F07AE008AA81F /* ViewEditArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EB9203F07AE008AA81F /* ViewEditArea.swift */; };
 		A4C97EBC203F12E3008AA81F /* ViewTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C97EBB203F12E3008AA81F /* ViewTask.swift */; };
-		A4D0D80320E94D230087F23D /* DataCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D0D80220E94D230087F23D /* DataCompression.swift */; };
 		A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */; };
 		A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E8DF931EDAA29100D12029 /* DragDropView.swift */; };
 /* End PBXBuildFile section */
@@ -108,7 +107,6 @@
 		A4C97EB7203EFE98008AA81F /* ViewControllerEditorWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerEditorWorkflow.swift; sourceTree = "<group>"; };
 		A4C97EB9203F07AE008AA81F /* ViewEditArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEditArea.swift; sourceTree = "<group>"; };
 		A4C97EBB203F12E3008AA81F /* ViewTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTask.swift; sourceTree = "<group>"; };
-		A4D0D80220E94D230087F23D /* DataCompression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCompression.swift; sourceTree = "<group>"; };
 		A4E782891EE3EF7000B81971 /* WindowControllerMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerMain.swift; sourceTree = "<group>"; };
 		A4E8DF931EDAA29100D12029 /* DragDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,7 +214,6 @@
 			children = (
 				A46393301E8FDA40000C7BDB /* AppDelegate.swift */,
 				A41A701A1F57354100117E18 /* Common.swift */,
-				A4D0D80220E94D230087F23D /* DataCompression.swift */,
 				A4B73C3F1F7D0E6200087A10 /* Notifications.swift */,
 				A4C61CF01F56982900759F57 /* PythonExecutor.swift */,
 				A401DBF31F71292400A12302 /* Prefs.swift */,
@@ -407,7 +404,6 @@
 				A4BC0AD91FD950D300EF42BE /* ViewControllerButtons.swift in Sources */,
 				A4C97EBA203F07AE008AA81F /* ViewEditArea.swift in Sources */,
 				A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */,
-				A4D0D80320E94D230087F23D /* DataCompression.swift in Sources */,
 				A4B42B571FD5C6530078AC69 /* ViewControllerWelcome.swift in Sources */,
 				A4B42B5D1FD5D4C80078AC69 /* ViewControllerDocs.swift in Sources */,
 				A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */,

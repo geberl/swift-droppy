@@ -218,8 +218,9 @@ func extractBundledWorkspace(workspacePath: String) {
     }
     
     // Unzip the zip file into the dedicated temp directory.
-    //SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath) // TODO this cocoapod has been removed, use DataCompresseion.swift somehow
-    os_log("Unzipped '%@' to '%@'.", log: logFileSystem, type: .debug, zipPath, unzipPath)
+    //SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath) // TODO removed cocoapod
+    //os_log("Unzipped '%@' to '%@'.", log: logFileSystem, type: .debug, zipPath, unzipPath)
+    os_log("TODO actually unzip now", log: logFileSystem, type: .error)
     
     // The zip file contains a sub-directory. Find out its name (depends on release version of Workspace).
     guard let subDirEnumerator: FileManager.DirectoryEnumerator =
