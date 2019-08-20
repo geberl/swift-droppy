@@ -1,4 +1,4 @@
-# DropPy Docs
+# DropPy
 
 ## Repos
 
