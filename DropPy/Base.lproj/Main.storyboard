@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -144,23 +144,10 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="window" id="4au-es-AwO">
                                     <items>
-                                        <menuItem title="First Run Assistant..." id="nF9-sR-alW">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="showFirstRunWindow:" target="Voe-Tx-rLC" id="fUS-h8-zsF"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="MLy-GH-Kqy"/>
                                         <menuItem title="Documentation Website" id="8aW-ec-3q2">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="showDocumentation:" target="Voe-Tx-rLC" id="kl9-YU-Wvb"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Support" id="syD-Fu-yr1">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="showSupport:" target="Voe-Tx-rLC" id="KXG-CH-gWP"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Release Notes" id="hg1-Rf-6aM">
@@ -169,13 +156,6 @@
                                                 <action selector="showReleaseNotes:" target="Voe-Tx-rLC" id="r2G-Gs-ADu"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Privacy Statement" id="Jog-i0-naC">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="showPrivacyStatement:" target="Voe-Tx-rLC" id="rqe-ln-cTe"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="Gz9-FD-6G3"/>
                                         <menuItem title="Product Website" id="MVQ-6e-eo1">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>

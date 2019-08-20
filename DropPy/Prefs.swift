@@ -43,20 +43,6 @@ struct UserDefaultStruct {
 }
 
 
-func isFirstRun() -> Bool {
-    // Check all relevant keys independently. As soon as one is found it can't be the app's first run.
-    if isKeyPresentInUserDefaults(key: "workspacePath") { return false }
-    if isKeyPresentInUserDefaults(key: "workflowSelected") { return false }
-    if isKeyPresentInUserDefaults(key: "devModeEnabled") { return false }
-    if isKeyPresentInUserDefaults(key: "editorAppPath") { return false }
-    if isKeyPresentInUserDefaults(key: "editorIconPath") { return false }
-    if isKeyPresentInUserDefaults(key: "editorForWorkflows") { return false }
-    if isKeyPresentInUserDefaults(key: "editorForTasks") { return false }
-    if isKeyPresentInUserDefaults(key: "interpreters") { return false }
-    return true
-}
-
-
 func isKeyPresentInUserDefaults(key: String) -> Bool {
     if UserDefaults.standard.object(forKey: key) == nil {
         return false

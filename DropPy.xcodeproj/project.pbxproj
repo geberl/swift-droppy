@@ -18,9 +18,6 @@
 		A43E6CCF1FD40C3B00D6F8BA /* WindowPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43E6CCE1FD40C3B00D6F8BA /* WindowPrefs.swift */; };
 		A44105552041CB1400B3C304 /* ViewControllerTaskProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44105542041CB1400B3C304 /* ViewControllerTaskProps.swift */; };
 		A44105582041CB6C00B3C304 /* ViewControllerTaskLib.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44105562041CB6C00B3C304 /* ViewControllerTaskLib.swift */; };
-		A4410F941FD41B9F0001F7F7 /* WindowControllerFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */; };
-		A4410F961FD420710001F7F7 /* WindowFirstRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4410F951FD420710001F7F7 /* WindowFirstRun.swift */; };
-		A444507D1EF0EC5600EBB485 /* FirstRun.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */; };
 		A46393311E8FDA40000C7BDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393301E8FDA40000C7BDB /* AppDelegate.swift */; };
 		A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46393321E8FDA40000C7BDB /* ViewControllerMain.swift */; };
 		A46393351E8FDA40000C7BDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A46393341E8FDA40000C7BDB /* Assets.xcassets */; };
@@ -29,14 +26,9 @@
 		A46CE6BA1F459BEE000DEACB /* WindowControllerEditorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46CE6B91F459BEE000DEACB /* WindowControllerEditorText.swift */; };
 		A46CE6BC1F459F87000DEACB /* ViewControllerEditorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46CE6BB1F459F87000DEACB /* ViewControllerEditorText.swift */; };
 		A48DAE581F88B5CA00D7F96E /* WebLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48DAE571F88B5CA00D7F96E /* WebLinks.swift */; };
-		A4B42B571FD5C6530078AC69 /* ViewControllerWelcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B42B561FD5C6530078AC69 /* ViewControllerWelcome.swift */; };
-		A4B42B5A1FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B42B581FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift */; };
-		A4B42B5D1FD5D4C80078AC69 /* ViewControllerDocs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B42B5C1FD5D4C80078AC69 /* ViewControllerDocs.swift */; };
-		A4B42B601FD5D4EE0078AC69 /* ViewControllerFinish.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B42B5E1FD5D4EE0078AC69 /* ViewControllerFinish.swift */; };
 		A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B73C3F1F7D0E6200087A10 /* Notifications.swift */; };
 		A4B853B82041601300EC123F /* ObjectTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B853B72041601300EC123F /* ObjectTask.swift */; };
 		A4B853BA2041604D00EC123F /* ObjectTaskCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B853B92041604D00EC123F /* ObjectTaskCategory.swift */; };
-		A4BC0AD91FD950D300EF42BE /* ViewControllerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BC0AD81FD950D300EF42BE /* ViewControllerButtons.swift */; };
 		A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */; };
 		A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */; };
 		A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */; };
@@ -76,9 +68,6 @@
 		A43E6CCE1FD40C3B00D6F8BA /* WindowPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowPrefs.swift; sourceTree = "<group>"; };
 		A44105542041CB1400B3C304 /* ViewControllerTaskProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskProps.swift; sourceTree = "<group>"; };
 		A44105562041CB6C00B3C304 /* ViewControllerTaskLib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskLib.swift; sourceTree = "<group>"; };
-		A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllerFirstRun.swift; sourceTree = "<group>"; };
-		A4410F951FD420710001F7F7 /* WindowFirstRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowFirstRun.swift; sourceTree = "<group>"; };
-		A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FirstRun.storyboard; sourceTree = "<group>"; };
 		A463932D1E8FDA40000C7BDB /* DropPy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropPy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A46393301E8FDA40000C7BDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A46393321E8FDA40000C7BDB /* ViewControllerMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerMain.swift; sourceTree = "<group>"; };
@@ -89,14 +78,9 @@
 		A46CE6B91F459BEE000DEACB /* WindowControllerEditorText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowControllerEditorText.swift; sourceTree = "<group>"; };
 		A46CE6BB1F459F87000DEACB /* ViewControllerEditorText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEditorText.swift; sourceTree = "<group>"; };
 		A48DAE571F88B5CA00D7F96E /* WebLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinks.swift; sourceTree = "<group>"; };
-		A4B42B561FD5C6530078AC69 /* ViewControllerWelcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerWelcome.swift; sourceTree = "<group>"; };
-		A4B42B581FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerWorkspaceSetup.swift; sourceTree = "<group>"; };
-		A4B42B5C1FD5D4C80078AC69 /* ViewControllerDocs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDocs.swift; sourceTree = "<group>"; };
-		A4B42B5E1FD5D4EE0078AC69 /* ViewControllerFinish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFinish.swift; sourceTree = "<group>"; };
 		A4B73C3F1F7D0E6200087A10 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		A4B853B72041601300EC123F /* ObjectTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectTask.swift; sourceTree = "<group>"; };
 		A4B853B92041604D00EC123F /* ObjectTaskCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectTaskCategory.swift; sourceTree = "<group>"; };
-		A4BC0AD81FD950D300EF42BE /* ViewControllerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerButtons.swift; sourceTree = "<group>"; };
 		A4BD30811F4558C900890713 /* ViewControllerGeneral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerGeneral.swift; sourceTree = "<group>"; };
 		A4BD30831F45612000890713 /* ViewControllerInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerInterpreter.swift; sourceTree = "<group>"; };
 		A4BD30851F456F6900890713 /* ViewControllerWorkspace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWorkspace.swift; sourceTree = "<group>"; };
@@ -147,21 +131,6 @@
 				A44105542041CB1400B3C304 /* ViewControllerTaskProps.swift */,
 			);
 			name = Right;
-			sourceTree = "<group>";
-		};
-		A444507B1EF0EBF000EBB485 /* FirstRun */ = {
-			isa = PBXGroup;
-			children = (
-				A444507C1EF0EC5600EBB485 /* FirstRun.storyboard */,
-				A4410F931FD41B9F0001F7F7 /* WindowControllerFirstRun.swift */,
-				A4410F951FD420710001F7F7 /* WindowFirstRun.swift */,
-				A4BC0AD81FD950D300EF42BE /* ViewControllerButtons.swift */,
-				A4B42B561FD5C6530078AC69 /* ViewControllerWelcome.swift */,
-				A4B42B581FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift */,
-				A4B42B5C1FD5D4C80078AC69 /* ViewControllerDocs.swift */,
-				A4B42B5E1FD5D4EE0078AC69 /* ViewControllerFinish.swift */,
-			);
-			name = FirstRun;
 			sourceTree = "<group>";
 		};
 		A46022741EED37D10060FA75 /* Preferences */ = {
@@ -222,7 +191,6 @@
 				A46CE6B61F459A0B000DEACB /* Editor Text */,
 				A4C97EAC203EE309008AA81F /* Editor Workflow */,
 				A46022741EED37D10060FA75 /* Preferences */,
-				A444507B1EF0EBF000EBB485 /* FirstRun */,
 			);
 			path = DropPy;
 			sourceTree = "<group>";
@@ -322,7 +290,6 @@
 				A4C97EAE203EE36F008AA81F /* EditorWorkflow.storyboard in Resources */,
 				A46CE6B81F459A34000DEACB /* EditorText.storyboard in Resources */,
 				A417ACE41EED7AFD00C08DED /* Preferences.storyboard in Resources */,
-				A444507D1EF0EC5600EBB485 /* FirstRun.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +356,6 @@
 				A48DAE581F88B5CA00D7F96E /* WebLinks.swift in Sources */,
 				A401DBF41F71292400A12302 /* Prefs.swift in Sources */,
 				A4C97EB8203EFE98008AA81F /* ViewControllerEditorWorkflow.swift in Sources */,
-				A4410F961FD420710001F7F7 /* WindowFirstRun.swift in Sources */,
 				A4C97EB2203EF53D008AA81F /* WindowEditorWorkflow.swift in Sources */,
 				A41A701B1F57354100117E18 /* Common.swift in Sources */,
 				A44105582041CB6C00B3C304 /* ViewControllerTaskLib.swift in Sources */,
@@ -400,18 +366,13 @@
 				A46CE6BA1F459BEE000DEACB /* WindowControllerEditorText.swift in Sources */,
 				A46CE6BC1F459F87000DEACB /* ViewControllerEditorText.swift in Sources */,
 				A4C97EBC203F12E3008AA81F /* ViewTask.swift in Sources */,
-				A4B42B5A1FD5C7590078AC69 /* ViewControllerWorkspaceSetup.swift in Sources */,
-				A4BC0AD91FD950D300EF42BE /* ViewControllerButtons.swift in Sources */,
 				A4C97EBA203F07AE008AA81F /* ViewEditArea.swift in Sources */,
 				A4BD30861F456F6900890713 /* ViewControllerWorkspace.swift in Sources */,
-				A4B42B571FD5C6530078AC69 /* ViewControllerWelcome.swift in Sources */,
-				A4B42B5D1FD5D4C80078AC69 /* ViewControllerDocs.swift in Sources */,
 				A46393331E8FDA40000C7BDB /* ViewControllerMain.swift in Sources */,
 				A43523571F7D6A6000265672 /* TabViewControllerPrefs.swift in Sources */,
 				A4E7828A1EE3EF7000B81971 /* WindowControllerMain.swift in Sources */,
 				A43E6CC91FD40A9800D6F8BA /* WindowMain.swift in Sources */,
 				A4B73C401F7D0E6200087A10 /* Notifications.swift in Sources */,
-				A4410F941FD41B9F0001F7F7 /* WindowControllerFirstRun.swift in Sources */,
 				A4E8DF941EDAA29100D12029 /* DragDropView.swift in Sources */,
 				A4BD30841F45612000890713 /* ViewControllerInterpreter.swift in Sources */,
 				A4C97EB0203EF4B7008AA81F /* WindowControllerEditorWorkflow.swift in Sources */,
@@ -419,7 +380,6 @@
 				A4BD30821F4558C900890713 /* ViewControllerGeneral.swift in Sources */,
 				A4B853B82041601300EC123F /* ObjectTask.swift in Sources */,
 				A44105552041CB1400B3C304 /* ViewControllerTaskProps.swift in Sources */,
-				A4B42B601FD5D4EE0078AC69 /* ViewControllerFinish.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

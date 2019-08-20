@@ -31,8 +31,6 @@ struct AppState {
     
     static var interpreterStockName: String = "macOS pre-installed"
     static var bundledWorkspaceVersion: String = "INCOMPLETE v2.1 (832bf42) (2018-01-09)"  // missing Runners/run.py that is now assumed here
-    
-    static var initialSetupCompleted: Bool = false
 
     static var systemVersion = ProcessInfo.processInfo.operatingSystemVersion
 }
@@ -146,24 +144,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         self.devModeMenuItem.isEnabled = true  // override auto enabling in "Workflow" menu for this item.
         
-        AppState.initialSetupCompleted = !isFirstRun()
-        if AppState.initialSetupCompleted {
-            reapplyPrefs()
-            loadWindowPosition()
-            self.loadDevMenuState()
-        } else {
-            self.showSetupAssistant()
-            if AppState.initialSetupCompleted {
-                reapplyPrefs()  // Initialize the rest of the preferences with their default values.
-                NotificationCenter.default.post(name: .reloadWorkflows, object: nil)
-            }
-        }
+        reapplyPrefs()
+        loadWindowPosition()
+        self.loadDevMenuState()
     }
     
     func applicationWillBecomeActive(_ notification: Notification) {
-        if AppState.initialSetupCompleted {
-            self.reloadWorkflowsFromDir()
-        }
+        self.reloadWorkflowsFromDir()
     }
     
     @objc func reloadWorkflows(_ notification: Notification) {
@@ -327,30 +314,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func showProductWebsite(_ sender: NSMenuItem) {
         openWebsite(webUrl: droppyappUrls.main)
-    }
-    
-    lazy var firstRunWindowController: WindowControllerFirstRun  = {
-        let wcSB = NSStoryboard(name: "FirstRun", bundle: Bundle.main)
-        return wcSB.instantiateInitialController() as! WindowControllerFirstRun
-    }()
-    
-    @IBAction func showFirstRunWindow(_ sender: NSMenuItem) {
-        self.showSetupAssistant()
-    }
-    
-    func showSetupAssistant() {
-        // Set the Workspace and extract the default content via this assistant.
-        if let windowFirstRun = firstRunWindowController.window {
-            let application = NSApplication.shared
-            // Use a modal window so the user can not access DropPy before going though with the initial setup.
-            application.runModal(for: windowFirstRun)
-            windowFirstRun.close()
-            
-            // Exit DropPy completely if the initial setup was cancelled before a workspaceDir was set.
-            if !AppState.initialSetupCompleted {
-                NSApplication.shared.terminate(self)
-            }
-        }
     }
     
     func reloadWorkflowsFromDir() {
